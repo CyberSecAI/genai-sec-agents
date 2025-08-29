@@ -4,23 +4,29 @@ This directory contains the complete documentation for the **BMad Security Agent
 
 ## Document Reading Order
 
-The documents in this directory should be read in the following order, which reflects both their creation chronology and logical flow:
+The documents in this directory should be read in the following order, which reflects their logical flow from security analysis through implementation planning:
 
-### 1. Foundation & Threat Analysis (August 29, 10:44 - 11:32)
+### 1. Foundation & Security Analysis
 
-| Order | Document | Created | Purpose |
-|-------|----------|---------|---------|
-| **1** | [BMadSecurityAgentInitialThreatModel.md](BMadSecurityAgentInitialThreatModel.md) | 10:44 AM | **Initial threat modeling** using STRIDE methodology identifying 16 distinct security threats across knowledge ingestion, agent orchestrator, and CI/CD validation components |
-| **2** | [BMadSecurityAgentDREADRiskAssessment.md](BMadSecurityAgentDREADRiskAssessment.md) | 10:48 AM | **Quantitative risk assessment** using DREAD methodology, prioritizing threats from the initial threat model with risk scores and impact analysis |
-| **3** | [BMadSecurityAgentSecurityMitigationsandControls.md](BMadSecurityAgentSecurityMitigationsandControls.md) | 11:32 AM | **Comprehensive mitigation strategies** and security controls to address identified threats, including implementation recommendations and validation approaches |
+| Order | Document | Purpose |
+|-------|----------|---------|
+| **1** | [BMadSecurityAgentInitialThreatModel.md](BMadSecurityAgentInitialThreatModel.md) | **Initial threat modeling** using STRIDE methodology identifying 16 distinct security threats across knowledge ingestion, agent orchestrator, and CI/CD validation components |
+| **2** | [BMadSecurityAgentDREADRiskAssessment.md](BMadSecurityAgentDREADRiskAssessment.md) | **Quantitative risk assessment** using DREAD methodology, prioritizing threats from the initial threat model with risk scores and impact analysis |
+| **3** | [BMadSecurityAgentSecurityMitigationsandControls.md](BMadSecurityAgentSecurityMitigationsandControls.md) | **Comprehensive mitigation strategies** and security controls to address identified threats, including implementation recommendations and validation approaches |
 
-### 2. Project Definition & Planning (August 29, 12:10 - 13:11)
+### 2. Project Definition & Requirements
 
-| Order | Document | Created | Purpose |
-|-------|----------|---------|---------|
-| **4** | [BMadSecurityAgentProjectOverview.md](BMadSecurityAgentProjectOverview.md) | 12:10 PM | **High-level project overview** establishing vision, scope, and strategic context for the BMad Security Agent initiative |
-| **5** | [ProjectBriefAIPoweredDevSecOpsAssistant.md](ProjectBriefAIPoweredDevSecOpsAssistant.md) | 12:32 PM | **Comprehensive project brief** detailing problem statement, solution approach, user personas (Daniella, Leo, Sara), and business justification |
-| **6** | [PRD.md](PRD.md) | 13:11 PM | **Product Requirements Document** with detailed functional requirements, user stories, acceptance criteria, and implementation roadmap |
+| Order | Document | Purpose |
+|-------|----------|---------|
+| **4** | [BMadSecurityAgentProjectOverview.md](BMadSecurityAgentProjectOverview.md) | **High-level project overview** establishing vision, scope, and strategic context for the BMad Security Agent initiative |
+| **5** | [ProjectBriefAIPoweredDevSecOpsAssistant.md](ProjectBriefAIPoweredDevSecOpsAssistant.md) | **Comprehensive project brief** detailing problem statement, solution approach, user personas (Daniella, Leo, Sara), and business justification |
+| **6** | [PRD.md](PRD.md) | **Complete Product Requirements Document** (v1.5) with detailed epic breakdowns, user stories, acceptance criteria, and comprehensive implementation roadmap for all 3 development phases |
+
+### 3. Implementation Architecture
+
+| Order | Document | Purpose |
+|-------|----------|---------|
+| **7** | [architecture.md](architecture.md) | **Comprehensive fullstack architecture** (v2.0) defining system design, technology stack, data models, API specifications, core workflows, and implementation patterns for the complete DevSecOps assistant platform |
 
 ## Key Concepts & Architecture
 
@@ -60,12 +66,26 @@ The documents in this directory should be read in the following order, which ref
 
 ## Implementation Roadmap
 
-The PRD outlines a phased implementation approach:
+The PRD (v1.5) outlines a comprehensive 3-phase implementation approach with detailed stories:
 
-1. **Epic 1**: Knowledge Management & Basic Agent Framework
-2. **Epic 2**: IDE Integration & Developer Experience  
-3. **Epic 3**: CI/CD Pipeline Integration & Validation
-4. **Epic 4**: Advanced Features & Scalability
+### **Epic 1: Policy-as-Code Engine** (3 Stories)
+Foundation for AppSec Engineers to manage security policies:
+- **Story 1.1**: Rule Card Repository & YAML Schema
+- **Story 1.2**: Manual Ingestion of Initial Rule Cards (10-15 high-value rules)
+- **Story 1.3**: Agent Compiler Toolchain & JSON Package Generation
+
+### **Epic 2: IDE Agent Integration (Claude Code MVP)** (3 Stories) 
+Real-time security guidance for developers:
+- **Story 2.1**: Agentic Runtime Core & Package Loading
+- **Story 2.2**: Claude Code Sub-Agent & Router Implementation
+- **Story 2.3**: Manual On-Demand Security Scanning
+
+### **Epic 3: CI/CD Advisory Integration** (4 Stories)
+Non-blocking validation pipeline for consistent enforcement:
+- **Story 3.1**: CI/CD Integration Scaffolding (GitHub Actions)
+- **Story 3.2**: CI Validation Engine & Dynamic Scanner Orchestration  
+- **Story 3.3**: Multi-Scanner Integration (Semgrep, CodeQL, TruffleHog, etc.)
+- **Story 3.4**: Non-Blocking Advisory Reporting & Audit Trail
 
 ## Document Relationships
 
@@ -75,7 +95,8 @@ graph TD
     B --> C[Security Mitigations & Controls]
     C --> D[Project Overview]
     D --> E[Project Brief]
-    E --> F[Product Requirements Document]
+    E --> F[Product Requirements Document v1.5]
+    F --> G[Fullstack Architecture v2.0]
     
     style A fill:#ff9999
     style B fill:#ff9999
@@ -83,16 +104,32 @@ graph TD
     style D fill:#99ccff
     style E fill:#99ccff
     style F fill:#99ccff
+    style G fill:#99ff99
 ```
 
 **Security Analysis Phase** (Red): Threat identification → Risk quantification → Mitigation planning  
-**Project Definition Phase** (Blue): Vision → Problem/Solution → Implementation requirements
+**Project Definition Phase** (Blue): Vision → Problem/Solution → Detailed requirements  
+**Implementation Phase** (Green): Complete technical architecture and system design
 
 ## Usage Guidelines
 
 - **Start with security analysis** (documents 1-3) to understand the threat landscape and security posture
-- **Review project definition** (documents 4-6) to understand business context and implementation approach  
-- **Reference PRD** for detailed functional requirements and user stories during development
-- **Use threat model and mitigations** as living documents for ongoing security reviews
+- **Review project definition** (documents 4-6) to understand business context, user personas, and solution approach  
+- **Use architecture document** (document 7) for technical implementation details, technology stack, and system design patterns
+- **Reference PRD** for detailed functional requirements, epic breakdowns, and user stories during development
+- **Use threat model and mitigations** as living documents for ongoing security reviews throughout implementation
+
+## Current Status
+
+**Documentation Phase: Complete** ✅  
+All foundational documentation is complete with:
+- **Security analysis finalized**: Comprehensive threat modeling, risk assessment, and mitigation strategies
+- **Project requirements finalized**: Complete PRD v1.5 with detailed 3-phase implementation roadmap  
+- **Architecture design finalized**: Comprehensive v2.0 fullstack architecture with technical specifications
+
+**Next Phase: Implementation**  
+Ready to begin Epic 1: Policy-as-Code Engine development with complete documentation foundation.
+
+---
 
 This documentation provides the complete foundation for developing a secure, effective AI-powered DevSecOps assistant that bridges the gap between security policy and developer workflow.
