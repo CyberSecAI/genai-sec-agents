@@ -113,3 +113,20 @@ This section confirms that the BMad Security Agent system will be governed by th
 * **Change Management**: All changes to the system's components, configurations, or knowledge sources will be subject to the organization's standard change management and approval process.  
 * **Third-Party Risk Management**: The vetting and approval of new knowledge sources will be governed by the organization's existing third-party and vendor risk management program.  
 * **Security Audits**: The system will be included in the scope of regular internal and external security audits conducted for the organization.
+
+## **Implementation Plan**
+
+This section provides a prioritized implementation plan for the security mitigations. The plan is organized into phases, focusing on addressing the highest-risk threats first.
+
+| Mitigation | Priority Level | Implementation Phase | Timeline | Resources Required | Dependencies | Success Criteria |
+| :---- | :---- | :---- | :---- | :---- | :---- | :---- |
+| **Comprehensive Audit Logging** (CI-R1) | **Critical** | Phase 1 (0-30 days) | 2 Sprints | 1 Security Engineer, 1 DevOps Engineer | SIEM access | All system actions are logged in a structured, tamper-evident format. |
+| **Build Stability Controls** (CI-D1) | **High** | Phase 1 (0-30 days) | 2 Sprints | 2 DevOps Engineers | CI/CD Platform Access | Builds are resilient to agent/scanner failures; clear error reporting exists. |
+| **Knowledge Provenance** (KIP-R1) | **High** | Phase 1 (0-30 days) | 1 Sprint | 1 Backend Engineer | Knowledge Base Schema | Every Rule Card contains immutable source, hash, and date metadata. |
+| **Prompt Injection Defenses** (AO-T1) | **High** | Phase 1 (0-30 days) | 2 Sprints | 1 Security Engineer, 1 LLM Engineer | Agent Orchestrator access | Agent successfully resists common prompt injection attack patterns in testing. |
+| **Independent Scan Verification** (CI-S1) | **High** | Phase 2 (1-3 months) | 1 Sprint | 1 DevOps Engineer | CI/CD Platform, Scanners | CI/CD pipeline validates scanner results directly, not via agent output. |
+| **Agent Sandboxing** (AO-E1) | **High** | Phase 2 (1-3 months) | 2 Sprints | 1 DevOps, 1 Security Engineer | Containerization Platform | Agent runs in a minimal, least-privilege container with no unauthorized tool access. |
+| **Ingestion Pipeline Hardening** (KIP-D1) | **High** | Phase 2 (1-3 months) | 1 Sprint | 1 Backend Engineer | Knowledge Ingestion Code | Pipeline enforces strict resource limits and timeouts. |
+| **DB Access Controls & Integrity** (KB-T1) | **High** | Phase 2 (1-3 months) | 2 Sprints | 1 DBA, 1 Security Engineer | Database Access | MFA is required for DB admin access; integrity checks run hourly. |
+| **Mandatory Human Review for Fixes** (CI-T1) | **High** | Phase 3 (3-6 months) | 1 Sprint | 1 DevOps Engineer | Source Control Platform | Git hooks or branch policies are in place to block unreviewed auto-fixes. |
+
