@@ -1,0 +1,22 @@
+id: JWT-EXP-001
+title: "JWTs must have exp and short TTL"
+scope: "backend:java"
+severity: high
+requirement: "Set exp; access tokens TTL ≤ 15m; validate exp server-side with ±60s clock skew."
+do:
+  - "Validate iss,aud,exp,nbf claims on every request."
+  - "Prefer RS256/ES256 with managed keys."
+dont:
+  - "Do not accept tokens without exp."
+  - "Do not rely on client-side expiration only."
+detect:
+  semgrep: ["java-jwt-missing-exp", "java-jwt-missing-claims"]
+verify:
+  tests:
+    - "Reject token without exp"
+    - "Reject token with past exp"
+refs:
+  asvs: ["V2.1.5", "V2.1.2"]
+  owasp_cheatsheet: ["JSON Web Token for Java"]
+license:
+  source: "OWASP Cheat Sheet Series (CC BY-SA 4.0)"

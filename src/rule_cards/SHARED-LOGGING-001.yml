@@ -1,0 +1,20 @@
+id: SHARED-LOGGING-001
+title: "Avoid sensitive data in logs"
+scope: "*"
+severity: medium
+requirement: "Never log secrets, tokens, passwords, or full PANs; mask/ redact sensitive fields."
+do:
+  - "Use structured logging with allowlists."
+  - "Mask tokens and PII at the logger boundary."
+dont:
+  - "Do not log Authorization headers or session IDs."
+detect:
+  semgrep: ["logging-sensitive-data"]
+verify:
+  tests:
+    - "Simulated requests do not emit secrets in logs"
+refs:
+  asvs: ["V7.1", "V7.3"]
+  owasp_cheatsheet: ["Logging", "Privacy"]
+license:
+  source: "OWASP Cheat Sheet Series (CC BY-SA 4.0)"

@@ -1,0 +1,21 @@
+id: JWT-ALG-002
+title: "Safe JWT algorithms"
+scope: "backend:java"
+severity: high
+requirement: "Use RS256/ES256; reject 'none'; do not confuse HS256 shared secret with RSA public key."
+do:
+  - "Pin acceptable algorithms in verifier settings."
+  - "Use JWKs/JWKS with key rotation."
+dont:
+  - "Do not allow alg from token to override server policy."
+detect:
+  semgrep: ["java-jwt-insecure-alg", "java-jwt-dynamic-alg"]
+verify:
+  tests:
+    - "Reject alg=none"
+    - "Reject HS256 token when RS256 expected"
+refs:
+  asvs: ["V2.1.1"]
+  owasp_cheatsheet: ["JSON Web Token for Java"]
+license:
+  source: "OWASP Cheat Sheet Series (CC BY-SA 4.0)"

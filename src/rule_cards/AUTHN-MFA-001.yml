@@ -1,0 +1,20 @@
+id: AUTHN-MFA-001
+title: "Require MFA for high-privilege actions"
+scope: "backend"
+severity: high
+requirement: "Enforce MFA for admin accounts and sensitive transactions; step-up auth when risk increases."
+do:
+  - "Enable TOTP/WebAuthn for admin users."
+  - "Implement step-up flows for sensitive endpoints."
+dont:
+  - "Do not allow password-only access to admin consoles."
+detect:
+  semgrep: ["authn-mfa-required-admin"]
+verify:
+  tests:
+    - "Admin login without MFA is rejected"
+refs:
+  asvs: ["V1.2", "V2.8"]
+  owasp_cheatsheet: ["Authentication"]
+license:
+  source: "OWASP Cheat Sheet Series (CC BY-SA 4.0)"
