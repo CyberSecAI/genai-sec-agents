@@ -54,33 +54,35 @@ The project will be organized as a **monorepo** to facilitate the management of 
 
 This diagram illustrates the flow of information and the interaction between the core components of the system.
 
+```mermaid
 graph TD  
     subgraph "A. Policy-as-Code Repository (Git)"  
-        A1\[rule\_cards/\*.yml\]  
-        A2\[tools/agents\_manifest.yml\]  
+        A1[rule_cards/*.yml]  
+        A2[tools/agents_manifest.yml]  
     end
 
     subgraph "B. Build-Time Compiler (Python)"  
-        B1\[tools/compile\_agents.py\]  
-        A1 \--\> B1  
-        A2 \--\> B1  
-        B1 \--\> B2\[dist/agents/\*.json\]  
+        B1[tools/compile_agents.py]  
+        A1 --> B1  
+        A2 --> B1  
+        B1 --> B2[dist/agents/*.json]  
     end
 
     subgraph "C. Developer IDE (Inner Loop)"  
-        C1\[Agentic Platform \- e.g., Claude Code\]  
-        B2 \-- Loads \--\> C1  
-        C2\[Developer's Code\]  
-        C1 \-- Provides Guidance \--\> C2  
+        C1[Agentic Platform - e.g., Claude Code]  
+        B2 -- Loads --> C1  
+        C2[Developer's Code]  
+        C1 -- Provides Guidance --> C2  
     end  
       
     subgraph "D. Local & CI/CD Validation (Outer Loops)"  
-        D1\[Local Machine / CI Runner\]  
-        C2 \-- Pre-Commit or Push \--\> D1  
-        D1 \-- Runs \--\> D2\[CI Scanners \- Semgrep, Trivy, etc.\]  
-        B2 \-- Informs \--\> D2  
-        D2 \-- Reports Status \--\> D1  
+        D1[Local Machine / CI Runner]  
+        C2 -- Pre-Commit or Push --> D1  
+        D1 -- Runs --> D2[CI Scanners - Semgrep, Trivy, etc.]  
+        B2 -- Informs --> D2  
+        D2 -- Reports Status --> D1  
     end
+```
 
 ### **Architectural Patterns**
 
@@ -133,6 +135,8 @@ The entire system revolves around a single, critical data model: the **Rule Card
 
 TypeScript Interface (for Agent Runtime):  
 This interface defines the structure of a "reduced" rule as it exists within the compiled agent package.  
+
+```typescript
 // The machine-readable structure of a single security rule within a compiled agent package.  
 interface RuleCard {  
   id: string;  
@@ -140,18 +144,19 @@ interface RuleCard {
   severity: 'low' | 'medium' | 'high' | 'critical';  
   scope: string;  
   requirement: string;  
-  do: string\[\];  
-  dont: string\[\];  
+  do: string[];  
+  dont: string[];  
   detect: {  
-    \[tool: string\]: string\[\]; // e.g., { "semgrep": \["java-jwt-missing-exp"\] }  
+    [tool: string]: string[]; // e.g., { "semgrep": ["java-jwt-missing-exp"] }  
   };  
   verify: {  
-    tests: string\[\];  
+    tests: string[];  
   };  
   refs: {  
-    \[standard: string\]: string\[\]; // e.g., { "asvs": \["V2.1.5"\] }  
+    [standard: string]: string[]; // e.g., { "asvs": ["V2.1.5"] }  
   };  
 }
+```
 
 ## **API Specification**
 
@@ -161,31 +166,33 @@ The system does not have a traditional REST or GraphQL API. Instead, its primary
 
 This schema defines the complete structure of the JSON files located in the /dist/agents/ directory.
 
+```typescript
 // Defines the complete data contract for a compiled sub-agent package.  
 interface CompiledAgentPackage {  
-  // \--- Metadata \---  
+  // --- Metadata ---  
   id: string; // Unique identifier, e.g., "agent.jwt.java"  
   name: string; // Human-friendly name  
   version: string; // Build version, e.g., "2025.08.29"  
-  build\_date: string; // ISO 8601 timestamp of the build  
-  source\_digest: string; // SHA256 hash of all source Rule Cards  
+  build_date: string; // ISO 8601 timestamp of the build  
+  source_digest: string; // SHA256 hash of all source Rule Cards  
   attribution: string; // License and attribution notice
 
-  // \--- Policy & Configuration \---  
+  // --- Policy & Configuration ---  
   policy: {  
-    targets: string\[\]; // Glob patterns for target files, e.g., \["\*\*/\*.java"\]  
-    defaults: { \[key: string\]: any }; // Default values, e.g., { "jwt\_ttl\_seconds": 900 }  
+    targets: string[]; // Glob patterns for target files, e.g., ["**/*.java"]  
+    defaults: { [key: string]: any }; // Default values, e.g., { "jwt_ttl_seconds": 900 }  
   };
 
-  // \--- Rule Data \---  
-  rules: string\[\]; // A list of all Rule Card IDs included in this package  
-  rules\_detail: RuleCard\[\]; // The full, detailed content of each Rule Card (see Data Models)
+  // --- Rule Data ---  
+  rules: string[]; // A list of all Rule Card IDs included in this package  
+  rules_detail: RuleCard[]; // The full, detailed content of each Rule Card (see Data Models)
 
-  // \--- Validation Hooks \---  
-  validation\_hooks: {  
-    \[tool: string\]: string\[\]; // Aggregated map of all scanner rules, e.g., { "semgrep": \["rule1", "rule2"\] }  
+  // --- Validation Hooks ---  
+  validation_hooks: {  
+    [tool: string]: string[]; // Aggregated map of all scanner rules, e.g., { "semgrep": ["rule1", "rule2"] }  
   };  
 }
+```
 
 ## **Components**
 
@@ -235,42 +242,47 @@ This section illustrates the key operational sequences of the system, correspond
 
 This sequence diagram shows the flow of information when a developer receives "just-in-time" security feedback as they are writing code.
 
+```mermaid
 sequenceDiagram  
     participant Dev as Developer  
     participant IDE as Agentic IDE (Claude Code)  
     participant Runtime as Agentic Runtime  
     participant LLM as GenAI Model (Claude)
 
-    Dev-\>\>IDE: Writes / Modifies Code  
-    IDE-\>\>Runtime: Sends Code Context (file, content)  
-    Runtime-\>\>Runtime: Selects relevant Compiled Agent Package  
-    Runtime-\>\>LLM: Hydrates and sends secure prompt with rules  
-    LLM--\>\>Runtime: Returns guidance / code suggestion  
-    Runtime-\>\>IDE: Formats and sends response  
-    IDE--\>\>Dev: Displays real-time guidance
+    Dev->>IDE: Writes / Modifies Code  
+    IDE->>Runtime: Sends Code Context (file, content)  
+    Runtime->>Runtime: Selects relevant Compiled Agent Package  
+    Runtime->>LLM: Hydrates and sends secure prompt with rules  
+    LLM-->>Runtime: Returns guidance / code suggestion  
+    Runtime->>IDE: Formats and sends response  
+    IDE-->>Dev: Displays real-time guidance
+```
 
 ### **Workflow 2: Outer Loops \- Local & CI/CD Validation**
 
 This sequence diagram shows the "post-code" validation flow, which is identical whether run manually by a developer pre-commit or automatically by the CI/CD pipeline.
 
+```mermaid
 sequenceDiagram  
     participant Dev as Developer  
     participant Runner as Local Machine or CI/CD Runner  
     participant Engine as Validation Engine  
     participant Scanners as Security Scanners (Semgrep, etc.)
 
-    Dev-\>\>Runner: Runs 'git push' or local validation script  
-    Runner-\>\>Engine: Invokes Validation Engine  
-    Engine-\>\>Engine: Loads relevant Compiled Agent Package  
-    Engine-\>\>Scanners: Executes scanners based on 'validation\_hooks'  
-    Scanners--\>\>Engine: Return results (e.g., SARIF)  
-    Engine-\>\>Runner: Aggregates results and determines pass/fail  
-    Runner--\>\>Dev: Reports status (e.g., in PR comment or terminal)
+    Dev->>Runner: Runs 'git push' or local validation script  
+    Runner->>Engine: Invokes Validation Engine  
+    Engine->>Engine: Loads relevant Compiled Agent Package  
+    Engine->>Scanners: Executes scanners based on 'validation_hooks'  
+    Scanners-->>Engine: Return results (e.g., SARIF)  
+    Engine->>Runner: Aggregates results and determines pass/fail  
+    Runner-->>Dev: Reports status (e.g., in PR comment or terminal)
+```
 
 ## **Unified Project Structure**
 
 The project will be housed in a single monorepo named genai-sec-agents. This structure organizes the Policy-as-Code assets, the compiler toolchain, and CI/CD configurations logically.
 
+```
 /genai-sec-agents/  
 |  
 ├── .github/  
@@ -308,6 +320,7 @@ The project will be housed in a single monorepo named genai-sec-agents. This str
 ├── Makefile                    \# Helper scripts for local development  
 ├── requirements.txt            \# Python dependencies for the toolchain  
 └── README.md
+```
 
 ## **Development Workflow**
 
