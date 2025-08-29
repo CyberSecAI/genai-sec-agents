@@ -1,0 +1,298 @@
+template:
+  id: story-template-v2
+  name: Story Document
+  version: 2.0
+  output:
+    format: markdown
+    filename: docs/stories/{{epic_num}}.{{story_num}}.{{story_title_short}}.md
+    title: "Story {{epic_num}}.{{story_num}}: {{story_title_short}}"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+
+agent_config:
+  editable_sections: 
+    - Status
+    - Story
+    - Acceptance Criteria
+    - Tasks / Subtasks
+    - Dev Notes
+    - Testing
+    - Change Log
+
+sections:
+  - id: status
+    title: Status
+    type: choice
+    choices: [Draft, Approved, InProgress, Review, Done]
+    instruction: Select the current status of the story
+    owner: scrum-master
+    editors: [scrum-master, dev-agent]
+    
+  - id: story
+    title: Story
+    type: template-text
+    template: |
+      **As a** {{role}},
+      **I want** {{action}},
+      **so that** {{benefit}}
+    instruction: Define the user story using the standard format with role, action, and benefit
+    elicit: true
+    owner: scrum-master
+    editors: [scrum-master]
+    
+  - id: acceptance-criteria
+    title: Acceptance Criteria
+    type: numbered-list
+    instruction: Copy the acceptance criteria numbered list from the epic file
+    elicit: true
+    owner: scrum-master
+    editors: [scrum-master]
+    
+  - id: security-requirements
+    title: Security Requirements
+    type: numbered-list
+    instruction: |
+      Define security-specific requirements for this story based on threat analysis and security controls needed.
+      Include authentication, authorization, input validation, data protection, and compliance requirements.
+    template: |
+      1. Authentication: [Specify auth requirements]
+      2. Authorization: [Define access controls needed]
+      3. Input Validation: [Required input sanitization]
+      4. Data Protection: [Encryption, masking requirements]
+      5. Compliance: [Regulatory/standard requirements]
+    elicit: true
+    owner: scrum-master
+    editors: [scrum-master, security-agent]
+    optional: false
+    
+  - id: tasks-subtasks
+    title: Tasks / Subtasks
+    type: bullet-list
+    instruction: |
+      Break down the story into specific tasks and subtasks needed for implementation.
+      Reference applicable acceptance criteria numbers where relevant.
+    template: |
+      - [ ] Task 1 (AC: # if applicable)
+        - [ ] Subtask1.1...
+        - [ ] Security validation for Task 1 (if security requirements apply)
+      - [ ] Task 2 (AC: # if applicable)
+        - [ ] Subtask 2.1...
+        - [ ] Security validation for Task 2 (if security requirements apply)
+      - [ ] Task 3 (AC: # if applicable)
+        - [ ] Subtask 3.1...
+        - [ ] Security validation for Task 3 (if security requirements apply)
+      - [ ] Security Requirements Implementation (if applicable)
+        - [ ] Implement authentication controls
+        - [ ] Implement authorization controls
+        - [ ] Implement input validation
+        - [ ] Implement data protection
+        - [ ] Verify compliance requirements
+    elicit: true
+    owner: scrum-master
+    editors: [scrum-master, dev-agent]
+    
+  - id: dev-notes
+    title: Dev Notes
+    instruction: |
+      Populate relevant information, only what was pulled from actual artifacts from docs folder, relevant to this story:
+      - Do not invent information
+      - If known add Relevant Source Tree info that relates to this story
+      - If there were important notes from previous story that are relevant to this one, include them here
+      - Put enough information in this section so that the dev agent should NEVER need to read the architecture documents, these notes along with the tasks and subtasks must give the Dev Agent the complete context it needs to comprehend with the least amount of overhead the information to complete the story, meeting all AC and completing all tasks+subtasks
+      - Include security considerations and threat context relevant to this story implementation
+    elicit: true
+    owner: scrum-master
+    editors: [scrum-master]
+    sections:
+      - id: threat-considerations
+        title: Threat Considerations
+        instruction: |
+          Document security threats and attack vectors relevant to this story:
+          - Potential attack surfaces introduced
+          - Threat actors and attack scenarios
+          - Security controls that must be implemented
+          - Risk mitigation strategies
+          - Security architecture constraints
+        template: |
+          **Attack Surfaces**:
+          - [List new attack surfaces this story introduces]
+          
+          **Threat Scenarios**:
+          - [Describe potential attack scenarios]
+          
+          **Required Security Controls**:
+          - [List security controls that must be implemented]
+          
+          **Risk Mitigation**:
+          - [Describe how risks will be mitigated]
+        elicit: true
+        owner: scrum-master
+        editors: [scrum-master, security-agent]
+        optional: conditional
+        condition: story_has_security_implications
+      - id: testing-standards
+        title: Testing Standards
+        instruction: |
+          List Relevant Testing Standards from Architecture the Developer needs to conform to:
+          - Test file location
+          - Test standards
+          - Testing frameworks and patterns to use
+          - Any specific testing requirements for this story
+        elicit: true
+        owner: scrum-master
+        editors: [scrum-master]
+        
+  - id: testing
+    title: Testing
+    instruction: |
+      Define comprehensive testing approach for this story including unit tests, integration tests, security verification, and manual testing.
+    elicit: true
+    owner: scrum-master
+    editors: [scrum-master, dev-agent, qa-agent]
+    sections:
+      - id: unit-tests
+        title: Unit Tests
+        instruction: |
+          Define unit tests required for this story:
+          - Test individual components and functions
+          - Mock external dependencies
+          - Verify business logic correctness
+        template: |
+          - [ ] Test [component/function] with valid inputs
+          - [ ] Test [component/function] with invalid inputs
+          - [ ] Test error handling and edge cases
+        elicit: true
+        owner: scrum-master
+        editors: [scrum-master, dev-agent]
+        
+      - id: integration-tests
+        title: Integration Tests
+        instruction: |
+          Define integration tests required for this story:
+          - Test component interactions
+          - Test external API integrations
+          - Test database interactions
+          - End-to-end workflow testing
+        template: |
+          - [ ] Test integration between [component A] and [component B]
+          - [ ] Test external API calls and responses
+          - [ ] Test database operations and data persistence
+        elicit: true
+        owner: scrum-master
+        editors: [scrum-master, dev-agent]
+        
+      - id: security-verification
+        title: Security Verification
+        instruction: |
+          Define security testing and verification requirements for this story:
+          - Input validation and sanitization tests
+          - Authentication and authorization tests
+          - Vulnerability prevention tests
+          - Security configuration validation
+          - Compliance verification
+        template: |
+          - [ ] **Secure API Key Handling:** Create a test to confirm the script fails gracefully with a clear error if an external API key is required but not provided in the environment, verifying it is not hardcoded.
+          - [ ] **Input Validation:** Test all user inputs for proper validation and sanitization to prevent injection attacks.
+          - [ ] **Authentication Tests:** Verify authentication mechanisms work correctly and reject invalid credentials.
+          - [ ] **Authorization Tests:** Confirm proper access controls are enforced for different user roles.
+          - [ ] **Data Protection:** Validate that sensitive data is properly encrypted, masked, or protected.
+          - [ ] **Malformed Data Handling:** Test the system with malformed or empty data files to ensure it fails gracefully without crashing or unexpected errors.
+          - [ ] **Security Headers:** Verify proper security headers are set in HTTP responses.
+          - [ ] **SQL Injection Prevention:** Test for SQL injection vulnerabilities in database queries.
+          - [ ] **XSS Prevention:** Test for cross-site scripting vulnerabilities in user-facing components.
+        elicit: true
+        owner: scrum-master
+        editors: [scrum-master, security-agent, qa-agent]
+        
+      - id: manual-verification
+        title: Manual Verification
+        instruction: |
+          Define manual testing and verification steps:
+          - End-user workflow testing
+          - UI/UX validation
+          - Performance validation
+          - System integration verification
+        template: |
+          - [ ] Run the main functionality from the user interface and verify expected behavior
+          - [ ] Check system logs for success messages and proper error handling
+          - [ ] Verify data is correctly stored and retrievable
+          - [ ] Test user workflows end-to-end
+        elicit: true
+        owner: scrum-master
+        editors: [scrum-master, qa-agent]
+        
+  - id: change-log
+    title: Change Log
+    type: table
+    columns: [Date, Version, Description, Author]
+    instruction: Track changes made to this story document
+    owner: scrum-master
+    editors: [scrum-master, dev-agent, qa-agent]
+    
+  - id: dev-agent-record
+    title: Dev Agent Record
+    instruction: This section is populated by the development agent during implementation
+    owner: dev-agent
+    editors: [dev-agent]
+    sections:
+      - id: agent-model
+        title: Agent Model Used
+        template: "{{agent_model_name_version}}"
+        instruction: Record the specific AI agent model and version used for development
+        owner: dev-agent
+        editors: [dev-agent]
+        
+      - id: debug-log-references
+        title: Debug Log References
+        instruction: Reference any debug logs or traces generated during development
+        owner: dev-agent
+        editors: [dev-agent]
+        
+      - id: completion-notes
+        title: Completion Notes List
+        instruction: Notes about the completion of tasks and any issues encountered
+        owner: dev-agent
+        editors: [dev-agent]
+        
+      - id: file-list
+        title: File List
+        instruction: List all files created, modified, or affected during story implementation
+        owner: dev-agent
+        editors: [dev-agent]
+        
+  - id: qa-results
+    title: QA Results
+    instruction: Results from QA Agent QA review of the completed story implementation
+    owner: qa-agent
+    editors: [qa-agent]
+    
+  - id: security-review-results
+    title: Security Review Results
+    instruction: Results from VulnerabilityTech Agent security code review of the completed story implementation
+    owner: vulnerabilityTech-agent
+    editors: [vulnerabilityTech-agent]
+    optional: true
+    sections:
+      - id: vulnerability-findings
+        title: Vulnerability Findings
+        instruction: Document any security vulnerabilities identified during code review
+        owner: vulnerabilityTech-agent
+        editors: [vulnerabilityTech-agent]
+        
+      - id: security-compliance
+        title: Security Compliance Status
+        instruction: |
+          Document compliance with security requirements and standards:
+          - NIST SSDF practice compliance
+          - Security requirement validation
+          - Threat mitigation verification
+        owner: vulnerabilityTech-agent
+        editors: [vulnerabilityTech-agent]
+        
+      - id: remediation-recommendations
+        title: Remediation Recommendations
+        instruction: Provide specific recommendations for addressing any security issues found
+        owner: vulnerabilityTech-agent
+        editors: [vulnerabilityTech-agent]

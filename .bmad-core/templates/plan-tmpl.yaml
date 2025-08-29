@@ -1,0 +1,108 @@
+---
+meta:
+  type: Implementation Plan
+  description: "Detailed implementation plan template for user stories"
+  version: 1.0
+  agent-ownership:
+    owner: dev
+    editors: [dev, architect]
+  condition: "True"
+  output-file-suggestion: "docs/plans/[STORY_ID].[STORY_NAME].md"
+
+sections:
+  header:
+    elicit: false
+    instruction: |
+      Create a header with the story title and basic metadata. Format as:
+      # Epic [STORY_ID] Implementation Plan: [STORY_TITLE]
+      
+      ## Overview
+      [Brief description of what will be implemented and why this is important]
+
+  pre_implementation:
+    elicit: true
+    agent-ownership:
+      owner: dev
+      editors: [dev, architect]
+    instruction: |
+      Create a comprehensive pre-implementation checklist based on the story's requirements and dependencies.
+      Include:
+      - Prerequisites verification
+      - Tool/environment requirements
+      - Access requirements (repositories, APIs, etc.)
+      - Architecture/design dependencies
+      - Security considerations that need to be addressed upfront
+
+  implementation_steps:
+    elicit: true
+    agent-ownership:
+      owner: dev
+      editors: [dev]
+    instruction: |
+      Break down the story into detailed implementation phases and steps.
+      Each phase should have:
+      - Clear objectives
+      - Time estimates
+      - Specific technical steps
+      - Commands or code examples where appropriate
+      - Expected outcomes
+      
+      Structure as:
+      ### Phase N: [Phase Name] (Estimated: X minutes/hours)
+      #### Step N.M: [Step Name]
+      [Detailed instructions with code examples]
+
+  success_criteria:
+    elicit: false
+    agent-ownership:
+      owner: dev
+      editors: [dev, qa]
+    instruction: |
+      Define clear success criteria that indicate the story is complete.
+      Map to acceptance criteria from the original story.
+      Use checklist format with ✅ indicators.
+
+  verification_steps:
+    elicit: true
+    agent-ownership:
+      owner: dev
+      editors: [dev, qa]
+    instruction: |
+      Create step-by-step verification procedures to validate the implementation.
+      Include:
+      - Functional testing steps
+      - Integration testing
+      - Security validation (if applicable)
+      - Performance checks (if applicable)
+      - Manual verification steps
+
+  time_estimation:
+    elicit: false
+    instruction: |
+      Provide detailed time estimates:
+      - Total estimated time
+      - Critical path identification
+      - Dependencies on other stories/epics
+      - Buffer time for unexpected issues
+
+  risk_mitigation:
+    elicit: true
+    agent-ownership:
+      owner: dev
+      editors: [dev, architect]
+    instruction: |
+      Identify potential risks and mitigation strategies:
+      - Technical risks and solutions
+      - Dependency risks
+      - Resource constraints
+      - Timeline risks
+      - Rollback plans if needed
+
+  next_steps:
+    elicit: false
+    instruction: |
+      Outline what should happen after this story is completed:
+      - Follow-up stories or epics
+      - Integration points with other work
+      - Monitoring or maintenance requirements
+      - Documentation updates needed

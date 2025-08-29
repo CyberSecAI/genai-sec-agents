@@ -1,0 +1,39 @@
+version: 1.0.0
+installed_at: '2025-08-13T11:00:50.004Z'
+install_type: expansion-pack
+expansion_pack_id: software-assurance
+expansion_pack_name: Software Assurance
+ides_setup:
+  - claude-code
+  - gemini
+files:
+  - path: .software-assurance/config.yaml
+    hash: c1baebc30434f506
+    modified: false
+  - path: .software-assurance/utils/workflow-management.md
+    hash: b148df3ebb1f9c61
+    modified: false
+  - path: .software-assurance/utils/mermaid-syntax-guide.md
+    hash: 63f1645090118f5b
+    modified: false
+  - path: .software-assurance/utils/bmad-doc-template.md
+    hash: 4b2f7c4408835b9e
+    modified: false
+  - path: .software-assurance/tasks/execute-checklist.md
+    hash: 7843baf5f254d16a
+    modified: false
+  - path: .software-assurance/tasks/create-doc.md
+    hash: 395719b8a002f7f9
+    modified: false
+  - path: .software-assurance/templates/python-vuln-scan-tmpl.yaml
+    hash: a538175e692501d8
+    modified: false
+  - path: .software-assurance/data/python-secure-coding.md
+    hash: c76479e7141bb6c5
+    modified: false
+  - path: .software-assurance/data/python-common-vulns.md
+    hash: dd320c00b616098b
+    modified: false
+  - path: .software-assurance/data/code-quality-standards.md
+    hash: 5a1ebe4e3b753893
+    modified: false

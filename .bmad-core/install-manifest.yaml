@@ -1,0 +1,361 @@
+version: 4.31.0
+installed_at: '2025-08-13T11:00:50.125Z'
+install_type: full
+agent: null
+ides_setup:
+  - claude-code
+  - gemini
+expansion_packs:
+  - software-assurance
+files:
+  - path: .bmad-core/working-in-the-brownfield.md
+    hash: 467f6b560ab170ef
+    modified: false
+  - path: .bmad-core/user-guide.md
+    hash: a50ffc3de4034175
+    modified: false
+  - path: .bmad-core/core-config.yaml
+    hash: a7d1007020c0702f
+    modified: false
+  - path: .bmad-core/workflows/greenfield-ui.yaml
+    hash: 1317dedfc4609a87
+    modified: false
+  - path: .bmad-core/workflows/greenfield-service.yaml
+    hash: ad75ec08b4976c7c
+    modified: false
+  - path: .bmad-core/workflows/greenfield-fullstack.yaml
+    hash: b178120d4b3c96e8
+    modified: false
+  - path: .bmad-core/workflows/brownfield-ui.yaml
+    hash: 675a533e0c6b4285
+    modified: false
+  - path: .bmad-core/workflows/brownfield-service.yaml
+    hash: e7751248143af519
+    modified: false
+  - path: .bmad-core/workflows/brownfield-fullstack.yaml
+    hash: e79e64626b847e17
+    modified: false
+  - path: .bmad-core/utils/workflow-management.md
+    hash: b148df3ebb1f9c61
+    modified: false
+  - path: .bmad-core/utils/security-analysis.md
+    hash: 9715c61b6706b460
+    modified: false
+  - path: .bmad-core/utils/mermaid-syntax-guide.md
+    hash: 63f1645090118f5b
+    modified: false
+  - path: .bmad-core/utils/bmad-doc-template.md
+    hash: 4b2f7c4408835b9e
+    modified: false
+  - path: .bmad-core/tasks/vulnerability-consolidation.md
+    hash: 94c8f86d1ba6e654
+    modified: false
+  - path: .bmad-core/tasks/vulnerability-assessment.md
+    hash: 94b7733a6f5e95fe
+    modified: false
+  - path: .bmad-core/tasks/validate-next-story.md
+    hash: e38e62f4fc2c1da2
+    modified: false
+  - path: .bmad-core/tasks/threat-modeling.md
+    hash: 53ae4f4146a23192
+    modified: false
+  - path: .bmad-core/tasks/test-security-validation.md
+    hash: 915753e9fa69f2b2
+    modified: false
+  - path: .bmad-core/tasks/specialized-security-review.md
+    hash: 337fa2e7f624233b
+    modified: false
+  - path: .bmad-core/tasks/shard-doc.md
+    hash: ed55fdb819d630ca
+    modified: false
+  - path: .bmad-core/tasks/security-validation.md
+    hash: 0feb8ce24dd39739
+    modified: false
+  - path: .bmad-core/tasks/security-test-cases.md
+    hash: 4f8ff95e277c40aa
+    modified: false
+  - path: .bmad-core/tasks/security-findings-report.md
+    hash: 6942cf5a2cdd920f
+    modified: false
+  - path: .bmad-core/tasks/security-assessment.md
+    hash: f3e4f196fa13eb54
+    modified: false
+  - path: .bmad-core/tasks/review-story.md
+    hash: b1257de0be5a3a7b
+    modified: false
+  - path: .bmad-core/tasks/review-epic.md
+    hash: 7d2993e878e25f88
+    modified: false
+  - path: .bmad-core/tasks/pattern-security-analysis.md
+    hash: 063afd9b32bd06d4
+    modified: false
+  - path: .bmad-core/tasks/nist-ssdf-planning-assessment.md
+    hash: 5037348a6b28ce7d
+    modified: false
+  - path: .bmad-core/tasks/nist-ssdf-integration-guide.md
+    hash: b3ce012de32cdd37
+    modified: false
+  - path: .bmad-core/tasks/nist-ssdf-integrated-validation.md
+    hash: dc96bb37842d4d18
+    modified: false
+  - path: .bmad-core/tasks/nist-ssdf-compliance.md
+    hash: 1b90150a99d79357
+    modified: false
+  - path: .bmad-core/tasks/nist-ssdf-code-validation.md
+    hash: dc0bffed8c13a140
+    modified: false
+  - path: .bmad-core/tasks/kb-mode-interaction.md
+    hash: 9c73e5ff25ef4890
+    modified: false
+  - path: .bmad-core/tasks/individual-semgrep-triage.md
+    hash: a3c2f580c1a83220
+    modified: false
+  - path: .bmad-core/tasks/index-docs.md
+    hash: 349f0ddf65dd71fe
+    modified: false
+  - path: .bmad-core/tasks/generate-ai-frontend-prompt.md
+    hash: b0a89d7a4aeaa5f8
+    modified: false
+  - path: .bmad-core/tasks/facilitate-brainstorming-session.md
+    hash: 084a72e9c71e2c7f
+    modified: false
+  - path: .bmad-core/tasks/execute-checklist.md
+    hash: e0467201115d500f
+    modified: false
+  - path: .bmad-core/tasks/dread-assessment.md
+    hash: 5f288f6d3065a2e8
+    modified: false
+  - path: .bmad-core/tasks/document-project.md
+    hash: 62495d0979bb6924
+    modified: false
+  - path: .bmad-core/tasks/dependency-security-scan.md
+    hash: f765f1b24a88b141
+    modified: false
+  - path: .bmad-core/tasks/create-next-story.md
+    hash: fa18ad2a04b6a93f
+    modified: false
+  - path: .bmad-core/tasks/create-doc.md
+    hash: 395719b8a002f7f9
+    modified: false
+  - path: .bmad-core/tasks/create-deep-research-prompt.md
+    hash: 5716b19ae78b3afb
+    modified: false
+  - path: .bmad-core/tasks/create-brownfield-story.md
+    hash: 3399449361fa0ea3
+    modified: false
+  - path: .bmad-core/tasks/correct-course.md
+    hash: 1c9dd46177b0ac6b
+    modified: false
+  - path: .bmad-core/tasks/compliance-audit.md
+    hash: efd8825fc06bd101
+    modified: false
+  - path: .bmad-core/tasks/code-security-review.md
+    hash: 7a4cb8208495210f
+    modified: false
+  - path: .bmad-core/tasks/brownfield-create-story.md
+    hash: 6e5cd0247836c4de
+    modified: false
+  - path: .bmad-core/tasks/brownfield-create-epic.md
+    hash: 1b2b6c8b67a176ee
+    modified: false
+  - path: .bmad-core/tasks/assess-plan.md
+    hash: a5bc0093130b614e
+    modified: false
+  - path: .bmad-core/tasks/advanced-elicitation.md
+    hash: 28e3b538dc6fe104
+    modified: false
+  - path: .bmad-core/templates/vuln-assessment-tmpl.yaml
+    hash: c0ea7cc439e32673
+    modified: false
+  - path: .bmad-core/templates/threat-model-tmpl.yaml
+    hash: 5f534d45a9b6e7a4
+    modified: false
+  - path: .bmad-core/templates/story-tmpl.yaml
+    hash: 950afb04da024b21
+    modified: false
+  - path: .bmad-core/templates/security-test-cases-tmpl.yaml
+    hash: acc1cf6035552b38
+    modified: false
+  - path: .bmad-core/templates/security-consolidated-report-tmpl.yaml
+    hash: 927fc6a29d60a2aa
+    modified: false
+  - path: .bmad-core/templates/security-code-review-tmpl.yaml
+    hash: f0d3cb5c5a3a9fbc
+    modified: false
+  - path: .bmad-core/templates/security-architecture-tmpl.yaml
+    hash: 7bb6f815b46206d4
+    modified: false
+  - path: .bmad-core/templates/project-brief-tmpl.yaml
+    hash: cd4b269b0722c361
+    modified: false
+  - path: .bmad-core/templates/prd-tmpl.yaml
+    hash: 2b082af71b872d2d
+    modified: false
+  - path: .bmad-core/templates/nist-ssdf-code-validation-tmpl.yaml
+    hash: 01da0f891f63794e
+    modified: false
+  - path: .bmad-core/templates/nist-ssdf-assessment-tmpl.yaml
+    hash: bfbd601c12b83fc3
+    modified: false
+  - path: .bmad-core/templates/mitigations-tmpl.yaml
+    hash: 43bbe54133516256
+    modified: false
+  - path: .bmad-core/templates/market-research-tmpl.yaml
+    hash: 949ab9c006cfaf6f
+    modified: false
+  - path: .bmad-core/templates/fullstack-architecture-tmpl.yaml
+    hash: ef0aea75ac4946ee
+    modified: false
+  - path: .bmad-core/templates/front-end-spec-tmpl.yaml
+    hash: ceb07429c009df27
+    modified: false
+  - path: .bmad-core/templates/front-end-architecture-tmpl.yaml
+    hash: 337c8a6c1dd75446
+    modified: false
+  - path: .bmad-core/templates/dread-assessment-tmpl.yaml
+    hash: d73d2c569ff2a903
+    modified: false
+  - path: .bmad-core/templates/competitor-analysis-tmpl.yaml
+    hash: b58b108e14dac04b
+    modified: false
+  - path: .bmad-core/templates/brownfield-prd-tmpl.yaml
+    hash: bada70d6cd246e8f
+    modified: false
+  - path: .bmad-core/templates/brownfield-architecture-tmpl.yaml
+    hash: a153d1eca84ff783
+    modified: false
+  - path: .bmad-core/templates/brainstorming-output-tmpl.yaml
+    hash: e4261b61b915ee9b
+    modified: false
+  - path: .bmad-core/templates/attack-tree-tmpl.yaml
+    hash: 7dfbedf3a7b57927
+    modified: false
+  - path: .bmad-core/templates/architecture-tmpl.yaml
+    hash: df1b0cec27c7e861
+    modified: false
+  - path: .bmad-core/docs/nist-ssdf-agent-distribution.md
+    hash: 341b63ec788afa6a
+    modified: false
+  - path: .bmad-core/data/threat-intelligence.md
+    hash: ef4a9e4bc3d141b3
+    modified: false
+  - path: .bmad-core/data/technical-preferences.md
+    hash: 6530bed845540b0d
+    modified: false
+  - path: .bmad-core/data/security-standards-ref.md
+    hash: 9e6ac0d281daab5d
+    modified: false
+  - path: .bmad-core/data/security-methodologies.md
+    hash: 177559c45ece1663
+    modified: false
+  - path: .bmad-core/data/nist-ssdf-practices.md
+    hash: 2466d0bea6d2bcd0
+    modified: false
+  - path: .bmad-core/data/elicitation-methods.md
+    hash: 6c4d7716010e8d55
+    modified: false
+  - path: .bmad-core/data/compliance-frameworks.md
+    hash: db22b1a5ffa49689
+    modified: false
+  - path: .bmad-core/data/brainstorming-techniques.md
+    hash: 2dae43f4464f1ad2
+    modified: false
+  - path: .bmad-core/data/bmad-kb.md
+    hash: fd0d443bd30753c5
+    modified: false
+  - path: .bmad-core/checklists/story-draft-checklist.md
+    hash: 0afc9941d2cdc7df
+    modified: false
+  - path: .bmad-core/checklists/story-dod-checklist.md
+    hash: cd7469d4367de7a0
+    modified: false
+  - path: .bmad-core/checklists/security-implementation-checklist.md
+    hash: 6172524b9ec9d8e6
+    modified: false
+  - path: .bmad-core/checklists/security-deployment-checklist.md
+    hash: 39c5cf9e349b5d4f
+    modified: false
+  - path: .bmad-core/checklists/security-architecture-checklist.md
+    hash: adc77c9414f25a95
+    modified: false
+  - path: .bmad-core/checklists/po-master-checklist.md
+    hash: 89d2dc785aa0e8a7
+    modified: false
+  - path: .bmad-core/checklists/pm-checklist.md
+    hash: 139209e205a92628
+    modified: false
+  - path: .bmad-core/checklists/compliance-checklist.md
+    hash: 64118e489357444e
+    modified: false
+  - path: .bmad-core/checklists/code-security-checklist.md
+    hash: aab123080a380f44
+    modified: false
+  - path: .bmad-core/checklists/change-checklist.md
+    hash: 3c49c8f5ac96b63c
+    modified: false
+  - path: .bmad-core/checklists/architect-checklist.md
+    hash: 99f4655b9ff99dd1
+    modified: false
+  - path: .bmad-core/agents/vulnerabilityTech.md
+    hash: 69f19e4dfc507b11
+    modified: false
+  - path: .bmad-core/agents/ux-expert.md
+    hash: 6977961373e2e471
+    modified: false
+  - path: .bmad-core/agents/sm.md
+    hash: 0d6fd5f7063f485a
+    modified: false
+  - path: .bmad-core/agents/security.md
+    hash: 4409c7e66ffc4650
+    modified: false
+  - path: .bmad-core/agents/qa.md
+    hash: 70aa18cc0f26704e
+    modified: false
+  - path: .bmad-core/agents/po.md
+    hash: 6cb654b8b20f0f14
+    modified: false
+  - path: .bmad-core/agents/pm.md
+    hash: 2aa0ad1d378a6c03
+    modified: false
+  - path: .bmad-core/agents/dev.md
+    hash: 9c566d0508e49ec2
+    modified: false
+  - path: .bmad-core/agents/bmad-orchestrator.md
+    hash: 1ad7981f12ca4987
+    modified: false
+  - path: .bmad-core/agents/bmad-master.md
+    hash: e657e2dc82267a46
+    modified: false
+  - path: .bmad-core/agents/architect.md
+    hash: 8b78cc043099846f
+    modified: false
+  - path: .bmad-core/agents/analyst.md
+    hash: c8469ed88139158a
+    modified: false
+  - path: .bmad-core/agent-teams/team-no-ui.yaml
+    hash: 8e0b0eba99b92d76
+    modified: false
+  - path: .bmad-core/agent-teams/team-ide-minimal.yaml
+    hash: 600b6795116fd74e
+    modified: false
+  - path: .bmad-core/agent-teams/team-fullstack.yaml
+    hash: 343a483c815fa9b6
+    modified: false
+  - path: .bmad-core/agent-teams/team-all.yaml
+    hash: abbb0c0eaf28b894
+    modified: false
+  - path: .software-assurance/templates/python-vuln-scan-tmpl.yaml
+    hash: a538175e692501d8
+    modified: false
+  - path: .software-assurance/data/python-secure-coding.md
+    hash: c76479e7141bb6c5
+    modified: false
+  - path: .software-assurance/data/python-common-vulns.md
+    hash: dd320c00b616098b
+    modified: false
+  - path: .software-assurance/data/code-quality-standards.md
+    hash: 5a1ebe4e3b753893
+    modified: false
+  - path: .software-assurance/config.yaml
+    hash: c1baebc30434f506
+    modified: false
