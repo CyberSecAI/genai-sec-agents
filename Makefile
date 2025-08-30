@@ -11,18 +11,21 @@ install:	## Install Python dependencies
 	pip install -r requirements.txt
 
 validate:	## Validate all Rule Cards
-	python app/tools/validate_cards.py app/rule_cards/
+	python3 app/tools/validate_cards.py app/rule_cards/
 
 test:		## Run all tests
-	pytest tests/ -v
+	python3 tests/test_compiler_simple.py
+	python3 app/tools/validate_cards.py app/rule_cards/
 
 clean:		## Clean build artifacts
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
 	rm -rf app/dist/agents/*.json
 
-build:		## Build agent packages (placeholder)
-	@echo "Agent compilation not yet implemented"
+compile:	## Compile Rule Cards into agent packages
+	python3 app/tools/compile_agents.py --verbose
+
+build: validate compile	## Validate Rule Cards and compile agent packages
 
 lint:		## Run code linting
 	@echo "Linting not yet configured"

@@ -1,0 +1,72 @@
+version: "1.0"
+description: "Agent configuration manifest defining specialized security agents and their Rule Card associations"
+
+agents:
+  - name: "secrets-specialist"
+    description: "Specialized in detecting and preventing hardcoded secrets across applications"
+    rule_cards:
+      - "secrets/*.yml"
+    output_file: "secrets-specialist.json"
+    domains:
+      - "API key security"
+      - "Database credential protection"
+      - "JWT signing secret security"
+      - "Cloud service credential security"
+
+  - name: "web-security-specialist"
+    description: "Web application security specialist covering cookies and JWT implementation"
+    rule_cards:
+      - "cookies/*.yml"
+      - "jwt/*.yml"
+    output_file: "web-security-specialist.json"
+    domains:
+      - "Secure cookie configuration"
+      - "JWT signature verification"
+      - "JWT algorithm validation"
+      - "JWT key management"
+      - "JWT expiration handling"
+
+  - name: "genai-security-specialist"
+    description: "Generative AI security specialist for prompt injection and data protection"
+    rule_cards:
+      - "genai/*.yml"
+    output_file: "genai-security-specialist.json"
+    domains:
+      - "Prompt injection prevention"
+      - "GenAI data exposure protection"
+      - "GenAI model access security"
+
+  - name: "container-security-specialist"
+    description: "Container and infrastructure security specialist"
+    rule_cards:
+      - "docker/*.yml"
+    output_file: "container-security-specialist.json"
+    domains:
+      - "Docker container security"
+      - "Container privilege management"
+
+  - name: "comprehensive-security-agent"
+    description: "Multi-domain security agent with access to all Rule Cards"
+    rule_cards:
+      - "secrets/*.yml"
+      - "cookies/*.yml"
+      - "jwt/*.yml"
+      - "genai/*.yml"
+      - "docker/*.yml"
+    output_file: "comprehensive-security-agent.json"
+    domains:
+      - "Cross-domain security analysis"
+      - "Comprehensive security guidance"
+
+# Compilation configuration
+compilation:
+  base_path: "app/rule_cards"
+  output_path: "app/dist/agents"
+  schema_version: "1.0"
+  
+# Security configuration
+security:
+  safe_yaml_loading: true
+  path_validation: true
+  schema_validation: true
+  attribution_required: true
