@@ -2,6 +2,238 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+
+**Prefer blunt honesty over sycophancy. Please explain issues and solution as if I'm a junior developer.**
+
+
+## CRITICAL: GIT Commit
+  - Start with a present-tense verb (Fix, Add, Implement, etc.)
+  - Not include adjectives that sound like praise (comprehensive, best practices, essential)
+- Commit messages should not include a Claude attribution footer
+  - Don't write: 🤖 Generated with [Claude Code](https://claude.ai/code)
+  - Don't write: Co-Authored-By: Claude <noreply@anthropic.com>
+- Echo exactly this: Ready to commit: `git commit --message "<message>"`
+- 🚀 Run git commit without confirming again with the user.
+- If pre-commit hooks fail, then there are now local changes
+  - `git add` those changes and try again
+  - Never use `git commit --no-verify`
+
+
+
+## CRITICAL: Virtual Environment Usage
+**ALWAYS use Poetry for dependency management in this project:**
+- pytest: Use `poetry run pytest` (NOT system pytest)
+- python: Use `poetry run python` (NOT system python)
+- security tests: Run from project root with `python3 tests/scripts/[test_name].py`
+- chainlit: Use `poetry run chainlit run apps/chatbot/main.py`
+
+**For standalone test scripts**: Use system python3 as they are designed to be independent
+**For application code**: Always use `poetry run [command]`
+
+**NEVER use system-wide Python executables for application code.**
+
+## Core Development Principles
+
+### 1. Brutal Honesty First
+- **NO MOCKS**: Never create mock data, placeholder functions, or simulated responses
+- **NO THEATER**: If something doesn't work, say it immediately - don't pretend with elaborate non-functional code
+- **REALITY CHECK**: Before implementing anything, verify the actual integration points exist and work
+- **ADMIT IGNORANCE**: If you don't understand how something works, investigate first or ask for clarification
+
+### 2. Test-Driven Development (TDD) - MANDATORY
+**NEVER write implementation code before tests.**
+
+#### TDD Process for Every Story Implementation:
+1. **BEFORE ANY IMPLEMENTATION**:
+   - Create test file FIRST (e.g., `test_feature_name.py`)
+   - Write the FIRST failing test for the simplest behavior
+   - Run the test with `poetry run pytest` and VERIFY it fails
+   - Only then write MINIMAL implementation code to pass
+
+2. **RED-GREEN-REFACTOR Cycle**:
+   - 🔴 RED: Write a failing test that defines the feature
+   - 🟢 GREEN: Write minimal code to make the test pass
+   - 🔵 REFACTOR: Clean up only after tests are green
+   - **Never skip the red-green-refactor cycle**
+
+3. **Story Implementation Order**:
+   ```
+   1. Read story requirements
+   2. Break down into small testable behaviors
+   3. Create test file
+   4. Write first failing test
+   5. Run test (see it fail) - use poetry run pytest
+   6. Implement minimal code
+   7. Run test (see it pass) - use poetry run pytest
+   8. Refactor if needed
+   9. Repeat 4-9 for next behavior
+   ```
+
+#### TDD Example - How to Start Every Story:
+```python
+# STEP 1: Create test file FIRST
+# test_loan_configuration.py
+
+def test_can_create_loan_configuration():
+    """Test creating a basic loan configuration."""
+    # This test MUST fail first because LoanConfiguration doesn't exist yet
+    loan = LoanConfiguration(
+        loan_number=1,
+        amount=100000,
+        interest_rate=6.5,
+        term_months=360
+    )
+    assert loan.loan_number == 1
+
+# STEP 2: Run test - see it fail with "NameError: name 'LoanConfiguration' is not defined"
+# ALWAYS use: poetry run pytest test_loan_configuration.py
+
+# STEP 3: Create minimal implementation to pass
+# loan_configuration.py
+class LoanConfiguration:
+    def __init__(self, loan_number, amount, interest_rate, term_months):
+        self.loan_number = loan_number
+
+# STEP 4: Run test - see it pass
+# STEP 5: Write next failing test for next behavior
+```
+
+#### What Makes a Good TDD Test:
+1. **Tests behavior, not implementation** - Test WHAT it does, not HOW
+2. **One assertion per test** - Each test verifies ONE thing
+3. **Descriptive test names** - `test_loan_with_zero_interest_rate_calculates_zero_interest()`
+4. **Arrange-Act-Assert pattern** - Setup, Execute, Verify
+5. **Fast and isolated** - No external dependencies, runs in milliseconds
+6. **Fails for the right reason** - Verify the error message when test fails
+
+
+### 3. One Feature at a Time
+- **SINGLE FOCUS**: Complete one feature entirely before moving to the next
+- **DEFINITION OF DONE**:
+  - Tests written and passing
+  - Code working in real environment
+  - Integration verified with actual system
+  - Documentation updated
+- **NO FEATURE CREEP**: Resist adding "nice to have" additions until current feature is complete
+
+### 4. Break Things Internally
+- **FAIL FAST**: Make code fail immediately when assumptions are wrong
+- **AGGRESSIVE VALIDATION**: Check every input, every integration point
+- **LOUD ERRORS**: When something breaks, make it obvious with clear error messages
+- **TEST EDGE CASES**: Deliberately try to break your own code before calling it done
+
+### 5. Optimization After Working
+- **MAKE IT WORK**: First priority is functioning code
+- **MAKE IT RIGHT**: Clean up and refactor with tests as safety net
+- **MAKE IT FAST**: Only optimize after profiling shows real bottlenecks
+- **MEASURE FIRST**: Never optimize based on assumptions
+
+### 6. Implement per the original specification
+e.g. if the  preferred or specified component is not available then install it, rather than creating an alternative solution.
+
+#### BAD EXAMPLE. DON'T DO THIS!
+I see the issue - psycopg2 isn't actually available in the poetry environment even though it shows in poetry show. Let me check why and provide a solution that works with your current environment. Let me create a practical database setup guide instead.
+
+#### GOOD EXAMPLE. DO THIS!
+why not load psycopg2 if this is the preferred option
+
+You're absolutely right! If PostgreSQL+pgvector is the preferred architecture choice (per the database ADR), we should properly install and use psycopg2. Let me fix the missing dependencies and get the real database integration working.
+
+## Implementation Checklist
+
+### Before starting any feature:
+- [ ] Understand the ACTUAL integration (not what you think it should be)
+- [ ] Write tests that verify real behavior (not mocked behavior)
+- [ ] Identify all dependencies and verify they exist
+- [ ] Check if similar code exists to learn from
+
+### During implementation:
+- [ ] Run tests frequently (every few lines of code)
+- [ ] Test in real environment, not just unit tests
+- [ ] When stuck, investigate the actual system, don't guess
+- [ ] Keep changes small and focused
+
+### After implementation:
+- [ ] Verify it works with the real system (no mocks!)
+- [ ] Run all related tests
+- [ ] Update documentation with what ACTUALLY works
+- [ ] Clean up any experimental code
+
+## CRITICAL DOCUMENTATION WORKFLOW
+
+### During Story Implementation:
+1. **START of each story**: 
+   - Add an entry to `/docs/CURATION_NOTES.md` with story ID
+   - Create TodoWrite list with TDD tasks:
+     - [ ] Create test file for first feature
+     - [ ] Write first failing test
+     - [ ] Run test and see it fail
+     - [ ] Implement minimal code to pass
+     - [ ] Refactor if needed
+     - [ ] Write next failing test
+   - See bmad-agent/personas.sm.ide.md personal for documentation workflow responsibilities
+
+2. **DURING implementation**: 
+   - Document key decisions and technical debt in CURATION_NOTES.md
+   - Mark each TDD cycle in TodoWrite as completed
+
+3. **AFTER completing implementation**: Before marking story as done, update CURATION_NOTES.md with:
+   - Final decisions made
+   - Technical debt incurred
+   - Lessons learned
+   - Architectural notes
+
+### After Epic/Feature Completion:
+1. **EXTRACT** insights from CURATION_NOTES.md to:
+   - `/docs/LESSONS_LEARNED.md` - Add dated entries with tags
+   - `/docs/README.md` - Update if architecture changed
+   - `/docs/TASKS.md` - Add new maintenance tasks
+2. **ARCHIVE** implementation documents to `/docs/archive/[epic-name]/`
+3. **DELETE** temporary entries from CURATION_NOTES.md
+
+### Documentation Checklist Commands:
+- Use `*checklist sm` to see Scrum Master documentation tasks
+- Use `*doc-status` to check documentation compliance
+- Use `*archive-docs [epic-name]` to archive implementation docs
+
+## MCP Server Instructions
+When implementing ALWAYS use sequentialthinking and decisionframework. When fixing ALWAYS use debuggingapproach.
+
+## Red Flags to Avoid
+🚫 Creating elaborate structures without testing integration
+🚫 Writing 100+ lines without running anything
+🚫 Assuming how external systems work
+🚫 Building "comprehensive" solutions before basic functionality
+🚫 Implementing multiple features simultaneously
+🚫 Writing implementation before tests
+🚫 Writing tests after implementation
+🚫 Skip running tests to see them fail first
+
+## Reality Checks
+Ask yourself frequently:
+- "Have I tested this with the real system?"
+- "Am I building what's needed or what I think is cool?"
+- "Does this actually integrate with existing code?"
+- "Am I hiding problems with elaborate abstractions?"
+- "Would a simpler solution work just as well?"
+- "Did I write the test first and see it fail?"
+
+## When You Get Stuck
+1. **Stop coding** - More code won't fix understanding problems
+2. **Investigate the real system** - Use debugger, logging, inspection
+3. **Write a simpler test** - Break down the problem
+4. **Ask for clarification** - Don't guess about requirements
+5. **Check existing code** - The answer might already exist
+
+## Auto-Approved Commands
+Always check whether commands you want to run are auto-approved by referencing `/.bmad-core/config/auto-approved-commands.md`
+
+## Remember
+The goal is **WORKING CODE** that **ACTUALLY INTEGRATES** with the real system. Everything else is secondary. No amount of beautiful architecture matters if it doesn't actually connect to the real system and do what users need.
+
+**Test first. Make it work. Make it right. Make it fast.**
+
+
 ## Repository Overview
 
 This is the **GenAI Security Agents** repository, a collection of AI-powered security tools and frameworks with the primary focus on the CWE ChatBot project. The repository contains defensive security tools, documentation, and agent frameworks for cybersecurity professionals.
