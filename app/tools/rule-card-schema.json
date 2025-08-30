@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Rule Card Schema",
+  "type": "object",
+  "required": ["id", "title", "severity", "scope", "requirement", "do", "dont", "detect", "verify", "refs"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]+-[A-Z0-9]+-[0-9]{3}$",
+      "description": "Unique identifier (e.g., DOCKER-USER-001)"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100,
+      "description": "Concise, descriptive title"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "scope": {
+      "type": "string",
+      "description": "Context where rule applies"
+    },
+    "requirement": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Normative statement of requirement"
+    },
+    "do": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "dont": {
+      "type": "array", 
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "detect": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "verify": {
+      "type": "object",
+      "required": ["tests"],
+      "properties": {
+        "tests": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "refs": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": {
+          "type": "array", 
+          "items": {"type": "string"}
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,48 @@
+id: COOKIES-HTTPONLY-001
+title: "Session and security-sensitive cookies must use HttpOnly attribute"
+severity: high
+scope: web-applications
+requirement: "All cookies containing session identifiers, authentication tokens, or other security-sensitive data must include the HttpOnly attribute to prevent client-side script access and mitigate XSS-based cookie theft."
+do:
+  - "Set HttpOnly attribute on all session cookies"
+  - "Apply HttpOnly to authentication and authorization cookies"
+  - "Use HttpOnly for cookies containing sensitive user data or preferences"
+  - "Configure web framework cookie settings to default HttpOnly to true"
+  - "Validate HttpOnly attribute is present in cookie security tests"
+  - "Document cookie security requirements for development teams"
+dont:
+  - "Do not omit HttpOnly attribute from session management cookies"
+  - "Do not create security-sensitive cookies accessible to JavaScript"
+  - "Do not rely solely on CSRF tokens without HttpOnly session cookies"
+  - "Do not use HttpOnly for functional cookies that legitimately need client-side access"
+  - "Do not assume HttpOnly prevents all cookie-based attacks"
+detect:
+  semgrep:
+    - "javascript.express.security.express-cookie-settings.express-cookie-no-httponly"
+    - "python.flask.security.insecure-cookies.flask-cookie-no-httponly"
+    - "java.servlet.security.httponly-cookie"
+    - "php.security.cookie-not-httponly"
+  codeql:
+    - "cookie-without-httponly"
+    - "insecure-cookie-configuration"
+verify:
+  tests:
+    - "Verify all session cookies include HttpOnly attribute in Set-Cookie headers"
+    - "Test that HttpOnly cookies are not accessible via document.cookie in browser"
+    - "Confirm authentication cookies cannot be read by malicious JavaScript"
+    - "Validate cookie security configuration in framework settings"
+    - "Test XSS attack scenarios cannot access HttpOnly session cookies"
+refs:
+  cwe:
+    - "CWE-1004"
+    - "CWE-79"
+    - "CWE-200"
+  asvs:
+    - "V3.4.1"
+    - "V3.4.2"
+  owasp:
+    - "A03:2021"
+    - "A05:2021"
+  standards:
+    - "RFC 6265"
+    - "OWASP Session Management Cheat Sheet"

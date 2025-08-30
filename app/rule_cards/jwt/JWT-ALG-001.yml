@@ -1,0 +1,50 @@
+id: JWT-ALG-001
+title: "JWT algorithm claims must be validated against allowed algorithms"
+severity: high
+scope: jwt-implementations
+requirement: "JWT verification must validate that the algorithm specified in the token header matches an explicitly allowed list of secure algorithms, preventing algorithm confusion attacks."
+do:
+  - "Maintain an explicit allowlist of permitted JWT algorithms"
+  - "Validate JWT algorithm header against the allowed algorithms list"
+  - "Use asymmetric algorithms (RS256, ES256) for distributed systems"
+  - "Reject tokens with algorithm mismatches or unexpected algorithms"
+  - "Implement algorithm-specific key validation and verification"
+  - "Document approved algorithms and their use cases for development teams"
+dont:
+  - "Do not accept JWT tokens with 'none' algorithm"
+  - "Do not allow algorithm switching without explicit validation"
+  - "Do not use weak or deprecated algorithms (HS256 with shared secrets in distributed systems)"
+  - "Do not trust algorithm claims without verification against allowed list"
+  - "Do not implement algorithm detection based solely on token header"
+detect:
+  semgrep:
+    - "javascript.jsonwebtoken.security.jwt-algorithm-none"
+    - "python.jwt.security.jwt-none-algorithm"
+    - "java.jwt.security.jwt-weak-algorithm"
+    - "generic.jwt.security.algorithm-confusion"
+  codeql:
+    - "jwt-algorithm-confusion"
+    - "jwt-none-algorithm"
+    - "weak-jwt-algorithm"
+verify:
+  tests:
+    - "Verify tokens with 'none' algorithm are rejected"
+    - "Test that only explicitly allowed algorithms are accepted"
+    - "Confirm algorithm confusion attacks are prevented"
+    - "Validate proper error handling for unsupported algorithms"
+    - "Test algorithm validation occurs before signature verification"
+refs:
+  cwe:
+    - "CWE-347"
+    - "CWE-327"
+    - "CWE-345"
+  asvs:
+    - "V6.2.1"
+    - "V6.2.2"
+    - "V3.1.1"
+  owasp:
+    - "A02:2021"
+  standards:
+    - "RFC 7515"
+    - "RFC 7518"
+    - "OWASP JWT Security Cheat Sheet"

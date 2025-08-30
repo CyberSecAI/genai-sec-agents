@@ -1,0 +1,59 @@
+id: GENAI-DATA-001
+title: "GenAI applications must protect sensitive data from exposure through model outputs"
+severity: critical
+scope: genai-applications
+requirement: "Generative AI applications must implement data loss prevention controls to prevent sensitive information, personal data, or confidential business information from being exposed through model responses or training data."
+do:
+  - "Implement data classification and labeling for sensitive information"
+  - "Use data sanitization and redaction before processing with GenAI models"
+  - "Apply output filtering to detect and block sensitive data in responses"
+  - "Implement access controls and data governance for GenAI training data"
+  - "Use differential privacy techniques where appropriate for model training"
+  - "Monitor and audit GenAI outputs for data leakage incidents"
+dont:
+  - "Do not include sensitive data in GenAI training datasets without protection"
+  - "Do not process personal information without proper consent and controls"
+  - "Do not ignore data classification when designing GenAI workflows"
+  - "Do not allow unrestricted access to GenAI models with sensitive training data"
+  - "Do not skip output validation that could expose confidential information"
+  - "Do not store or log sensitive data processed by GenAI systems"
+detect:
+  semgrep:
+    - "generic.genai.security.sensitive-data-exposure"
+    - "python.genai.security.pii-in-prompts"
+    - "javascript.genai.security.data-leakage"
+    - "generic.secrets.hardcoded-sensitive-data"
+  trufflehog:
+    - "Personally Identifiable Information"
+    - "Financial Data"
+    - "Health Records"
+  codeql:
+    - "sensitive-data-exposure"
+    - "uncontrolled-data-used-in-path-expression"
+verify:
+  tests:
+    - "Verify sensitive data is detected and redacted before GenAI processing"
+    - "Test that PII and confidential data do not appear in model outputs"
+    - "Confirm data access controls prevent unauthorized GenAI model usage"
+    - "Validate output filtering blocks sensitive information leakage"
+    - "Test data governance policies are enforced in GenAI workflows"
+refs:
+  cwe:
+    - "CWE-200"
+    - "CWE-209"
+    - "CWE-532"
+    - "CWE-359"
+  asvs:
+    - "V1.7.1"
+    - "V1.7.2"
+    - "V8.3.1"
+    - "V8.3.4"
+  owasp:
+    - "LLM02:2023"
+    - "A01:2021"
+    - "A09:2021"
+  standards:
+    - "GDPR Article 25"
+    - "CCPA Section 1798.100"
+    - "NIST Privacy Framework"
+    - "ISO/IEC 27701:2019"

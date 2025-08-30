@@ -1,0 +1,55 @@
+id: JWT-KEY-001
+title: "JWT signing and verification keys must be securely managed"
+severity: critical
+scope: jwt-implementations
+requirement: "JWT signing keys must be generated with sufficient entropy, stored securely, rotated regularly, and verification keys must be obtained through secure channels with proper validation."
+do:
+  - "Generate JWT signing keys using cryptographically secure random number generators"
+  - "Store JWT signing keys in dedicated key management systems or secure storage"
+  - "Implement key rotation procedures with overlap periods for verification"
+  - "Use key identifiers (kid) to support multiple active keys during rotation"
+  - "Validate verification keys against trusted key sources (JWKS endpoints with HTTPS)"
+  - "Implement key revocation mechanisms for compromised keys"
+dont:
+  - "Do not use predictable or weak keys for JWT signing"
+  - "Do not store JWT signing keys in application configuration or source code"
+  - "Do not reuse JWT keys across different environments or applications"
+  - "Do not fetch verification keys from untrusted or unencrypted sources"
+  - "Do not skip key validation when retrieving keys from external sources"
+  - "Do not use the same key indefinitely without rotation"
+detect:
+  semgrep:
+    - "javascript.jsonwebtoken.security.jwt-hardcode-key"
+    - "python.jwt.security.jwt-hardcode-key"
+    - "java.jwt.security.jwt-hardcoded-key"
+    - "generic.jwt.security.weak-key-generation"
+  trufflehog:
+    - "JWT Signing Key"
+    - "Private Key"
+  codeql:
+    - "hardcoded-jwt-key"
+    - "weak-jwt-key-generation"
+verify:
+  tests:
+    - "Verify JWT signing keys are not present in source code or configuration"
+    - "Test key rotation procedures maintain token validation capability"
+    - "Confirm verification keys are retrieved securely with proper validation"
+    - "Validate key identifier (kid) handling supports multiple active keys"
+    - "Test key revocation procedures properly invalidate compromised keys"
+refs:
+  cwe:
+    - "CWE-321"
+    - "CWE-798"
+    - "CWE-330"
+    - "CWE-295"
+  asvs:
+    - "V6.1.1"
+    - "V6.4.1"
+    - "V6.4.2"
+    - "V3.1.1"
+  owasp:
+    - "A02:2021"
+  standards:
+    - "RFC 7517"
+    - "RFC 7519"
+    - "NIST SP 800-57"

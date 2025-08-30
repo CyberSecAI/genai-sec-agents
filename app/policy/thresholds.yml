@@ -1,0 +1,29 @@
+# Policy thresholds for CI gates
+# This file defines the threshold levels for different severity findings
+
+# Security scanning thresholds
+security:
+  fail_on_critical: true
+  fail_on_high: true
+  fail_on_medium: false
+  fail_on_low: false
+
+# Maximum allowed findings by severity
+max_findings:
+  critical: 0
+  high: 0
+  medium: 10
+  low: 50
+
+# Tool-specific configurations
+tools:
+  semgrep:
+    enabled: true
+    timeout_seconds: 300
+  
+  hadolint:
+    enabled: true
+    
+  trufflehog:
+    enabled: true
+    verify: true

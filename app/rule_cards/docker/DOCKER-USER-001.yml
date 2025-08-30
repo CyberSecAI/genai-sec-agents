@@ -1,0 +1,31 @@
+id: DOCKER-USER-001
+title: "Docker containers must not run as root user"
+severity: high
+scope: dockerfile
+requirement: "Container processes must run under a non-root user account to limit privilege escalation risks."
+do:
+  - "Use USER directive to specify non-root user"
+  - "Create dedicated application user in Dockerfile"
+  - "Set appropriate file permissions for non-root user"
+dont:
+  - "Do not run processes as root (UID 0)"
+  - "Do not rely on runtime user switching"
+  - "Do not use privileged containers unnecessarily"
+detect:
+  semgrep:
+    - "dockerfile.security.missing-user"
+    - "dockerfile.security.user-root"
+  hadolint:
+    - "DL3002"
+verify:
+  tests:
+    - "Verify USER directive is present and not root"
+    - "Test container runs with non-root UID"
+    - "Validate file permissions work for specified user"
+refs:
+  cis:
+    - "4.1"
+  nist:
+    - "CM-2"
+  owasp:
+    - "A06:2021"

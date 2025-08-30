@@ -1,0 +1,56 @@
+id: GENAI-MODEL-001
+title: "GenAI model access and inference must be secured with appropriate authentication and authorization"
+severity: high
+scope: genai-applications
+requirement: "Generative AI model access must implement robust authentication, authorization, and usage controls to prevent unauthorized access, model abuse, and ensure compliance with usage policies."
+do:
+  - "Implement strong authentication for GenAI model API access"
+  - "Apply role-based access control (RBAC) for different model capabilities"
+  - "Use API keys, tokens, or certificates for model authentication"
+  - "Implement usage quotas and rate limiting per user or application"
+  - "Log and monitor all GenAI model access and usage patterns"
+  - "Apply principle of least privilege for model access permissions"
+dont:
+  - "Do not allow anonymous or unauthenticated access to GenAI models"
+  - "Do not use shared credentials for GenAI model access across users"
+  - "Do not implement weak or easily guessable API keys"
+  - "Do not skip authorization checks for sensitive model operations"
+  - "Do not allow unlimited model usage without proper controls"
+  - "Do not expose internal model endpoints without security controls"
+detect:
+  semgrep:
+    - "generic.genai.security.weak-model-authentication"
+    - "python.genai.security.missing-api-auth"
+    - "javascript.genai.security.hardcoded-api-keys"
+    - "generic.genai.security.unauthorized-model-access"
+  codeql:
+    - "missing-authentication-for-critical-function"
+    - "weak-authentication-protocol"
+    - "hardcoded-credentials"
+verify:
+  tests:
+    - "Verify GenAI model access requires valid authentication"
+    - "Test that unauthorized users cannot access restricted models"
+    - "Confirm rate limiting and quotas are enforced per user/application"
+    - "Validate proper authorization for different model capabilities"
+    - "Test that API keys and tokens are properly validated and rotated"
+refs:
+  cwe:
+    - "CWE-287"
+    - "CWE-306"
+    - "CWE-284"
+    - "CWE-798"
+  asvs:
+    - "V2.1.1"
+    - "V4.1.1"
+    - "V4.2.1"
+    - "V11.1.1"
+  owasp:
+    - "LLM04:2023"
+    - "A07:2021"
+    - "A01:2021"
+  standards:
+    - "NIST Cybersecurity Framework"
+    - "ISO/IEC 27001:2022"
+    - "OpenAI Usage Policies"
+    - "OWASP API Security Top 10"

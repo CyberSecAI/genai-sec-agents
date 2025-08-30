@@ -1,0 +1,46 @@
+id: COOKIES-SAMESITE-001
+title: "Authentication and session cookies must use appropriate SameSite attribute"
+severity: medium
+scope: web-applications
+requirement: "Session management and authentication cookies must include the SameSite attribute with appropriate values (Strict, Lax, or None with Secure) to prevent cross-site request forgery attacks."
+do:
+  - "Set SameSite=Strict for highly sensitive cookies that don't need cross-site access"
+  - "Use SameSite=Lax for session cookies that need some cross-site functionality"
+  - "Apply SameSite=None with Secure for cookies requiring cross-site access"
+  - "Configure SameSite policy based on application's cross-origin requirements"
+  - "Implement SameSite as part of comprehensive CSRF defense strategy"
+  - "Test SameSite behavior with application's legitimate cross-origin workflows"
+dont:
+  - "Do not omit SameSite attribute from authentication or session cookies"
+  - "Do not use SameSite=None without the Secure attribute"
+  - "Do not rely solely on SameSite for CSRF protection"
+  - "Do not use SameSite=Strict for cookies needed in legitimate cross-site scenarios"
+  - "Do not assume older browsers support SameSite attribute"
+detect:
+  semgrep:
+    - "javascript.express.security.express-cookie-settings.express-cookie-no-samesite"
+    - "python.flask.security.insecure-cookies.flask-cookie-no-samesite"
+    - "java.servlet.security.samesite-cookie"
+    - "php.security.cookie-no-samesite"
+  codeql:
+    - "cookie-without-samesite"
+    - "insecure-samesite-configuration"
+verify:
+  tests:
+    - "Verify SameSite attribute is present on session and authentication cookies"
+    - "Test cross-site request scenarios respect SameSite policy"
+    - "Confirm SameSite=None cookies also include Secure attribute"
+    - "Validate cookie behavior in cross-origin iframe and AJAX scenarios"
+    - "Test CSRF attack mitigation with SameSite cookie configuration"
+refs:
+  cwe:
+    - "CWE-352"
+    - "CWE-346"
+  asvs:
+    - "V3.4.1"
+    - "V4.2.2"
+  owasp:
+    - "A01:2021"
+  standards:
+    - "RFC 6265bis"
+    - "OWASP Cross-Site Request Forgery Prevention Cheat Sheet"

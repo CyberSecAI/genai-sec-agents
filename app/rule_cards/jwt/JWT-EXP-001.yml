@@ -1,0 +1,47 @@
+id: JWT-EXP-001
+title: "JWT tokens must include expiration claims and be validated"
+severity: high
+scope: jwt-implementations
+requirement: "All JWT tokens must include expiration (exp) claims with appropriate time limits, and applications must validate expiration before accepting tokens to prevent indefinite token usage."
+do:
+  - "Include 'exp' claim in all JWT tokens with reasonable expiration times"
+  - "Validate JWT expiration before processing token claims"
+  - "Set appropriate expiration based on token purpose (short for access, longer for refresh)"
+  - "Implement token refresh mechanisms before expiration"
+  - "Log and monitor expired token usage attempts"
+  - "Use synchronized time sources for expiration validation"
+dont:
+  - "Do not create JWT tokens without expiration claims"
+  - "Do not accept expired JWT tokens in authorization decisions"
+  - "Do not set excessively long expiration times (>24 hours for access tokens)"
+  - "Do not skip expiration validation during token verification"
+  - "Do not rely on client-side expiration checking alone"
+detect:
+  semgrep:
+    - "javascript.jsonwebtoken.security.jwt-missing-expiration"
+    - "python.jwt.security.jwt-missing-exp"
+    - "java.jwt.security.jwt-no-expiration"
+    - "generic.jwt.security.missing-expiration-claim"
+  codeql:
+    - "jwt-without-expiration"
+    - "jwt-expiration-not-validated"
+verify:
+  tests:
+    - "Verify all generated JWT tokens contain 'exp' claim"
+    - "Test that expired JWT tokens are rejected during validation"
+    - "Confirm appropriate expiration times based on token type and use case"
+    - "Validate token refresh mechanisms work before expiration"
+    - "Test system behavior with tokens having past expiration dates"
+refs:
+  cwe:
+    - "CWE-613"
+    - "CWE-287"
+  asvs:
+    - "V3.1.3"
+    - "V3.3.1"
+    - "V3.3.3"
+  owasp:
+    - "A07:2021"
+  standards:
+    - "RFC 7519"
+    - "OWASP JWT Security Cheat Sheet"

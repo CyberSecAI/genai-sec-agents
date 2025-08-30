@@ -1,0 +1,51 @@
+id: JWT-SIG-001
+title: "JWT signatures must be properly verified before processing claims"
+severity: critical
+scope: jwt-implementations
+requirement: "All JWT tokens must undergo complete signature verification using the correct algorithm and key before any claims are processed or authorization decisions are made."
+do:
+  - "Verify JWT signature before accessing token claims or making authorization decisions"
+  - "Use strong cryptographic algorithms (RS256, ES256) for JWT signing"
+  - "Implement proper key management for JWT verification keys"
+  - "Validate the JWT header algorithm matches expected signing algorithm"
+  - "Use well-established JWT libraries with security updates"
+  - "Log signature verification failures for security monitoring"
+dont:
+  - "Do not process JWT claims without verifying the signature first"
+  - "Do not accept JWT tokens with 'none' algorithm in production"
+  - "Do not ignore JWT signature verification failures"
+  - "Do not use weak or deprecated signing algorithms (HS256 with weak keys)"
+  - "Do not implement custom JWT signature verification without security review"
+  - "Do not trust JWT claims from unverified tokens"
+detect:
+  semgrep:
+    - "javascript.jsonwebtoken.security.jwt-verify-none"
+    - "python.jwt.security.jwt-none-alg"
+    - "java.jwt.security.jwt-signature-bypass"
+    - "generic.jwt.security.disabled-signature-verification"
+  codeql:
+    - "jwt-signature-not-verified"
+    - "jwt-none-algorithm-accepted"
+verify:
+  tests:
+    - "Verify JWT tokens with invalid signatures are rejected"
+    - "Test that tokens with 'none' algorithm are refused in production"
+    - "Confirm signature verification occurs before claim processing"
+    - "Validate proper error handling for signature verification failures"
+    - "Test JWT verification with wrong signing keys fails appropriately"
+refs:
+  cwe:
+    - "CWE-347"
+    - "CWE-295"
+    - "CWE-287"
+  asvs:
+    - "V3.1.1"
+    - "V6.2.1"
+    - "V6.2.2"
+  owasp:
+    - "A02:2021"
+    - "A07:2021"
+  standards:
+    - "RFC 7515"
+    - "RFC 7519"
+    - "OWASP JWT Security Cheat Sheet"

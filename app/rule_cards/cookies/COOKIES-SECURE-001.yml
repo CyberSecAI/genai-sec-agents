@@ -1,0 +1,48 @@
+id: COOKIES-SECURE-001
+title: "Security-sensitive cookies must use Secure attribute for HTTPS transmission"
+severity: high
+scope: web-applications
+requirement: "All cookies containing sensitive data, session identifiers, or authentication information must include the Secure attribute to ensure transmission only over encrypted HTTPS connections."
+do:
+  - "Set Secure attribute on all session and authentication cookies"
+  - "Apply Secure flag to cookies containing sensitive user data"
+  - "Configure application frameworks to automatically set Secure for sensitive cookies"
+  - "Implement HTTPS-only cookie policies in production environments"
+  - "Use conditional Secure setting based on HTTPS availability in development"
+  - "Validate Secure attribute presence in automated security tests"
+dont:
+  - "Do not send sensitive cookies over unencrypted HTTP connections"
+  - "Do not omit Secure attribute from authentication or session cookies"
+  - "Do not rely on application-level encryption as substitute for HTTPS"
+  - "Do not use Secure flag for functional cookies that need HTTP access during development"
+  - "Do not assume Secure attribute alone provides complete cookie protection"
+detect:
+  semgrep:
+    - "javascript.express.security.express-cookie-settings.express-cookie-no-secure"
+    - "python.flask.security.insecure-cookies.flask-cookie-no-secure"
+    - "java.servlet.security.secure-cookie"
+    - "php.security.cookie-not-secure"
+  codeql:
+    - "cookie-without-secure-flag"
+    - "sensitive-cookie-not-secure"
+verify:
+  tests:
+    - "Verify Secure attribute is present on sensitive cookies in HTTPS responses"
+    - "Test that secure cookies are not transmitted over HTTP connections"
+    - "Confirm session cookies include Secure flag in production configuration"
+    - "Validate cookie security settings in web server and application configuration"
+    - "Test cookie behavior in mixed HTTP/HTTPS environments"
+refs:
+  cwe:
+    - "CWE-614"
+    - "CWE-319"
+    - "CWE-523"
+  asvs:
+    - "V3.4.1"
+    - "V9.1.3"
+  owasp:
+    - "A02:2021"
+    - "A05:2021"
+  standards:
+    - "RFC 6265"
+    - "OWASP Session Management Cheat Sheet"
