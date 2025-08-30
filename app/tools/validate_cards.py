@@ -22,20 +22,54 @@ class SecureRuleCardValidator:
         self.security_warnings = []
     
     def _load_schema(self, schema_path: str) -> Dict[str, Any]:
-        """Load JSON schema with path validation"""
-        # Security: Validate file path to prevent directory traversal
-        safe_path = os.path.normpath(schema_path)
-        # Allow relative paths within project directory
-        abs_path = os.path.abspath(safe_path)
-        project_root = os.getcwd()
-        if not abs_path.startswith(project_root):
-            raise ValueError(f"Invalid schema path: {schema_path}")
+        """Load JSON schema with enhanced path validation"""
+        validated_path = self._validate_schema_path(schema_path)
         
         try:
-            with open(safe_path, 'r', encoding='utf-8') as f:
+            with open(validated_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
             raise ValueError(f"Failed to load schema: {e}")
+    
+    def _validate_schema_path(self, schema_path: str) -> str:
+        """Enhanced path validation with multiple security layers.
+        
+        Args:
+            schema_path: Path to validate
+            
+        Returns:
+            str: Validated absolute path
+            
+        Raises:
+            ValueError: If path validation fails
+        """
+        if not schema_path or not isinstance(schema_path, str):
+            raise ValueError("Schema path must be a non-empty string")
+        
+        try:
+            # Resolve symbolic links and normalize path
+            safe_path = Path(schema_path).resolve()
+            project_root = Path(__file__).parent.parent.parent.resolve()
+            
+            # Multiple validation layers
+            if not str(safe_path).startswith(str(project_root)):
+                raise ValueError(f"Schema path outside project: {schema_path}")
+            
+            if not safe_path.exists():
+                raise ValueError(f"Schema file does not exist: {schema_path}")
+                
+            if not safe_path.is_file():
+                raise ValueError(f"Schema path is not a file: {schema_path}")
+            
+            # Additional security check for file size (prevent DoS)
+            file_size = safe_path.stat().st_size
+            if file_size > 10 * 1024 * 1024:  # 10MB limit
+                raise ValueError(f"Schema file too large: {file_size} bytes")
+                
+            return str(safe_path)
+            
+        except (OSError, ValueError) as e:
+            raise ValueError(f"Invalid schema path: {e}")
     
     def _safe_load_yaml(self, file_path: str) -> Optional[Dict[str, Any]]:
         """Securely load YAML file using safe_load"""

@@ -184,17 +184,54 @@ class RuleCardCompiler:
     def _get_git_version(self) -> str:
         """Generate version string from Git commit hash and timestamp."""
         try:
+            # Security: Validate git working directory is within project boundaries
+            cwd_path = self._validate_git_working_directory(
+                Path(self.config.rule_cards_path).parent
+            )
             commit_hash = subprocess.check_output(
                 ['git', 'rev-parse', 'HEAD'], 
-                cwd=Path(self.config.rule_cards_path).parent,
-                text=True
+                cwd=cwd_path,
+                text=True,
+                timeout=10  # Add timeout protection
             ).strip()
             timestamp = int(time.time())
             return f"{commit_hash[:8]}-{timestamp}"
-        except subprocess.CalledProcessError:
-            # Fallback if not in Git repository
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            # Fallback if not in Git repository or timeout
             timestamp = int(time.time())
             return f"local-{timestamp}"
+    
+    def _validate_git_working_directory(self, path: Path) -> Path:
+        """Validate git working directory is within project boundaries.
+        
+        Args:
+            path: Path to validate for git operations
+            
+        Returns:
+            Path: Validated and resolved path
+            
+        Raises:
+            SecurityError: If path is outside project directory
+        """
+        try:
+            # Resolve symbolic links and normalize path
+            resolved_path = path.resolve()
+            project_root = Path(__file__).parent.parent.parent.resolve()
+            
+            # Ensure cwd is within project boundaries
+            if not str(resolved_path).startswith(str(project_root)):
+                raise SecurityError(
+                    f"Git operation attempted outside project directory: {path}"
+                )
+            
+            # Verify the path exists and is accessible
+            if not resolved_path.exists():
+                raise SecurityError(f"Git working directory does not exist: {path}")
+                
+            return resolved_path
+            
+        except (OSError, ValueError) as e:
+            raise SecurityError(f"Invalid git working directory: {e}")
     
     def _calculate_source_digest(self) -> str:
         """Calculate SHA256 digest of all source Rule Card files."""
