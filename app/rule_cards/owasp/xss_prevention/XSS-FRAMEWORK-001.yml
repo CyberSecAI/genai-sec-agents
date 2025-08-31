@@ -1,0 +1,29 @@
+id: XSS-FRAMEWORK-001
+title: "Understand XSS prevention mechanisms in modern web frameworks"
+severity: high
+scope: web-application
+requirement: "Developers using modern web frameworks like React, Angular, or Lit must understand how these frameworks prevent XSS vulnerabilities and be aware of potential gaps in security mechanisms."
+do:
+  - "Follow framework best practices for templating, auto-escaping, and output encoding"
+  - "Be cautious of using escape hatches that directly manipulate the DOM"
+  - "Avoid using insecure functions like React's dangerouslySetInnerHTML or Angular's bypassSecurityTrustAs*"
+  - "Regularly update framework plugins and components to mitigate XSS risks"
+dont:
+  - "Use escape hatches without understanding their security implications"
+  - "Rely solely on framework protections without considering additional security measures"
+detect:
+  semgrep:
+    - "javascript.react.security.react-dangerously-set-inner-html"
+    - "javascript.angular.security.angular-bypass-security-trust"
+    - "javascript.lit.security.lit-unsafe-html"
+verify:
+  tests:
+    - "Review framework-specific XSS prevention guidelines and ensure compliance"
+    - "Perform code reviews to identify insecure usage of escape hatches"
+refs:
+  owasp:
+    - "A07:2021"
+    - "A08:2021"
+    - "A09:2021"
+    - "A10:2021"
+```

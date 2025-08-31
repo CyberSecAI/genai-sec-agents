@@ -1,0 +1,30 @@
+id: SESSION-MANAGEMENT-002
+title: Implement strong session ID entropy to prevent brute-force attacks
+severity: high
+scope: web-application
+requirement: Generate session IDs with at least 64 bits of entropy using a cryptographically
+  secure pseudorandom number generator to prevent brute-force guessing attacks.
+do:
+- Use a strong CSPRNG to generate session IDs
+- Ensure session IDs have at least 64 bits of entropy
+- Consider different encoding methods to achieve required entropy
+dont:
+- Use predictable or weak session ID generation algorithms
+detect:
+  semgrep:
+  - http.session-id-weak-entropy
+  - http.session-id-brute-force
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+verify:
+  tests:
+  - Test session ID generation algorithm for entropy strength
+  - Verify session IDs have at least 64 bits of entropy
+refs:
+  cwe:
+  - CWE-330
+  - CWE-338
+  owasp:
+  - A3:2021
+  - A6:2021

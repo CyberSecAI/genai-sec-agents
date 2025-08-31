@@ -1,0 +1,41 @@
+id: CLICKJACKING-DEFENSE-003
+title: Secure session cookies with SameSite attribute to mitigate Clickjacking
+severity: medium
+scope: web-application
+requirement: Mark session cookies with SameSite attribute as 'strict' or 'lax' to
+  prevent them from being included in requests made to a page within an iframe. This
+  helps defend against Clickjacking attacks by ensuring that authenticated sessions
+  are not vulnerable to being hijacked.
+do:
+- Set SameSite attribute to 'strict' for session cookies to prevent them from being
+  sent in cross-origin requests
+- Consider using SameSite attribute 'lax' for session cookies to allow them in top-level
+  navigations and safe HTTP methods
+dont:
+- Do not solely rely on SameSite attribute for Clickjacking defense, use in conjunction
+  with other mechanisms
+detect:
+  semgrep:
+  - http.cookie.samesite-strict
+  - http.cookie.samesite-lax
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+  trufflehog:
+  - SameSite Cookie Attribute
+  - Basic Auth
+verify:
+  tests:
+  - Verify session cookies are marked with SameSite attribute as 'strict' or 'lax'
+  - Test that session cookies are not included in requests within iframes
+refs:
+  cwe:
+  - CWE-693
+  - CWE-1021
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A6:2021
+  standards:
+  - RFC 6265bis

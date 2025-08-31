@@ -1,0 +1,41 @@
+id: FILE-UPLOAD-001
+title: Validate file extensions and content types
+severity: high
+scope: web-application
+requirement: Implement input validation to check file extensions against a whitelist
+  of allowed extensions. Additionally, validate the file's content type to prevent
+  malicious uploads.
+do:
+- List allowed extensions for each file type and validate against them
+- Check file content type in addition to file extension
+- Implement both allowlist and denylist approaches for content type validation
+- Use secure libraries or tools to determine file content type
+dont:
+- Do not rely solely on file extensions for validation
+- Do not trust the Content-Type header provided by users
+detect:
+  semgrep:
+  - file-upload.security.extension-validation
+  - file-upload.security.content-type-validation
+  - python.django.security.audit.avoid-unsafe-deserialization
+  - python.flask.security.audit.direct-use-of-jinja2
+  - java.spring.security.audit.spring-unvalidated-redirect
+  trufflehog:
+  - File Extension Bypass
+  - Content-Type Spoofing
+verify:
+  tests:
+  - Verify that only allowed file extensions are accepted
+  - Test that content type validation is effective in blocking malicious uploads
+refs:
+  cwe:
+  - CWE-434
+  - CWE-918
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A04:2021
+  - A08:2021
+  standards:
+  - ISO/IEC 27001:2013

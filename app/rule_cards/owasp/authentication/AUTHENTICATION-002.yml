@@ -1,0 +1,36 @@
+id: AUTHENTICATION-002
+title: Require Re-authentication for Sensitive Features
+severity: medium
+scope: web-application
+requirement: Mandate re-authentication before allowing access to sensitive features
+  or performing high-risk actions to mitigate CSRF and session hijacking risks.
+do:
+- Require current credentials for sensitive actions
+- Implement re-authentication for password changes or sensitive transactions
+- Invalidate sessions after re-authentication
+dont:
+- Do not allow sensitive actions without re-authentication
+detect:
+  semgrep:
+  - reauthentication-required
+  - session-hijacking
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+  trufflehog:
+  - Sensitive Action Re-authentication
+  - Basic Auth
+verify:
+  tests:
+  - Verify re-authentication is enforced for sensitive features
+  - Test session invalidation after re-authentication
+refs:
+  cwe:
+  - CWE-384
+  - CWE-613
+  asvs:
+  - V2.2.2
+  - V2.2.3
+  owasp:
+  - A2:2021
+  - A5:2021

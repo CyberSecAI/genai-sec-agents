@@ -1,0 +1,30 @@
+```yaml
+id: XSS-OUTPUT-ENCODING-002
+title: "Implement proper output encoding for different contexts"
+severity: high
+scope: web-application
+requirement: "Ensure all user input displayed in HTML, HTML attribute, JavaScript, CSS, and URL contexts is properly encoded to prevent XSS vulnerabilities."
+do:
+  - "Use HTML entity encoding for HTML contexts"
+  - "Apply HTML attribute encoding for HTML attribute contexts"
+  - "Utilize JavaScript encoding for JavaScript contexts"
+  - "Implement CSS hex encoding for CSS contexts"
+  - "Use URL encoding for URL contexts"
+dont:
+  - "Display user input without proper encoding in any context"
+detect:
+  semgrep:
+    - "generic.xss.security.unsafe-output-encoding"
+    - "javascript.security.unsafe-javascript-context"
+    - "css.security.unsafe-css-context"
+verify:
+  tests:
+    - "Automated scanning to detect missing or improper output encoding"
+    - "Manual code review to verify correct encoding implementation"
+refs:
+  owasp:
+    - "A01:2021"
+    - "A02:2021"
+    - "A03:2021"
+    - "A04:2021"
+```

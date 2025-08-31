@@ -1,0 +1,44 @@
+id: SQL-INJECTION-PREVENTION-001
+title: Prevent SQL Injection with Prepared Statements
+severity: high
+scope: web-application
+requirement: Developers must use prepared statements with parameterized queries to
+  prevent SQL injection vulnerabilities. Prepared statements ensure that the database
+  distinguishes between code and data, making it impossible for attackers to change
+  the query's intent.
+do:
+- Use prepared statements with variable binding in database queries
+- Define all SQL code first and pass in each parameter to the query later
+- Ensure the database always distinguishes between code and data
+dont:
+- Avoid writing dynamic queries with string concatenation
+- Do not allow user-supplied input to be directly appended to queries
+detect:
+  semgrep:
+  - java.sql.preparedstatement
+  - csharp.sql.preparedstatement
+  - hibernate.querylanguage.preparedstatement
+  - python.django.security.injection.sql.django-sql-injection
+  - python.sqlalchemy.security.audit.sqlalchemy-execute-raw-query
+  - java.spring.security.audit.spring-sqli
+  trufflehog:
+  - SQL Injection
+  codeql:
+  - sql-injection
+verify:
+  tests:
+  - Verify that all database queries use prepared statements with parameterized queries
+  - Test that user-supplied input is never directly appended to SQL queries
+  - Confirm that the database distinguishes between code and data in all queries
+refs:
+  cwe:
+  - CWE-89
+  - CWE-564
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A1:2021
+  - A4:2021
+  standards:
+  - ISO/IEC 27001

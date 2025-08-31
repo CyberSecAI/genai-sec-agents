@@ -1,0 +1,26 @@
+id: DOM-XSS-PREVENTION-RULE2
+title: JavaScript Escape for Untrusted Data in HTML Attribute Subcontext
+severity: medium
+scope: web-application
+requirement: JavaScript escape untrusted data before inserting into HTML attribute
+  subcontext within the execution context to prevent DOM based XSS vulnerabilities.
+do:
+- Use JavaScript encoding for untrusted data in HTML attribute subcontext
+- Avoid unnecessary HTML attribute encoding in execution context
+dont:
+- Do not double-encode untrusted data in HTML attribute subcontext
+detect:
+  semgrep:
+  - javascript.security.dom-based-xss
+  - python.django.security.audit.xss.direct-use-of-httpresp-write
+  - javascript.browser.security.audit.dom-based-xss
+  - java.spring.security.audit.spring-xss
+verify:
+  tests:
+  - Check codebase to confirm proper JavaScript encoding for HTML attribute subcontext
+refs:
+  cwe:
+  - CWE-79
+  owasp:
+  - A7:2021
+  - A2:2021

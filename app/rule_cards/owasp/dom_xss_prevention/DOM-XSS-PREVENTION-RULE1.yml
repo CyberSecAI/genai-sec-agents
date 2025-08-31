@@ -1,0 +1,26 @@
+id: DOM-XSS-PREVENTION-RULE1
+title: HTML and JavaScript Encoding for Untrusted Data in HTML Subcontext
+severity: high
+scope: web-application
+requirement: HTML escape and then JavaScript escape all untrusted data before inserting
+  into HTML subcontext within the execution context to prevent DOM based XSS vulnerabilities.
+do:
+- Use HTML encoding followed by JavaScript encoding for untrusted data in HTML subcontext
+- Utilize ESAPI or similar libraries for encoding untrusted data
+dont:
+- Do not directly insert untrusted data into HTML subcontext without proper encoding
+detect:
+  semgrep:
+  - javascript.security.dom-based-xss
+  - python.django.security.audit.xss.direct-use-of-httpresp-write
+  - javascript.browser.security.audit.dom-based-xss
+  - java.spring.security.audit.spring-xss
+verify:
+  tests:
+  - Scan codebase to ensure all untrusted data in HTML subcontext is properly encoded
+refs:
+  cwe:
+  - CWE-79
+  owasp:
+  - A7:2021
+  - A2:2021

@@ -1,0 +1,33 @@
+id: HTTP-HEADERS-CONTENT-TYPE-003
+title: Prevent MIME type confusion with X-Content-Type-Options header
+severity: medium
+scope: web-application
+requirement: Implement X-Content-Type-Options header to prevent MIME type sniffing
+  by instructing browsers to follow the MIME types advertised in the Content-Type
+  headers.
+do:
+- Set X-Content-Type-Options header to nosniff to block MIME type sniffing
+- Ensure Content-Type header is set correctly throughout the site
+dont:
+- Do not rely solely on X-Content-Type-Options header for MIME type security
+detect:
+  semgrep:
+  - http.x-content-type-options.nosniff
+  - python.django.security.audit.xss-filter-disabled
+  - python.flask.security.audit.flask-cors-origin-wildcard
+  - java.spring.security.audit.spring-security-headers
+  trufflehog:
+  - X-Content-Type-Options
+verify:
+  tests:
+  - Verify X-Content-Type-Options header is set to nosniff
+  - Test that browsers follow the correct MIME types
+refs:
+  cwe:
+  - CWE-434
+  - CWE-116
+  owasp:
+  - A03:2021
+  - A07:2021
+  standards:
+  - RFC 7034

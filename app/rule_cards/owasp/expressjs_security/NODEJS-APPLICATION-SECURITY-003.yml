@@ -1,0 +1,28 @@
+```yaml
+id: NODEJS-APPLICATION-SECURITY-003
+title: "Prevent blocking the event loop for improved performance"
+severity: high
+scope: web-application
+requirement: "Avoid blocking the Node.js event loop with synchronous operations to maintain high throughput and prevent performance degradation. Ensure all blocking operations are executed asynchronously."
+do:
+  - "Use asynchronous operations for CPU-intensive tasks"
+  - "Utilize callbacks or Promises to handle asynchronous code execution"
+  - "Avoid synchronous file operations that can block the event loop"
+dont:
+  - "Do not perform CPU-intensive operations synchronously"
+  - "Avoid synchronous file operations in event-driven applications"
+detect:
+  semgrep:
+    - "javascript.nodejs.security.nodejs-blocking-event-loop"
+verify:
+  tests:
+    - "Profile application performance to identify blocking operations"
+    - "Test application under load to verify event loop is not blocked"
+refs:
+  cwe:
+    - "CWE-400"
+    - "CWE-362"
+  owasp:
+    - "A08:2021"
+    - "A10:2021"
+```

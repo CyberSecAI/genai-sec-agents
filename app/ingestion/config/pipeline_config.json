@@ -1,0 +1,59 @@
+{
+  "pipeline": {
+    "name": "OWASP Cheat Sheet Ingestion Pipeline",
+    "version": "1.0.0",
+    "description": "Automated pipeline for OWASP cheat sheet ingestion and Rule Card generation",
+    "max_concurrent_requests": 2,
+    "retry_count": 3,
+    "timeout_seconds": 300,
+    "rate_limit_delay": 2
+  },
+  "validation": {
+    "schema_validation": true,
+    "duplicate_detection": true,
+    "quality_threshold": 0.7,
+    "max_failures_percent": 25,
+    "required_fields": ["id", "title", "severity", "scope", "requirement"],
+    "valid_severities": ["low", "medium", "high", "critical"]
+  },
+  "output": {
+    "rule_cards_path": "app/rule_cards/owasp",
+    "backup_enabled": true,
+    "backup_path": "backups/owasp_ingestion",
+    "output_format": "yaml",
+    "preserve_existing": true
+  },
+  "llm": {
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.1,
+    "max_tokens": 2000,
+    "api_timeout": 30,
+    "rate_limit_delay": 2,
+    "retry_on_failure": true
+  },
+  "scanner_integration": {
+    "enabled": true,
+    "supported_scanners": ["semgrep", "trufflehog"],
+    "custom_patterns_enabled": true,
+    "validation_enabled": true
+  },
+  "corpus_integration": {
+    "enabled": true,
+    "semantic_enhancement": true,
+    "provenance_tracking": true,
+    "keyword_extraction": true
+  },
+  "logging": {
+    "level": "INFO",
+    "log_file": "logs/owasp_ingestion.log",
+    "detailed_logging": true,
+    "console_output": true,
+    "log_rotation": true
+  },
+  "scheduling": {
+    "enabled": false,
+    "cron_schedule": "0 2 * * 0",
+    "auto_update_check": true,
+    "change_detection": true
+  }
+}

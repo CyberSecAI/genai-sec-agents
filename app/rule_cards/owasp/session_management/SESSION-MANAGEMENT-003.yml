@@ -1,0 +1,35 @@
+id: SESSION-MANAGEMENT-003
+title: Enforce secure session management mechanisms
+severity: critical
+scope: web-application
+requirement: Implement secure session management mechanisms like cookies with advanced
+  attributes (Secure, HttpOnly), enforce HTTPS, and use advanced token properties
+  to protect session IDs.
+do:
+- Use cookies with Secure and HttpOnly attributes for session management
+- Enforce HTTPS for the entire web session, not just during authentication
+- Implement advanced token properties like expiration date and granular usage constraints
+dont:
+- Allow session IDs to be exchanged through insecure channels
+- Neglect to set Secure and HttpOnly attributes for session cookies
+detect:
+  semgrep:
+  - http.cookie-missing-secure-attribute
+  - http.cookie-missing-httponly-attribute
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+  trufflehog:
+  - Session ID
+  - JWT Token
+verify:
+  tests:
+  - Verify cookies have Secure and HttpOnly attributes set
+  - Test that HTTPS is enforced for the entire web session
+refs:
+  cwe:
+  - CWE-614
+  - CWE-319
+  owasp:
+  - A3:2021
+  - A6:2021

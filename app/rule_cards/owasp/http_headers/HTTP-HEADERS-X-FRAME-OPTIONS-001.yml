@@ -1,0 +1,34 @@
+id: HTTP-HEADERS-X-FRAME-OPTIONS-001
+title: Prevent Clickjacking attacks with X-Frame-Options header
+severity: high
+scope: web-application
+requirement: Implement X-Frame-Options header to prevent Clickjacking attacks by specifying
+  whether a browser should be allowed to render a page in a frame.
+do:
+- Set X-Frame-Options header to DENY to disallow displaying the page in a frame
+- Consider using Content Security Policy (CSP) frame-ancestors directive for supporting
+  browsers
+dont:
+- Do not allow the page to be displayed in a frame without proper validation
+detect:
+  semgrep:
+  - http.x-frame-options.deny
+  - http.x-frame-options.allow-from
+  - python.django.security.audit.xss-filter-disabled
+  - python.flask.security.audit.flask-cors-origin-wildcard
+  - java.spring.security.audit.spring-security-headers
+  trufflehog:
+  - X-Frame-Options
+verify:
+  tests:
+  - Verify X-Frame-Options header is set to DENY
+  - Test that the page cannot be embedded in a frame
+refs:
+  cwe:
+  - CWE-693
+  - CWE-1021
+  owasp:
+  - A06:2021
+  - A09:2021
+  standards:
+  - RFC 7034

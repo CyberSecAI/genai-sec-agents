@@ -1,0 +1,43 @@
+id: SQL-INJECTION-PREVENTION-002
+title: Implement Secure Stored Procedures
+severity: high
+scope: web-application
+requirement: Developers must use properly constructed stored procedures to prevent
+  SQL injection vulnerabilities. Stored procedures should be implemented safely with
+  predefined SQL statements and parameters to ensure the database distinguishes between
+  code and data.
+do:
+- Build SQL statements with parameters in stored procedures
+- Ensure stored procedures are implemented safely to prevent SQL injection
+- Define and store SQL code in the database itself, then call from the application
+dont:
+- Avoid using unsafe dynamic SQL generation within stored procedures
+- Do not grant excessive execute rights to application accounts for stored procedures
+detect:
+  semgrep:
+  - java.sql.callablestatement
+  - dotnet.sql.command
+  - python.django.security.injection.sql.django-sql-injection
+  - python.sqlalchemy.security.audit.sqlalchemy-execute-raw-query
+  - java.spring.security.audit.spring-sqli
+  trufflehog:
+  - SQL Injection
+  codeql:
+  - sql-injection
+verify:
+  tests:
+  - Verify that stored procedures use predefined SQL statements with parameters
+  - Test that stored procedures are implemented safely to prevent SQL injection
+  - Confirm that stored procedures distinguish between code and data in queries
+refs:
+  cwe:
+  - CWE-89
+  - CWE-564
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A1:2021
+  - A4:2021
+  standards:
+  - ISO/IEC 27001

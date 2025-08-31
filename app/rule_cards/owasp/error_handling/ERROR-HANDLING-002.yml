@@ -1,0 +1,42 @@
+id: ERROR-HANDLING-002
+title: Implement global error handling for SpringMVC/SpringBoot applications
+severity: high
+scope: web-application
+requirement: Define a global error handler in SpringMVC or SpringBoot applications
+  to return a generic response for unexpected errors without exposing sensitive information.
+do:
+- Create a RestResponseEntityExceptionHandler class to handle exceptions extending
+  java.lang.Exception
+- Use ProblemDetail class to create the response object with a generic message
+- Ensure the response includes an internal server error status code (500)
+dont:
+- Avoid returning detailed error messages to clients in production environments
+detect:
+  semgrep:
+  - spring.exception-handler
+  - spring.problem-detail
+  - python.logging.security.audit.logging-sensitive-data
+  - java.lang.security.audit.system-exit
+  - javascript.express.security.audit.express-expose-sensitive-data
+  trufflehog:
+  - Spring Error Handling Configuration
+  custom:
+  - Manual code review to validate error handling implementation
+verify:
+  tests:
+  - Validate that the global error handler responds with a generic message for all
+    exceptions
+  - Test that the response includes an internal server error status code
+  - Confirm that no sensitive information is exposed in error responses
+refs:
+  cwe:
+  - CWE-209
+  - CWE-116
+  asvs:
+  - V6.4.1
+  - V6.4.2
+  owasp:
+  - A06:2021
+  - A07:2021
+  standards:
+  - RFC 7807

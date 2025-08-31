@@ -1,0 +1,41 @@
+id: ERROR-HANDLING-003
+title: Implement global error handling for ASP.NET Core web applications
+severity: high
+scope: web-application
+requirement: Define a global error handler in ASP.NET Core applications to return
+  a generic JSON response for unexpected errors and log error details without exposing
+  sensitive information.
+do:
+- Create an ErrorController API Controller to handle all unexpected exceptions
+- Build a generic JSON response with a message indicating an error occurred
+- Set the HTTP status code to 500 for internal server errors
+dont:
+- Avoid leaking implementation details in error responses
+detect:
+  semgrep:
+  - aspnetcore.error-handler
+  - aspnetcore.json-error-response
+  - python.logging.security.audit.logging-sensitive-data
+  - java.lang.security.audit.system-exit
+  - javascript.express.security.audit.express-expose-sensitive-data
+  trufflehog:
+  - ASP.NET Core Error Handling Configuration
+  custom:
+  - Manual inspection to ensure error handling is correctly implemented
+verify:
+  tests:
+  - Ensure the ErrorController handles all types of exceptions
+  - Verify that the response includes a generic error message
+  - Confirm that the HTTP status code is set to 500 for internal server errors
+refs:
+  cwe:
+  - CWE-209
+  - CWE-116
+  asvs:
+  - V6.4.1
+  - V6.4.2
+  owasp:
+  - A06:2021
+  - A07:2021
+  standards:
+  - RFC 7807

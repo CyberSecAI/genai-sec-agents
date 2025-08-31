@@ -1,0 +1,42 @@
+id: ERROR-HANDLING-001
+title: Implement global error handling for Java web applications
+severity: high
+scope: web-application
+requirement: Configure a global error handler in Java web applications to redirect
+  to an error page, trace the error, and return a generic response without revealing
+  implementation details.
+do:
+- Configure the web.xml file to define error-page for java.lang.Exception
+- Create an error.jsp file to log the error, set HTTP response header, and return
+  a generic JSON response
+- Ensure the error.jsp file handles unexpected errors and returns a 500 status code
+dont:
+- Avoid exposing detailed error messages to users in production environments
+detect:
+  semgrep:
+  - java.servlet.error-page
+  - java.servlet.error-handler
+  - python.logging.security.audit.logging-sensitive-data
+  - java.lang.security.audit.system-exit
+  - javascript.express.security.audit.express-expose-sensitive-data
+  trufflehog:
+  - Java Error Handling Configuration
+  custom:
+  - Manual code review to ensure error handling is implemented correctly
+verify:
+  tests:
+  - Verify that unexpected errors redirect to the error page
+  - Test that error.jsp logs errors and returns a generic response
+  - Confirm that detailed error messages are not exposed to users
+refs:
+  cwe:
+  - CWE-209
+  - CWE-116
+  asvs:
+  - V6.4.1
+  - V6.4.2
+  owasp:
+  - A06:2021
+  - A07:2021
+  standards:
+  - RFC 7807

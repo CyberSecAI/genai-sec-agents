@@ -15,6 +15,29 @@ from dataclasses import dataclass
 import requests
 from datetime import datetime
 
+# Load environment variables from specified env file
+def _load_env_file():
+    """Load environment variables from ../../env/.env file"""
+    # From app/ingestion/llm_rule_generator.py, go up to project root, then to ../../env/.env
+    project_root = Path(__file__).parent.parent.parent  # genai-sec-agents/
+    env_path = project_root.parent.parent / 'env' / '.env'  # ../../env/.env
+    
+    if env_path.exists():
+        with open(env_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    # Remove quotes if present
+                    value = value.strip("'\"")
+                    os.environ[key] = value
+        print(f"Loaded environment variables from {env_path}")
+    else:
+        print(f"Warning: Environment file not found at {env_path}")
+
+# Load environment on module import
+_load_env_file()
+
 from .owasp_fetcher import OWASPFetcher
 
 

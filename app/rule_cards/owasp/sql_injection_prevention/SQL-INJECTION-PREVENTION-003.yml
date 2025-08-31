@@ -1,0 +1,43 @@
+id: SQL-INJECTION-PREVENTION-003
+title: Implement Allow-list Input Validation
+severity: medium
+scope: web-application
+requirement: Developers must implement allow-list input validation for parts of SQL
+  queries that can't use bind variables, such as table names or column names. Input
+  validation should ensure that only legal and expected values are used in queries.
+do:
+- Validate input for table names, column names, or sort order indicators
+- Map parameter values to legal and expected table or column names
+- Use input validation to prevent unauthorized input in SQL queries
+dont:
+- Avoid using user parameter values directly for table or column names
+- Do not allow unvalidated user input to be included in queries
+detect:
+  semgrep:
+  - input-validation.table-name
+  - input-validation.column-name
+  - python.django.security.audit.avoid-unsafe-deserialization
+  - python.flask.security.audit.direct-use-of-jinja2
+  - java.spring.security.audit.spring-unvalidated-redirect
+  trufflehog:
+  - SQL Injection
+  codeql:
+  - sql-injection
+verify:
+  tests:
+  - Verify that input validation is implemented for table names, column names, and
+    sort order indicators
+  - Test that only legal and expected values are used in SQL queries
+  - Confirm that unauthorized input is prevented from being included in queries
+refs:
+  cwe:
+  - CWE-89
+  - CWE-564
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A1:2021
+  - A4:2021
+  standards:
+  - ISO/IEC 27001

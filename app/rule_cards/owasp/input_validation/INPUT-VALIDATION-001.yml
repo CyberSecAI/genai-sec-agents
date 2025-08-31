@@ -1,0 +1,39 @@
+id: INPUT-VALIDATION-001
+title: Implement syntactic and semantic input validation for all user inputs
+severity: high
+scope: web-application
+requirement: All user inputs, including data from untrusted sources, must undergo
+  both syntactic and semantic validation to ensure correct syntax and values in the
+  specific business context.
+do:
+- Enforce correct syntax for structured fields (e.g., SSN, date, currency symbol)
+- Ensure correctness of values in the specific business context (e.g., start date
+  before end date)
+- Use data type validators provided by web application frameworks or custom validators
+- Validate input against JSON Schema or XML Schema for structured data
+dont:
+- Rely solely on client-side validation for input validation
+- Accept inputs without proper syntactic and semantic validation
+detect:
+  semgrep:
+  - python.django.security.django-input-validation
+  - java.spring.security.spring-input-validation
+  - python.django.security.audit.avoid-unsafe-deserialization
+  - python.flask.security.audit.direct-use-of-jinja2
+  - java.spring.security.audit.spring-unvalidated-redirect
+  trufflehog:
+  - Structured data validation issues
+verify:
+  tests:
+  - Verify that all user inputs are validated both syntactically and semantically
+  - Test for bypassing validation by providing malformed data
+refs:
+  cwe:
+  - CWE-20
+  - CWE-116
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A03:2021
+  - C3:2024

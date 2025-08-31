@@ -1,0 +1,41 @@
+id: AUTHENTICATION-003
+title: Protect Against Automated Attacks
+severity: high
+scope: web-application
+requirement: Implement defenses against automated attacks including brute force, credential
+  stuffing, and password spraying such as multi-factor authentication, login throttling,
+  account lockout, CAPTCHA, and security questions.
+do:
+- Implement multi-factor authentication
+- Enforce login throttling
+- Implement account lockout after failed attempts
+- Use CAPTCHA for additional verification
+- Consider security questions for added protection
+dont:
+- Do not rely solely on passwords for authentication
+- Do not neglect protection against automated attacks
+detect:
+  semgrep:
+  - brute-force-attack
+  - credential-stuffing
+  - password-spraying
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+  trufflehog:
+  - Automated Attack Protection
+  - Basic Auth
+verify:
+  tests:
+  - Verify multi-factor authentication implementation
+  - Test account lockout functionality
+refs:
+  cwe:
+  - CWE-307
+  - CWE-308
+  asvs:
+  - V2.2.1
+  - V2.2.4
+  owasp:
+  - A2:2021
+  - A6:2021

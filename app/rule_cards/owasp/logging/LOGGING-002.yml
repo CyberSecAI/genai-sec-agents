@@ -1,0 +1,32 @@
+```yaml
+id: LOGGING-002
+title: "Log authentication successes, failures, and authorization failures"
+severity: high
+scope: web-application
+requirement: "Ensure that authentication successes, authentication failures, and authorization failures are logged to monitor and track access control activities within the application."
+do:
+  - "Implement logging for successful authentications"
+  - "Implement logging for failed authentication attempts"
+  - "Implement logging for authorization failures"
+  - "Include user identity, timestamp, and event description in the log entries"
+dont:
+  - "Do not neglect logging authentication and authorization events"
+detect:
+  semgrep:
+    - "logging.authentication-success"
+    - "logging.authentication-failure"
+    - "logging.authorization-failure"
+  trufflehog:
+    - "Credentials Exposure"
+verify:
+  tests:
+    - "Verify that authentication successes, failures, and authorization failures are properly logged"
+    - "Test the logging of authentication and authorization events during security testing"
+refs:
+  cwe:
+    - "CWE-285"
+    - "CWE-306"
+  owasp:
+    - "A03:2021"
+    - "A07:2021"
+```

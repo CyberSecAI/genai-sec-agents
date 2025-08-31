@@ -1,0 +1,41 @@
+id: CLICKJACKING-DEFENSE-002
+title: Utilize Content Security Policy (CSP) frame-ancestors to prevent Clickjacking
+severity: medium
+scope: web-application
+requirement: Implement the frame-ancestors directive in Content-Security-Policy HTTP
+  response header to control which domains are allowed to render a page in a frame
+  or iframe. This helps defend against Clickjacking attacks by preventing content
+  from being embedded into unauthorized sites.
+do:
+- Use frame-ancestors 'none' to prevent any domain from framing the content
+- Specify frame-ancestors 'self' to only allow the current site to frame the content
+- Authorize specific domains using frame-ancestors directive
+dont:
+- Do not forget to include the frame-ancestors directive in the Content-Security-Policy
+  header
+detect:
+  semgrep:
+  - http.response-header.content-security-policy-frame-ancestors-none
+  - http.response-header.content-security-policy-frame-ancestors-self
+  - http.response-header.content-security-policy-frame-ancestors-specific
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+  trufflehog:
+  - Content-Security-Policy
+  - Basic Auth
+verify:
+  tests:
+  - Verify Content-Security-Policy header includes frame-ancestors directive
+  - Test that unauthorized domains cannot frame the page
+refs:
+  cwe:
+  - CWE-693
+  - CWE-1021
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A6:2021
+  standards:
+  - W3C CSP Level 2

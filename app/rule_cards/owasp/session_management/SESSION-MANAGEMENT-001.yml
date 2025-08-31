@@ -1,0 +1,32 @@
+id: SESSION-MANAGEMENT-001
+title: Use generic session ID names to avoid fingerprinting
+severity: medium
+scope: web-application
+requirement: Change default session ID names to generic names like 'id' to avoid disclosing
+  technologies and programming languages used by the web application.
+do:
+- Update session ID names to generic terms to prevent fingerprinting
+- Implement a random session ID generator with at least 64 bits of entropy
+- Ensure session ID names do not reveal sensitive information
+dont:
+- Use default session ID names like 'PHPSESSID', 'JSESSIONID', 'ASP.NET_SessionId'
+detect:
+  semgrep:
+  - http.cookie-session-id-fingerprinting
+  - http.cookie-session-id-disclosure
+  - python.django.security.audit.session-cookie-secure-false
+  - python.django.security.audit.session-cookie-httponly-false
+  - java.spring.security.audit.spring-csrf-disabled
+  trufflehog:
+  - Generic API Key
+verify:
+  tests:
+  - Verify session ID names are generic and do not disclose sensitive information
+  - Test session ID generation for at least 64 bits of entropy
+refs:
+  cwe:
+  - CWE-200
+  - CWE-384
+  owasp:
+  - A3:2021
+  - A6:2021

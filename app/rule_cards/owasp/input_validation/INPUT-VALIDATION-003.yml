@@ -1,0 +1,37 @@
+id: INPUT-VALIDATION-003
+title: Implement email address validation with syntactic and semantic checks
+severity: medium
+scope: web-application
+requirement: Validate email addresses with both syntactic and semantic checks to ensure
+  correct format and legitimacy.
+do:
+- Check for two parts separated by '@' symbol in email addresses
+- Ensure email addresses do not contain dangerous characters
+- Validate domain part with letters, numbers, hyphens, and periods only
+- Perform semantic validation by sending confirmation emails for ownership verification
+dont:
+- Accept email addresses without basic syntactic validation
+- Rely solely on regular expressions for email address validation
+detect:
+  semgrep:
+  - generic.validation.email-syntactic-check
+  - java.spring.security.spring-email-validation
+  - python.django.security.audit.avoid-unsafe-deserialization
+  - python.flask.security.audit.direct-use-of-jinja2
+  - java.spring.security.audit.spring-unvalidated-redirect
+  trufflehog:
+  - Email address validation issues
+verify:
+  tests:
+  - Verify that email addresses undergo both syntactic and semantic validation
+  - Test email confirmation process for ownership verification
+refs:
+  cwe:
+  - CWE-20
+  - CWE-116
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A03:2021
+  - C3:2024

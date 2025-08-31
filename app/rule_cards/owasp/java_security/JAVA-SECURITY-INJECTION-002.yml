@@ -1,0 +1,33 @@
+```yaml
+id: JAVA-SECURITY-INJECTION-002
+title: "Prevent Command Injection in Java applications"
+severity: high
+scope: web-application
+requirement: "Avoid building Operating System commands using untrusted user input directly in Strings. Utilize technology stack APIs to prevent command injection vulnerabilities."
+do:
+  - "Use Java API features for system interactions instead of constructing commands"
+  - "Sanitize and validate user input before using it in system commands"
+  - "Implement input validation using allowlist approach to restrict user input"
+dont:
+  - "Do not build system commands by concatenating user input directly"
+  - "Avoid executing system commands without proper validation"
+detect:
+  semgrep:
+    - "java.command-injection"
+    - "java.os-command-injection"
+  trufflehog:
+    - "Command Injection"
+  codeql:
+    - "command-injection"
+verify:
+  tests:
+    - "Review code to ensure system commands are constructed safely"
+    - "Perform security testing to validate command injection protections"
+refs:
+  cwe:
+    - "CWE-78"
+    - "CWE-88"
+  owasp:
+    - "A01:2021"
+    - "A06:2021"
+```

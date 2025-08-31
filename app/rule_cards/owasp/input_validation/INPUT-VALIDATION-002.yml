@@ -1,0 +1,36 @@
+id: INPUT-VALIDATION-002
+title: Implement allowlist validation for all user inputs
+severity: high
+scope: web-application
+requirement: Implement allowlist validation for all user inputs to define exactly
+  what is authorized, ensuring that only authorized inputs are accepted.
+do:
+- Define strong validation patterns based on regular expressions for structured data
+- Match input against a fixed set of options for dropdown lists or radio buttons
+- Use allowlist validation for all user-provided input fields
+dont:
+- Rely solely on denylist validation for input validation
+- Accept inputs without matching them against an allowlist
+detect:
+  semgrep:
+  - generic.validation.allowlist
+  - javascript.security.allowlist-validation
+  - python.django.security.audit.avoid-unsafe-deserialization
+  - python.flask.security.audit.direct-use-of-jinja2
+  - java.spring.security.audit.spring-unvalidated-redirect
+  trufflehog:
+  - Allowlist validation issues
+verify:
+  tests:
+  - Verify that all user inputs are validated against allowlists
+  - Test for bypassing validation by providing unauthorized inputs
+refs:
+  cwe:
+  - CWE-20
+  - CWE-116
+  asvs:
+  - V6.1.1
+  - V6.1.2
+  owasp:
+  - A03:2021
+  - C3:2024

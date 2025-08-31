@@ -1,0 +1,28 @@
+id: DOM-XSS-PREVENTION-RULE3
+title: Avoid Untrusted Data in Event Handler and JavaScript Code Subcontexts
+severity: high
+scope: web-application
+requirement: Avoid including untrusted data in event handler and JavaScript code subcontexts
+  within an execution context to prevent DOM based XSS vulnerabilities.
+do:
+- Minimize usage of untrusted data in event handlers and JavaScript code subcontexts
+- Prefer safe assignment properties like textContent for populating the DOM with untrusted
+  data
+dont:
+- Do not directly insert untrusted data into event handlers or JavaScript code subcontexts
+detect:
+  semgrep:
+  - javascript.security.dom-based-xss
+  - python.django.security.audit.xss.direct-use-of-httpresp-write
+  - javascript.browser.security.audit.dom-based-xss
+  - java.spring.security.audit.spring-xss
+verify:
+  tests:
+  - Review codebase to ensure absence of untrusted data in event handlers and JavaScript
+    code subcontexts
+refs:
+  cwe:
+  - CWE-79
+  owasp:
+  - A7:2021
+  - A2:2021

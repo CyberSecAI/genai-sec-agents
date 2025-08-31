@@ -1,0 +1,25 @@
+id: LARAVEL-APP-KEY-001
+title: Generate and secure application key
+severity: high
+scope: web-application
+requirement: Ensure that the application key is generated and securely stored to protect
+  sensitive data encrypted using Laravel's encryption mechanisms.
+do:
+- Run 'php artisan key:generate' to generate a new application key
+- Store the application key securely and avoid exposing it in version control
+dont:
+- Do not hardcode or expose the application key in source code
+detect:
+  semgrep:
+  - php.laravel.security.key-generation
+  custom:
+  - custom-laravel-app-key-001
+verify:
+  tests:
+  - Verify the application key is generated and securely stored
+  - Ensure the application key is not exposed in source code or configuration files
+refs:
+  owasp:
+  - A03:2021
+  - A06:2021
+  - A09:2021

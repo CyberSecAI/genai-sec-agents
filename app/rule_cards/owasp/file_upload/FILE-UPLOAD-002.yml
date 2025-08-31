@@ -1,0 +1,37 @@
+id: FILE-UPLOAD-002
+title: Secure file naming and storage location
+severity: high
+scope: web-application
+requirement: Generate random filenames for uploaded files and store them in a secure
+  location outside the webroot to prevent direct access.
+do:
+- Generate unique filenames using UUID/GUID
+- Implement filename length limits and restrict characters to a safe subset
+- Store files on a different server or outside the webroot
+- Set proper permissions for file storage location
+dont:
+- Avoid using user-provided filenames directly
+- Do not store files in the webroot where they can be accessed directly
+detect:
+  semgrep:
+  - file-upload.security.filename-generation
+  - file-upload.security.storage-location
+  - python.django.security.audit.unescaped-file-extension
+  - java.spring.security.audit.spring-file-upload-filename
+  - php.lang.security.file-inclusion.file-inclusion
+verify:
+  tests:
+  - Confirm that filenames are randomized and not predictable
+  - Check that files are stored outside the webroot with restricted access
+refs:
+  cwe:
+  - CWE-116
+  - CWE-379
+  asvs:
+  - V6.3.1
+  - V6.3.2
+  owasp:
+  - A05:2021
+  - A07:2021
+  standards:
+  - PCI DSS v3.2.1

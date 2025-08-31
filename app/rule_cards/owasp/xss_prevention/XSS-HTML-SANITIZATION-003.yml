@@ -1,0 +1,25 @@
+```yaml
+id: XSS-HTML-SANITIZATION-003
+title: "Implement HTML sanitization for user-generated content"
+severity: medium
+scope: web-application
+requirement: "When allowing users to author HTML content, utilize HTML sanitization libraries like DOMPurify to strip dangerous HTML and prevent XSS attacks."
+do:
+  - "Use DOMPurify library for HTML sanitization"
+  - "Regularly patch and update HTML sanitization libraries"
+  - "Ensure sanitized content is not modified afterwards to maintain security"
+dont:
+  - "Rely solely on output encoding for user-generated HTML content"
+  - "Modify sanitized content after applying HTML sanitization"
+detect:
+  custom:
+    - "Manual review of HTML sanitization implementation"
+verify:
+  tests:
+    - "Test user-generated HTML content with known XSS payloads"
+    - "Verify that DOMPurify or similar library is effectively sanitizing input"
+refs:
+  owasp:
+    - "A05:2021"
+    - "A06:2021"
+```
