@@ -1,13 +1,15 @@
 # GenAI Security Agents - Policy-as-Code Engine
 
-A comprehensive Policy-as-Code system that transforms human-readable security Rule Cards into machine-readable JSON agent packages for AI-powered security guidance systems.
+A comprehensive Policy-as-Code system that transforms human-readable security Rule Cards into machine-readable JSON agent packages for AI-powered security guidance systems, featuring **Claude Code integration for real-time security analysis**.
 
 ## Overview
-This repository implements a complete security rule management and compilation toolchain:
+This repository implements a complete security rule management and compilation toolchain with AI-powered runtime capabilities:
 
 - **Rule Cards**: Human-readable YAML security policies with scanner integration
 - **Compiler Toolchain**: Secure compilation system transforming YAML to JSON agent packages  
 - **Specialized Agents**: 5 domain-specific security agents compiled from Rule Cards
+- **AgenticRuntime**: AI-powered runtime for dynamic security guidance (Story 2.1)
+- **Claude Code Sub-Agent**: Real-time security analysis within Claude Code IDE (Story 2.2) ✅
 - **CI/CD Integration**: Makefile automation with validation and compilation workflows
 
 ## Quick Start
@@ -34,6 +36,18 @@ make build  # Validates Rule Cards then compiles agent packages
 make test   # Runs comprehensive test suite with security validation
 ```
 
+### 5. Claude Code Sub-Agent (Real-Time Security Analysis)
+```bash
+# Initialize Claude Code security runtime
+python3 app/claude_code/initialize_security_runtime.py
+
+# Analyze code for security issues 
+python3 app/claude_code/analyze_context.py /path/to/your/code.py --format=guidance
+
+# JSON output for programmatic use
+python3 app/claude_code/analyze_context.py /path/to/your/code.py --format=json
+```
+
 ## Generated Agent Packages
 
 The compilation process generates 5 specialized security agent packages:
@@ -55,11 +69,20 @@ app/
 │   ├── jwt/                # JWT security validation (4 cards)
 │   ├── genai/              # GenAI security controls (3 cards)
 │   └── docker/             # Container security (1 card)
+├── runtime/                 # AgenticRuntime core components (Story 2.1)
+│   ├── core.py             # Main runtime engine for dynamic guidance
+│   └── ...                 # Runtime supporting modules
+├── claude_code/             # Claude Code Sub-Agent (Story 2.2) ✅
+│   ├── initialize_security_runtime.py  # Performance-optimized runtime manager
+│   └── analyze_context.py  # Enhanced context analyzer with snippets
 ├── tools/                   # Compilation and validation toolchain
 │   ├── agents_manifest.yml # Agent configuration definitions
 │   ├── compile_agents.py   # Main compiler script  
 │   └── validate_cards.py   # Rule Card validator
 └── dist/agents/            # Compiled JSON agent packages (generated)
+
+.claude/agents/             # Claude Code Sub-Agent Configuration ✅
+└── security-guidance.md    # Sub-agent definition with YAML frontmatter
 
 docs/                       # Comprehensive project documentation
 ├── stories/               # User story definitions and completion tracking
@@ -67,9 +90,82 @@ docs/                       # Comprehensive project documentation
 └── epics/                 # Epic definitions and requirements
 
 tests/                      # Test suites with security validation
+├── claude_code/           # Claude Code sub-agent tests (44 tests) ✅
+└── runtime/               # Runtime engine test suites
 ```
 
+## Claude Code Integration Features ✅
+
+The **security-guidance** sub-agent provides real-time security analysis within Claude Code:
+
+### Key Features
+- **🚀 Sub-2-Second Response**: Performance-optimized with multi-level caching
+- **🔍 Framework Detection**: Automatic detection of Flask, Django, JWT, Docker, SQLAlchemy, etc.
+- **📊 Security Scoring**: Letter-grade security assessment with issue breakdown
+- **💻 Secure Code Snippets**: Context-aware secure implementation examples
+- **⚡ Smart Caching**: Package and analysis result caching for faster responses
+- **🎯 Priority Alerts**: High/critical security issues highlighted prominently
+
+### Sub-Agent Output Example
+```
+🔍 **Security Analysis Results** - Score: 85/100 (B)
+📁 File: /path/to/your/app.py
+🤖 Agent: web-security-specialist
+⚙️ Frameworks: flask, requests
+
+🚨 **Priority Security Issues (2):**
+⚠️ Insecure Cookie Configuration (COOKIES-HTTPONLY-001)
+   └─ Session cookies must include HttpOnly attribute
+
+💡 **Security Guidance:**
+Configure Flask cookies with security attributes to prevent XSS attacks...
+
+✅ **Recommended Actions (3):**
+⚠️ Set HttpOnly attribute on all session cookies
+⚠️ Apply Secure flag for HTTPS-only cookies  
+📋 Configure SameSite attribute to prevent CSRF
+
+💻 **Secure Code Examples (1 available):**
+
+📝 **Secure Flask Cookie Configuration** (PYTHON/flask)
+   Configure Flask cookies with security attributes
+   ```python
+   from flask import Flask, session
+   
+   app = Flask(__name__)
+   app.config['SESSION_COOKIE_HTTPONLY'] = True
+   app.config['SESSION_COOKIE_SECURE'] = True
+   # ... (5 more lines)
+   ```
+   🔐 HttpOnly prevents XSS cookie theft
+   🔐 Secure flag requires HTTPS
+
+🔒 Analysis: Input sanitized, context enhanced, 5 agents loaded
+```
+
+### 📋 **Want to See This in Action?**
+Check out our **[Worked Example](docs/WORKED_EXAMPLE.md)** that demonstrates the sub-agent analyzing a vulnerable Flask application and shows:
+- How Claude Code routes the security task to the sub-agent
+- Which agents are loaded and why
+- Expected vs actual security issue detection
+- Complete validation of all acceptance criteria
+- Performance measurements and caching behavior
+
 ## Advanced Usage
+
+### Claude Code Sub-Agent
+```bash
+# Test sub-agent functionality
+cd /path/to/your/code
+python3 /path/to/genai-sec-agents/app/claude_code/analyze_context.py $(pwd)/suspicious_file.py
+
+# Performance testing (should complete under 2 seconds)
+time python3 app/claude_code/analyze_context.py your_file.py
+
+# Cache testing (second run should be much faster)
+python3 app/claude_code/analyze_context.py your_file.py  # Populates cache
+python3 app/claude_code/analyze_context.py your_file.py  # Uses cache
+```
 
 ### Compiler Options
 ```bash
@@ -134,11 +230,38 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 ## Documentation
 
 - **[User Guide](docs/USER_GUIDE.md)** - Complete usage guide with examples and troubleshooting
+- **[Worked Example](docs/WORKED_EXAMPLE.md)** - ⭐ **Comprehensive demonstration** of Claude Code sub-agent analyzing vulnerable Flask app
 - **[Security Guide](docs/SECURITY_GUIDE.md)** - Security practices and guidelines  
 - **[Stories](docs/stories/)** - User story definitions and implementation tracking
 - **[Plans](docs/plans/)** - Technical implementation plans and specifications
 
+## Story Implementation Status
+
+| Story | Description | Status | Features |
+|-------|-------------|--------|----------|
+| **Story 1.2** | Rule Card Creation | ✅ **Complete** | 15 security Rule Cards across 5 domains |
+| **Story 1.3** | Agent Compiler Toolchain | ✅ **Complete** | 5 specialized agent packages, validation, CI/CD |
+| **Story 2.1** | Agentic Runtime & Router | ✅ **Complete** | AgenticRuntime engine for dynamic guidance |
+| **Story 2.2** | Claude Code Sub-Agent | ✅ **Complete** | Real-time IDE integration, <2s response, secure snippets |
+
+### Current Capabilities
+- ✅ **15 Security Rule Cards** covering secrets, web security, GenAI, containers
+- ✅ **5 Specialized Agents** with domain expertise
+- ✅ **Secure Compiler Toolchain** with comprehensive validation
+- ✅ **AgenticRuntime** for dynamic rule selection and guidance
+- ✅ **Claude Code Sub-Agent** with real-time security analysis
+- ✅ **Performance Optimization** with caching and timeout handling
+- ✅ **44 Comprehensive Tests** covering all components
+
 ## Integration
+
+### Claude Code Sub-Agent Integration
+The security-guidance sub-agent can be used within Claude Code for real-time security analysis:
+
+1. **Automatic Activation**: Claude Code automatically delegates security-related tasks to the sub-agent
+2. **Context-Aware Analysis**: Detects frameworks (Flask, Django, etc.) and provides targeted guidance
+3. **Performance Optimized**: Sub-2-second response requirement with intelligent caching
+4. **Secure Code Generation**: Provides validated secure code snippets
 
 ### CI/CD Pipeline Integration
 ```bash
@@ -160,13 +283,37 @@ Generated agent packages include `validation_hooks` mapping Rule Cards to scanne
 - **Hadolint**: 1 Docker linting rule
 - **Custom**: 3 domain-specific detection patterns
 
+## Testing
+
+### Comprehensive Test Suite (44 Tests)
+```bash
+# Run complete test suite
+python3 -m pytest tests/claude_code/test_sub_agent_framework.py -v
+
+# Test specific components
+python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask1 -v  # Sub-agent framework
+python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask2 -v  # Real-time guidance  
+python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask3 -v  # Secure snippets
+python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask4 -v  # Performance optimization
+```
+
+### Test Coverage
+- **Sub-Agent Configuration**: 3 tests validating Claude Code integration
+- **Runtime Management**: 5 tests covering initialization and package loading
+- **Context Analysis**: 8 tests for code analysis and guidance generation
+- **Security Validation**: 3 tests ensuring secure operation
+- **Enhanced Features**: 5 tests for Task 2 improvements (scoring, frameworks)
+- **Code Snippets**: 9 tests for Task 3 secure code generation
+- **Performance**: 9 tests for Task 4 optimization (caching, timeout, metrics)
+
 ## Contributing
 
 1. **Create Rule Cards**: Follow schema in existing examples
 2. **Validate Syntax**: `make validate`  
 3. **Test Integration**: `make test`
 4. **Build Packages**: `make build`
-5. **Submit Pull Request**: Include validation results
+5. **Test Claude Code Sub-Agent**: `python3 -m pytest tests/claude_code/ -v`
+6. **Submit Pull Request**: Include validation results
 
 ## Standards Compliance
 
