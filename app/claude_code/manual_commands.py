@@ -23,9 +23,20 @@ sys.path.insert(0, str(project_root / 'app'))
 try:
     from app.claude_code.analyze_context import CodeContextAnalyzer
     from app.claude_code.initialize_security_runtime import SecurityRuntimeManager
+    # Import semantic search components
+    from app.semantic import SemanticSearchInterface, SemanticSearchFeatureFlags
+    from app.semantic.semantic_search import SearchFilters
+    SEMANTIC_SEARCH_AVAILABLE = True
 except ImportError as e:
-    print(f"Error importing required components: {e}")
-    sys.exit(1)
+    print(f"Semantic search components not available: {e}")
+    SEMANTIC_SEARCH_AVAILABLE = False
+    
+    try:
+        from app.claude_code.analyze_context import CodeContextAnalyzer
+        from app.claude_code.initialize_security_runtime import SecurityRuntimeManager
+    except ImportError as e:
+        print(f"Error importing required components: {e}")
+        sys.exit(1)
 
 
 class SecurityAnalysisResults:
@@ -78,6 +89,18 @@ class ManualSecurityCommands:
         # Security: Path validation patterns
         self._allowed_paths = set()
         self._project_root = Path.cwd()  # Assume current working directory is project root
+        
+        # Semantic search integration
+        self.semantic_search = None
+        self.feature_flags = None
+        if SEMANTIC_SEARCH_AVAILABLE:
+            try:
+                self.semantic_search = SemanticSearchInterface()
+                self.feature_flags = SemanticSearchFeatureFlags()
+            except Exception as e:
+                logging.warning(f"Failed to initialize semantic search: {e}")
+                self.semantic_search = None
+                self.feature_flags = None
         
     def initialize(self) -> bool:
         """Initialize the analyzer and runtime components."""
@@ -277,6 +300,309 @@ class ManualSecurityCommands:
                 return future.result(timeout=self.ANALYSIS_TIMEOUT)
             except Exception as e:
                 raise TimeoutError(f"Analysis timed out after {self.ANALYSIS_TIMEOUT} seconds: {e}")
+    
+    def analyze_file_with_semantic_search(self, file_path: str, semantic_enabled: bool = False, 
+                                         analysis_depth: str = "standard") -> Dict[str, Any]:
+        """Enhanced file analysis with optional semantic search augmentation.
+        
+        Args:
+            file_path: Path to the file to analyze
+            semantic_enabled: Whether to enable semantic search enhancement
+            analysis_depth: Level of analysis ("standard" or "comprehensive")
+            
+        Returns:
+            Dictionary containing analysis results with semantic search supplements
+        """
+        if not self._initialized:
+            raise RuntimeError("Manual commands not initialized. Call initialize() first.")
+        
+        start_time = time.time()
+        
+        # Check semantic search availability and feature flags
+        use_semantic = (semantic_enabled and 
+                       self.semantic_search is not None and 
+                       self.feature_flags is not None and
+                       self.feature_flags.is_runtime_retrieval_enabled())
+        
+        try:
+            # Validate and get absolute path
+            validated_path = self._validate_file_path(file_path)
+            
+            # Get base analysis results
+            base_results = self.analyze_file(str(validated_path), analysis_depth)
+            
+            if not use_semantic:
+                # Add note about semantic search availability
+                if 'metadata' not in base_results:
+                    base_results['metadata'] = {}
+                base_results['metadata']['semantic_search_used'] = False
+                base_results['metadata']['semantic_search_available'] = self.semantic_search is not None
+                base_results['metadata']['semantic_search_enabled'] = semantic_enabled
+                return base_results
+            
+            # Enhance with semantic search
+            language = self._detect_language_from_extension(validated_path.suffix)
+            
+            # Read file content for context-aware search
+            with open(validated_path, 'r', encoding='utf-8', errors='ignore') as f:
+                file_content = f.read(10000)  # First 10KB for context
+            
+            # Perform semantic search
+            semantic_results = self.semantic_search.search_by_context(file_content, language)
+            
+            # Merge results
+            enhanced_results = self._merge_analysis_with_semantic(base_results, semantic_results)
+            
+            # Add processing metadata
+            processing_time = time.time() - start_time
+            enhanced_results['metadata']['semantic_search_used'] = True
+            enhanced_results['metadata']['semantic_processing_time_ms'] = int((processing_time - base_results.get('analysis_time', 0)) * 1000)
+            enhanced_results['metadata']['semantic_results_count'] = len(semantic_results.results)
+            
+            return enhanced_results
+            
+        except Exception as e:
+            logging.error(f"Enhanced file analysis failed: {e}")
+            # Fall back to base analysis
+            return self.analyze_file(file_path, analysis_depth)
+    
+    def analyze_workspace_with_semantic_search(self, workspace_path: Optional[str] = None,
+                                              semantic_options: Optional[Dict[str, Any]] = None,
+                                              analysis_depth: str = "standard") -> Dict[str, Any]:
+        """Enhanced workspace analysis with semantic search for edge case detection.
+        
+        Args:
+            workspace_path: Path to workspace directory (defaults to current directory)
+            semantic_options: Semantic search configuration options
+            analysis_depth: Level of analysis ("standard" or "comprehensive")
+            
+        Returns:
+            Dictionary containing workspace analysis results with semantic enhancements
+        """
+        if not self._initialized:
+            raise RuntimeError("Manual commands not initialized. Call initialize() first.")
+        
+        start_time = time.time()
+        
+        # Parse semantic options
+        semantic_options = semantic_options or {}
+        semantic_enabled = semantic_options.get('enabled', False)
+        filters = semantic_options.get('filters', {})
+        
+        # Check semantic search availability
+        use_semantic = (semantic_enabled and 
+                       self.semantic_search is not None and 
+                       self.feature_flags is not None and
+                       self.feature_flags.is_runtime_retrieval_enabled())
+        
+        try:
+            # Get base workspace analysis
+            base_results = self.analyze_workspace(workspace_path, analysis_depth)
+            
+            if not use_semantic:
+                base_results['metadata']['semantic_search_used'] = False
+                return base_results
+            
+            # Enhance with semantic search for edge cases
+            semantic_enhancements = []
+            
+            # Search for common edge cases not covered by compiled rules
+            edge_case_queries = [
+                "authentication bypass vulnerability",
+                "privilege escalation security flaw", 
+                "race condition security issue",
+                "memory leak security risk",
+                "time-based attack vulnerability"
+            ]
+            
+            # Create search filters based on workspace context
+            search_filters = SearchFilters(
+                languages=filters.get('languages', []),
+                categories=filters.get('categories', []),
+                severity_levels=filters.get('severity_levels', ['high', 'critical']),
+                confidence_threshold=0.6  # Higher threshold for workspace analysis
+            )
+            
+            for query in edge_case_queries:
+                try:
+                    semantic_results = self.semantic_search.search_query(query, search_filters)
+                    if semantic_results.results:
+                        high_confidence = semantic_results.get_high_confidence_results(0.7)
+                        if high_confidence:
+                            semantic_enhancements.extend(high_confidence[:2])  # Top 2 per query
+                except Exception as e:
+                    logging.warning(f"Semantic search failed for query '{query}': {e}")
+                    continue
+            
+            # Merge semantic enhancements with base results
+            enhanced_results = self._merge_workspace_with_semantic(base_results, semantic_enhancements)
+            
+            # Add processing metadata
+            processing_time = time.time() - start_time
+            enhanced_results['metadata']['semantic_search_used'] = True
+            enhanced_results['metadata']['semantic_enhancements_count'] = len(semantic_enhancements)
+            enhanced_results['metadata']['semantic_processing_time_ms'] = int((processing_time - base_results.get('analysis_time', 0)) * 1000)
+            
+            return enhanced_results
+            
+        except Exception as e:
+            logging.error(f"Enhanced workspace analysis failed: {e}")
+            # Fall back to base analysis
+            return self.analyze_workspace(workspace_path, analysis_depth)
+    
+    def explain_security_guidance(self, rule_id: str, code_context: str) -> Dict[str, Any]:
+        """Provide detailed explanation using semantic search for context.
+        
+        Args:
+            rule_id: Security rule identifier to explain
+            code_context: Code context for the explanation
+            
+        Returns:
+            Dictionary containing detailed explanation and related guidance
+        """
+        if not self._initialized:
+            raise RuntimeError("Manual commands not initialized. Call initialize() first.")
+        
+        explanation_result = {
+            'rule_id': rule_id,
+            'explanation': '',
+            'related_guidance': [],
+            'examples': [],
+            'references': [],
+            'semantic_search_used': False
+        }
+        
+        # Check if explain mode is enabled and semantic search is available
+        use_semantic = (self.semantic_search is not None and 
+                       self.feature_flags is not None and
+                       self.feature_flags.is_explain_mode_enabled())
+        
+        if not use_semantic:
+            explanation_result['explanation'] = f"Basic explanation for {rule_id} - semantic search not available"
+            return explanation_result
+        
+        try:
+            # Use semantic search to find detailed explanation
+            semantic_results = self.semantic_search.explain_rule_match(rule_id, code_context)
+            
+            if semantic_results.results:
+                # Extract explanation from top semantic results
+                top_results = semantic_results.get_top_results(3)
+                
+                explanation_parts = []
+                related_guidance = []
+                
+                for result in top_results:
+                    if result.confidence_score >= 0.7:
+                        explanation_parts.append(f"• {result.snippet}")
+                        
+                        related_guidance.append({
+                            'source': result.source_rule_id,
+                            'category': result.category,
+                            'severity': result.severity,
+                            'guidance': result.snippet
+                        })
+                
+                explanation_result['explanation'] = f"Detailed explanation for {rule_id}:\n" + "\n".join(explanation_parts)
+                explanation_result['related_guidance'] = related_guidance
+                explanation_result['semantic_search_used'] = True
+            else:
+                explanation_result['explanation'] = f"No detailed explanation found for {rule_id}"
+            
+            return explanation_result
+            
+        except Exception as e:
+            logging.error(f"Explanation generation failed: {e}")
+            explanation_result['explanation'] = f"Error generating explanation for {rule_id}: {str(e)}"
+            return explanation_result
+    
+    def _merge_analysis_with_semantic(self, base_results: Dict[str, Any], semantic_results) -> Dict[str, Any]:
+        """Merge base analysis results with semantic search results."""
+        enhanced_results = base_results.copy()
+        
+        # Add semantic search section
+        enhanced_results['semantic_supplements'] = {
+            'query_used': semantic_results.query,
+            'total_results': len(semantic_results.results),
+            'high_confidence_matches': [],
+            'additional_context': []
+        }
+        
+        # Categorize semantic results
+        high_confidence = semantic_results.get_high_confidence_results(0.7)
+        medium_confidence = [r for r in semantic_results.results if 0.4 <= r.confidence_score < 0.7]
+        
+        # Add high confidence matches as primary supplements
+        for result in high_confidence:
+            enhanced_results['semantic_supplements']['high_confidence_matches'].append({
+                'rule_id': result.source_rule_id,
+                'confidence': result.confidence_score,
+                'category': result.category,
+                'severity': result.severity,
+                'guidance': result.snippet
+            })
+        
+        # Add medium confidence as additional context
+        for result in medium_confidence[:3]:  # Limit to top 3
+            enhanced_results['semantic_supplements']['additional_context'].append({
+                'rule_id': result.source_rule_id,
+                'confidence': result.confidence_score,
+                'context': result.snippet
+            })
+        
+        return enhanced_results
+    
+    def _merge_workspace_with_semantic(self, base_results: Dict[str, Any], semantic_enhancements: List) -> Dict[str, Any]:
+        """Merge workspace analysis with semantic enhancements."""
+        enhanced_results = base_results.copy()
+        
+        # Add semantic enhancements section
+        enhanced_results['semantic_edge_cases'] = {
+            'total_enhancements': len(semantic_enhancements),
+            'edge_case_detections': [],
+            'additional_recommendations': []
+        }
+        
+        # Process semantic enhancements
+        for enhancement in semantic_enhancements:
+            edge_case = {
+                'rule_id': enhancement.source_rule_id,
+                'confidence': enhancement.confidence_score,
+                'category': enhancement.category,
+                'severity': enhancement.severity,
+                'description': enhancement.snippet,
+                'source_type': 'semantic_search'
+            }
+            
+            if enhancement.confidence_score >= 0.8:
+                enhanced_results['semantic_edge_cases']['edge_case_detections'].append(edge_case)
+            else:
+                enhanced_results['semantic_edge_cases']['additional_recommendations'].append(edge_case)
+        
+        return enhanced_results
+    
+    def _detect_language_from_extension(self, extension: str) -> str:
+        """Detect programming language from file extension."""
+        extension_map = {
+            '.py': 'python',
+            '.js': 'javascript', 
+            '.ts': 'typescript',
+            '.jsx': 'javascript',
+            '.tsx': 'typescript',
+            '.java': 'java',
+            '.go': 'go',
+            '.rs': 'rust',
+            '.rb': 'ruby',
+            '.php': 'php',
+            '.c': 'c',
+            '.cpp': 'cpp',
+            '.h': 'c',
+            '.hpp': 'cpp',
+            '.cs': 'csharp',
+            '.kt': 'kotlin',
+            '.swift': 'swift'
+        }
+        return extension_map.get(extension.lower(), 'unknown')
     
     def analyze_file(self, file_path: str, analysis_depth: str = "standard") -> Dict[str, Any]:
         """Analyze a single file for security issues.
@@ -508,13 +834,18 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="Manual Security Analysis Commands")
-    parser.add_argument("command", choices=["file", "workspace"], 
+    parser.add_argument("command", choices=["file", "workspace", "explain"], 
                        help="Analysis command type")
     parser.add_argument("--path", help="File or workspace path to analyze")
     parser.add_argument("--depth", choices=["standard", "comprehensive"], 
                        default="standard", help="Analysis depth")
     parser.add_argument("--format", choices=["json", "human"], 
                        default="human", help="Output format")
+    parser.add_argument("--semantic", action="store_true", 
+                       help="Enable semantic search enhancement (requires feature flag)")
+    parser.add_argument("--semantic-filters", help="JSON string with semantic search filters")
+    parser.add_argument("--rule-id", help="Rule ID for explanation command")
+    parser.add_argument("--code-context", help="Code context for explanation command")
     
     args = parser.parse_args()
     
@@ -525,13 +856,69 @@ def main():
         return 1
     
     try:
+        # Parse semantic filters if provided
+        semantic_options = {}
+        if args.semantic_filters:
+            import json
+            try:
+                semantic_options = json.loads(args.semantic_filters)
+            except json.JSONDecodeError:
+                print("ERROR: Invalid JSON format for --semantic-filters")
+                return 1
+        
         if args.command == "file":
             if not args.path:
                 print("ERROR: --path is required for file analysis")
                 return 1
-            result = commands.analyze_file(args.path, args.depth)
-        else:  # workspace
-            result = commands.analyze_workspace(args.path, args.depth)
+            
+            if args.semantic:
+                result = commands.analyze_file_with_semantic_search(
+                    args.path, semantic_enabled=True, analysis_depth=args.depth
+                )
+            else:
+                result = commands.analyze_file(args.path, args.depth)
+                
+        elif args.command == "workspace":
+            semantic_options['enabled'] = args.semantic
+            
+            if args.semantic:
+                result = commands.analyze_workspace_with_semantic_search(
+                    args.path, semantic_options=semantic_options, analysis_depth=args.depth
+                )
+            else:
+                result = commands.analyze_workspace(args.path, args.depth)
+                
+        elif args.command == "explain":
+            if not args.rule_id:
+                print("ERROR: --rule-id is required for explain command")
+                return 1
+            if not args.code_context:
+                print("ERROR: --code-context is required for explain command")
+                return 1
+                
+            explanation_result = commands.explain_security_guidance(args.rule_id, args.code_context)
+            
+            # Format explanation output
+            if args.format == "json":
+                import json
+                print(json.dumps(explanation_result, indent=2))
+            else:
+                print(f"\n🔍 **Security Rule Explanation**")
+                print(f"📋 Rule ID: {explanation_result['rule_id']}")
+                print(f"🔍 Semantic Search Used: {'✅' if explanation_result['semantic_search_used'] else '❌'}")
+                print(f"\n📝 **Explanation:**")
+                print(explanation_result['explanation'])
+                
+                if explanation_result['related_guidance']:
+                    print(f"\n🎯 **Related Guidance:**")
+                    for guidance in explanation_result['related_guidance']:
+                        print(f"  • {guidance['source']} ({guidance['category']}) - {guidance['severity']}")
+                        print(f"    └─ {guidance['guidance'][:100]}...")
+            
+            return 0
+        else:
+            print(f"ERROR: Unknown command: {args.command}")
+            return 1
         
         # Output results
         if args.format == "json":
@@ -555,6 +942,42 @@ def main():
             print(f"  💡 Low: {summary['low_count']}")
             print(f"🎯 CI/CD Prediction: {'PASS' if results['ci_cd_prediction']['would_pass'] else 'FAIL'}")
             print(f"⏱️ Analysis Time: {summary['analysis_time']:.2f}s")
+            
+            # Display semantic search information if available
+            metadata = results.get('metadata', {})
+            if 'semantic_search_used' in metadata:
+                semantic_used = metadata['semantic_search_used']
+                print(f"🔍 Semantic Search: {'✅ Enhanced' if semantic_used else '❌ Not Used'}")
+                
+                if semantic_used:
+                    if 'semantic_processing_time_ms' in metadata:
+                        print(f"   ⏱️ Semantic Processing: {metadata['semantic_processing_time_ms']}ms")
+                    if 'semantic_results_count' in metadata:
+                        print(f"   📊 Semantic Matches: {metadata['semantic_results_count']}")
+            
+            # Display semantic supplements if available
+            if 'semantic_supplements' in results:
+                supplements = results['semantic_supplements']
+                if supplements['high_confidence_matches']:
+                    print(f"\n🎯 **High Confidence Semantic Matches:**")
+                    for match in supplements['high_confidence_matches'][:3]:  # Top 3
+                        print(f"  • {match['rule_id']} [{match['confidence']:.2f}] ({match['category']})")
+                        print(f"    └─ {match['guidance'][:80]}...")
+            
+            # Display semantic edge cases if available
+            if 'semantic_edge_cases' in results:
+                edge_cases = results['semantic_edge_cases']
+                if edge_cases['edge_case_detections']:
+                    print(f"\n🔍 **Semantic Edge Case Detections:**")
+                    for case in edge_cases['edge_case_detections'][:3]:  # Top 3
+                        print(f"  • {case['rule_id']} [{case['confidence']:.2f}] ({case['category']})")
+                        print(f"    └─ {case['description'][:80]}...")
+                
+                if edge_cases['additional_recommendations']:
+                    print(f"\n💡 **Additional Semantic Recommendations:**")
+                    for rec in edge_cases['additional_recommendations'][:2]:  # Top 2
+                        print(f"  • {rec['rule_id']} [{rec['confidence']:.2f}]")
+                        print(f"    └─ {rec['description'][:80]}...")
         
         return 0
         

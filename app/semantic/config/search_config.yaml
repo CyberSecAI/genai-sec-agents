@@ -1,0 +1,31 @@
+# Semantic Search Configuration  
+# Controls search behavior, performance, and feature flags
+
+search:
+  performance:
+    max_query_time_seconds: 1.0
+    max_results: 50
+    cache_enabled: true
+    cache_ttl_seconds: 300  # 5 minutes
+    
+  filters:
+    languages: ["python", "javascript", "typescript", "java", "go", "rust", "php", "ruby"]
+    categories: ["authentication", "authorization", "input_validation", "crypto", "secrets", "web_security", "genai", "container"]
+    severity_levels: ["critical", "high", "medium", "low"]
+    
+  feature_flags:
+    runtime_retrieval_default: false  # OFF by default per ADR
+    explain_mode_default: true
+    pr_review_mode_default: false
+    audit_logging_enabled: true
+    
+  security:
+    input_sanitization: true
+    query_length_limit: 1000
+    results_size_limit_mb: 10
+    timeout_enabled: true
+    
+  quality:
+    min_confidence_score: 0.3
+    relevance_threshold: 0.5
+    max_snippet_length: 500
