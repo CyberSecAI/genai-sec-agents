@@ -11,7 +11,7 @@ This repository implements a complete security rule management and compilation t
 - **AgenticRuntime**: AI-powered runtime for dynamic security guidance (Story 2.1)
 - **Claude Code Sub-Agent**: Real-time security analysis within Claude Code IDE (Story 2.2) ✅
 - **Manual Security Analysis**: On-demand security scans for files and workspaces (Story 2.3) ✅
-- **Semtools Semantic Search**: Local semantic search for extended security knowledge (Story 2.4) 🚧
+- **Semtools Semantic Search**: Local semantic search for extended security knowledge (Story 2.4) ✅
 - **CI/CD Integration**: Makefile automation with validation and compilation workflows
 
 ## Quick Start
@@ -68,6 +68,24 @@ python3 app/claude_code/manual_commands.py workspace --path src/ --depth compreh
 python3 app/claude_code/manual_commands.py file --path file.py --format json
 ```
 
+### 7. Semantic Search Enhancement (Story 2.4) ✅
+```bash
+# Enable semantic search for enhanced analysis (requires feature flag)
+python3 app/claude_code/manual_commands.py file --path file.py --semantic
+
+# Semantic search with custom filters
+python3 app/claude_code/manual_commands.py workspace --semantic --semantic-filters '{"languages": ["python"], "severity_levels": ["high", "critical"]}'
+
+# Explain mode for detailed security guidance
+python3 app/claude_code/manual_commands.py explain --rule-id "SECRET-001" --code-context "api_key = 'hardcoded-secret'"
+
+# Generate and validate semantic search corpus
+python3 -c "from app.semantic import CorpusManager; cm = CorpusManager(); corpus = cm.render_corpus_from_packages([]); print('Corpus generated:', len(corpus.content), 'bytes')"
+
+# Check semantic search availability and statistics
+python3 -c "from app.semantic import SemanticSearchInterface; si = SemanticSearchInterface(); print('Available:', si.is_available()); print('Stats:', si.get_search_statistics())"
+```
+
 ## Generated Agent Packages
 
 The compilation process generates 5 specialized security agent packages:
@@ -94,7 +112,14 @@ app/
 │   └── ...                 # Runtime supporting modules
 ├── claude_code/             # Claude Code Sub-Agent (Story 2.2) ✅
 │   ├── initialize_security_runtime.py  # Performance-optimized runtime manager
-│   └── analyze_context.py  # Enhanced context analyzer with snippets
+│   ├── analyze_context.py  # Enhanced context analyzer with snippets
+│   └── manual_commands.py  # Manual analysis with semantic search integration ✅
+├── semantic/                # Semantic Search Integration (Story 2.4) ✅
+│   ├── corpus_manager.py    # Rule card corpus rendering and management
+│   ├── semantic_search.py   # Semtools interface with fallback search
+│   ├── feature_flags.py     # Runtime retrieval feature flag management
+│   ├── search_results.py    # Search result formatting and provenance
+│   └── config/             # Corpus and search configuration files
 ├── tools/                   # Compilation and validation toolchain
 │   ├── agents_manifest.yml # Agent configuration definitions
 │   ├── compile_agents.py   # Main compiler script  
@@ -111,6 +136,13 @@ docs/                       # Comprehensive project documentation
 
 tests/                      # Test suites with security validation
 ├── claude_code/           # Claude Code sub-agent tests (44 tests) ✅
+├── semantic/              # Semantic search test suites (100+ tests) ✅
+│   ├── test_corpus_manager.py           # Corpus management and security tests
+│   ├── test_semantic_search.py          # Search interface and fallback tests
+│   ├── test_feature_flags.py            # Feature flag and audit tests
+│   ├── test_developer_tools_integration.py # Integration tests
+│   ├── test_performance_reliability.py  # Performance and reliability tests
+│   └── test_complete_integration.py     # End-to-end integration tests
 └── runtime/               # Runtime engine test suites
 ```
 
@@ -127,7 +159,7 @@ The **security-guidance** sub-agent provides real-time security analysis within 
 - **🎯 Priority Alerts**: High/critical security issues highlighted prominently
 - **🔧 Manual Analysis Commands**: On-demand security scans for files and workspaces (Story 2.3)
 - **🎯 CI/CD Prediction**: Predict CI/CD pipeline outcomes before commit
-- **🔍 Semantic Search**: Local semantic search for extended security knowledge access (Story 2.4 - Planned)
+- **🔍 Semantic Search**: Local semantic search for extended security knowledge access (Story 2.4) ✅
 
 ### Sub-Agent Output Example
 ```
@@ -203,6 +235,47 @@ The Claude Code sub-agent now supports manual on-demand security analysis:
 - **⏱️ Resource Limits**: 30-second timeout, 1MB file size limit, 1000 file workspace limit
 - **🛡️ Input Validation**: Comprehensive sanitization of all user inputs
 - **📊 CI/CD Consistency**: Predictions match pipeline validation rules
+
+### 🔍 **Semantic Search Integration (Story 2.4)**
+
+**Hybrid Architecture**: Combines deterministic compiled rules with optional local semantic search for comprehensive coverage:
+
+```
+🔒 Security Analysis Results (Enhanced)
+📁 Files Analyzed: 15
+🔍 Total Issues: 8
+📊 Severity Breakdown:
+  🚨 Critical: 2
+  ⚠️ High: 1  
+  📋 Medium: 3
+  💡 Low: 2
+🎯 CI/CD Prediction: FAIL (3 blocking issues)
+⏱️ Analysis Time: 4.32s
+🔍 Semantic Search: ✅ Enhanced
+   ⏱️ Semantic Processing: 245ms
+   📊 Semantic Matches: 7
+
+🎯 **High Confidence Semantic Matches:**
+  • SECRET-MGMT-002 [0.89] (secrets)
+    └─ Use environment variables or secure key management systems for API keys
+  • AUTH-BYPASS-001 [0.83] (authentication)  
+    └─ Implement proper session management and token validation
+
+🔍 **Semantic Edge Case Detections:**
+  • RACE-CONDITION-001 [0.81] (concurrency)
+    └─ Potential race condition in multi-threaded authentication flow
+  • TIMING-ATTACK-001 [0.76] (crypto)
+    └─ String comparison vulnerable to timing attacks in password validation
+```
+
+**Semantic Search Features:**
+- **🎯 Local-Only Operation**: No external API calls, complete offline capability
+- **🔧 Feature Flag Control**: Runtime retrieval OFF by default (secure), can be enabled per-analysis
+- **🔍 Explain Mode**: Detailed explanations for security rules with context-aware guidance  
+- **📊 Edge Case Detection**: Finds vulnerabilities not covered by compiled rules
+- **⚡ Performance Optimized**: <1s search requirement with intelligent caching
+- **🛡️ Security-First**: Comprehensive input validation, audit logging, resource limits
+- **🔄 Graceful Fallback**: Works completely offline when semtools unavailable
 
 ### 📋 **Want to See This in Action?**
 Check out our **[Worked Example](docs/WORKED_EXAMPLE.md)** that demonstrates the sub-agent analyzing a vulnerable Flask application and shows:
@@ -292,6 +365,7 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 
 - **[User Guide](docs/USER_GUIDE.md)** - Complete usage guide with examples and troubleshooting
 - **[Worked Example](docs/WORKED_EXAMPLE.md)** - ⭐ **Comprehensive demonstration** of Claude Code sub-agent analyzing vulnerable Flask app
+- **[Semantic Search Guide](docs/SEMANTIC_SEARCH_GUIDE.md)** - ⭐ **Complete semantic search integration guide** with examples and best practices ✅
 - **[Security Guide](docs/SECURITY_GUIDE.md)** - Security practices and guidelines  
 - **[Stories](docs/stories/)** - User story definitions and implementation tracking
 - **[Plans](docs/plans/)** - Technical implementation plans and specifications
@@ -305,7 +379,8 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 | **Story 2.1** | Agentic Runtime & Router | ✅ **Complete** | AgenticRuntime engine for dynamic guidance |
 | **Story 2.2** | Claude Code Sub-Agent | ✅ **Complete** | Real-time IDE integration, <2s response, secure snippets |
 | **Story 2.3** | Manual On-Demand Execution | ✅ **Complete** | Manual security scans, workspace analysis, CI/CD prediction |
-| **Story 2.4** | Semtools Semantic Search | 🚧 **Planned** | Local semantic search, feature flags, corpus management |
+| **Story 2.4** | Semtools Semantic Search | ✅ **Complete** | Local semantic search, feature flags, corpus management, explain mode |
+| **Story 2.5** | OWASP Cheat Sheet Ingestion | 📋 **Planned** | Automated OWASP content ingestion, 100+ generated Rule Cards, hybrid knowledge base |
 
 ### Current Capabilities
 - ✅ **15 Security Rule Cards** covering secrets, web security, GenAI, containers
@@ -314,9 +389,10 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 - ✅ **AgenticRuntime** for dynamic rule selection and guidance
 - ✅ **Claude Code Sub-Agent** with real-time security analysis
 - ✅ **Manual Security Analysis** with file and workspace scanning
+- ✅ **Semantic Search Integration** with local corpus and feature flag control
 - ✅ **CI/CD Pipeline Prediction** for pre-commit validation
 - ✅ **Performance Optimization** with caching and timeout handling
-- ✅ **60+ Comprehensive Tests** covering all components and security validation
+- ✅ **150+ Comprehensive Tests** covering all components, semantic search, and security validation
 
 ## Integration
 
@@ -350,13 +426,16 @@ Generated agent packages include `validation_hooks` mapping Rule Cards to scanne
 
 ## Testing
 
-### Comprehensive Test Suite (44+ Tests)
+### Comprehensive Test Suite (150+ Tests)
 ```bash
 # Run complete test suite
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py -v
 
 # Test Story 2.3 Manual Execution (NEW)
 python3 -m pytest tests/claude_code/test_manual_execution.py -v
+
+# Test Story 2.4 Semantic Search Integration (NEW)
+python3 -m pytest tests/semantic/ -v
 
 # Test specific components
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask1 -v  # Sub-agent framework
@@ -383,6 +462,13 @@ python3 -m pytest tests/claude_code/test_manual_execution.py::TestSecurityValida
   - **Results Display**: Structured output, severity categorization, CI/CD prediction
   - **Security Validation**: Input sanitization, resource limits, authorization
   - **Integration**: End-to-end workflow testing and performance validation
+- **Semantic Search (NEW)**: 100+ tests for Story 2.4 semantic search integration
+  - **Corpus Management**: Rule card rendering, versioning, integrity validation, security features
+  - **Search Interface**: Query processing, semtools integration, fallback mechanism, input validation
+  - **Feature Flags**: Runtime retrieval control, audit logging, temporary enablement, configuration
+  - **Developer Tools**: Manual command integration, explain mode, result formatting
+  - **Performance & Reliability**: <1s search requirement, concurrent handling, resource limits
+  - **Complete Integration**: End-to-end workflows, hybrid architecture validation, ADR compliance
 
 ## Contributing
 
