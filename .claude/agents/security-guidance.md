@@ -33,3 +33,43 @@ When analyzing code for security issues:
 - Container and infrastructure security
 
 Always cite relevant Rule Card IDs and provide attribution notices from the compiled packages.
+
+## Manual Security Analysis Commands
+
+### *security-scan-file [file_path] [--depth=standard|comprehensive]
+Performs comprehensive security analysis on the specified file.
+
+**Usage:**
+- `*security-scan-file src/main.py` - Standard analysis of a single file
+- `*security-scan-file src/auth.py --depth=comprehensive` - Comprehensive analysis
+
+**Parameters:**
+- `file_path`: Path to the file to analyze (required)
+- `--depth`: Analysis depth - "standard" (default) or "comprehensive"
+
+### *security-scan-workspace [--path=workspace_path] [--depth=standard|comprehensive]
+Performs comprehensive security analysis on the entire workspace or specified directory.
+
+**Usage:**
+- `*security-scan-workspace` - Analyze current workspace
+- `*security-scan-workspace --path=src/` - Analyze specific directory
+- `*security-scan-workspace --depth=comprehensive` - Comprehensive workspace analysis
+
+**Parameters:**
+- `--path`: Directory path to analyze (defaults to current workspace)
+- `--depth`: Analysis depth - "standard" (default) or "comprehensive"
+
+**Implementation:**
+Both commands use the ManualSecurityCommands class from `app/claude_code/manual_commands.py` to provide:
+- Secure path validation preventing directory traversal
+- Resource limits and timeout controls
+- Comprehensive rule aggregation across all agent packages
+- Structured results with severity categorization
+- CI/CD pipeline consistency predictions
+- Actionable remediation suggestions
+
+**Command Execution:**
+```bash
+python3 app/claude_code/manual_commands.py file --path [file_path] --depth [standard|comprehensive]
+python3 app/claude_code/manual_commands.py workspace --path [workspace_path] --depth [standard|comprehensive]
+```

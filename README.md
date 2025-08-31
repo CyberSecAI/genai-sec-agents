@@ -10,6 +10,7 @@ This repository implements a complete security rule management and compilation t
 - **Specialized Agents**: 5 domain-specific security agents compiled from Rule Cards
 - **AgenticRuntime**: AI-powered runtime for dynamic security guidance (Story 2.1)
 - **Claude Code Sub-Agent**: Real-time security analysis within Claude Code IDE (Story 2.2) ✅
+- **Manual Security Analysis**: On-demand security scans for files and workspaces (Story 2.3) ✅
 - **CI/CD Integration**: Makefile automation with validation and compilation workflows
 
 ## Quick Start
@@ -46,6 +47,24 @@ python3 app/claude_code/analyze_context.py /path/to/your/code.py --format=guidan
 
 # JSON output for programmatic use
 python3 app/claude_code/analyze_context.py /path/to/your/code.py --format=json
+```
+
+### 6. Manual Security Analysis Commands (Story 2.3)
+```bash
+# Analyze a single file for security issues
+python3 app/claude_code/manual_commands.py file --path /path/to/your/file.py
+
+# Comprehensive analysis of a single file
+python3 app/claude_code/manual_commands.py file --path /path/to/your/file.py --depth comprehensive
+
+# Analyze entire workspace for security issues
+python3 app/claude_code/manual_commands.py workspace
+
+# Analyze specific directory with comprehensive depth
+python3 app/claude_code/manual_commands.py workspace --path src/ --depth comprehensive
+
+# JSON output for programmatic integration
+python3 app/claude_code/manual_commands.py file --path file.py --format json
 ```
 
 ## Generated Agent Packages
@@ -105,6 +124,8 @@ The **security-guidance** sub-agent provides real-time security analysis within 
 - **💻 Secure Code Snippets**: Context-aware secure implementation examples
 - **⚡ Smart Caching**: Package and analysis result caching for faster responses
 - **🎯 Priority Alerts**: High/critical security issues highlighted prominently
+- **🔧 Manual Analysis Commands**: On-demand security scans for files and workspaces (Story 2.3)
+- **🎯 CI/CD Prediction**: Predict CI/CD pipeline outcomes before commit
 
 ### Sub-Agent Output Example
 ```
@@ -142,6 +163,44 @@ Configure Flask cookies with security attributes to prevent XSS attacks...
 
 🔒 Analysis: Input sanitized, context enhanced, 5 agents loaded
 ```
+
+### Manual Security Analysis Commands (Story 2.3)
+
+The Claude Code sub-agent now supports manual on-demand security analysis:
+
+**Available Commands:**
+- `*security-scan-file [file_path] [--depth=standard|comprehensive]` - Analyze single file
+- `*security-scan-workspace [--path=workspace_path] [--depth=standard|comprehensive]` - Analyze workspace
+
+**Example Manual Analysis Output:**
+```
+🔒 Security Analysis Results
+📁 Files Analyzed: 15
+🔍 Total Issues: 8
+📊 Severity Breakdown:
+  🚨 Critical: 2
+  ⚠️ High: 1
+  📋 Medium: 3
+  💡 Low: 2
+🎯 CI/CD Prediction: FAIL (3 blocking issues)
+⏱️ Analysis Time: 4.32s
+
+🚨 **Blocking Issues for CI/CD:**
+- HARDCODED-JWT-SECRET-001: Remove hardcoded JWT secrets (Critical)
+- SSRF-VULNERABILITY-002: Validate URLs in proxy endpoint (High)
+- INSECURE-COOKIE-CONFIG: Add HttpOnly flag to session cookies (High)
+
+💡 **Remediation Priority:**
+1. ✅ Store JWT secrets in environment variables
+2. ✅ Implement URL whitelist for proxy requests  
+3. ✅ Configure secure cookie attributes
+```
+
+**Security Features:**
+- **🔐 Path Traversal Protection**: Prevents access outside project boundaries
+- **⏱️ Resource Limits**: 30-second timeout, 1MB file size limit, 1000 file workspace limit
+- **🛡️ Input Validation**: Comprehensive sanitization of all user inputs
+- **📊 CI/CD Consistency**: Predictions match pipeline validation rules
 
 ### 📋 **Want to See This in Action?**
 Check out our **[Worked Example](docs/WORKED_EXAMPLE.md)** that demonstrates the sub-agent analyzing a vulnerable Flask application and shows:
@@ -243,6 +302,7 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 | **Story 1.3** | Agent Compiler Toolchain | ✅ **Complete** | 5 specialized agent packages, validation, CI/CD |
 | **Story 2.1** | Agentic Runtime & Router | ✅ **Complete** | AgenticRuntime engine for dynamic guidance |
 | **Story 2.2** | Claude Code Sub-Agent | ✅ **Complete** | Real-time IDE integration, <2s response, secure snippets |
+| **Story 2.3** | Manual On-Demand Execution | ✅ **Complete** | Manual security scans, workspace analysis, CI/CD prediction |
 
 ### Current Capabilities
 - ✅ **15 Security Rule Cards** covering secrets, web security, GenAI, containers
@@ -250,8 +310,10 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 - ✅ **Secure Compiler Toolchain** with comprehensive validation
 - ✅ **AgenticRuntime** for dynamic rule selection and guidance
 - ✅ **Claude Code Sub-Agent** with real-time security analysis
+- ✅ **Manual Security Analysis** with file and workspace scanning
+- ✅ **CI/CD Pipeline Prediction** for pre-commit validation
 - ✅ **Performance Optimization** with caching and timeout handling
-- ✅ **44 Comprehensive Tests** covering all components
+- ✅ **60+ Comprehensive Tests** covering all components and security validation
 
 ## Integration
 
@@ -285,16 +347,23 @@ Generated agent packages include `validation_hooks` mapping Rule Cards to scanne
 
 ## Testing
 
-### Comprehensive Test Suite (44 Tests)
+### Comprehensive Test Suite (44+ Tests)
 ```bash
 # Run complete test suite
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py -v
+
+# Test Story 2.3 Manual Execution (NEW)
+python3 -m pytest tests/claude_code/test_manual_execution.py -v
 
 # Test specific components
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask1 -v  # Sub-agent framework
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask2 -v  # Real-time guidance  
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask3 -v  # Secure snippets
 python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask4 -v  # Performance optimization
+
+# Test manual analysis features
+python3 -m pytest tests/claude_code/test_manual_execution.py::TestManualCommandInterface -v
+python3 -m pytest tests/claude_code/test_manual_execution.py::TestSecurityValidation -v
 ```
 
 ### Test Coverage
@@ -305,6 +374,12 @@ python3 -m pytest tests/claude_code/test_sub_agent_framework.py::TestTask4 -v  #
 - **Enhanced Features**: 5 tests for Task 2 improvements (scoring, frameworks)
 - **Code Snippets**: 9 tests for Task 3 secure code generation
 - **Performance**: 9 tests for Task 4 optimization (caching, timeout, metrics)
+- **Manual Commands (NEW)**: 15+ tests for Story 2.3 manual analysis features
+  - **Command Interface**: Path validation, parameter validation, security controls
+  - **Analysis Engine**: File discovery, workspace traversal, rule aggregation
+  - **Results Display**: Structured output, severity categorization, CI/CD prediction
+  - **Security Validation**: Input sanitization, resource limits, authorization
+  - **Integration**: End-to-end workflow testing and performance validation
 
 ## Contributing
 

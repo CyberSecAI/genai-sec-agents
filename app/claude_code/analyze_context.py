@@ -875,6 +875,341 @@ secret = config.secret_key
         
         return "\n".join(output)
 
+    # === Manual Analysis Extensions for Story 2.3 ===
+    
+    def analyze_file_manual(self, file_path: str, include_all_rules: bool = True) -> Dict[str, Any]:
+        """Analyze file with comprehensive rule set for manual analysis.
+        
+        Args:
+            file_path: Path to file to analyze
+            include_all_rules: Whether to include all applicable rules (True for manual mode)
+            
+        Returns:
+            Enhanced analysis results for manual use
+        """
+        if not self.runtime:
+            return {"error": "Runtime not initialized"}
+        
+        try:
+            file_path_obj = Path(file_path)
+            
+            # Read file content
+            if not file_path_obj.exists():
+                return {"error": f"File not found: {file_path}"}
+            
+            try:
+                code_content = file_path_obj.read_text(encoding='utf-8')
+            except Exception as e:
+                return {"error": f"Failed to read file: {e}"}
+            
+            # Enhanced context for manual analysis
+            context = self._enhance_context_analysis(file_path_obj, code_content)
+            context["manual_mode"] = True
+            context["comprehensive_analysis"] = include_all_rules
+            
+            # Get all applicable rules from all packages for comprehensive analysis
+            if include_all_rules:
+                all_rules = self._select_all_applicable_rules(context)
+                context["force_all_rules"] = True
+            
+            # Get guidance with extended timeout for manual mode
+            guidance_response = self._get_guidance_with_timeout(context, 10.0)  # 10s for manual
+            
+            if not guidance_response:
+                return {"error": "No guidance response received"}
+            
+            # Enhanced result building for manual analysis
+            result = self._build_manual_analysis_result(
+                file_path_obj, guidance_response.get("selected_rules", []), 
+                guidance_response, context
+            )
+            
+            return result
+            
+        except Exception as e:
+            return {"error": f"Manual analysis failed: {e}"}
+
+    def analyze_workspace_manual(self, workspace_path: str, 
+                               file_filters: Optional[List[str]] = None) -> Dict[str, Any]:
+        """Analyze multiple files in workspace for manual analysis.
+        
+        Args:
+            workspace_path: Path to workspace directory
+            file_filters: Optional list of file patterns to include
+            
+        Returns:
+            Aggregated analysis results for workspace
+        """
+        workspace_path_obj = Path(workspace_path)
+        
+        if not workspace_path_obj.exists():
+            return {"error": f"Workspace path not found: {workspace_path}"}
+        
+        if not workspace_path_obj.is_dir():
+            return {"error": f"Workspace path is not a directory: {workspace_path}"}
+        
+        try:
+            # Discover files using the manual commands logic (reuse for consistency)
+            from app.claude_code.manual_commands import ManualSecurityCommands
+            manual_cmd = ManualSecurityCommands()
+            discovered_files = manual_cmd._discover_workspace_files(workspace_path_obj, file_filters)
+            
+            if not discovered_files:
+                return {
+                    "workspace_path": str(workspace_path_obj),
+                    "files_found": 0,
+                    "files_analyzed": 0,
+                    "aggregated_results": [],
+                    "summary": {
+                        "total_issues": 0,
+                        "critical_issues": 0,
+                        "high_issues": 0,
+                        "medium_issues": 0,
+                        "low_issues": 0
+                    }
+                }
+            
+            # Analyze each file
+            file_results = []
+            for file_path in discovered_files[:50]:  # Limit to 50 files for performance
+                try:
+                    result = self.analyze_file_manual(str(file_path), include_all_rules=True)
+                    if "error" not in result:
+                        file_results.append(result)
+                except Exception as e:
+                    # Continue with other files if one fails
+                    continue
+            
+            # Aggregate results
+            aggregated = self._aggregate_analysis_results(file_results)
+            aggregated["workspace_path"] = str(workspace_path_obj)
+            aggregated["files_found"] = len(discovered_files)
+            aggregated["files_analyzed"] = len(file_results)
+            
+            return aggregated
+            
+        except Exception as e:
+            return {"error": f"Workspace analysis failed: {e}"}
+    
+    def _select_all_applicable_rules(self, context: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Select all applicable rules from all agent packages for manual analysis.
+        
+        Args:
+            context: Analysis context
+            
+        Returns:
+            List of all applicable rules across packages
+        """
+        if not self.runtime:
+            return []
+        
+        try:
+            # Get all loaded packages
+            packages = self.runtime_manager.get_loaded_packages()
+            all_rules = []
+            
+            for package_name, package_path in packages.items():
+                try:
+                    # Load package content to get rules
+                    import json
+                    with open(package_path, 'r') as f:
+                        package_data = json.load(f)
+                    
+                    # Extract rules from package
+                    rules = package_data.get("rules_detail", [])
+                    
+                    # Add package context to each rule
+                    for rule in rules:
+                        rule["source_package"] = package_name
+                        rule["package_path"] = str(package_path)
+                    
+                    all_rules.extend(rules)
+                    
+                except Exception as e:
+                    # Continue with other packages if one fails
+                    continue
+            
+            return all_rules
+            
+        except Exception as e:
+            return []
+    
+    def _aggregate_analysis_results(self, file_results: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Aggregate results from multiple file analyses.
+        
+        Args:
+            file_results: List of individual file analysis results
+            
+        Returns:
+            Aggregated analysis results
+        """
+        if not file_results:
+            return {
+                "aggregated_results": [],
+                "summary": {
+                    "total_issues": 0,
+                    "critical_issues": 0,
+                    "high_issues": 0,
+                    "medium_issues": 0,
+                    "low_issues": 0,
+                    "files_with_issues": 0,
+                    "highest_severity": "none"
+                }
+            }
+        
+        aggregated = {
+            "aggregated_results": file_results,
+            "summary": {
+                "total_issues": 0,
+                "critical_issues": 0,
+                "high_issues": 0,
+                "medium_issues": 0,
+                "low_issues": 0,
+                "files_with_issues": 0,
+                "highest_severity": "low"
+            }
+        }
+        
+        # Aggregate issue counts
+        for result in file_results:
+            rules = result.get("selected_rules", [])
+            if rules:
+                aggregated["summary"]["files_with_issues"] += 1
+                
+                for rule in rules:
+                    severity = rule.get("severity", "medium").lower()
+                    
+                    if severity == "critical":
+                        aggregated["summary"]["critical_issues"] += 1
+                        aggregated["summary"]["highest_severity"] = "critical"
+                    elif severity == "high":
+                        aggregated["summary"]["high_issues"] += 1
+                        if aggregated["summary"]["highest_severity"] not in ["critical"]:
+                            aggregated["summary"]["highest_severity"] = "high"
+                    elif severity == "medium":
+                        aggregated["summary"]["medium_issues"] += 1
+                        if aggregated["summary"]["highest_severity"] not in ["critical", "high"]:
+                            aggregated["summary"]["highest_severity"] = "medium"
+                    else:  # low
+                        aggregated["summary"]["low_issues"] += 1
+        
+        aggregated["summary"]["total_issues"] = (
+            aggregated["summary"]["critical_issues"] +
+            aggregated["summary"]["high_issues"] +
+            aggregated["summary"]["medium_issues"] +
+            aggregated["summary"]["low_issues"]
+        )
+        
+        return aggregated
+    
+    def _build_manual_analysis_result(self, file_path_obj: Path, selected_rules: List[Dict],
+                                    guidance_response: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
+        """Build enhanced analysis result for manual analysis mode.
+        
+        Args:
+            file_path_obj: Path object for the analyzed file
+            selected_rules: Rules selected for this analysis
+            guidance_response: Response from guidance generation
+            context: Analysis context
+            
+        Returns:
+            Enhanced analysis result with manual mode features
+        """
+        # Base result
+        result = self._build_analysis_result(file_path_obj, selected_rules, guidance_response, context)
+        
+        # Add manual analysis enhancements
+        result["manual_analysis"] = True
+        result["comprehensive_mode"] = context.get("comprehensive_analysis", True)
+        result["frameworks_detected"] = context.get("framework_hints", [])
+        
+        # Enhanced rule processing for manual mode
+        enhanced_rules = []
+        for rule in selected_rules:
+            enhanced_rule = rule.copy()
+            
+            # Add CI/CD consistency information
+            enhanced_rule["cicd_relevant"] = self._is_rule_cicd_relevant(rule)
+            enhanced_rule["blocking_severity"] = rule.get("severity") in ["critical", "high"]
+            
+            # Generate actionable remediation
+            enhanced_rule["remediation_steps"] = self._generate_remediation_steps(rule)
+            
+            enhanced_rules.append(enhanced_rule)
+        
+        result["selected_rules"] = enhanced_rules
+        result["cicd_prediction"] = self._predict_cicd_outcome(enhanced_rules)
+        
+        return result
+    
+    def _is_rule_cicd_relevant(self, rule: Dict[str, Any]) -> bool:
+        """Check if a rule is relevant for CI/CD pipeline validation.
+        
+        Args:
+            rule: Rule to check
+            
+        Returns:
+            True if rule would be checked in CI/CD pipeline
+        """
+        # Rules with detect hooks are typically CI/CD relevant
+        return bool(rule.get("detect", {}))
+    
+    def _generate_remediation_steps(self, rule: Dict[str, Any]) -> List[str]:
+        """Generate specific remediation steps for a rule.
+        
+        Args:
+            rule: Rule to generate remediation for
+            
+        Returns:
+            List of actionable remediation steps
+        """
+        steps = []
+        
+        # Add steps from rule's "do" recommendations
+        do_items = rule.get("do", [])
+        for item in do_items:
+            steps.append(f"✅ {item}")
+        
+        # Add steps to avoid from rule's "dont" items
+        dont_items = rule.get("dont", [])
+        for item in dont_items:
+            steps.append(f"❌ Avoid: {item}")
+        
+        # Add verification steps
+        verify_tests = rule.get("verify", {}).get("tests", [])
+        for test in verify_tests:
+            steps.append(f"🔍 Verify: {test}")
+        
+        return steps if steps else ["Review the security requirement and apply appropriate fixes"]
+    
+    def _predict_cicd_outcome(self, rules: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Predict CI/CD pipeline outcome based on analysis results.
+        
+        Args:
+            rules: List of rules/issues found
+            
+        Returns:
+            CI/CD prediction information
+        """
+        critical_count = sum(1 for rule in rules if rule.get("severity") == "critical")
+        high_count = sum(1 for rule in rules if rule.get("severity") == "high")
+        blocking_count = critical_count + high_count
+        
+        # CI/CD typically fails on critical/high severity issues
+        would_pass = blocking_count == 0
+        
+        return {
+            "would_pass": would_pass,
+            "blocking_issues": blocking_count,
+            "critical_issues": critical_count,
+            "high_issues": high_count,
+            "confidence": "high" if blocking_count <= 2 else "medium",
+            "recommendation": (
+                "Code is ready for commit" if would_pass 
+                else f"Fix {blocking_count} blocking issues before commit"
+            )
+        }
+
 
 def main():
     """Main entry point for context analysis."""
@@ -901,6 +1236,8 @@ def main():
         print(analyzer.format_guidance_output(result))
     
     return 0
+
+
 
 
 if __name__ == "__main__":

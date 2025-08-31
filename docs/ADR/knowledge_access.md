@@ -36,7 +36,7 @@ Several approaches were considered:
 
    * Use **medium-granularity sub-agents** (topic+language, \~6–12 rules each).
    * Agents load essential, compiled rules by default.
-   * Optionally, a local semantic search tool (semtools) can provide *extra snippets* from the rule card corpus.
+   * Optionally, a local semantic search tool ([semtools](https://github.com/run-llama/semtools)) can provide *extra snippets* from the rule card corpus.
    * Pros: freshness and explainability without external infra; low latency compared to vector DBs; simple updates (re-run corpus render).
    * Cons: introduces some non-determinism, modest extra complexity.
 
