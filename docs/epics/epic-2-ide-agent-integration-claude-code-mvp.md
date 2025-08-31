@@ -33,3 +33,13 @@
     2. When invoked, the agent performs a security analysis of the specified code against all relevant Rule Cards.  
     3. The results are displayed in a clear, easy-to-read format in the IDE's interface.  
     4. This manual execution provides feedback consistent with the automated CI/CD checks (**NFR2**).
+* **Story 2.4: Semtools Semantic Search Integration**  
+  * **As a** Deadline-Driven Developer (Daniella),  
+  * **I want** semantic search capabilities that can find relevant security guidance from the rule card corpus when I encounter edge cases not covered by compiled rules,  
+  * **so that** I can access comprehensive security knowledge without leaving my IDE while maintaining fast, deterministic core behavior.  
+  * **Acceptance Criteria:**  
+    1. A corpus management system can render rule cards into searchable format and maintain freshness tracking.  
+    2. A semantic search interface can query the local corpus with ranked results and provenance tracking.  
+    3. Runtime retrieval is controlled by feature flags (default: OFF) with comprehensive audit logging.  
+    4. Manual commands are enhanced with semantic search options and explain mode for extended coverage.  
+    5. Performance meets requirements (<1s search, graceful offline fallback, manageable corpus size).

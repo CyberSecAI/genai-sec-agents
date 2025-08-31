@@ -11,6 +11,7 @@ This repository implements a complete security rule management and compilation t
 - **AgenticRuntime**: AI-powered runtime for dynamic security guidance (Story 2.1)
 - **Claude Code Sub-Agent**: Real-time security analysis within Claude Code IDE (Story 2.2) ✅
 - **Manual Security Analysis**: On-demand security scans for files and workspaces (Story 2.3) ✅
+- **Semtools Semantic Search**: Local semantic search for extended security knowledge (Story 2.4) 🚧
 - **CI/CD Integration**: Makefile automation with validation and compilation workflows
 
 ## Quick Start
@@ -126,6 +127,7 @@ The **security-guidance** sub-agent provides real-time security analysis within 
 - **🎯 Priority Alerts**: High/critical security issues highlighted prominently
 - **🔧 Manual Analysis Commands**: On-demand security scans for files and workspaces (Story 2.3)
 - **🎯 CI/CD Prediction**: Predict CI/CD pipeline outcomes before commit
+- **🔍 Semantic Search**: Local semantic search for extended security knowledge access (Story 2.4 - Planned)
 
 ### Sub-Agent Output Example
 ```
@@ -303,6 +305,7 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 | **Story 2.1** | Agentic Runtime & Router | ✅ **Complete** | AgenticRuntime engine for dynamic guidance |
 | **Story 2.2** | Claude Code Sub-Agent | ✅ **Complete** | Real-time IDE integration, <2s response, secure snippets |
 | **Story 2.3** | Manual On-Demand Execution | ✅ **Complete** | Manual security scans, workspace analysis, CI/CD prediction |
+| **Story 2.4** | Semtools Semantic Search | 🚧 **Planned** | Local semantic search, feature flags, corpus management |
 
 ### Current Capabilities
 - ✅ **15 Security Rule Cards** covering secrets, web security, GenAI, containers
