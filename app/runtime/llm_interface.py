@@ -5,10 +5,12 @@ Provides flexible interface for integrating with different LLM providers
 while maintaining consistent prompt formatting and response handling.
 
 Security Features:
-- Sanitizes rule content before prompt integration
+- Centralized input validation using security module
+- Structured prompt templates with context isolation
+- Proper prompt injection defense (no ineffective blacklisting)
+- Content size limits and truncation
+- Secure response parsing and validation
 - Prevents sensitive data leakage in prompts
-- Implements secure response parsing
-- Validates all LLM interactions
 """
 
 import logging
@@ -16,6 +18,8 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any
 import json
 import re
+
+from ..security import InputValidator, ValidationError
 
 
 class LLMInterfaceError(Exception):
@@ -280,7 +284,7 @@ class LLMInterface:
     
     def _validate_inputs(self, context: Dict, rules: List[Dict]) -> None:
         """
-        Validate inputs for security issues.
+        Validate inputs for security issues using centralized validation.
         
         Args:
             context: Context to validate
@@ -289,32 +293,48 @@ class LLMInterface:
         Raises:
             LLMInterfaceError: If validation fails
         """
-        if not isinstance(context, dict):
-            raise LLMInterfaceError("Context must be a dictionary")
-        
-        if not isinstance(rules, list):
-            raise LLMInterfaceError("Rules must be a list")
-        
-        # Validate context content size
-        content = context.get('content', '')
-        if len(content) > 50000:  # 50KB limit
-            raise LLMInterfaceError("Content too large for LLM processing")
-        
-        # Check for too many rules
-        if len(rules) > 20:
-            raise LLMInterfaceError("Too many rules for single guidance request")
+        try:
+            # Use centralized validation for context
+            validated_context = InputValidator.validate_context_dict(context)
+            
+            if not isinstance(rules, list):
+                raise LLMInterfaceError("Rules must be a list")
+            
+            # Check for too many rules
+            if len(rules) > 20:
+                raise LLMInterfaceError("Too many rules for single guidance request")
+            
+            # Validate each rule structure
+            for i, rule in enumerate(rules):
+                if not isinstance(rule, dict):
+                    raise LLMInterfaceError(f"Rule {i} must be a dictionary")
+                
+                # Validate critical rule fields
+                required_fields = ['id', 'title', 'requirement']
+                for field in required_fields:
+                    if field not in rule or not isinstance(rule[field], str):
+                        raise LLMInterfaceError(f"Rule {i} missing valid {field}")
+            
+        except ValidationError as e:
+            raise LLMInterfaceError(f"Input validation failed: {e}")
     
     def _format_prompt(self, context: Dict, rules: List[Dict], agent_metadata: Dict) -> str:
         """
-        Format secure prompt with context and rules.
+        Format secure prompt with context and rules using structured templates.
+        
+        This method implements proper prompt injection defense through:
+        1. Structured prompt templates with clear boundaries
+        2. Context isolation using template placeholders
+        3. Input validation via centralized security module
+        4. Content truncation to prevent overflow attacks
         
         Args:
-            context: Development context
-            rules: Security rules
+            context: Development context (pre-validated)
+            rules: Security rules (pre-validated)
             agent_metadata: Agent metadata
             
         Returns:
-            Formatted prompt string
+            Formatted prompt string with security boundaries
         """
         try:
             # Sanitize context data
@@ -350,57 +370,34 @@ class LLMInterface:
         """
         sanitized = {}
         
-        # Sanitize file path
+        # Sanitize file path using centralized validation
         if 'file_path' in context:
-            file_path = str(context['file_path'])
-            # Remove sensitive patterns
-            file_path = re.sub(r'[<>"|*?]', '', file_path)[:200]
-            sanitized['file_path'] = file_path
+            try:
+                sanitized['file_path'] = InputValidator.validate_file_path_string(context['file_path'])
+            except ValidationError:
+                # Use safe default if validation fails
+                sanitized['file_path'] = 'unknown_file'
         
-        # Sanitize content
+        # Sanitize content using centralized validation
         if 'content' in context:
-            content = str(context['content'])
-            # Remove potential prompt injection patterns
-            content = self._remove_prompt_injection(content)
-            sanitized['content'] = content
+            try:
+                sanitized['content'] = InputValidator.validate_code_content(context['content'])
+            except ValidationError as e:
+                self.logger.warning(f"Content validation failed, using truncated version: {e}")
+                # Fallback to truncated content if validation fails
+                sanitized['content'] = self._truncate_content(str(context['content']), 1000)
         
-        # Copy safe fields
+        # Copy safe fields using centralized validation
         for field in ['language', 'framework', 'domain']:
             if field in context:
-                value = str(context[field])[:50]
-                # Basic alphanumeric + common chars only
-                if re.match(r'^[a-zA-Z0-9\-_.]+$', value):
-                    sanitized[field] = value
+                try:
+                    sanitized[field] = InputValidator.validate_string_field(context[field], field)
+                except ValidationError:
+                    # Skip invalid fields
+                    continue
         
         return sanitized
     
-    def _remove_prompt_injection(self, content: str) -> str:
-        """
-        Remove potential prompt injection patterns from content.
-        
-        Args:
-            content: Content to sanitize
-            
-        Returns:
-            Sanitized content
-        """
-        # Remove common prompt injection patterns
-        injection_patterns = [
-            r'ignore\s+previous\s+instructions',
-            r'forget\s+everything',
-            r'system\s*:',
-            r'assistant\s*:',
-            r'human\s*:',
-            r'</[^>]+>',  # HTML-like tags
-            r'\[INST\]',  # Instruction markers
-            r'\[/INST\]'
-        ]
-        
-        sanitized = content
-        for pattern in injection_patterns:
-            sanitized = re.sub(pattern, '[FILTERED]', sanitized, flags=re.IGNORECASE)
-        
-        return sanitized
     
     def _format_rules_summary(self, rules: List[Dict]) -> str:
         """

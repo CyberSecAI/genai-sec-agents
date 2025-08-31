@@ -21,6 +21,10 @@ from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import logging
 
+# Import centralized security modules
+from ..security import (InputValidator, ValidationError, PathValidator, PathTraversalError,
+                       PackageIntegrityValidator, PackageManifest, IntegrityError)
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -52,6 +56,8 @@ class RuleCardCompiler:
         self.config = config
         self.manifest = None
         self.rule_cards = {}
+        self.integrity_validator = PackageIntegrityValidator()
+        self.source_files_used = []  # Track source files for integrity validation
         
     def load_manifest(self) -> Dict[str, Any]:
         """Load and validate the agent manifest file."""
@@ -107,6 +113,9 @@ class RuleCardCompiler:
                     if rule_card:
                         rule_card['_source_file'] = str(file_path.relative_to(base_path))
                         rule_cards.append(rule_card)
+                        # Track source file for integrity validation
+                        if file_path not in self.source_files_used:
+                            self.source_files_used.append(file_path)
                         
             except Exception as e:
                 logger.error(f"Error processing pattern {pattern}: {e}")
@@ -131,6 +140,14 @@ class RuleCardCompiler:
             
             if missing_fields:
                 logger.warning(f"Rule card {file_path} missing fields: {missing_fields}")
+                return None
+            
+            # Validate critical string fields using centralized validation
+            try:
+                rule_card['id'] = InputValidator.validate_string_field(rule_card['id'], 'rule_card_id')
+                rule_card['title'] = InputValidator.validate_string_field(rule_card['title'], 'rule_card_title')
+            except ValidationError as e:
+                logger.warning(f"Rule card {file_path} validation failed: {e}")
                 return None
                 
             return rule_card
@@ -330,6 +347,31 @@ class RuleCardCompiler:
         }
         
         logger.info(f"Compiled {agent_name}: {len(clean_rule_cards)} rules, {len(validation_hooks)} hook types")
+        
+        # Generate package manifest for integrity validation
+        try:
+            compilation_metadata = {
+                'compiler_version': '1.0.0',
+                'compilation_timestamp': metadata.get('build_date', ''),
+                'source_rule_cards': len(clean_rule_cards),
+                'validation_hooks_count': len(validation_hooks)
+            }
+            
+            package_manifest = self.integrity_validator.generate_package_manifest(
+                agent_package, 
+                self.source_files_used,
+                compilation_metadata
+            )
+            
+            # Add manifest metadata to package
+            agent_package['_integrity_manifest'] = package_manifest.to_dict()
+            
+            logger.info(f"Generated integrity manifest for {agent_name}")
+            
+        except IntegrityError as e:
+            logger.warning(f"Failed to generate integrity manifest for {agent_name}: {e}")
+            # Continue without manifest - not critical for basic compilation
+        
         return agent_package
     
     def save_agent_package(self, agent_package: Dict[str, Any], output_file: str) -> Path:
@@ -344,8 +386,24 @@ class RuleCardCompiler:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
         try:
+            # Save main package file
             with open(output_path, 'w', encoding='utf-8') as f:
-                json.dump(agent_package, f, indent=2, sort_keys=True)
+                # Remove manifest from package data before saving
+                package_to_save = {k: v for k, v in agent_package.items() if k != '_integrity_manifest'}
+                json.dump(package_to_save, f, indent=2, sort_keys=True)
+            
+            # Save separate manifest file if integrity manifest was generated
+            if '_integrity_manifest' in agent_package:
+                try:
+                    manifest_path = output_path.with_suffix('.manifest.json')
+                    manifest_data = agent_package['_integrity_manifest']
+                    manifest = PackageManifest.from_dict(manifest_data)
+                    
+                    self.integrity_validator.save_manifest(manifest, manifest_path)
+                    logger.info(f"Saved integrity manifest: {manifest_path}")
+                    
+                except (IntegrityError, Exception) as e:
+                    logger.warning(f"Failed to save manifest file: {e}")
             
             logger.info(f"Saved agent package: {output_path}")
             return output_path

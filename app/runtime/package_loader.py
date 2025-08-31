@@ -46,8 +46,9 @@ class PackageLoader:
     }
     
     def __init__(self):
-        """Initialize the package loader."""
+        """Initialize the package loader with SHA-256 integrity validation."""
         self.logger = logging.getLogger(__name__)
+        self.integrity_validator = PackageIntegrityValidator()
     
     def load_package(self, package_path: str) -> Optional[Dict]:
         """
@@ -246,11 +247,12 @@ class PackageLoader:
             if not isinstance(value, str) or not value.strip():
                 raise PackageLoaderError(f"Agent field {field} must be non-empty string")
             
-            # Limit string length
-            if len(value) > self.MAX_STRING_LENGTH:
-                raise PackageLoaderError(f"Agent field {field} too long")
-            
-            validated[field] = value.strip()
+            # Use centralized validation for string fields
+            try:
+                validated_value = InputValidator.validate_string_field(value, f"agent.{field}")
+                validated[field] = validated_value
+            except ValidationError as e:
+                raise PackageLoaderError(f"Agent field validation failed: {e}")
         
         # Copy optional fields with validation
         for field in ["description", "attribution", "compiler_version"]:

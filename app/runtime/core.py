@@ -19,6 +19,7 @@ from pathlib import Path
 from .package_loader import PackageLoader
 from .rule_selector import RuleSelector
 from .llm_interface import LLMInterface
+from ..security import InputValidator, ValidationError, PathValidator, PathTraversalError
 
 
 class AgenticRuntimeError(Exception):
@@ -45,7 +46,12 @@ class AgenticRuntime:
         Raises:
             AgenticRuntimeError: If package directory is invalid
         """
-        self.package_directory = self._validate_package_directory(package_directory)
+        try:
+            self.package_directory_path = PathValidator.validate_base_directory(package_directory)
+            self.package_directory = str(self.package_directory_path)
+        except PathTraversalError as e:
+            raise AgenticRuntimeError(f"Invalid package directory: {e}")
+        
         self.loaded_packages = {}
         self.debug = debug
         
@@ -60,37 +66,6 @@ class AgenticRuntime:
         if self.debug:
             self.logger.debug(f"AgenticRuntime initialized with package directory: {self.package_directory}")
     
-    def _validate_package_directory(self, directory: str) -> str:
-        """
-        Validate package directory exists and is accessible.
-        
-        Args:
-            directory: Directory path to validate
-            
-        Returns:
-            Validated absolute directory path
-            
-        Raises:
-            AgenticRuntimeError: If directory is invalid
-        """
-        try:
-            path = Path(directory).resolve()
-            
-            # Security check: Ensure path is within allowed directories
-            if not path.exists():
-                raise AgenticRuntimeError(f"Package directory does not exist: {directory}")
-            
-            if not path.is_dir():
-                raise AgenticRuntimeError(f"Package path is not a directory: {directory}")
-            
-            # Check read permissions
-            if not os.access(path, os.R_OK):
-                raise AgenticRuntimeError(f"No read permission for package directory: {directory}")
-            
-            return str(path)
-            
-        except (OSError, PermissionError) as e:
-            raise AgenticRuntimeError(f"Invalid package directory: {e}")
     
     def _setup_logging(self) -> None:
         """Configure secure logging with appropriate levels."""
@@ -121,53 +96,32 @@ class AgenticRuntime:
             AgenticRuntimeError: If loading fails due to security issues
         """
         try:
-            # Sanitize agent name to prevent path traversal
-            safe_agent_name = self._sanitize_agent_name(agent_name)
-            package_path = os.path.join(self.package_directory, f"{safe_agent_name}.json")
+            # Validate and sanitize agent name using centralized security
+            validated_agent_name = InputValidator.validate_agent_name(agent_name)
+            
+            # Validate package path using secure path validation
+            package_path = PathValidator.validate_package_path(self.package_directory, validated_agent_name)
             
             # Load package using secure loader
-            package_data = self.package_loader.load_package(package_path)
+            package_data = self.package_loader.load_package(str(package_path))
             
             if package_data is None:
                 self.logger.error(f"Failed to load agent package: {agent_name}")
                 return False
             
             # Store loaded package
-            self.loaded_packages[agent_name] = package_data
+            self.loaded_packages[validated_agent_name] = package_data
             
-            self.logger.info(f"Successfully loaded agent: {agent_name}")
+            self.logger.info(f"Successfully loaded agent: {validated_agent_name}")
             return True
             
+        except (ValidationError, PathTraversalError) as e:
+            self.logger.error(f"Security validation failed for agent {agent_name}: {e}")
+            raise AgenticRuntimeError(f"Security validation failed: {e}")
         except Exception as e:
             self.logger.error(f"Error loading agent {agent_name}: {str(e)}")
             return False
     
-    def _sanitize_agent_name(self, agent_name: str) -> str:
-        """
-        Sanitize agent name to prevent path traversal attacks.
-        
-        Args:
-            agent_name: Raw agent name input
-            
-        Returns:
-            Sanitized agent name
-            
-        Raises:
-            AgenticRuntimeError: If agent name contains invalid characters
-        """
-        if not agent_name or not isinstance(agent_name, str):
-            raise AgenticRuntimeError("Agent name must be a non-empty string")
-        
-        # Remove dangerous characters
-        sanitized = "".join(c for c in agent_name if c.isalnum() or c in ['-', '_'])
-        
-        if not sanitized:
-            raise AgenticRuntimeError("Agent name contains no valid characters")
-        
-        if sanitized != agent_name:
-            self.logger.warning(f"Agent name sanitized: {agent_name} -> {sanitized}")
-        
-        return sanitized
     
     def get_guidance(self, context: Dict, agent_name: Optional[str] = None) -> Optional[Dict]:
         """
@@ -184,11 +138,15 @@ class AgenticRuntime:
             AgenticRuntimeError: If context is invalid
         """
         try:
-            # Validate context input
-            validated_context = self._validate_context(context)
+            # Validate context input using centralized validation
+            validated_context = InputValidator.validate_context_dict(context)
             
-            # Select or validate agent
-            selected_agent = agent_name or self._select_best_agent(validated_context)
+            # Validate agent name if provided
+            if agent_name:
+                validated_agent_name = InputValidator.validate_agent_name(agent_name)
+                selected_agent = validated_agent_name
+            else:
+                selected_agent = self._select_best_agent(validated_context)
             
             if selected_agent not in self.loaded_packages:
                 if not self.load_agent(selected_agent):
@@ -217,61 +175,15 @@ class AgenticRuntime:
             
             return guidance_response
             
+        except (ValidationError, PathTraversalError) as e:
+            self.logger.error(f"Security validation failed: {e}")
+            raise AgenticRuntimeError(f"Security validation failed: {e}")
         except Exception as e:
             self.logger.error(f"Error generating guidance: {str(e)}")
             return None
     
-    def _validate_context(self, context: Dict) -> Dict:
-        """
-        Validate and sanitize context input.
-        
-        Args:
-            context: Raw context input
-            
-        Returns:
-            Validated context dict
-            
-        Raises:
-            AgenticRuntimeError: If context is invalid
-        """
-        if not isinstance(context, dict):
-            raise AgenticRuntimeError("Context must be a dictionary")
-        
-        validated = {}
-        
-        # Validate required fields
-        if "file_path" in context:
-            validated["file_path"] = self._sanitize_file_path(context["file_path"])
-        
-        if "content" in context:
-            validated["content"] = self._sanitize_content(context["content"])
-        
-        # Add optional fields
-        for field in ["language", "framework", "domain"]:
-            if field in context:
-                validated[field] = str(context[field])[:100]  # Limit length
-        
-        return validated
     
-    def _sanitize_file_path(self, file_path: str) -> str:
-        """Sanitize file path to prevent path traversal."""
-        if not isinstance(file_path, str):
-            return ""
-        
-        # Remove dangerous patterns
-        sanitized = file_path.replace("..", "").replace("//", "/")
-        
-        # Limit length
-        return sanitized[:500]
     
-    def _sanitize_content(self, content: str) -> str:
-        """Sanitize file content for safe processing."""
-        if not isinstance(content, str):
-            return ""
-        
-        # Limit content size (1MB max)
-        MAX_CONTENT_SIZE = 1024 * 1024
-        return content[:MAX_CONTENT_SIZE]
     
     def _select_best_agent(self, context: Dict) -> str:
         """
