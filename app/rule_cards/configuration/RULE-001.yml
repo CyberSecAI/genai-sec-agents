@@ -1,3 +1,4 @@
+id: CONFIG-001
 title: Document all communication needs and external services
 severity: medium
 scope: web-application

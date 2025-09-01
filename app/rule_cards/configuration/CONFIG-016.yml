@@ -1,3 +1,4 @@
+id: CONFIG-016
 title: Restrict File Extensions for Web Tier
 severity: high
 scope: web-application

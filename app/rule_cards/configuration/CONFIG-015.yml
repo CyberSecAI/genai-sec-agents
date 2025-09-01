@@ -1,3 +1,4 @@
+id: CONFIG-015
 title: Limit Backend Component Version Information
 severity: high
 scope: web-application

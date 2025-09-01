@@ -1,3 +1,4 @@
+id: CONFIG-012
 title: Restrict Directory Listings
 severity: medium
 scope: web-application

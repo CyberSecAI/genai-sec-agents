@@ -1,3 +1,4 @@
+id: CONFIG-007
 title: Secure Cryptographic Operations
 severity: high
 scope: web-application/api

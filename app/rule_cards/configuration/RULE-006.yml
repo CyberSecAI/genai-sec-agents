@@ -1,3 +1,4 @@
+id: CONFIG-006
 title: Secret Management Best Practices
 severity: medium
 scope: web-application/api

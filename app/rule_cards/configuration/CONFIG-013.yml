@@ -1,3 +1,4 @@
+id: CONFIG-013
 title: Disable HTTP TRACE Method
 severity: medium
 scope: web-application

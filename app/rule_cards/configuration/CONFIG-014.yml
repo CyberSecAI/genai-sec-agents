@@ -1,3 +1,4 @@
+id: CONFIG-014
 title: Restrict Documentation and Monitoring Endpoints
 severity: medium
 scope: web-application

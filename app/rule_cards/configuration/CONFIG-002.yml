@@ -1,3 +1,4 @@
+id: CONFIG-002
 title: Authenticate backend communication components
 severity: high
 scope: web-application
