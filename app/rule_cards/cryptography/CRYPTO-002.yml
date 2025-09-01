@@ -1,0 +1,24 @@
+id: CRYPTO-002
+title: Hash Function Collision Resistance
+severity: medium
+scope: web-application
+requirement: Hash functions used in digital signatures, data authentication, or data
+  integrity must be collision resistant with appropriate bit-lengths
+do:
+- Ensure hash functions used have output length of at least 256 bits for collision
+  resistance or 128 bits for resistance to second pre-image attacks
+dont:
+- Use hash functions with inadequate bit-lengths for required collision resistance
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V11.4.3
+  owasp:
+  - A##:2021

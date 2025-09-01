@@ -1,0 +1,24 @@
+id: CRYPTO-006
+title: Crypto Agility Design
+severity: medium
+scope: web-application/api/mobile/infrastructure
+requirement: Design with crypto agility to allow reconfiguration, upgrading, or swapping
+  of cryptographic algorithms, key lengths, ciphers, and modes
+do:
+- Implement crypto agility to allow for seamless upgrades and replacements of cryptographic
+  components
+dont:
+- Rely on static cryptographic configurations that cannot be easily changed
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V11.2.2
+  owasp:
+  - A##:2021

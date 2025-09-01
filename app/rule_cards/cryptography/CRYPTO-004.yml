@@ -1,0 +1,24 @@
+id: CRYPTO-004
+title: Approved Key Exchange Algorithms
+severity: high
+scope: web-application
+requirement: Use approved cryptographic algorithms for key exchange with secure parameters
+  to prevent cryptographic breaks
+do:
+- Implement approved cryptographic algorithms for key exchange (e.g., Diffie-Hellman)
+  with secure parameters
+dont:
+- Use insecure key exchange algorithms
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V11.6.2
+  owasp:
+  - A##:2021

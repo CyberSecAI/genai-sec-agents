@@ -1,0 +1,22 @@
+id: CRYPTO-005
+title: Industry-Validated Cryptographic Implementations
+severity: medium
+scope: web-application/api/mobile/infrastructure
+requirement: Use industry-validated implementations for cryptographic operations
+do:
+- Ensure that cryptographic operations use industry-validated implementations
+dont:
+- Use unvalidated or custom cryptographic implementations
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V11.2.1
+  owasp:
+  - A##:2021
