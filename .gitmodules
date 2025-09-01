@@ -1,3 +1,6 @@
 [submodule "vendor/owasp-asvs"]
 	path = vendor/owasp-asvs
 	url = https://github.com/OWASP/ASVS.git
+[submodule "vendor/owasp-cheatsheets"]
+	path = vendor/owasp-cheatsheets
+	url = https://github.com/OWASP/CheatSheetSeries.git
