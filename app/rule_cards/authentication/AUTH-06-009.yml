@@ -1,0 +1,19 @@
+id: AUTH-06-009
+title: Prevent Identity Spoofing with Multiple Identity Providers
+severity: medium
+scope: web-application
+requirement: Verify that, if the application supports multiple identity providers
+  (IdPs), the user's identity can't be spoofed via another supported identity provider.
+  The application should register and identify the user using a combination of the
+  IdP ID and the user's ID in the IdP.
+do:
+- Register and identify the user using a combination of IdP ID and user's ID
+- Prevent user identity spoofing via another supported identity provider
+refs:
+  cwe:
+  - CWE-347
+  asvs:
+  - V6.8.1:2021
+  owasp:
+  - A6:2021
+NEW RULES: null

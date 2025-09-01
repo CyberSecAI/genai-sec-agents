@@ -1,0 +1,24 @@
+id: AUTH-OTHER-002
+title: Secure access to administrative interfaces
+severity: high
+scope: web-application/api
+requirement: Access to administrative interfaces should incorporate multiple layers
+  of security, including continuous consumer identity verification, device security
+  posture assessment, and contextual risk analysis.
+do:
+- Implement multiple layers of security for administrative interfaces
+dont:
+- Rely solely on network location or trusted endpoints for authorization
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test security layers for administrative interfaces
+refs:
+  cwe:
+  - CWE-285
+  asvs:
+  - V8.4.2
+  owasp:
+  - A8:2021

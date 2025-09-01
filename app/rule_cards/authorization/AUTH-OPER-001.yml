@@ -1,0 +1,23 @@
+id: AUTH-OPER-001
+title: Enforce authorization rules at a trusted service layer
+severity: low
+scope: web-application/api
+requirement: Enforce authorization rules at a trusted service layer and avoid relying
+  on controls that an untrusted consumer could manipulate, such as client-side JavaScript.
+do:
+- Implement authorization checks on the server-side
+dont:
+- Rely solely on client-side authorization logic
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test server-side authorization enforcement
+refs:
+  cwe:
+  - CWE-285
+  asvs:
+  - V8.3.1
+  owasp:
+  - A8:2021

@@ -1,0 +1,23 @@
+id: AUTH-002
+title: Define Lifetime for Out-of-Band Authentication
+severity: medium
+scope: web-application
+requirement: Out-of-band authentication requests, codes, or tokens must have a defined
+  lifetime.
+do:
+- Set maximum lifetime of 10 minutes for out-of-band requests and 30 seconds for TOTPs
+dont:
+- Allow indefinite lifetime for authentication codes
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify the defined lifetimes for authentication tokens
+refs:
+  cwe:
+  - CWE-613
+  asvs:
+  - V6.5.5
+  owasp:
+  - A3:2021

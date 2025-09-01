@@ -1,0 +1,27 @@
+id: AUTH-GEN-006
+title: Authentication Details Update Notification
+severity: medium
+scope: web-application
+requirement: Users must be notified after updates to authentication details, such
+  as credential resets or modifications.
+do:
+- Ensure that users are notified via email or in-app notifications about any changes
+  to their authentication details.
+- Include details of the change and provide instructions on what to do if the change
+  was not authorized.
+dont:
+- Do not send sensitive information in the notification, such as new passwords or
+  activation codes.
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Simulate authentication detail updates and verify that users receive notifications.
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.5.5
+  owasp:
+  - A##:2021

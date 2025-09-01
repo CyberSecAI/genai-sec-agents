@@ -1,0 +1,24 @@
+id: AUTHENTICATION-008
+title: Rate Limit Push Notifications for Multi-Factor Authentication
+severity: high
+scope: web-application
+requirement: Verify that, where push notifications are used for multi-factor authentication,
+  rate limiting is used to prevent push bombing attacks. Number matching may also
+  mitigate this risk.
+do:
+- Implement rate limiting for push notifications to prevent abuse
+dont:
+- Do not rely solely on push notifications without rate limiting
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test rate limiting functionality for push notifications
+refs:
+  cwe:
+  - CWE-285
+  asvs:
+  - V6.6.4
+  owasp:
+  - A3:2021

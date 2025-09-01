@@ -1,0 +1,22 @@
+title: Adaptive Security Controls
+severity: high
+scope: web-application
+requirement: Implement adaptive security controls based on environmental and contextual
+  attributes for authentication and authorization decisions.
+do:
+- Implement adaptive security controls based on contextual attributes
+dont:
+- Rely solely on static access controls
+detect:
+  semgrep:
+  - adaptive-security-controls
+verify:
+  tests:
+  - Verify implementation of adaptive security controls
+refs:
+  cwe:
+  - CWE-284
+  asvs:
+  - V8.2.4
+  owasp:
+  - A4:2021

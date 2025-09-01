@@ -1,0 +1,23 @@
+id: SESSION-002
+title: Use dynamically generated tokens for session management
+severity: medium
+scope: web-application/api
+requirement: Session management should use dynamically generated tokens to enhance
+  security and prevent unauthorized access.
+do:
+- Use self-contained or reference tokens dynamically generated for session management
+dont:
+- Use static API secrets and keys for session management
+detect:
+  semgrep:
+  - dynamic-session-tokens
+verify:
+  tests:
+  - Verify that session tokens are dynamically generated and not static
+refs:
+  cwe:
+  - CWE-321
+  asvs:
+  - V7.2.2:2021
+  owasp:
+  - A2:2021

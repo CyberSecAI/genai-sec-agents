@@ -1,0 +1,25 @@
+id: AUTH-GEN-002
+title: Multi-Factor Authentication Usage
+severity: medium
+scope: web-application
+requirement: Either a multi-factor authentication mechanism or a combination of single-factor
+  authentication mechanisms must be used to access the application. For L3, one factor
+  must be hardware-based.
+do:
+- Implement multi-factor authentication
+- Use hardware-based authentication as one factor for L3
+dont:
+- Rely solely on single-factor authentication
+detect:
+  semgrep:
+  - multi-factor-authentication
+verify:
+  tests:
+  - Test multi-factor authentication implementation
+refs:
+  cwe:
+  - CWE-308
+  asvs:
+  - V6.3.3
+  owasp:
+  - A3:2021

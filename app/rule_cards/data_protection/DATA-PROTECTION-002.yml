@@ -1,0 +1,23 @@
+id: DATA-PROTECTION-002
+title: Remove sensitive information from user-submitted file metadata
+severity: high
+scope: web-application
+requirement: Sensitive information must be removed from the metadata of user-submitted
+  files unless storage is explicitly consented to by the user.
+do:
+- Implement mechanisms to strip sensitive metadata from user-submitted files
+dont:
+- Store sensitive information in file metadata without user consent
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify sensitive metadata is removed from user-submitted files
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V14.2.8
+  owasp:
+  - A14:2021

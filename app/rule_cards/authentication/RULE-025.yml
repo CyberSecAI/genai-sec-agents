@@ -1,0 +1,24 @@
+title: Renewal Instructions for Expiring Authentication Mechanisms
+severity: high
+scope: web-application
+requirement: Send renewal instructions for expiring authentication mechanisms with
+  sufficient time before expiration, and configure automated reminders if necessary.
+do:
+- Send renewal instructions with enough time before expiration for users to renew
+  their authentication mechanisms
+- Configure automated reminders if necessary
+dont:
+- Delay sending renewal instructions until authentication mechanisms have expired
+detect:
+  semgrep:
+  - expiring-authentication-renewal-instructions
+verify:
+  tests:
+  - Verify that renewal instructions are sent with sufficient time before expiration
+refs:
+  cwe:
+  - CWE-640
+  asvs:
+  - V6.4.5
+  owasp:
+  - A11:2021

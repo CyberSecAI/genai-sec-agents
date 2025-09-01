@@ -1,0 +1,23 @@
+id: AUTH-GEN-008
+title: Secure Initial Passwords/Activation Codes
+severity: medium
+scope: web-application
+requirement: System generated initial passwords or activation codes must be securely
+  randomly generated, follow p...
+do:
+- Enhance the existing rule by adding ASVS-specific guidance for securing initial
+  passwords/activation codes.
+dont: []
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods for securing initial passwords/activation codes.
+refs:
+  cwe:
+  - CWE-XX
+  asvs:
+  - V##.##.##
+  owasp:
+  - A##:2021

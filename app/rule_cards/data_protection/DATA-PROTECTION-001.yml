@@ -1,0 +1,24 @@
+id: DATA-PROTECTION-001
+title: Sensitive information data retention
+severity: high
+scope: web-application
+requirement: Sensitive information must be subject to data retention classification
+  to ensure outdated or unnecessary data is deleted automatically, on a defined schedule,
+  or as the situation requires.
+do:
+- Implement automated data retention policies for sensitive information
+dont:
+- Retain outdated or unnecessary sensitive data
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify data retention policies are in place and functioning correctly
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V14.2.7
+  owasp:
+  - A14:2021

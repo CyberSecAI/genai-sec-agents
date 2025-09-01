@@ -1,0 +1,24 @@
+id: SESSION-004
+title: Generate new session token on user authentication
+severity: medium
+scope: web-application/api
+requirement: Generate a new session token upon user authentication, including re-authentication,
+  and terminate the current session token.
+do:
+- Generate new session token on user authentication and terminate current session
+  token
+dont:
+- Reuse existing session tokens without regeneration
+detect:
+  semgrep:
+  - new-session-token-generation
+verify:
+  tests:
+  - Authenticate as a user and verify that a new session token is generated
+refs:
+  cwe:
+  - CWE-384
+  asvs:
+  - V7.2.4:2021
+  owasp:
+  - A2:2021

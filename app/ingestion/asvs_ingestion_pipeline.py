@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-ASVS Comprehensive Ingestion Pipeline
+ASVS Domain-Based Ingestion Pipeline
 
 Complete automated pipeline for OWASP ASVS (Application Security Verification Standard)
-ingestion, Rule Card generation, scanner integration, and corpus enhancement.
+domain-based integration with intelligent rule enhancement.
 
-Building on Story 2.5 success for ASVS integration
+Story 2.5.1: ASVS Domain-Based Integration
 """
 
 import os
@@ -21,14 +21,16 @@ from typing import Dict, List, Any, Optional
 project_root = Path(__file__).parent.parent.parent
 sys.path.append(str(project_root))
 
-from app.ingestion.asvs_fetcher import ASVSFetcher
-from app.ingestion.asvs_rule_generator import ASVSRuleCardGenerator, ASVSRuleCardResult
+from app.ingestion.asvs_fetcher import ASVSFetcher, ASVSSection
+from app.ingestion.domain_based_asvs_generator import DomainBasedASVSGenerator, DomainIntegrationResult
+from app.ingestion.rule_enhancer import RuleEnhancer, EnhancementResult
+from app.ingestion.domain_mapping import DOMAIN_MAPPINGS, get_domain_for_asvs_section
 
 logger = logging.getLogger(__name__)
 
 
 class ASVSPipelineStats:
-    """Statistics tracking for ASVS ingestion pipeline."""
+    """Statistics tracking for domain-based ASVS ingestion pipeline."""
     
     def __init__(self):
         self.start_time = datetime.now(timezone.utc)
@@ -36,31 +38,51 @@ class ASVSPipelineStats:
         self.sections_processed = 0
         self.sections_successful = 0
         self.total_requirements = 0
-        self.total_rule_cards = 0
+        self.new_rules_created = 0
+        self.existing_rules_enhanced = 0
+        self.rules_quality_enhanced = 0
+        self.placeholders_resolved = 0
         self.total_tokens_used = 0
         self.total_cost = 0.0
-        self.errors = []
-        self.section_results = {}
+        self.domains_updated = set()
+        self.integration_results = {}
+        self.enhancement_results = {}
         
-    def add_section_result(self, section_id: str, result: ASVSRuleCardResult, requirements_count: int):
-        """Add results from processing a section."""
+    def add_integration_result(self, section_id: str, result: DomainIntegrationResult):
+        """Add results from domain integration."""
         self.sections_processed += 1
-        self.total_requirements += requirements_count
+        self.total_requirements += result.asvs_requirements_count
         
         if result.success:
             self.sections_successful += 1
-            self.total_rule_cards += len(result.rule_cards)
+            self.new_rules_created += result.new_rules_created
+            self.existing_rules_enhanced += result.existing_rules_enhanced
+            self.domains_updated.add(result.domain)
         
         self.total_tokens_used += result.tokens_used
-        self.total_cost += result.tokens_used * 0.0015 / 1000  # GPT-3.5-turbo pricing
+        self.total_cost += result.tokens_used * 0.0015 / 1000
         
-        self.section_results[section_id] = {
+        self.integration_results[section_id] = {
+            'domain': result.domain,
             'success': result.success,
-            'rule_cards': len(result.rule_cards),
-            'requirements': requirements_count,
+            'new_rules': result.new_rules_created,
+            'enhanced_rules': result.existing_rules_enhanced,
+            'requirements': result.asvs_requirements_count,
             'tokens': result.tokens_used,
             'error': result.error_message
         }
+    
+    def add_enhancement_results(self, domain: str, results: List[EnhancementResult]):
+        """Add results from rule quality enhancement."""
+        if results:
+            self.rules_quality_enhanced += len(results)
+            self.placeholders_resolved += sum(r.resolved_placeholders for r in results)
+            
+            self.enhancement_results[domain] = {
+                'rules_enhanced': len(results),
+                'placeholders_resolved': sum(r.resolved_placeholders for r in results),
+                'success_rate': (sum(1 for r in results if r.success) / len(results)) * 100
+            }
     
     def finalize(self):
         """Finalize pipeline statistics."""
@@ -76,28 +98,36 @@ class ASVSPipelineStats:
             'sections_successful': self.sections_successful,
             'success_rate': (self.sections_successful / max(self.sections_processed, 1)) * 100,
             'total_requirements': self.total_requirements,
-            'total_rule_cards': self.total_rule_cards,
-            'conversion_rate': (self.total_rule_cards / max(self.total_requirements, 1)) * 100,
+            'new_rules_created': self.new_rules_created,
+            'existing_rules_enhanced': self.existing_rules_enhanced,
+            'rules_quality_enhanced': self.rules_quality_enhanced,
+            'placeholders_resolved': self.placeholders_resolved,
+            'domains_updated': list(self.domains_updated),
             'total_tokens_used': self.total_tokens_used,
             'estimated_cost': self.total_cost,
             'avg_tokens_per_requirement': self.total_tokens_used / max(self.total_requirements, 1),
-            'section_results': self.section_results
+            'integration_results': self.integration_results,
+            'enhancement_results': self.enhancement_results
         }
 
 
 class ASVSIngestionPipeline:
-    """Comprehensive ASVS ingestion pipeline."""
+    """Domain-based ASVS ingestion and integration pipeline."""
     
     def __init__(self, priority_levels: List[int] = [1, 2]):
-        """Initialize ASVS ingestion pipeline."""
+        """Initialize domain-based ASVS ingestion pipeline."""
         self.priority_levels = priority_levels
         self.stats = ASVSPipelineStats()
         
         # Initialize components
         self.asvs_fetcher = ASVSFetcher()
-        self.rule_generator = ASVSRuleCardGenerator()
+        self.domain_generator = DomainBasedASVSGenerator()
+        self.rule_enhancer = RuleEnhancer()
         
-        logger.info(f"ASVS Ingestion Pipeline initialized for priority levels: {priority_levels}")
+        # Pipeline configuration
+        self.rate_limit_delay = 2
+        
+        logger.info(f"Domain-based ASVS Pipeline initialized for priority levels: {priority_levels}")
     
     def validate_prerequisites(self) -> bool:
         """Validate prerequisites for pipeline execution."""
@@ -140,38 +170,61 @@ class ASVSIngestionPipeline:
             logger.error(f"Failed to fetch ASVS sections: {e}")
             return []
     
-    def process_asvs_section(self, section) -> ASVSRuleCardResult:
-        """Process a single ASVS section into Rule Cards."""
+    def process_asvs_section(self, section: ASVSSection) -> DomainIntegrationResult:
+        """Process a single ASVS section with domain-based integration."""
         logger.info(f"Processing ASVS section: {section.title} ({len(section.requirements)} requirements)")
         
         try:
-            # Generate Rule Cards for this section
-            result = self.rule_generator.generate_rule_cards_from_asvs_section(
-                section, max_requirements_per_batch=5
-            )
+            # Determine target domain
+            domain = get_domain_for_asvs_section(section.id.split('-')[0])  # V11-Cryptography -> V11
             
-            # Save Rule Cards to files if successful
-            if result.success:
-                save_success = self.rule_generator.save_rule_cards_to_files(result)
-                if not save_success:
-                    logger.warning(f"Generated Rule Cards for {section.title} but failed to save files")
+            if domain == "unknown":
+                logger.warning(f"No domain mapping found for section {section.id}")
+                # Create failed result
+                failed_result = DomainIntegrationResult(
+                    domain="unknown",
+                    asvs_section=section.id,
+                    existing_rules_count=0,
+                    asvs_requirements_count=len(section.requirements),
+                    new_rules_created=0,
+                    existing_rules_enhanced=0,
+                    success=False,
+                    tokens_used=0,
+                    error_message=f"No domain mapping for section {section.id}"
+                )
+                self.stats.add_integration_result(section.id, failed_result)
+                return failed_result
+            
+            logger.info(f"Integrating {section.title} with {domain} domain")
+            
+            # Perform domain integration
+            result = self.domain_generator.integrate_asvs_with_domain(section, domain)
             
             # Update statistics
-            self.stats.add_section_result(section.id, result, len(section.requirements))
+            self.stats.add_integration_result(section.id, result)
             
-            logger.info(f"Section {section.title}: {len(result.rule_cards)} Rule Cards generated")
+            if result.success:
+                logger.info(f"✅ {section.title}: {result.new_rules_created} new, {result.existing_rules_enhanced} enhanced")
+            else:
+                logger.error(f"❌ {section.title}: {result.error_message}")
+            
             return result
             
         except Exception as e:
             logger.error(f"Failed to process section {section.title}: {e}")
             # Create failed result
-            failed_result = ASVSRuleCardResult(
-                asvs_id=section.id,
+            failed_result = DomainIntegrationResult(
+                domain="error",
+                asvs_section=section.id,
+                existing_rules_count=0,
+                asvs_requirements_count=len(section.requirements),
+                new_rules_created=0,
+                existing_rules_enhanced=0,
                 success=False,
-                rule_cards=[],
+                tokens_used=0,
                 error_message=str(e)
             )
-            self.stats.add_section_result(section.id, failed_result, len(section.requirements))
+            self.stats.add_integration_result(section.id, failed_result)
             return failed_result
     
     def run_full_pipeline(self) -> bool:
@@ -197,8 +250,8 @@ class ASVSIngestionPipeline:
             
             logger.info(f"Found {len(sections)} ASVS sections to process")
             
-            # Step 3: Process each section
-            logger.info("Step 3: Processing ASVS sections...")
+            # Step 3: Process each section with domain integration
+            logger.info("Step 3: Processing ASVS sections with domain integration...")
             successful_sections = []
             
             for i, section in enumerate(sections, 1):
@@ -210,9 +263,25 @@ class ASVSIngestionPipeline:
                     successful_sections.append(section.title)
                 
                 # Rate limiting between sections
-                if i < len(sections):  # Don't sleep after the last section
+                if i < len(sections):
                     logger.info("Rate limiting delay...")
-                    time.sleep(3)
+                    time.sleep(self.rate_limit_delay)
+            
+            # Step 4: Enhance rule quality for updated domains
+            if self.stats.domains_updated:
+                logger.info("Step 4: Enhancing rule quality...")
+                
+                for domain in self.stats.domains_updated:
+                    logger.info(f"Enhancing rules in {domain} domain")
+                    enhancement_results = self.rule_enhancer.enhance_domain_rules(domain)
+                    self.stats.add_enhancement_results(domain, enhancement_results)
+                    
+                    if enhancement_results:
+                        successful = sum(1 for r in enhancement_results if r.success)
+                        total_resolved = sum(r.resolved_placeholders for r in enhancement_results)
+                        logger.info(f"✅ {domain}: {successful}/{len(enhancement_results)} rules enhanced, {total_resolved} placeholders resolved")
+                    
+                    time.sleep(self.rate_limit_delay)
             
             # Step 4: Finalize and report
             self.stats.finalize()
@@ -226,8 +295,11 @@ class ASVSIngestionPipeline:
             logger.info(f"Sections successful: {summary['sections_successful']}")
             logger.info(f"Success rate: {summary['success_rate']:.1f}%")
             logger.info(f"Total ASVS requirements: {summary['total_requirements']}")
-            logger.info(f"Total Rule Cards generated: {summary['total_rule_cards']}")
-            logger.info(f"Conversion rate: {summary['conversion_rate']:.1f}%")
+            logger.info(f"New rules created: {summary['new_rules_created']}")
+            logger.info(f"Existing rules enhanced: {summary['existing_rules_enhanced']}")
+            logger.info(f"Rules quality enhanced: {summary['rules_quality_enhanced']}")
+            logger.info(f"Placeholders resolved: {summary['placeholders_resolved']}")
+            logger.info(f"Domains updated: {len(summary['domains_updated'])}")
             logger.info(f"Total tokens used: {summary['total_tokens_used']}")
             logger.info(f"Estimated cost: ${summary['estimated_cost']:.3f}")
             
@@ -313,7 +385,8 @@ class ASVSIngestionPipeline:
             
             logger.info("Sample pipeline complete:")
             logger.info(f"  Success rate: {summary['success_rate']:.1f}%")
-            logger.info(f"  Rule Cards generated: {summary['total_rule_cards']}")
+            logger.info(f"  New rules created: {summary['new_rules_created']}")
+            logger.info(f"  Existing rules enhanced: {summary['existing_rules_enhanced']}")
             logger.info(f"  Estimated cost: ${summary['estimated_cost']:.3f}")
             
             return True

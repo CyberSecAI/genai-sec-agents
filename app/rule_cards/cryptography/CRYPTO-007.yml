@@ -10,13 +10,17 @@ dont:
 - Use cryptographic primitives with insufficient security strength
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 verify:
   tests:
   - Testing methods
 refs:
   cwe:
-  - CWE-XXX
+  - CWE-327
+  - CWE-328
+  - CWE-329
   asvs:
   - V11.2.3
   owasp:

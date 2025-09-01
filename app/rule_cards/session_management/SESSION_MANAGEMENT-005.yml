@@ -1,0 +1,23 @@
+id: SESSION_MANAGEMENT-005
+title: Provide Visible Logout Functionality
+severity: medium
+scope: web-application
+requirement: All pages that require authentication have easy and visible access to
+  logout functionality.
+do:
+- Ensure logout functionality is easily accessible on authenticated pages
+dont:
+- Hide or make logout functionality hard to find
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify that logout functionality is visible on authenticated pages
+refs:
+  cwe:
+  - CWE-384
+  asvs:
+  - V7.4.4
+  owasp:
+  - A2:2021

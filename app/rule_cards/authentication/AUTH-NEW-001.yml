@@ -1,0 +1,23 @@
+id: AUTH-NEW-001
+title: Multi-Factor Authentication Requirement
+severity: medium
+scope: web-application
+requirement: Either a multi-factor authentication mechanism or a combination of single-factor
+  authentication mechanisms, must be used in order to access the application...
+do:
+- Implement multi-factor authentication or a combination of single-factor mechanisms
+dont:
+- Rely solely on single-factor authentication
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.3.3
+  owasp:
+  - A##:2021

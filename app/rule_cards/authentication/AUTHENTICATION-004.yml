@@ -1,0 +1,23 @@
+id: AUTHENTICATION-004
+title: Unique Processing of SAML Assertions
+severity: medium
+scope: web-application
+requirement: SAML assertions are uniquely processed and used only once within the
+  validity period to prevent replay attacks.
+do:
+- Ensure SAML assertions are processed uniquely and not reused
+dont:
+- Do not reuse SAML assertions within their validity period
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test uniqueness and non-replay of SAML assertions
+refs:
+  cwe:
+  - CWE-352
+  asvs:
+  - V6.8.3
+  owasp:
+  - A2:2021

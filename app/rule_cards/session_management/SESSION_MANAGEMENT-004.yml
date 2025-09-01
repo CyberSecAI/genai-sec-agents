@@ -1,0 +1,24 @@
+id: SESSION_MANAGEMENT-004
+title: Terminate Other Sessions on Authentication Factor Change
+severity: medium
+scope: web-application
+requirement: Gives the option to terminate all other active sessions after a successful
+  change or removal of any authentication factor.
+do:
+- Provide the option to terminate all other active sessions after authentication factor
+  change
+dont:
+- Keep all other sessions active after authentication factor change
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify that users can terminate other sessions after authentication factor change
+refs:
+  cwe:
+  - CWE-384
+  asvs:
+  - V7.4.3
+  owasp:
+  - A2:2021

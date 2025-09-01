@@ -11,13 +11,17 @@ dont:
 - Use insecure random number generation methods
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 verify:
   tests:
   - Testing methods
 refs:
   cwe:
-  - CWE-XXX
+  - CWE-327
+  - CWE-328
+  - CWE-329
   asvs:
   - V11.5.1
   - V11.5.2

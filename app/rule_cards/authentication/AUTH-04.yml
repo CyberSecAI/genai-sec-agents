@@ -1,0 +1,21 @@
+id: AUTH-04
+title: Allow passwords of at least 64 characters
+severity: medium
+scope: web-application
+requirement: Passwords of at least 64 characters are permitted.
+do:
+- Allow passwords with a minimum length of 64 characters
+dont: []
+detect:
+  semgrep:
+  - minimum-password-length
+verify:
+  tests:
+  - Test password creation with 64+ characters
+refs:
+  cwe:
+  - CWE-521
+  asvs:
+  - V6.2.9
+  owasp:
+  - A2:2021

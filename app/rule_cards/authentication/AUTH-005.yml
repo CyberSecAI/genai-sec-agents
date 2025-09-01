@@ -1,0 +1,22 @@
+id: AUTH-005
+title: Secure Time-based One-time Passwords (TOTPs)
+severity: high
+scope: web-application
+requirement: TOTPs must be checked based on a time source from a trusted service.
+do:
+- Validate TOTPs using a trusted time source
+dont:
+- Rely on untrusted or client-provided time for TOTPs
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify TOTP validation against trusted time source
+refs:
+  cwe:
+  - CWE-347
+  asvs:
+  - V6.5.8
+  owasp:
+  - A3:2021

@@ -1,0 +1,14 @@
+id: AUTH-NEW-004
+title: Require User's Current and New Password for Password Change
+severity: low
+scope: web-application
+requirement: Password change functionality requires the user's current and new password.
+do:
+- Implement password change functionality that requires both current and new password
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.2.3
+  owasp:
+  - A##:2021

@@ -1,0 +1,22 @@
+id: AUTH-007
+title: Bind Out-of-Band Authentication to Request
+severity: medium
+scope: web-application
+requirement: Out-of-band authentication codes must be bound to the original request.
+do:
+- Ensure out-of-band codes are only valid for the original request
+dont:
+- Allow reuse of out-of-band codes for different requests
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify out-of-band code binding to requests
+refs:
+  cwe:
+  - CWE-384
+  asvs:
+  - V6.6.2
+  owasp:
+  - A3:2021

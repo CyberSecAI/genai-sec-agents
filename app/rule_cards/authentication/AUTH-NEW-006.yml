@@ -1,0 +1,16 @@
+id: AUTH-NEW-006
+title: Allow Passwords of Any Composition
+severity: low
+scope: web-application
+requirement: Passwords of any composition can be used, without rules limiting the
+  type of characters permitted. There must be no requirement for a minimum number
+  of upper or lower case characters, numbers, or special characters.
+do:
+- Allow passwords of any composition without restrictions on character types
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.2.5
+  owasp:
+  - A##:2021

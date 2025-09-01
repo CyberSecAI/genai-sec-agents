@@ -1,0 +1,24 @@
+id: AUTH-07
+title: Secure Storage of Lookup Secrets
+severity: medium
+scope: web-application
+requirement: Hash lookup secrets with less than 112 bits of entropy using an approved
+  password storage hashing algorithm with a random salt.
+do:
+- Hash lookup secrets with less than 112 bits of entropy using an approved hashing
+  algorithm with a random salt
+dont:
+- Store lookup secrets with less than 112 bits of entropy in plain or reversible format
+detect:
+  semgrep:
+  - insecure-lookup-secrets-storage
+verify:
+  tests:
+  - Verify that lookup secrets are hashed with a random salt and approved algorithm
+refs:
+  cwe:
+  - CWE-640
+  asvs:
+  - V6.5.2
+  owasp:
+  - A11:2021

@@ -1,0 +1,24 @@
+title: Admin-initiated Password Reset Process
+severity: high
+scope: web-application
+requirement: Allow administrative users to initiate the password reset process for
+  users without changing or choosing the user's password.
+do:
+- Enable administrative users to initiate password reset process for users
+- Ensure administrative users cannot change or choose the user's password
+dont:
+- Allow administrative users to change or choose user passwords
+detect:
+  semgrep:
+  - admin-initiated-password-reset
+verify:
+  tests:
+  - Verify that administrative users can initiate password reset without changing
+    user passwords
+refs:
+  cwe:
+  - CWE-640
+  asvs:
+  - V6.4.6
+  owasp:
+  - A11:2021

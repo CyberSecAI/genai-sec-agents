@@ -1,0 +1,24 @@
+id: NETWORK-SEC-004
+title: Implement strong authentication for intra-service communications
+severity: high
+scope: infrastructure
+requirement: Ensure that services communicating internally within a system use strong
+  authentication to verify each endpoint. Employ strong authentication methods like
+  TLS client authentication using public-key infrastructure.
+do:
+- Implement strong authentication for intra-service communications
+dont:
+- Allow insecure authentication methods for intra-service communication
+detect:
+  semgrep:
+  - strong-authentication-intra-service
+verify:
+  tests:
+  - Verify strong authentication implementation for intra-service communications
+refs:
+  cwe:
+  - CWE-287
+  asvs:
+  - V12.3.5
+  owasp:
+  - A06:2021

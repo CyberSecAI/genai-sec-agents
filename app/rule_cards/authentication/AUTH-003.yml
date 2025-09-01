@@ -1,0 +1,22 @@
+id: AUTH-003
+title: Revocation of Authentication Factors
+severity: high
+scope: web-application
+requirement: Any authentication factor must be revocable in case of theft or loss.
+do:
+- Implement mechanisms to revoke authentication factors
+dont:
+- Allow unrevokeable authentication factors
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test revocation functionality for authentication factors
+refs:
+  cwe:
+  - CWE-602
+  asvs:
+  - V6.5.6
+  owasp:
+  - A3:2021

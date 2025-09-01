@@ -1,0 +1,23 @@
+id: SESSION_MANAGEMENT-006
+title: Ability to Terminate Active Sessions
+severity: medium
+scope: web-application
+requirement: Application administrators are able to terminate active sessions for
+  an individual user or for all users.
+do:
+- Provide application administrators with the ability to terminate active sessions
+dont:
+- Restrict administrators from terminating active sessions
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify that administrators can terminate active sessions
+refs:
+  cwe:
+  - CWE-384
+  asvs:
+  - V7.4.5
+  owasp:
+  - A2:2021

@@ -1,0 +1,24 @@
+id: DATA-PROTECTION-008
+title: Secure Configuration of Caching Mechanisms
+severity: high
+scope: web-application
+requirement: Configure caching mechanisms to only cache appropriate content types
+  and prevent caching of sensitive, dynamic content.
+do:
+- Configure caching mechanisms to cache only expected content types
+- Prevent caching of sensitive, dynamic content
+dont:
+- Allow caching of sensitive data inappropriately
+detect:
+  semgrep:
+  - caching-configuration
+verify:
+  tests:
+  - Verify secure configuration of caching mechanisms
+refs:
+  cwe:
+  - CWE-524
+  asvs:
+  - V14.2.5
+  owasp:
+  - A6:2021

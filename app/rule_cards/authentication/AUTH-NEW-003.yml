@@ -1,0 +1,23 @@
+id: AUTH-NEW-003
+title: Suspicious Authentication Attempt Notification
+severity: high
+scope: web-application
+requirement: Users are notified of suspicious authentication attempts (successful
+  or unsuccessful)...
+do:
+- Implement notification system for suspicious authentication attempts
+dont:
+- Neglect to notify users of suspicious authentication activity
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.3.5
+  owasp:
+  - A##:2021

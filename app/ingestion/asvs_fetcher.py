@@ -10,11 +10,13 @@ Extension of Story 2.5 for ASVS integration
 
 import os
 import re
+import json
 import logging
 import requests
 from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -47,6 +49,14 @@ class ASVSFetcher:
         """Initialize ASVS fetcher with GitHub URLs."""
         self.base_url = "https://raw.githubusercontent.com/OWASP/ASVS/master/5.0/en/"
         self.github_base = "https://github.com/OWASP/ASVS/blob/master/5.0/en/"
+        
+        # Semantic search preservation paths
+        self.semantic_sources_path = Path("app/semantic/sources/asvs/v5.0")
+        self.cached_sources_path = Path("app/data/asvs_sources")
+        
+        # Ensure directories exist
+        self.semantic_sources_path.mkdir(parents=True, exist_ok=True)
+        self.cached_sources_path.mkdir(parents=True, exist_ok=True)
         
         # ASVS 5.0 verification sections mapping
         self.asvs_sections = {
@@ -192,6 +202,63 @@ class ASVSFetcher:
             logger.error(f"Failed to fetch ASVS content from {url}: {e}")
             return None
     
+    def preserve_markdown_for_semantic_search(self, section_info: Dict[str, Any], content: str) -> bool:
+        """Preserve original ASVS markdown files for semantic search corpus."""
+        try:
+            # Save to semantic search corpus
+            semantic_file_path = self.semantic_sources_path / section_info['file']
+            with open(semantic_file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            # Save to cached sources with metadata
+            cached_file_path = self.cached_sources_path / section_info['file']
+            with open(cached_file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            # Create/update metadata file
+            metadata_path = self.semantic_sources_path / "metadata.json"
+            metadata = self._load_or_create_metadata(metadata_path)
+            
+            # Update metadata for this section
+            metadata['sections'][section_info['id']] = {
+                'title': section_info['title'],
+                'file': section_info['file'],
+                'github_url': section_info['github_url'],
+                'description': section_info['description'],
+                'last_updated': datetime.now().isoformat(),
+                'content_length': len(content),
+                'version': '5.0'
+            }
+            
+            # Save updated metadata
+            with open(metadata_path, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False)
+            
+            logger.info(f"Preserved markdown for semantic search: {section_info['file']}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to preserve markdown for {section_info['file']}: {e}")
+            return False
+    
+    def _load_or_create_metadata(self, metadata_path: Path) -> Dict[str, Any]:
+        """Load existing metadata or create new structure."""
+        if metadata_path.exists():
+            try:
+                with open(metadata_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to load existing metadata: {e}, creating new")
+        
+        # Create new metadata structure
+        return {
+            'asvs_version': '5.0',
+            'corpus_created': datetime.now().isoformat(),
+            'last_updated': datetime.now().isoformat(),
+            'source_repository': 'https://github.com/OWASP/ASVS',
+            'sections': {}
+        }
+    
     def parse_verification_requirements(self, content: str, section_id: str, section_title: str) -> List[ASVSVerificationRequirement]:
         """Parse ASVS verification requirements from markdown content."""
         requirements = []
@@ -279,6 +346,9 @@ class ASVSFetcher:
             content = self.fetch_asvs_content(section_info['url'])
             if not content:
                 return None
+            
+            # Preserve markdown for semantic search
+            self.preserve_markdown_for_semantic_search(section_info, content)
             
             # Parse verification requirements
             requirements = self.parse_verification_requirements(

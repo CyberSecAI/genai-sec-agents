@@ -1,0 +1,16 @@
+id: AUTH-NEW-005
+title: Check Passwords Against Top 3000 Common Passwords
+severity: low
+scope: web-application
+requirement: Passwords submitted during account registration or password change are
+  checked against an available set of, at least, the top 3000 passwords which match
+  the application's password policy, e.g. minimum length.
+do:
+- Check passwords against a list of top 3000 common passwords
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.2.4
+  owasp:
+  - A##:2021

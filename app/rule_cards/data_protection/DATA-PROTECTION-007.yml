@@ -1,0 +1,24 @@
+id: DATA-PROTECTION-007
+title: Implementation of Defined Data Protection Controls
+severity: medium
+scope: web-application
+requirement: Implement defined controls related to encryption, integrity verification,
+  retention, access controls, and privacy for sensitive data.
+do:
+- Implement encryption, integrity verification, retention, access controls, and privacy
+  controls for sensitive data
+dont:
+- Neglect to implement defined data protection controls
+detect:
+  semgrep:
+  - data-protection-controls
+verify:
+  tests:
+  - Verify implementation of data protection controls
+refs:
+  cwe:
+  - CWE-311
+  asvs:
+  - V14.2.4
+  owasp:
+  - A6:2021

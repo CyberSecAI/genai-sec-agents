@@ -1,0 +1,25 @@
+id: AUTH-NEW-002
+title: Authentication Pathway Consistency
+severity: medium
+scope: web-application
+requirement: Verify that, if the application includes multiple authentication pathways,
+  there are no undocumented pathways and that security controls and authentication
+  strength are enforced consistently.
+do:
+- Ensure all authentication pathways are documented and enforce consistent security
+  controls
+dont:
+- Allow undocumented authentication pathways
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Testing methods
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.3.4
+  owasp:
+  - A##:2021

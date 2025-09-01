@@ -1,0 +1,22 @@
+id: AUTH-006
+title: Validate Phone Numbers for PSTN OTP Delivery
+severity: medium
+scope: web-application
+requirement: PSTN OTP delivery should only be offered for validated phone numbers.
+do:
+- Validate phone numbers before offering PSTN OTP delivery
+dont:
+- Allow PSTN OTP delivery for unvalidated phone numbers
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test PSTN OTP delivery for validated phone numbers
+refs:
+  cwe:
+  - CWE-601
+  asvs:
+  - V6.6.1
+  owasp:
+  - A3:2021

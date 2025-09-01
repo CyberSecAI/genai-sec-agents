@@ -1,0 +1,23 @@
+id: AUTH-GEN-004
+title: Suspicious Authentication Attempts Notification
+severity: high
+scope: web-application
+requirement: Users must be notified of suspicious authentication attempts, successful
+  or unsuccessful.
+do:
+- Implement notification for suspicious authentication attempts
+dont:
+- Ignore suspicious authentication attempts
+detect:
+  semgrep:
+  - suspicious-authentication-attempts
+verify:
+  tests:
+  - Test notification for suspicious authentication attempts
+refs:
+  cwe:
+  - CWE-285
+  asvs:
+  - V6.3.5
+  owasp:
+  - A5:2021

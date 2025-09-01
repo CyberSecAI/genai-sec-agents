@@ -1,0 +1,23 @@
+id: AUTH-GEN-005
+title: Email Not Used for Authentication
+severity: high
+scope: web-application
+requirement: Email is not used as either a single-factor or multi-factor authentication
+  mechanism.
+do:
+- Avoid using email for authentication
+dont:
+- Use email as an authentication mechanism
+detect:
+  semgrep:
+  - email-authentication
+verify:
+  tests:
+  - Verify email is not used for authentication
+refs:
+  cwe:
+  - CWE-640
+  asvs:
+  - V6.3.6
+  owasp:
+  - A6:2021

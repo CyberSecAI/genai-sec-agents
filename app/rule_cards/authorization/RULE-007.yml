@@ -1,0 +1,22 @@
+title: Authorization Design - Field-Level Access
+severity: medium
+scope: web-application
+requirement: Restrict field-level access to consumers with explicit permissions to
+  mitigate BOPLA.
+do:
+- Implement field-level access restrictions
+dont:
+- Allow unauthorized access to specific fields
+detect:
+  semgrep:
+  - field-level-access
+verify:
+  tests:
+  - Verify field-level access restrictions
+refs:
+  cwe:
+  - CWE-284
+  asvs:
+  - V8.2.3
+  owasp:
+  - A7:2021

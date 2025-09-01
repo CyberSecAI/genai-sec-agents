@@ -1,0 +1,23 @@
+id: AUTH-004
+title: Secure Use of Biometric Authentication
+severity: high
+scope: web-application
+requirement: Biometric authentication mechanisms should only be used as secondary
+  factors.
+do:
+- Use biometric authentication in conjunction with something you have or know
+dont:
+- Rely solely on biometric authentication
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify biometric authentication is used as a secondary factor
+refs:
+  cwe:
+  - CWE-308
+  asvs:
+  - V6.5.7
+  owasp:
+  - A3:2021

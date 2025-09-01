@@ -1,0 +1,23 @@
+id: AUTH-001
+title: Use Strong Secrets for Multi-factor Authentication
+severity: medium
+scope: web-application
+requirement: Lookup secrets and out-of-band authentication codes must have a minimum
+  of 20 bits of entropy.
+do:
+- Generate secrets with at least 20 bits of entropy
+dont:
+- Use weak secrets with insufficient entropy
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test the entropy of generated secrets
+refs:
+  cwe:
+  - CWE-326
+  asvs:
+  - V6.5.4
+  owasp:
+  - A3:2021

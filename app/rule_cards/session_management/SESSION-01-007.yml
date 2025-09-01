@@ -1,0 +1,23 @@
+id: SESSION-01-007
+title: Implement further authentication for highly sensitive transactions
+severity: high
+scope: web-application
+requirement: Before performing highly sensitive transactions or operations, further
+  authentication with at least one factor or secondary verification is required.
+do:
+- Implement multi-factor authentication for highly sensitive transactions
+dont:
+- Allow highly sensitive transactions without additional authentication
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test the implementation of further authentication for highly sensitive transactions
+refs:
+  cwe:
+  - CWE-XX
+  asvs:
+  - V7.5.3
+  owasp:
+  - A##:2021

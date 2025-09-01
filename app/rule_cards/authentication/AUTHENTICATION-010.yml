@@ -1,0 +1,24 @@
+id: AUTHENTICATION-010
+title: Secure Time-based One-time Passwords (TOTPs)
+severity: high
+scope: web-application
+requirement: Time-based one-time passwords (TOTPs) are checked based on a time source
+  from a trusted service and not from an untrusted or client provided time.
+do:
+- Use a trusted time source for checking TOTPs to prevent manipulation.
+- Implement mechanisms to ensure TOTPs are not based on client-provided time.
+dont:
+- Do not rely on untrusted time sources for validating TOTPs.
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify that TOTPs are validated using a trusted time source.
+refs:
+  cwe:
+  - CWE-XXX
+  asvs:
+  - V6.5.8
+  owasp:
+  - A##:2021

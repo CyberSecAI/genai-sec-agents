@@ -1,0 +1,23 @@
+id: SESSION_MANAGEMENT-007
+title: Re-authentication for Sensitive Account Attribute Modifications
+severity: medium
+scope: web-application
+requirement: Requires full re-authentication before allowing modifications to sensitive
+  account attributes which may affect authentication.
+do:
+- Implement full re-authentication for sensitive account attribute modifications
+dont:
+- Allow modifications to sensitive attributes without re-authentication
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Verify that re-authentication is required for sensitive attribute modifications
+refs:
+  cwe:
+  - CWE-384
+  asvs:
+  - V7.5.1
+  owasp:
+  - A2:2021

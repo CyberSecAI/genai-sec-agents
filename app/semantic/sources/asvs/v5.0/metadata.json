@@ -1,0 +1,62 @@
+{
+  "asvs_version": "5.0",
+  "corpus_created": "2025-09-01T08:42:45.434657",
+  "last_updated": "2025-09-01T08:42:45.434679",
+  "source_repository": "https://github.com/OWASP/ASVS",
+  "sections": {
+    "V6-Authentication": {
+      "title": "Authentication",
+      "file": "0x15-V6-Authentication.md",
+      "github_url": "https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md",
+      "description": "Authentication mechanisms and security",
+      "last_updated": "2025-09-01T08:53:06.866276",
+      "content_length": 22549,
+      "version": "5.0"
+    },
+    "V8-Authorization": {
+      "title": "Authorization",
+      "file": "0x17-V8-Authorization.md",
+      "github_url": "https://github.com/OWASP/ASVS/blob/master/5.0/en/0x17-V8-Authorization.md",
+      "description": "Access control and authorization",
+      "last_updated": "2025-09-01T08:53:09.129619",
+      "content_length": 5920,
+      "version": "5.0"
+    },
+    "V11-Cryptography": {
+      "title": "Cryptography",
+      "file": "0x20-V11-Cryptography.md",
+      "github_url": "https://github.com/OWASP/ASVS/blob/master/5.0/en/0x20-V11-Cryptography.md",
+      "description": "Cryptographic implementation and key management",
+      "last_updated": "2025-09-01T08:53:10.319410",
+      "content_length": 11998,
+      "version": "5.0"
+    },
+    "V14-Data-Protection": {
+      "title": "Data Protection",
+      "file": "0x23-V14-Data-Protection.md",
+      "github_url": "https://github.com/OWASP/ASVS/blob/master/5.0/en/0x23-V14-Data-Protection.md",
+      "description": "Data Protection requirements",
+      "last_updated": "2025-09-01T09:03:45.355995",
+      "content_length": 7285,
+      "version": "5.0"
+    },
+    "V12-Secure-Communication": {
+      "title": "Secure Communication",
+      "file": "0x21-V12-Secure-Communication.md",
+      "github_url": "https://github.com/OWASP/ASVS/blob/master/5.0/en/0x21-V12-Secure-Communication.md",
+      "description": "Secure Communication requirements",
+      "last_updated": "2025-09-01T09:03:28.925721",
+      "content_length": 5233,
+      "version": "5.0"
+    },
+    "V7-Session-Management": {
+      "title": "Session Management",
+      "file": "0x16-V7-Session-Management.md",
+      "github_url": "https://github.com/OWASP/ASVS/blob/master/5.0/en/0x16-V7-Session-Management.md",
+      "description": "Session handling and lifecycle security",
+      "last_updated": "2025-09-01T09:02:40.125415",
+      "content_length": 8989,
+      "version": "5.0"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+title: Secure Data Caching and Purging
+severity: medium
+scope: web-application
+requirement: Ensure sensitive data is not cached in server components, or securely
+  purge cached data after use.
+do:
+- Implement mechanisms to prevent sensitive data caching
+- Securely purge cached data after it is no longer needed
+dont:
+- Allow sensitive data to be stored in server caches indefinitely
+detect:
+  semgrep:
+  - sensitive-data-caching
+verify:
+  tests:
+  - Verify data caching and purging mechanisms
+refs:
+  cwe:
+  - CWE-524
+  asvs:
+  - V14.2.2
+  owasp:
+  - A6:2021

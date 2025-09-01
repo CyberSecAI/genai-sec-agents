@@ -1,0 +1,23 @@
+id: AUTH-OPER-003
+title: Subject-based access control
+severity: high
+scope: web-application/api
+requirement: Access to an object should be based on the originating subject's permissions,
+  not on any intermediary or service acting on their behalf.
+do:
+- Implement access control based on originating subject's permissions
+dont:
+- Base access control on intermediary permissions
+detect:
+  semgrep:
+  - relevant-scanner-rules
+verify:
+  tests:
+  - Test access control based on subject's permissions
+refs:
+  cwe:
+  - CWE-285
+  asvs:
+  - V8.3.3
+  owasp:
+  - A8:2021

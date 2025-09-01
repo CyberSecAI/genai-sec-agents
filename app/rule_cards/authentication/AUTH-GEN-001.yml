@@ -1,0 +1,23 @@
+id: AUTH-GEN-001
+title: Default User Accounts Absence
+severity: low
+scope: web-application
+requirement: Default user accounts (e.g., 'root', 'admin', or 'sa') are not present
+  in the application or are disabled.
+do:
+- Ensure default user accounts are either not present or disabled
+dont:
+- Keep default user accounts active
+detect:
+  semgrep:
+  - default-user-accounts
+verify:
+  tests:
+  - Manually verify default user accounts are not present or disabled
+refs:
+  cwe:
+  - CWE-16
+  asvs:
+  - V6.3.2
+  owasp:
+  - A2:2021

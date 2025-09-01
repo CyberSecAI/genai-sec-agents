@@ -1,0 +1,23 @@
+id: DATA-PROTECTION-006
+title: Protection Against Untrusted Data Sharing
+severity: medium
+scope: web-application
+requirement: Ensure defined sensitive data is not shared with untrusted parties to
+  prevent unauthorized data collection.
+do:
+- Implement controls to prevent sharing sensitive data with untrusted parties
+dont:
+- Share sensitive data with third parties without proper authorization
+detect:
+  semgrep:
+  - untrusted-data-sharing
+verify:
+  tests:
+  - Verify prevention of untrusted data sharing
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V14.2.3
+  owasp:
+  - A6:2021

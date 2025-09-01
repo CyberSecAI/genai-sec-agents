@@ -1,0 +1,24 @@
+id: DATA-PROTECTION-009
+title: Minimum Disclosure of Sensitive Data
+severity: high
+scope: web-application
+requirement: Only disclose the minimum required sensitive data for application functionality,
+  and mask complete data unless explicitly requested.
+do:
+- Disclose only necessary sensitive data
+- Mask complete data unless explicitly needed
+dont:
+- Expose unnecessary sensitive data
+detect:
+  semgrep:
+  - minimum-disclosure
+verify:
+  tests:
+  - Verify minimum disclosure of sensitive data
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V14.2.6
+  owasp:
+  - A6:2021

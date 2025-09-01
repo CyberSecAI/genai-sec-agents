@@ -1,0 +1,23 @@
+id: AUTH-GEN-007
+title: Protection Against User Enumeration
+severity: high
+scope: web-application
+requirement: Valid users cannot be deduced from failed authentication challenges,
+  such as by error messages or response times.
+do:
+- Implement protection against user enumeration
+dont:
+- Reveal valid users through error messages or response times
+detect:
+  semgrep:
+  - user-enumeration-protection
+verify:
+  tests:
+  - Verify protection against user enumeration
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V6.3.8
+  owasp:
+  - A8:2021
