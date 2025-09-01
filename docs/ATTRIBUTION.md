@@ -18,6 +18,14 @@ Rule Cards in this repository are based on:
 - **jsonschema**: JSON Schema validation
 - **pytest**: Testing framework
 
+## OWASP CheatSheet Series
+- **Source**: https://github.com/OWASP/CheatSheetSeries
+- **License**: CC BY-SA 4.0
+- **Usage**: Semantic search corpus for security guidance
+- **Attribution**: © OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License
+- **Local Path**: `vendor/owasp-cheatsheets/`
+- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities
+
 ## Contributors
 - Lead AppSec Engineer: [Name]
 - Development Team: [Names]
