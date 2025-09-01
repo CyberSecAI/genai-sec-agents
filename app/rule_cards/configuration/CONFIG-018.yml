@@ -1,4 +1,4 @@
-id: CONFIG-005
+id: CONFIG-018
 title: Secure Backend Communication Configuration
 severity: medium
 scope: web-application/api
