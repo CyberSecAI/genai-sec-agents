@@ -33,11 +33,12 @@ class SecurityError(Exception):
     pass
 
 class OWASPNormalizer:
-    """Secure OWASP CheatSheet normalizer with comprehensive security controls"""
+    """Secure OWASP CheatSheet and ASVS normalizer with comprehensive security controls"""
     
-    def __init__(self, source_dir: str, output_dir: str):
+    def __init__(self, source_dir: str, output_dir: str, asvs_dir: Optional[str] = None):
         self.source_dir = Path(source_dir).resolve()
         self.output_dir = Path(output_dir).resolve()
+        self.asvs_dir = Path(asvs_dir).resolve() if asvs_dir else None
         
         # Security validation
         self._validate_paths()
@@ -56,6 +57,24 @@ class OWASPNormalizer:
             'data_protection': re.compile(r'\b(privacy|gdpr|pii|sensitive data)\b', re.IGNORECASE)
         }
         
+        # ASVS domain mappings aligned with existing rule card structure
+        self.asvs_domain_tags = {
+            'V1': ['architecture', 'security_architecture'],
+            'V2': ['authentication', 'password_security'],
+            'V3': ['session_management', 'cookies'],
+            'V4': ['access_control', 'authorization'],
+            'V5': ['input_validation', 'output_encoding'],
+            'V6': ['cryptography', 'data_protection'],
+            'V7': ['error_handling', 'logging'],
+            'V8': ['data_protection', 'privacy'],
+            'V9': ['communications_security', 'network_security'],
+            'V10': ['malicious_code', 'code_integrity'],
+            'V11': ['business_logic', 'workflow'],
+            'V12': ['file_upload', 'file_security'],
+            'V13': ['api_security', 'web_services'],
+            'V14': ['configuration', 'deployment']
+        }
+
         # Content filters for normalization
         self.noise_patterns = [
             re.compile(r'^\s*---\s*$', re.MULTILINE),  # YAML frontmatter separators
@@ -117,17 +136,36 @@ class OWASPNormalizer:
         """Calculate SHA256 checksum of content"""
         return hashlib.sha256(content.encode('utf-8')).hexdigest()
 
-    def _extract_security_tags(self, content: str, filename: str) -> List[str]:
+    def _extract_security_tags(self, content: str, filename: str, source_type: str = 'owasp') -> List[str]:
         """Extract relevant security tags from content and filename"""
         tags = set()
         
-        # Check filename for tag patterns
-        for tag, pattern in self.tag_patterns.items():
-            if pattern.search(filename) or pattern.search(content):
-                tags.add(tag)
-        
-        # Add general OWASP tag
-        tags.add('owasp')
+        if source_type == 'asvs':
+            # ASVS-specific tag extraction
+            tags.add('asvs')
+            tags.add('owasp')  # ASVS is also an OWASP project
+            
+            # Extract ASVS verification category from filename or content
+            asvs_pattern = re.compile(r'V(\d+)', re.IGNORECASE)
+            matches = asvs_pattern.findall(filename + ' ' + content)
+            for match in matches:
+                verification_key = f'V{match}'
+                if verification_key in self.asvs_domain_tags:
+                    tags.update(self.asvs_domain_tags[verification_key])
+            
+            # Also check content patterns
+            for tag, pattern in self.tag_patterns.items():
+                if pattern.search(content):
+                    tags.add(tag)
+                    
+        else:
+            # OWASP CheatSheet processing (original logic)
+            for tag, pattern in self.tag_patterns.items():
+                if pattern.search(filename) or pattern.search(content):
+                    tags.add(tag)
+            
+            # Add general OWASP tag
+            tags.add('owasp')
         
         return sorted(list(tags))
 
@@ -147,23 +185,26 @@ class OWASPNormalizer:
         
         return normalized.strip()
 
-    def _generate_front_matter(self, source_path: Path, content: str, tags: List[str]) -> str:
+    def _generate_front_matter(self, source_path: Path, content: str, tags: List[str], source_type: str = 'owasp') -> str:
         """Generate YAML front-matter with metadata and security information"""
         sha256_hash = self._calculate_sha256(content)
         
+        source_name = 'owasp-asvs' if source_type == 'asvs' else 'owasp-cheatsheet-series'
+        
         front_matter = {
-            'source': 'owasp-cheatsheet-series',
+            'source': source_name,
             'path': str(source_path.relative_to(self.source_dir.parent)),
             'tags': tags,
             'license': 'CC-BY-SA-4.0',
             'sha256': sha256_hash,
             'processed_at': None,  # Will be set by YAML dumper
-            'security_domains': [tag for tag in tags if tag != 'owasp']
+            'security_domains': [tag for tag in tags if tag not in ['owasp', 'asvs']],
+            'verification_standard': 'ASVS' if source_type == 'asvs' else 'CheatSheet'
         }
         
         return yaml.dump(front_matter, default_flow_style=False, sort_keys=True)
 
-    def _process_file(self, md_file: Path) -> Optional[Path]:
+    def _process_file(self, md_file: Path, source_type: str = 'owasp') -> Optional[Path]:
         """Process a single markdown file with comprehensive security controls"""
         try:
             # Validate file path
@@ -184,8 +225,8 @@ class OWASPNormalizer:
                 logger.warning(f"File {md_file} too large ({len(content)} bytes), truncating")
                 content = content[:1024 * 1024]
                 
-            # Extract security tags
-            tags = self._extract_security_tags(content, md_file.stem)
+            # Extract security tags with source type
+            tags = self._extract_security_tags(content, md_file.stem, source_type)
             
             # Normalize content
             normalized_content = self._normalize_content(content)
@@ -194,11 +235,12 @@ class OWASPNormalizer:
                 logger.info(f"Skipping file with minimal content: {md_file}")
                 return None
                 
-            # Generate front-matter
-            front_matter = self._generate_front_matter(md_file, normalized_content, tags)
+            # Generate front-matter with source type
+            front_matter = self._generate_front_matter(md_file, normalized_content, tags, source_type)
             
-            # Create output filename
-            output_filename = self._sanitize_filename(f"{md_file.stem}.md")
+            # Create output filename with source prefix for clarity
+            prefix = 'asvs-' if source_type == 'asvs' else ''
+            output_filename = self._sanitize_filename(f"{prefix}{md_file.stem}.md")
             output_path = self.output_dir / output_filename
             
             # Write normalized file
@@ -208,7 +250,7 @@ class OWASPNormalizer:
                 with open(output_path, 'w', encoding='utf-8') as f:
                     f.write(final_content)
                     
-                logger.info(f"Processed: {md_file.name} -> {output_filename} ({len(tags)} tags)")
+                logger.info(f"Processed ({source_type}): {md_file.name} -> {output_filename} ({len(tags)} tags)")
                 return output_path
                 
             except IOError as e:
@@ -219,8 +261,8 @@ class OWASPNormalizer:
             logger.error(f"Error processing file {md_file}: {e}")
             return None
 
-    def process_all_cheatsheets(self) -> Dict[str, int]:
-        """Process all OWASP cheatsheets with security validation"""
+    def process_all_content(self, source_type: str = 'owasp') -> Dict[str, int]:
+        """Process content based on source type with security validation"""
         stats = {
             'processed': 0,
             'skipped': 0,
@@ -234,39 +276,56 @@ class OWASPNormalizer:
         except OSError as e:
             raise SecurityError(f"Cannot create output directory {self.output_dir}: {e}")
             
-        # Find all markdown files in source directory
-        cheatsheets_dir = self.source_dir / 'cheatsheets'
-        if not cheatsheets_dir.exists():
-            logger.warning(f"Cheatsheets directory not found: {cheatsheets_dir}")
-            cheatsheets_dir = self.source_dir  # Fallback to root
+        # Find markdown files based on source type
+        if source_type == 'owasp':
+            # Process OWASP CheatSheets
+            cheatsheets_dir = self.source_dir / 'cheatsheets'
+            if not cheatsheets_dir.exists():
+                logger.warning(f"Cheatsheets directory not found: {cheatsheets_dir}")
+                cheatsheets_dir = self.source_dir  # Fallback to root
+            md_files = list(cheatsheets_dir.glob('*.md'))
+        elif source_type == 'asvs':
+            # Process ASVS content - find all markdown files recursively
+            md_files = []
+            for pattern in ['*.md', '**/*.md']:
+                md_files.extend(self.source_dir.glob(pattern))
+        else:
+            raise ValueError(f"Unsupported source type: {source_type}")
             
-        md_files = list(cheatsheets_dir.glob('*.md'))
+        # Filter out common non-content files
+        excluded_files = {
+            'README.md', 'LICENSE.md', 'COMPILING.md', 'hall_of-fame.md', 
+            'pull_request_template.md', 'CODE_OF_CONDUCT.md'
+        }
+        md_files = [f for f in md_files if f.name not in excluded_files]
+        
         stats['total_files'] = len(md_files)
         
-        if not md_files:
-            logger.warning(f"No markdown files found in {cheatsheets_dir}")
-            return stats
-            
-        logger.info(f"Processing {len(md_files)} markdown files...")
+        if md_files:
+            logger.info(f"Processing {len(md_files)} {source_type.upper()} files...")
+            for md_file in md_files:
+                try:
+                    result = self._process_file(md_file, source_type)
+                    if result:
+                        stats['processed'] += 1
+                    else:
+                        stats['skipped'] += 1
+                        
+                except Exception as e:
+                    logger.error(f"Processing error for {md_file}: {e}")
+                    stats['errors'] += 1
+        else:
+            logger.warning(f"No {source_type.upper()} files found in {self.source_dir}")
         
-        # Process each file
-        for md_file in md_files:
-            try:
-                result = self._process_file(md_file)
-                if result:
-                    stats['processed'] += 1
-                else:
-                    stats['skipped'] += 1
-                    
-            except Exception as e:
-                logger.error(f"Processing error for {md_file}: {e}")
-                stats['errors'] += 1
-                
         # Log summary
         logger.info(f"Processing complete: {stats['processed']} processed, "
                    f"{stats['skipped']} skipped, {stats['errors']} errors")
         
         return stats
+    
+    def process_all_cheatsheets(self) -> Dict[str, int]:
+        """Legacy method - redirects to process_all_content for backward compatibility"""
+        return self.process_all_content()
 
 def validate_corpus_integrity(corpus_dir: str) -> bool:
     """Validate corpus file integrity using stored checksums"""
@@ -317,13 +376,25 @@ def validate_corpus_integrity(corpus_dir: str) -> bool:
 
 def main():
     """Main function with argument parsing and error handling"""
-    parser = argparse.ArgumentParser(description='Normalize OWASP CheatSheets for semantic search')
-    parser.add_argument('--source', '-s', 
+    parser = argparse.ArgumentParser(description='Normalize OWASP CheatSheets and ASVS standards for semantic search')
+    parser.add_argument('--owasp-source', 
                        default='vendor/owasp-cheatsheets',
                        help='Source directory containing OWASP cheatsheets')
-    parser.add_argument('--output', '-o',
+    parser.add_argument('--asvs-source',
+                       default='vendor/owasp-asvs',
+                       help='Source directory containing ASVS standards')
+    parser.add_argument('--owasp-output',
                        default='research/search_corpus/owasp',
-                       help='Output directory for normalized corpus')
+                       help='Output directory for normalized OWASP corpus')
+    parser.add_argument('--asvs-output',
+                       default='research/search_corpus/asvs',
+                       help='Output directory for normalized ASVS corpus')
+    parser.add_argument('--process-owasp', action='store_true', default=True,
+                       help='Process OWASP CheatSheets (default: True)')
+    parser.add_argument('--process-asvs', action='store_true', default=False,
+                       help='Process ASVS standards')
+    parser.add_argument('--process-all', action='store_true',
+                       help='Process both OWASP and ASVS content')
     parser.add_argument('--validate', '-v', action='store_true',
                        help='Validate corpus integrity after processing')
     parser.add_argument('--verbose', action='store_true',
@@ -333,30 +404,56 @@ def main():
     
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
+    
+    if args.process_all:
+        args.process_owasp = True
+        args.process_asvs = True
+    
+    total_stats = {'processed': 0, 'skipped': 0, 'errors': 0, 'total_files': 0}
         
     try:
-        # Initialize normalizer
-        normalizer = OWASPNormalizer(args.source, args.output)
+        # Process OWASP CheatSheets
+        if args.process_owasp:
+            logger.info("Processing OWASP CheatSheets...")
+            normalizer = OWASPNormalizer(args.owasp_source, args.owasp_output)
+            stats = normalizer.process_all_content('owasp')
+            
+            # Accumulate statistics
+            for key in total_stats:
+                total_stats[key] += stats.get(key, 0)
+            
+            # Validate OWASP corpus if requested
+            if args.validate:
+                logger.info("Validating OWASP corpus integrity...")
+                is_valid = validate_corpus_integrity(args.owasp_output)
+                if not is_valid:
+                    logger.error("OWASP corpus integrity validation failed")
         
-        # Process all cheatsheets
-        stats = normalizer.process_all_cheatsheets()
-        
-        # Validate if requested
-        if args.validate:
-            logger.info("Running corpus integrity validation...")
-            is_valid = validate_corpus_integrity(args.output)
-            if not is_valid:
-                logger.error("Corpus integrity validation failed")
-                return 1
+        # Process ASVS standards
+        if args.process_asvs:
+            logger.info("Processing ASVS standards...")
+            normalizer = OWASPNormalizer(args.asvs_source, args.asvs_output)
+            stats = normalizer.process_all_content('asvs')
+            
+            # Accumulate statistics
+            for key in total_stats:
+                total_stats[key] += stats.get(key, 0)
+            
+            # Validate ASVS corpus if requested
+            if args.validate:
+                logger.info("Validating ASVS corpus integrity...")
+                is_valid = validate_corpus_integrity(args.asvs_output)
+                if not is_valid:
+                    logger.error("ASVS corpus integrity validation failed")
                 
         # Print final statistics
         print(f"\nProcessing Summary:")
-        print(f"  Files processed: {stats['processed']}")
-        print(f"  Files skipped: {stats['skipped']}")
-        print(f"  Errors: {stats['errors']}")
-        print(f"  Total files: {stats['total_files']}")
+        print(f"  Files processed: {total_stats['processed']}")
+        print(f"  Files skipped: {total_stats['skipped']}")
+        print(f"  Errors: {total_stats['errors']}")
+        print(f"  Total files: {total_stats['total_files']}")
         
-        if stats['processed'] == 0:
+        if total_stats['processed'] == 0:
             logger.error("No files were successfully processed")
             return 1
             

@@ -1,0 +1,3 @@
+[submodule "vendor/owasp-asvs"]
+	path = vendor/owasp-asvs
+	url = https://github.com/OWASP/ASVS.git

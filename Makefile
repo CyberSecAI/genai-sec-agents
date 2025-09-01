@@ -30,8 +30,14 @@ build: validate compile	## Validate Rule Cards and compile agent packages
 lint:		## Run code linting
 	@echo "Linting not yet configured"
 
-semsearch-build:	## Build semantic search corpus from OWASP cheatsheets
-	python3 tools/render_owasp_for_search.py --verbose --validate
+semsearch-build:	## Build semantic search corpus from OWASP cheatsheets and ASVS
+	python3 tools/render_owasp_for_search.py --process-all --verbose --validate
+
+semsearch-build-owasp:	## Build semantic search corpus from OWASP cheatsheets only
+	python3 tools/render_owasp_for_search.py --process-owasp --verbose --validate
+
+semsearch-build-asvs:	## Build semantic search corpus from ASVS standards only
+	python3 tools/render_owasp_for_search.py --process-asvs --asvs-source vendor/owasp-asvs/5.0/en --verbose --validate
 
 semsearch:	## Perform semantic search on OWASP corpus (usage: make semsearch q="query")
 	@if [ -z "$(q)" ]; then \
@@ -42,4 +48,15 @@ semsearch:	## Perform semantic search on OWASP corpus (usage: make semsearch q="
 		echo "  make semsearch q=\"session fixation prevention\""; \
 	else \
 		tools/semsearch.sh "$(q)"; \
+	fi
+
+semsearch-asvs:	## Perform semantic search on ASVS corpus (usage: make semsearch-asvs q="query")
+	@if [ -z "$(q)" ]; then \
+		echo "Usage: make semsearch-asvs q=\"your search query\""; \
+		echo "Examples:"; \
+		echo "  make semsearch-asvs q=\"authentication verification\""; \
+		echo "  make semsearch-asvs q=\"session timeout requirements\""; \
+		echo "  make semsearch-asvs q=\"cryptographic validation\""; \
+	else \
+		tools/semsearch.sh "$(q)" research/search_corpus/asvs/; \
 	fi
