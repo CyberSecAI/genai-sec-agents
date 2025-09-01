@@ -1,0 +1,24 @@
+id: DATA-PROTECT-001
+title: Sensitive Data Identification and Classification
+severity: medium
+scope: web-application
+requirement: Identify and classify all sensitive data processed by the application
+  into protection levels, considering data protection and privacy regulations.
+do:
+- Implement a process to identify and classify sensitive data
+- Assign appropriate protection levels based on sensitivity
+dont:
+- Neglect to classify sensitive data
+detect:
+  semgrep:
+  - sensitive-data-identification
+verify:
+  tests:
+  - Verify sensitive data classification process
+refs:
+  asvs:
+  - V14.1.1
+  cwe:
+  - CWE-200
+  owasp:
+  - A3:2021

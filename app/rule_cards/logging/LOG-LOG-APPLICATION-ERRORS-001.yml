@@ -1,0 +1,35 @@
+id: LOG-LOG-APPLICATION-ERRORS-001
+title: Log application errors, system events, and high-risk functionality usage
+severity: high
+scope: web-application
+requirement: Log application errors, system events, and usage of high-risk functionality
+  to identify potential security vulnerabilities, performance issues, and unauthorized
+  activities within the application.
+do:
+- Implement logging for application errors and system events
+- Log the usage of high-risk functionality such as user administration actions and
+  encryption activities
+- Include detailed information like event timestamp, severity, and description in
+  the logs
+dont:
+- Do not overlook logging application errors, system events, and critical functionality
+  usage
+detect:
+  semgrep:
+  - logging.application-errors
+  - logging.system-events
+  - logging.high-risk-functionality-usage
+  trufflehog:
+  - Sensitive Data Exposure
+verify:
+  tests:
+  - Verify that application errors, system events, and high-risk functionality usage
+    are logged
+  - Test the logging of critical events during security testing to ensure completeness
+refs:
+  cwe:
+  - CWE-209
+  - CWE-778
+  owasp:
+  - A06:2021
+  - A10:2021

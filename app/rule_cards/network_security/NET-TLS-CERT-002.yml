@@ -1,0 +1,23 @@
+id: NET-TLS-CERT-002
+title: Ensure TLS clients validate certificates before communicating with a server
+severity: medium
+scope: infrastructure
+requirement: TLS clients must validate certificates received before communicating
+  with a TLS server.
+do:
+- Implement certificate validation in TLS clients
+dont:
+- Ignore certificate validation errors
+detect:
+  semgrep:
+  - tls-client-certificate-validation
+verify:
+  tests:
+  - Manually verify that TLS clients validate certificates
+refs:
+  asvs:
+  - V12.3.2
+  cwe:
+  - CWE-295
+  owasp:
+  - A06:2021

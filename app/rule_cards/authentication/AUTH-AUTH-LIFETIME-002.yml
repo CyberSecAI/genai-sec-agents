@@ -1,0 +1,17 @@
+id: AUTH-AUTH-LIFETIME-002
+title: Ensure Challenge Nonce Length for Cryptographic Authentication
+severity: high
+scope: web-application
+requirement: Verify that the challenge nonce used in cryptographic authentication
+  is at least 64 bits in length, and statistically unique or unique over the lifetime
+  of the cryptographic device.
+do:
+- Use challenge nonce of at least 64 bits in length
+- Ensure nonce is statistically unique or unique over the device's lifetime
+refs:
+  cwe:
+  - CWE-323
+  asvs:
+  - V6.7.2:2021
+  owasp:
+  - A6:2021

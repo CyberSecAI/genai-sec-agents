@@ -1,0 +1,25 @@
+id: AUTH-AUTH-MFA-001
+title: Evidence of Identity Proofing for Lost Authentication Factor
+severity: medium
+scope: web-application
+requirement: Perform evidence of identity proofing at the same level as during enrollment
+  when a multi-factor authentication factor is lost.
+do:
+- Verify the user's identity through the same level of proofing as during enrollment
+  when a multi-factor authentication factor is lost
+dont:
+- Skip identity proofing when a multi-factor authentication factor is lost
+detect:
+  semgrep:
+  - lost-authentication-factor-proofing
+verify:
+  tests:
+  - Verify that evidence of identity proofing is performed when a multi-factor authentication
+    factor is lost
+refs:
+  asvs:
+  - V6.4.4
+  cwe:
+  - CWE-640
+  owasp:
+  - A11:2021

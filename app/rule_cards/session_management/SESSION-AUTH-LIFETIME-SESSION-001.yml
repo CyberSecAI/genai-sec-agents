@@ -1,0 +1,26 @@
+id: SESSION-AUTH-LIFETIME-SESSION-001
+title: Federated Re-authentication
+severity: medium
+scope: web-application
+requirement: Ensure session lifetime and termination between Relying Parties (RPs)
+  and Identity Providers (IdPs) behave as documented, requiring re-authentication
+  as necessary such as when the maximum time between IdP authentication events is
+  reached.
+do:
+- Implement mechanisms for federated re-authentication between RPs and IdPs
+dont:
+- Neglect re-authentication requirements between RPs and IdPs
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+verify:
+  tests:
+  - Test session behavior between RPs and IdPs for re-authentication
+refs:
+  asvs:
+  - V7.6.1:2021
+  cwe:
+  - CWE-384
+  owasp:
+  - A07:2021

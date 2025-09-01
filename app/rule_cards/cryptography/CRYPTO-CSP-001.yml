@@ -1,0 +1,29 @@
+id: CRYPTO-CSP-001
+title: Secure Random Number Generation
+severity: high
+scope: web-application
+requirement: Generate random numbers and strings using a cryptographically secure
+  pseudo-random number generator (CSPRNG) with at least 128 bits of entropy
+do:
+- Use CSPRNG for generating non-guessable random values
+- Ensure random number generation mechanism works securely under heavy demand
+dont:
+- Use insecure random number generation methods
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
+verify:
+  tests:
+  - Verify implementation meets security requirements
+refs:
+  asvs:
+  - V11.5.1
+  - V11.5.2
+  cwe:
+  - CWE-327
+  - CWE-328
+  - CWE-329
+  owasp:
+  - A10:2021

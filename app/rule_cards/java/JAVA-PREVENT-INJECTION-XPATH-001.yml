@@ -1,0 +1,32 @@
+id: JAVA-PREVENT-INJECTION-XPATH-001
+title: Prevent XPath Injection in Java applications
+severity: medium
+scope: web-application
+requirement: Use XPath Variable Resolver to prevent XPath injection in Java applications.
+  Avoid building XPath queries using untrusted user input directly in Strings.
+do:
+- Implement XPath Variable Resolver to define parameters for XPath expressions
+- Sanitize and validate user input before using it in XPath queries
+- Apply input validation using allowlist approach to restrict user input
+dont:
+- Do not concatenate user input directly into XPath queries
+- Avoid using String manipulation to build XPath queries
+detect:
+  semgrep:
+  - java.xpath-injection
+  - java.xpath-variable-injection
+  trufflehog:
+  - XPath Injection
+  codeql:
+  - xpath-injection
+verify:
+  tests:
+  - Verify XPath queries are constructed safely without user input manipulation
+  - Conduct security testing to confirm XPath injection vulnerabilities are mitigated
+refs:
+  cwe:
+  - CWE-91
+  - CWE-918
+  owasp:
+  - A01:2021
+  - A06:2021

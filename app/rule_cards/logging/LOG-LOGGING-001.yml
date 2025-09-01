@@ -1,0 +1,29 @@
+id: LOG-LOGGING-001
+title: Implement customizable logging levels
+severity: medium
+scope: web-application
+requirement: Implement customizable logging levels to adjust the verbosity of logging
+  based on severity, threat level, and operational needs while ensuring critical events
+  are always captured.
+do:
+- Allow customization of logging levels to adjust verbosity
+- Ensure default logging level provides sufficient detail for operational needs
+- Prevent deactivation of critical event logging or compliance-required logs
+dont:
+- Do not allow complete deactivation of application logging or critical event logging
+detect:
+  semgrep:
+  - logging.customizable-levels
+  trufflehog:
+  - Sensitive Data Exposure
+verify:
+  tests:
+  - Verify that logging levels can be customized as needed
+  - Test the default logging level to ensure it captures essential events
+refs:
+  cwe:
+  - CWE-778
+  - CWE-117
+  owasp:
+  - A10:2021
+  - A13:2021

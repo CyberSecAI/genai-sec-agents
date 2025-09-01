@@ -1,0 +1,25 @@
+id: AUTH-AUTH-CERT-002
+title: Store Certificates Securely for Cryptographic Authentication
+severity: high
+scope: web-application
+requirement: Verify that certificates used to verify cryptographic authentication
+  assertions are stored securely to protect them from modification.
+do:
+- Store certificates in a secure location with restricted access
+- Regularly monitor and audit access to certificates
+dont:
+- Store certificates in plaintext or insecure locations
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Verify access controls and monitoring for certificate storage
+refs:
+  asvs:
+  - V6.7.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021

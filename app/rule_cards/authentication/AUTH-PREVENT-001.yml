@@ -1,0 +1,25 @@
+id: AUTH-PREVENT-001
+title: Prevent Identity Spoofing with Multiple Identity Providers
+severity: high
+scope: web-application
+requirement: Verify that, if the application supports multiple identity providers
+  (IdPs), the user's identity can...
+do:
+- Enhance the authentication process to prevent identity spoofing with multiple identity
+  providers
+dont:
+- Allow unauthorized access to user accounts through identity provider manipulation
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Testing methods to verify prevention of identity spoofing
+refs:
+  asvs:
+  - V6.4.2
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021

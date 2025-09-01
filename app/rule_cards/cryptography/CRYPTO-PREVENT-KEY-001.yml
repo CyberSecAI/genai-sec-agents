@@ -1,0 +1,28 @@
+id: CRYPTO-PREVENT-KEY-001
+title: Approved Key Exchange Algorithms
+severity: high
+scope: web-application
+requirement: Use approved cryptographic algorithms for key exchange with secure parameters
+  to prevent cryptographic breaks
+do:
+- Implement approved cryptographic algorithms for key exchange (e.g., Diffie-Hellman)
+  with secure parameters
+dont:
+- Use insecure key exchange algorithms
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
+verify:
+  tests:
+  - Verify implementation meets security requirements
+refs:
+  asvs:
+  - V11.6.2
+  cwe:
+  - CWE-327
+  - CWE-328
+  - CWE-329
+  owasp:
+  - A10:2021

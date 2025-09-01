@@ -1,0 +1,22 @@
+id: CONFIG-LIMIT-BACKEND-COMPONENT-001
+title: Limit Backend Component Version Information
+severity: high
+scope: web-application
+requirement: Detailed version information of backend components must not be exposed
+do:
+- Configure web server to limit backend component version information
+dont:
+- Expose detailed version information of backend components
+detect:
+  semgrep:
+  - 'http.response.body: $version'
+verify:
+  tests:
+  - Manually verify that backend component version information is limited
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V13.4.6
+  owasp:
+  - A6:2021

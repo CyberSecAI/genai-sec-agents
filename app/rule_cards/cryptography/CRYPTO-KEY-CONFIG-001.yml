@@ -1,0 +1,27 @@
+id: CRYPTO-KEY-CONFIG-001
+title: Minimum Security Strength for Cryptographic Primitives
+severity: medium
+scope: web-application/api/mobile/infrastructure
+requirement: Ensure that all cryptographic primitives utilize a minimum of 128-bits
+  of security based on the algorithm, key size, and configuration
+do:
+- Verify that cryptographic primitives provide a minimum of 128-bits of security
+dont:
+- Use cryptographic primitives with insufficient security strength
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
+verify:
+  tests:
+  - Verify implementation meets security requirements
+refs:
+  asvs:
+  - V11.2.3
+  cwe:
+  - CWE-327
+  - CWE-328
+  - CWE-329
+  owasp:
+  - A10:2021

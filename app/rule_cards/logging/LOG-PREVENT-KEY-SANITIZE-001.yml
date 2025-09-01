@@ -1,0 +1,29 @@
+id: LOG-PREVENT-KEY-SANITIZE-001
+title: Implement log sanitization to protect sensitive data
+severity: low
+scope: web-application
+requirement: Apply log sanitization techniques to remove or mask sensitive data such
+  as passwords, personal information, and encryption keys from log entries to prevent
+  exposure of confidential information.
+do:
+- Implement log sanitization to remove sensitive data before logging
+- Mask or encrypt sensitive information like passwords and personal data in log entries
+- Consider pseudonymization techniques for indirect identifiers in log data
+dont:
+- Do not log sensitive information in clear text without sanitization
+detect:
+  semgrep:
+  - logging.sanitization
+  trufflehog:
+  - Sensitive Data Exposure
+verify:
+  tests:
+  - Verify that log sanitization techniques are applied to sensitive data
+  - Test the effectiveness of data masking in log entries during security assessments
+refs:
+  cwe:
+  - CWE-312
+  - CWE-315
+  owasp:
+  - A10:2021
+  - A13:2021

@@ -1,0 +1,29 @@
+id: LOG-ACCESS-001
+title: Encrypt log data in transit and at rest
+severity: high
+scope: web-application
+requirement: Encrypt log data both in transit and at rest to protect sensitive information
+  from unauthorized access or interception.
+do:
+- Use secure transmission protocols for sending log data over untrusted networks
+- Encrypt log data stored at rest using strong encryption algorithms
+- Consider data masking or encryption for sensitive log entries
+dont:
+- Do not transmit log data over untrusted networks without encryption
+detect:
+  semgrep:
+  - logging.encryption-transit
+  - logging.encryption-rest
+  trufflehog:
+  - Sensitive Data Exposure
+verify:
+  tests:
+  - Verify that log data is encrypted in transit and at rest
+  - Test encryption mechanisms during security testing to ensure effectiveness
+refs:
+  cwe:
+  - CWE-311
+  - CWE-312
+  owasp:
+  - A10:2021
+  - A13:2021

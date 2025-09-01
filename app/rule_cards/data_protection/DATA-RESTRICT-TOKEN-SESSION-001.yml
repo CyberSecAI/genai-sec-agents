@@ -1,0 +1,25 @@
+id: DATA-RESTRICT-TOKEN-SESSION-001
+title: Restricting Sensitive Data in Browser Storage
+severity: medium
+scope: web-application
+requirement: Ensure data stored in browser storage does not contain sensitive data,
+  except for session tokens.
+do:
+- Implement controls to prevent storage of sensitive data in browser storage except
+  for session tokens.
+dont:
+- Allow sensitive data to be stored in browser storage.
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Verify that only session tokens are stored in browser storage.
+refs:
+  asvs:
+  - V14.3.3
+  cwe:
+  - CWE-311
+  owasp:
+  - A02:2021

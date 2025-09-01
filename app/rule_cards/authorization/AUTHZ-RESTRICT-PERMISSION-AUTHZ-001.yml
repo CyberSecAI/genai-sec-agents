@@ -1,0 +1,26 @@
+id: AUTHZ-RESTRICT-PERMISSION-AUTHZ-001
+title: Authorization Design - Data-Specific Access
+severity: high
+scope: web-application
+requirement: Restrict data-specific access to consumers with explicit permissions
+  to mitigate IDOR and BOLA.
+do:
+- Ensure explicit permissions are required for data-specific access
+- Mitigate IDOR and BOLA risks by enforcing access controls
+- Consider contextual attributes in data-specific authorization
+dont:
+- Do not rely on client-side controls for data-specific access
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+verify:
+  tests:
+  - Test data-specific access controls for effectiveness
+refs:
+  asvs:
+  - V8.2.2
+  cwe:
+  - CWE-285
+  owasp:
+  - A01:2021
