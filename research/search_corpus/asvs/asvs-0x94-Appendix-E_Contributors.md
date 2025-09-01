@@ -1,13 +1,13 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x94-Appendix-E_Contributors.md
+path: owasp-asvs/5.0/en/0x94-Appendix-E_Contributors.md
 processed_at: null
 security_domains: []
 sha256: 1dbe1f9d6cdc304eaa801435f7bf264e76cdcc3a04c00c53775d04170a84b133
 source: owasp-asvs
 tags:
-- asvs
 - owasp
+- asvs
 verification_standard: ASVS
 ---
 

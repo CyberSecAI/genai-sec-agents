@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x93-Appendix-D_Recommendations.md
+path: owasp-asvs/5.0/en/0x93-Appendix-D_Recommendations.md
 processed_at: null
 security_domains:
 - authentication
@@ -10,12 +10,8 @@ security_domains:
 sha256: c9ac1be3444e5ec10ea3dc3317fa43b131ea2537df7bab259f0b9339627cf757
 source: owasp-asvs
 tags:
-- asvs
-- authentication
-- authorization
-- input_validation
 - owasp
-- secrets
+- asvs
 verification_standard: ASVS
 ---
 

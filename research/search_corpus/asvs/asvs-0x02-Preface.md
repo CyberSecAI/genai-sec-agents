@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x02-Preface.md
+path: owasp-asvs/5.0/en/0x02-Preface.md
 processed_at: null
 security_domains:
 - access_control
@@ -10,12 +10,8 @@ security_domains:
 sha256: dfa64aae73ff5546c6863808811b1cb8a5bb826fd64fa8495dff188d53a9382a
 source: owasp-asvs
 tags:
-- access_control
-- asvs
-- authorization
-- input_validation
-- output_encoding
 - owasp
+- asvs
 verification_standard: ASVS
 ---
 

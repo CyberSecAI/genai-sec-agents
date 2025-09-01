@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x05-For-Users-Of-4.0.md
+path: owasp-asvs/5.0/en/0x05-For-Users-Of-4.0.md
 processed_at: null
 security_domains:
 - access_control
@@ -14,16 +14,8 @@ security_domains:
 sha256: f96f153bbc2ec8aa030e8798fb34695101936880b426e231bfa75fe6801a3972
 source: owasp-asvs
 tags:
-- access_control
-- architecture
-- asvs
-- authorization
-- data_protection
-- input_validation
-- network_security
 - owasp
-- security_architecture
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

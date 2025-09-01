@@ -1,13 +1,13 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x01-Frontispiece.md
+path: owasp-asvs/5.0/en/0x01-Frontispiece.md
 processed_at: null
 security_domains: []
 sha256: f24c375dbe3dee8703197f56125e959540150aa738071bfdeb6875090e28a1b4
 source: owasp-asvs
 tags:
-- asvs
 - owasp
+- asvs
 verification_standard: ASVS
 ---
 

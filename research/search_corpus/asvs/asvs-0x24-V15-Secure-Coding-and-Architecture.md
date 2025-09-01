@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x24-V15-Secure-Coding-and-Architecture.md
+path: owasp-asvs/5.0/en/0x24-V15-Secure-Coding-and-Architecture.md
 processed_at: null
 security_domains:
 - authorization
@@ -8,10 +8,8 @@ security_domains:
 sha256: c5d7ab5372aea18109586e111ebe9e6a7f5925297b0374445700725f1bb65816
 source: owasp-asvs
 tags:
-- asvs
-- authorization
-- network_security
 - owasp
+- asvs
 verification_standard: ASVS
 ---
 

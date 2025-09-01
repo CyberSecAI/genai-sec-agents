@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x03-What-is-the-ASVS.md
+path: owasp-asvs/5.0/en/0x03-What-is-the-ASVS.md
 processed_at: null
 security_domains:
 - authentication
@@ -13,15 +13,8 @@ security_domains:
 sha256: 13e8e336c18880bd4e065cf9161e6ebc0baa1dfa2047095fc29897b0b461a191
 source: owasp-asvs
 tags:
-- asvs
-- authentication
-- cookies
-- data_protection
-- input_validation
-- output_encoding
 - owasp
-- secrets
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

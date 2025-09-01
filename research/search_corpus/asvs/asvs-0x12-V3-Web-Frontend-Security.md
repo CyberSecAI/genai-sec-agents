@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x12-V3-Web-Frontend-Security.md
+path: owasp-asvs/5.0/en/0x12-V3-Web-Frontend-Security.md
 processed_at: null
 security_domains:
 - cookies
@@ -14,16 +14,8 @@ security_domains:
 sha256: 7dfd40281a21f0ddf5834fdc63f3eb2ff0d0b12f57c7f168b8dc4a304d95b827
 source: owasp-asvs
 tags:
-- asvs
-- cookies
-- cryptography
-- data_protection
-- docker
-- input_validation
-- network_security
 - owasp
-- secrets
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

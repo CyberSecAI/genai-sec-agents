@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x91-Appendix-B_References.md
+path: owasp-asvs/5.0/en/0x91-Appendix-B_References.md
 processed_at: null
 security_domains:
 - architecture
@@ -10,12 +10,8 @@ security_domains:
 sha256: 9c6e0875efa435226c57efc803138e55cb17e768133e9556d32ce1e1c6e8d6a6
 source: owasp-asvs
 tags:
-- architecture
-- asvs
-- cookies
 - owasp
-- security_architecture
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

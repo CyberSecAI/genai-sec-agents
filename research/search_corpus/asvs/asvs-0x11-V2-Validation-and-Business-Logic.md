@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x11-V2-Validation-and-Business-Logic.md
+path: owasp-asvs/5.0/en/0x11-V2-Validation-and-Business-Logic.md
 processed_at: null
 security_domains:
 - authentication
@@ -9,11 +9,8 @@ security_domains:
 sha256: 28fe1ca63cb943ce6d8e79a8d13c1f54799946387d1c57144b8b344ee164e9d5
 source: owasp-asvs
 tags:
-- asvs
-- authentication
-- input_validation
 - owasp
-- password_security
+- asvs
 verification_standard: ASVS
 ---
 

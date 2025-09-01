@@ -191,14 +191,18 @@ class OWASPNormalizer:
         
         source_name = 'owasp-asvs' if source_type == 'asvs' else 'owasp-cheatsheet-series'
         
+        # Separate metadata tags from security domain tags
+        metadata_tags = list(set([source_type, 'owasp']))  # Always include source type and 'owasp' for compatibility, remove duplicates
+        security_domains = [tag for tag in tags if tag not in ['owasp', 'asvs']]
+        
         front_matter = {
             'source': source_name,
             'path': str(source_path.relative_to(self.source_dir.parent)),
-            'tags': tags,
+            'tags': metadata_tags,
             'license': 'CC-BY-SA-4.0',
             'sha256': sha256_hash,
             'processed_at': None,  # Will be set by YAML dumper
-            'security_domains': [tag for tag in tags if tag not in ['owasp', 'asvs']],
+            'security_domains': security_domains,
             'verification_standard': 'ASVS' if source_type == 'asvs' else 'CheatSheet'
         }
         

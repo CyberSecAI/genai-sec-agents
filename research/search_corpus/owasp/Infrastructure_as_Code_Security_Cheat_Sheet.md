@@ -8,8 +8,6 @@ security_domains:
 sha256: cc8661834bd252c30fb183299ec1ea9c698346673e95f0c8b8a1b8e5721225e6
 source: owasp-cheatsheet-series
 tags:
-- docker
-- input_validation
 - owasp
 verification_standard: CheatSheet
 ---

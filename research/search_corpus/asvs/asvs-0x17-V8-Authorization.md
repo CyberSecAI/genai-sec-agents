@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x17-V8-Authorization.md
+path: owasp-asvs/5.0/en/0x17-V8-Authorization.md
 processed_at: null
 security_domains:
 - authorization
@@ -12,14 +12,8 @@ security_domains:
 sha256: 5b4a8b0966e998d5d895f36f494951e535f05a20aab93faa7d7ce7523818145a
 source: owasp-asvs
 tags:
-- asvs
-- authorization
-- data_protection
-- network_security
 - owasp
-- privacy
-- secrets
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

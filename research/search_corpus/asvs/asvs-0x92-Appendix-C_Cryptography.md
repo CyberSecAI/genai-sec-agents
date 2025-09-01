@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x92-Appendix-C_Cryptography.md
+path: owasp-asvs/5.0/en/0x92-Appendix-C_Cryptography.md
 processed_at: null
 security_domains:
 - architecture
@@ -14,16 +14,8 @@ security_domains:
 sha256: 91792328fd42a098b38d6a50b9fec2ccffac5a56dc244d9217664c43cf92534f
 source: owasp-asvs
 tags:
-- architecture
-- asvs
-- authentication
-- business_logic
-- cryptography
-- network_security
 - owasp
-- secrets
-- security_architecture
-- workflow
+- asvs
 verification_standard: ASVS
 ---
 

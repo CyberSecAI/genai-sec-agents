@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x10-V1-Encoding-and-Sanitization.md
+path: owasp-asvs/5.0/en/0x10-V1-Encoding-and-Sanitization.md
 processed_at: null
 security_domains:
 - architecture
@@ -9,11 +9,8 @@ security_domains:
 sha256: 3727235335942dbdbcdfa16db3fad9645294e82f67e4b43e489bde036130d57d
 source: owasp-asvs
 tags:
-- architecture
-- asvs
-- input_validation
 - owasp
-- security_architecture
+- asvs
 verification_standard: ASVS
 ---
 

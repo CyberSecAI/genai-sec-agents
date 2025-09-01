@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x18-V9-Self-contained-Tokens.md
+path: owasp-asvs/5.0/en/0x18-V9-Self-contained-Tokens.md
 processed_at: null
 security_domains:
 - communications_security
@@ -10,12 +10,8 @@ security_domains:
 sha256: 0fcd008c9ca11dfa4b0f1a8e677e2e4601f3701a518fed568e28c77451d62144
 source: owasp-asvs
 tags:
-- asvs
-- communications_security
-- jwt
-- network_security
 - owasp
-- secrets
+- asvs
 verification_standard: ASVS
 ---
 

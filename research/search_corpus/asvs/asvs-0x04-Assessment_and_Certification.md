@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x04-Assessment_and_Certification.md
+path: owasp-asvs/5.0/en/0x04-Assessment_and_Certification.md
 processed_at: null
 security_domains:
 - authorization
@@ -9,11 +9,8 @@ security_domains:
 sha256: 8e92e86433112a82c4ce9099fe4d1dd8174129c61691d708a5d99b40b89a1d90
 source: owasp-asvs
 tags:
-- asvs
-- authorization
-- input_validation
 - owasp
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

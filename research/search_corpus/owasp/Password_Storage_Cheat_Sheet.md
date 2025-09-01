@@ -11,12 +11,7 @@ security_domains:
 sha256: 878aad6cf764277ba6a9ca6a81e29e1ba3b8812d4874c65a939ac493841433e4
 source: owasp-cheatsheet-series
 tags:
-- authentication
-- cryptography
-- data_protection
-- input_validation
 - owasp
-- secrets
 verification_standard: CheatSheet
 ---
 

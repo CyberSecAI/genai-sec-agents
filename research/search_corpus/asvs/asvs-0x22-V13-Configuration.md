@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x22-V13-Configuration.md
+path: owasp-asvs/5.0/en/0x22-V13-Configuration.md
 processed_at: null
 security_domains:
 - api_security
@@ -13,15 +13,8 @@ security_domains:
 sha256: f9ce1fcd5a3717fa4c287c3efb9ac9f09409918bb5962377902d5e36f373d6ed
 source: owasp-asvs
 tags:
-- api_security
-- asvs
-- authentication
-- authorization
-- network_security
 - owasp
-- secrets
-- session_management
-- web_services
+- asvs
 verification_standard: ASVS
 ---
 

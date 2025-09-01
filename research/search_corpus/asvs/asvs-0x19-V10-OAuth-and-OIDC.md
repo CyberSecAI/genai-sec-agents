@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x19-V10-OAuth-and-OIDC.md
+path: owasp-asvs/5.0/en/0x19-V10-OAuth-and-OIDC.md
 processed_at: null
 security_domains:
 - authentication
@@ -16,18 +16,8 @@ security_domains:
 sha256: 86fefa8bcb3a73f2e4cfdb5951e9178a100503ac816a37c3921512a5e5c0bf6d
 source: owasp-asvs
 tags:
-- asvs
-- authentication
-- authorization
-- code_integrity
-- cryptography
-- input_validation
-- jwt
-- malicious_code
 - owasp
-- password_security
-- secrets
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 

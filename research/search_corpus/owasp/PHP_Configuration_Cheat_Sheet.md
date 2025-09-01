@@ -8,7 +8,6 @@ sha256: 3e8ec500a2ecf5b4d0be2f222afef22865bf56bf08889b4d38809e8f5b8f38ed
 source: owasp-cheatsheet-series
 tags:
 - owasp
-- session_management
 verification_standard: CheatSheet
 ---
 

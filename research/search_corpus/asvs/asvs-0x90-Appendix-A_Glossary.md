@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: en/0x90-Appendix-A_Glossary.md
+path: owasp-asvs/5.0/en/0x90-Appendix-A_Glossary.md
 processed_at: null
 security_domains:
 - authentication
@@ -13,15 +13,8 @@ security_domains:
 sha256: d28e5c18203dd2eb8f56830aadc6b2cc3d2c6b19877af66568500c4d6942c1b6
 source: owasp-asvs
 tags:
-- asvs
-- authentication
-- cryptography
-- input_validation
-- jwt
-- network_security
 - owasp
-- secrets
-- session_management
+- asvs
 verification_standard: ASVS
 ---
 
