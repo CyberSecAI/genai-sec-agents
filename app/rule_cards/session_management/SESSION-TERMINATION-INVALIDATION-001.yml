@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-002
+id: SESSION-TERMINATION-INVALIDATION-001
 title: Disallow Further Use of Session on Termination
 severity: low
 scope: web-application

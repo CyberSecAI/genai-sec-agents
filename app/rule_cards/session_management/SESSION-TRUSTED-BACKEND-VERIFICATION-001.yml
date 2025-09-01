@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-006
+id: SESSION-TRUSTED-BACKEND-VERIFICATION-001
 title: Use trusted backend service for session token verification
 severity: medium
 scope: web-application

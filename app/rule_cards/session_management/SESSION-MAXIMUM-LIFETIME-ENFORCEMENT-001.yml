@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-001
+id: SESSION-MAXIMUM-LIFETIME-ENFORCEMENT-001
 title: Enforce Absolute Maximum Session Lifetime
 severity: high
 scope: web-application

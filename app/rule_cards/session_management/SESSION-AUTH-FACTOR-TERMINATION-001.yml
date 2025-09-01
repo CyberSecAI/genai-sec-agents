@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-004
+id: SESSION-AUTH-FACTOR-TERMINATION-001
 title: Terminate Other Sessions on Authentication Factor Change
 severity: medium
 scope: web-application

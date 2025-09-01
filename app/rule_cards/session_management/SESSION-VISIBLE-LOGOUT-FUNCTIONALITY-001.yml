@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-005
+id: SESSION-VISIBLE-LOGOUT-FUNCTIONALITY-001
 title: Provide Visible Logout Functionality
 severity: medium
 scope: web-application

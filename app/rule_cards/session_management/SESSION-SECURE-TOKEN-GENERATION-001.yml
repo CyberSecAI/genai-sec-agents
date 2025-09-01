@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-007
+id: SESSION-SECURE-TOKEN-GENERATION-001
 title: Ensure unique and cryptographically secure session tokens
 severity: medium
 scope: web-application

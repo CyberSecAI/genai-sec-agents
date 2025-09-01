@@ -1,4 +1,4 @@
-id: network_security-12.1.4
+id: NET-CERTIFICATE-REVOCATION-OCSP-001
 title: Enable Certification Revocation
 severity: high
 scope: web-application

@@ -1,4 +1,4 @@
-id: network_security-12.1.5
+id: NET-ENCRYPTED-CLIENT-HELLO-001
 title: Enable Encrypted Client Hello
 severity: high
 scope: web-application

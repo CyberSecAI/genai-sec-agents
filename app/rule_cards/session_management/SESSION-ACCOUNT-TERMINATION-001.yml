@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-003
+id: SESSION-ACCOUNT-TERMINATION-001
 title: Terminate Sessions on Account Disable/Delete
 severity: low
 scope: web-application

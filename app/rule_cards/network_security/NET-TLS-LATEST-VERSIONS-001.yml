@@ -1,4 +1,4 @@
-id: network_security-12.1.1
+id: NET-TLS-LATEST-VERSIONS-001
 title: Enable Latest TLS Versions
 severity: low
 scope: web-application

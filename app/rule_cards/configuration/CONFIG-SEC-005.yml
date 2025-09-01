@@ -1,4 +1,4 @@
-id: CONFIG-SEC-005
+id: CONFIG-RESOURCE-MANAGEMENT-DOCUMENTATION-001
 title: Document resource management strategies for external systems
 severity: high
 scope: web-application

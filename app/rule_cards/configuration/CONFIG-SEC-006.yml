@@ -1,4 +1,4 @@
-id: CONFIG-SEC-006
+id: CONFIG-SECRET-ROTATION-THREAT-MODEL-001
 title: Rotate critical secrets based on threat model
 severity: high
 scope: web-application

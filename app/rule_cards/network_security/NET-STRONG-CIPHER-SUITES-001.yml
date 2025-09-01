@@ -1,4 +1,4 @@
-id: network_security-12.1.2
+id: NET-STRONG-CIPHER-SUITES-001
 title: Enable Strong Cipher Suites
 severity: medium
 scope: web-application

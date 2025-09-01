@@ -1,4 +1,4 @@
-id: SESSION_MANAGEMENT-008
+id: SESSION-ACTIVE-MANAGEMENT-TERMINATION-001
 title: View and Terminate Active Sessions
 severity: medium
 scope: web-application
