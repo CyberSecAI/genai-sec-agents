@@ -1,14 +1,23 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-GEN-003
+title: Notification of Suspicious Authentication Attempts
+severity: high
+scope: web-application
+requirement: Users must be notified of suspicious authentication attempts, including
+  unusual locations, partial successful attempts, long periods of inactivity, or multiple
+  unsuccessful attempts.
 do:
 - Implement notification system for suspicious authentication attempts
 - Include details of the suspicious activity in the notification
 - Provide guidance on actions to take in response to suspicious attempts
 dont:
 - Ignore or fail to notify users of suspicious authentication attempts
-id: AUTH-GEN-003
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Test notification functionality for suspicious authentication attempts
 refs:
   asvs:
   - V6.3.5:2021
@@ -16,12 +25,3 @@ refs:
   - CWE-287
   owasp:
   - A07:2021
-requirement: Users must be notified of suspicious authentication attempts, including
-  unusual locations, partial successful attempts, long periods of inactivity, or multiple
-  unsuccessful attempts.
-scope: web-application
-severity: high
-title: Notification of Suspicious Authentication Attempts
-verify:
-  tests:
-  - Test notification functionality for suspicious authentication attempts

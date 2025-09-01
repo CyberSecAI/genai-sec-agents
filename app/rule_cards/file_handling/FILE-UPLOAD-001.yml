@@ -1,7 +1,11 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.dangerous-system-call
-  - javascript.lang.security.audit.path-traversal
+id: FILE-UPLOAD-001
+title: Validate file extensions and content types
+severity: high
+scope: web-application
+requirement: Implement input validation to check file extensions against a whitelist
+  of allowed extensions. Additionally, validate or ignore user-submitted filenames,
+  including in a JSON, JSONP, or URL parameter, and specify a filename in the Content-Disposition
+  header field in the response.
 do:
 - Check file extensions against a whitelist of allowed extensions
 - Validate or ignore user-submitted filenames in various contexts
@@ -9,7 +13,13 @@ do:
 dont:
 - Accept file extensions without validation
 - Allow user-submitted filenames without proper handling
-id: FILE-UPLOAD-001
+detect:
+  semgrep:
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+verify:
+  tests:
+  - Test file upload validation and processing security
 refs:
   asvs:
   - V5.4.1
@@ -17,13 +27,3 @@ refs:
   - CWE-434
   owasp:
   - A01:2021
-requirement: Implement input validation to check file extensions against a whitelist
-  of allowed extensions. Additionally, validate or ignore user-submitted filenames,
-  including in a JSON, JSONP, or URL parameter, and specify a filename in the Content-Disposition
-  header field in the response.
-scope: web-application
-severity: high
-title: Validate file extensions and content types
-verify:
-  tests:
-  - Test file upload validation and processing security

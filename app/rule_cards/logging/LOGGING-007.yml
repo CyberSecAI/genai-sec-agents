@@ -1,15 +1,25 @@
-detect:
-  semgrep:
-  - logging.event-attributes
-  trufflehog:
-  - Sensitive Data Exposure
+id: LOGGING-007
+title: Include sufficient event attributes in log entries
+severity: medium
+scope: web-application
+requirement: Ensure that each log entry includes essential event attributes such as
+  timestamp, user identity, event type, and description for effective monitoring and
+  analysis.
 do:
 - Include timestamp, user identity, event type, and description in each log entry
 - Consider additional attributes like severity, action, object, and result status
   for comprehensive event logging
 dont:
 - Do not omit critical event attributes in log entries, hindering analysis and monitoring
-id: LOGGING-007
+detect:
+  semgrep:
+  - logging.event-attributes
+  trufflehog:
+  - Sensitive Data Exposure
+verify:
+  tests:
+  - Verify that essential event attributes are present in all log entries
+  - Test the completeness of event attributes during security testing
 refs:
   cwe:
   - CWE-778
@@ -17,13 +27,3 @@ refs:
   owasp:
   - A10:2021
   - A13:2021
-requirement: Ensure that each log entry includes essential event attributes such as
-  timestamp, user identity, event type, and description for effective monitoring and
-  analysis.
-scope: web-application
-severity: medium
-title: Include sufficient event attributes in log entries
-verify:
-  tests:
-  - Verify that essential event attributes are present in all log entries
-  - Test the completeness of event attributes during security testing

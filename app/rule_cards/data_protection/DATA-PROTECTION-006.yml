@@ -1,12 +1,21 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.hardcoded-password
-  - javascript.lang.security.audit.hardcoded-secret
+id: DATA-PROTECTION-006
+title: Protection Against Untrusted Data Sharing
+severity: medium
+scope: web-application
+requirement: Ensure defined sensitive data is not shared with untrusted parties to
+  prevent unauthorized data collection as per ASVS 14.2.3
 do:
 - Prevent sending defined sensitive data to untrusted parties
 dont:
 - Share sensitive data with untrusted parties
-id: DATA-PROTECTION-006
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Verify that defined sensitive data is not shared with untrusted parties as per
+    ASVS 14.2.3
 refs:
   asvs:
   - V14.2.3
@@ -14,12 +23,3 @@ refs:
   - CWE-311
   owasp:
   - A02:2021
-requirement: Ensure defined sensitive data is not shared with untrusted parties to
-  prevent unauthorized data collection as per ASVS 14.2.3
-scope: web-application
-severity: medium
-title: Protection Against Untrusted Data Sharing
-verify:
-  tests:
-  - Verify that defined sensitive data is not shared with untrusted parties as per
-    ASVS 14.2.3

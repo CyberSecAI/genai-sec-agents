@@ -1,11 +1,20 @@
-detect:
-  semgrep:
-  - generic.secrets.security.detected-secret
+id: network_security-12.1.5
+title: Enable Encrypted Client Hello
+severity: high
+scope: web-application
+requirement: Enable Encrypted Client Hello (ECH) in the application's TLS settings
+  to prevent exposure of sensitive metadata, such as the Server Name Indication (SNI),
+  during TLS handshake processes.
 do:
 - Enable Encrypted Client Hello (ECH)
 dont:
 - Expose sensitive metadata during TLS handshake
-id: network_security-12.1.5
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
+verify:
+  tests:
+  - Verify that ECH is enabled
 refs:
   asvs:
   - V12.1.5
@@ -13,12 +22,3 @@ refs:
   - CWE-200
   owasp:
   - A06:2021
-requirement: Enable Encrypted Client Hello (ECH) in the application's TLS settings
-  to prevent exposure of sensitive metadata, such as the Server Name Indication (SNI),
-  during TLS handshake processes.
-scope: web-application
-severity: high
-title: Enable Encrypted Client Hello
-verify:
-  tests:
-  - Verify that ECH is enabled

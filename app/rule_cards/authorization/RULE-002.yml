@@ -1,7 +1,9 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-jwt-not-revoked
-  - python.django.security.audit.avoid-csrf-disable
+id: RULE-002
+title: Field-Level Access Restrictions
+severity: high
+scope: web-application
+requirement: Define rules for field-level access restrictions based on consumer permissions
+  and resource attributes.
 do:
 - Specify clear rules for field-level access restrictions
 - Document how consumer permissions and resource attributes are used for field-level
@@ -9,7 +11,13 @@ do:
 - Consider other attribute values of the data object, such as state or status
 dont:
 - Do not allow unrestricted access to sensitive fields
-id: RULE-002
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+verify:
+  tests:
+  - Review field-level access rules for compliance
 refs:
   asvs:
   - V8.1.2
@@ -17,11 +25,3 @@ refs:
   - CWE-285
   owasp:
   - A01:2021
-requirement: Define rules for field-level access restrictions based on consumer permissions
-  and resource attributes.
-scope: web-application
-severity: high
-title: Field-Level Access Restrictions
-verify:
-  tests:
-  - Review field-level access rules for compliance

@@ -1,14 +1,24 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.hardcoded-password
-  - javascript.lang.security.audit.hardcoded-secret
+id: RULE-002
+title: Sensitive Data Protection Requirements Documentation
+severity: medium
+scope: web-application
+requirement: Document protection requirements for all sensitive data protection levels,
+  covering encryption, integrity verification, retention, logging, access controls,
+  database-level encryption, and privacy requirements as per ASVS 14.1.2
 do:
 - Include requirements related to general encryption, integrity verification, retention,
   logging, access controls, database-level encryption, and privacy as per ASVS 14.1.2
 dont:
 - Omit any sensitive data protection level from having a documented set of protection
   requirements
-id: RULE-002
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Verify that all sensitive data protection levels have documented protection requirements
+    as per ASVS 14.1.2
 refs:
   asvs:
   - V14.1.2
@@ -16,13 +26,3 @@ refs:
   - CWE-311
   owasp:
   - A02:2021
-requirement: Document protection requirements for all sensitive data protection levels,
-  covering encryption, integrity verification, retention, logging, access controls,
-  database-level encryption, and privacy requirements as per ASVS 14.1.2
-scope: web-application
-severity: medium
-title: Sensitive Data Protection Requirements Documentation
-verify:
-  tests:
-  - Verify that all sensitive data protection levels have documented protection requirements
-    as per ASVS 14.1.2

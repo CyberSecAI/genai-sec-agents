@@ -1,14 +1,25 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.dangerous-system-call
-  - javascript.lang.security.audit.path-traversal
+id: FILE-UPLOAD-003
+title: Implement file size and type validation
+severity: high
+scope: web-application
+requirement: Enforce file size limits and validate file signatures to prevent DoS
+  attacks and malicious uploads. When the application creates file paths for file
+  operations, instead of user-submitted filenames, it uses internally generated or
+  trusted data, or if user-submitted filenames or file metadata must be used, strict
+  validation and sanitization must be applied.
 do:
 - Implement file size limits and validate file signatures
 - Use internally generated or trusted data for file paths
 - Apply strict validation and sanitization for user-submitted filenames
 dont:
 - Accept user-submitted filenames without validation and sanitization
-id: FILE-UPLOAD-003
+detect:
+  semgrep:
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+verify:
+  tests:
+  - Test file upload validation and processing security
 refs:
   asvs:
   - V5.3.2
@@ -16,14 +27,3 @@ refs:
   - CWE-434
   owasp:
   - A01:2021
-requirement: Enforce file size limits and validate file signatures to prevent DoS
-  attacks and malicious uploads. When the application creates file paths for file
-  operations, instead of user-submitted filenames, it uses internally generated or
-  trusted data, or if user-submitted filenames or file metadata must be used, strict
-  validation and sanitization must be applied.
-scope: web-application
-severity: high
-title: Implement file size and type validation
-verify:
-  tests:
-  - Test file upload validation and processing security

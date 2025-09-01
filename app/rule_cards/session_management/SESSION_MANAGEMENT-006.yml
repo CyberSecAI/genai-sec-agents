@@ -1,12 +1,20 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-httponly-false
+id: SESSION_MANAGEMENT-006
+title: Use trusted backend service for session token verification
+severity: medium
+scope: web-application
+requirement: Perform all session token verification using a trusted backend service
+  to ensure secure session management.
 do:
 - Use trusted backend service for session token verification
 dont:
 - Rely on untrusted services for session token verification
-id: SESSION_MANAGEMENT-006
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+verify:
+  tests:
+  - Verify session token verification using trusted backend service
 refs:
   asvs:
   - V7.2.1
@@ -14,11 +22,3 @@ refs:
   - CWE-346
   owasp:
   - A2:2021
-requirement: Perform all session token verification using a trusted backend service
-  to ensure secure session management.
-scope: web-application
-severity: medium
-title: Use trusted backend service for session token verification
-verify:
-  tests:
-  - Verify session token verification using trusted backend service

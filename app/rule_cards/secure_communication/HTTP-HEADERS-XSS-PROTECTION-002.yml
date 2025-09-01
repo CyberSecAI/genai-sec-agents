@@ -1,7 +1,9 @@
-detect:
-  semgrep:
-  - python.requests.security.disabled-cert-validation
-  - javascript.lang.security.audit.tls-min-version
+id: HTTP-HEADERS-XSS-PROTECTION-002
+title: Mitigate XSS attacks with X-XSS-Protection header
+severity: high
+scope: web-application
+requirement: Implement X-XSS-Protection header to prevent reflected cross-site scripting
+  (XSS) attacks by stopping malicious scripts from executing.
 do:
 - Set X-XSS-Protection header with '1; mode=block' to enable XSS protection in supported
   browsers
@@ -10,7 +12,15 @@ do:
 dont:
 - Disable X-XSS-Protection header or set it to '0'
 - Trust certificates without validation
-id: HTTP-HEADERS-XSS-PROTECTION-002
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+verify:
+  tests:
+  - Manually verify X-XSS-Protection header is set correctly
+  - Verify TLS client certificate validation
+  - Verify strong authentication methods for intra-service communications
 refs:
   asvs:
   - V12.3.2
@@ -19,13 +29,3 @@ refs:
   - CWE-79
   owasp:
   - A03:2021
-requirement: Implement X-XSS-Protection header to prevent reflected cross-site scripting
-  (XSS) attacks by stopping malicious scripts from executing.
-scope: web-application
-severity: high
-title: Mitigate XSS attacks with X-XSS-Protection header
-verify:
-  tests:
-  - Manually verify X-XSS-Protection header is set correctly
-  - Verify TLS client certificate validation
-  - Verify strong authentication methods for intra-service communications

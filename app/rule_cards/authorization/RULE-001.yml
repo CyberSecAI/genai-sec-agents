@@ -1,7 +1,9 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-jwt-not-revoked
-  - python.django.security.audit.avoid-csrf-disable
+id: RULE-001
+title: Authorization Documentation and Rules
+severity: high
+scope: web-application
+requirement: Define rules for restricting function-level and data-specific access
+  based on consumer permissions and resource attributes.
 do:
 - Specify clear rules for function-level and data-specific access restrictions
 - Document how consumer permissions and resource attributes are used in authorization
@@ -9,7 +11,13 @@ do:
 - Include environmental and contextual attributes in the documentation
 dont:
 - Do not rely solely on user roles for access control
-id: RULE-001
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+verify:
+  tests:
+  - Review authorization documentation for completeness and accuracy
 refs:
   asvs:
   - V8.1.1
@@ -17,11 +25,3 @@ refs:
   - CWE-285
   owasp:
   - A01:2021
-requirement: Define rules for restricting function-level and data-specific access
-  based on consumer permissions and resource attributes.
-scope: web-application
-severity: high
-title: Authorization Documentation and Rules
-verify:
-  tests:
-  - Review authorization documentation for completeness and accuracy

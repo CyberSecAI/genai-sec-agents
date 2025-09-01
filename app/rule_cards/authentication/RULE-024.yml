@@ -1,12 +1,21 @@
-detect:
-  semgrep:
-  - lost-authentication-factor-proofing
+id: RULE-024
+title: Evidence of Identity Proofing for Lost Authentication Factor
+severity: medium
+scope: web-application
+requirement: Perform evidence of identity proofing at the same level as during enrollment
+  when a multi-factor authentication factor is lost.
 do:
 - Verify the user's identity through the same level of proofing as during enrollment
   when a multi-factor authentication factor is lost
 dont:
 - Skip identity proofing when a multi-factor authentication factor is lost
-id: RULE-024
+detect:
+  semgrep:
+  - lost-authentication-factor-proofing
+verify:
+  tests:
+  - Verify that evidence of identity proofing is performed when a multi-factor authentication
+    factor is lost
 refs:
   asvs:
   - V6.4.4
@@ -14,12 +23,3 @@ refs:
   - CWE-640
   owasp:
   - A11:2021
-requirement: Perform evidence of identity proofing at the same level as during enrollment
-  when a multi-factor authentication factor is lost.
-scope: web-application
-severity: medium
-title: Evidence of Identity Proofing for Lost Authentication Factor
-verify:
-  tests:
-  - Verify that evidence of identity proofing is performed when a multi-factor authentication
-    factor is lost

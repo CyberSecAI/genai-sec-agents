@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-04
+title: Allow passwords of at least 64 characters
+severity: high
+scope: web-application
+requirement: Passwords of at least 64 characters are permitted and challenge nonces
+  are at least 64 bits in length.
 do:
 - Allow passwords with a minimum length of 64 characters
 - Ensure challenge nonces are at least 64 bits in length and unique
 dont:
 - Enforce passwords shorter than 64 characters
-id: AUTH-04
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Test password length enforcement and nonce generation
 refs:
   asvs:
   - V6.7.2
@@ -15,11 +23,3 @@ refs:
   - CWE-287
   owasp:
   - A07:2021
-requirement: Passwords of at least 64 characters are permitted and challenge nonces
-  are at least 64 bits in length.
-scope: web-application
-severity: high
-title: Allow passwords of at least 64 characters
-verify:
-  tests:
-  - Test password length enforcement and nonce generation

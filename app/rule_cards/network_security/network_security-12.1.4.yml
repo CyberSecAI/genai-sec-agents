@@ -1,11 +1,19 @@
-detect:
-  semgrep:
-  - generic.secrets.security.detected-secret
+id: network_security-12.1.4
+title: Enable Certification Revocation
+severity: high
+scope: web-application
+requirement: Proper certification revocation mechanisms, such as Online Certificate
+  Status Protocol (OCSP) Stapling, are enabled and configured.
 do:
 - Enable OCSP Stapling or equivalent mechanism
 dont:
 - Neglect certification revocation mechanisms
-id: network_security-12.1.4
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
+verify:
+  tests:
+  - Verify that certification revocation mechanisms are enabled
 refs:
   asvs:
   - V12.1.4
@@ -13,11 +21,3 @@ refs:
   - CWE-346
   owasp:
   - A06:2021
-requirement: Proper certification revocation mechanisms, such as Online Certificate
-  Status Protocol (OCSP) Stapling, are enabled and configured.
-scope: web-application
-severity: high
-title: Enable Certification Revocation
-verify:
-  tests:
-  - Verify that certification revocation mechanisms are enabled

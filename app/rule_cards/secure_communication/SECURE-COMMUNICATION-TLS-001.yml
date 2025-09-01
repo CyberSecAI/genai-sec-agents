@@ -1,12 +1,20 @@
-detect:
-  semgrep:
-  - python.requests.security.disabled-cert-validation
-  - javascript.lang.security.audit.tls-min-version
+id: SECURE-COMMUNICATION-TLS-001
+title: Enable latest TLS versions for secure communication
+severity: high
+scope: web-application
+requirement: Only the latest recommended versions of the TLS protocol (e.g., TLS 1.2
+  and TLS 1.3) are enabled for secure communication.
 do:
 - Enable TLS 1.2 and TLS 1.3 as preferred options
 dont:
 - Allow outdated or insecure TLS versions
-id: SECURE-COMMUNICATION-TLS-001
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+verify:
+  tests:
+  - Manually verify that only TLS 1.2 and TLS 1.3 are enabled
 refs:
   asvs:
   - V12.1.1
@@ -14,11 +22,3 @@ refs:
   - CWE-326
   owasp:
   - A06:2021
-requirement: Only the latest recommended versions of the TLS protocol (e.g., TLS 1.2
-  and TLS 1.3) are enabled for secure communication.
-scope: web-application
-severity: high
-title: Enable latest TLS versions for secure communication
-verify:
-  tests:
-  - Manually verify that only TLS 1.2 and TLS 1.3 are enabled

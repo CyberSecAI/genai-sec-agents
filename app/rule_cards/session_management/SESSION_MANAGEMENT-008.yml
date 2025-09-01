@@ -1,12 +1,19 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-httponly-false
+id: SESSION_MANAGEMENT-008
+title: View and Terminate Active Sessions
+severity: medium
+scope: web-application
+requirement: Users are able to view and terminate any or all currently active sessions.
 do:
 - Allow users to view and terminate active sessions
 dont:
 - Restrict users from managing their active sessions
-id: SESSION_MANAGEMENT-008
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+verify:
+  tests:
+  - Verify that users can view and terminate their active sessions
 refs:
   asvs:
   - V7.5.2
@@ -14,10 +21,3 @@ refs:
   - CWE-384
   owasp:
   - A2:2021
-requirement: Users are able to view and terminate any or all currently active sessions.
-scope: web-application
-severity: medium
-title: View and Terminate Active Sessions
-verify:
-  tests:
-  - Verify that users can view and terminate their active sessions

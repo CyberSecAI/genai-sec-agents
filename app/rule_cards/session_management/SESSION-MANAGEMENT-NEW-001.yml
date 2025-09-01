@@ -1,24 +1,24 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-httponly-false
+id: SESSION-MANAGEMENT-NEW-001
+title: Terminate all active sessions on user account disable or deletion
+severity: medium
+scope: web-application
+requirement: Terminate all active sessions when a user account is disabled or deleted
+  to prevent unauthorized access.
 do:
 - Implement a mechanism to terminate all active sessions upon user account disablement
   or deletion
 dont:
 - Allow disabled or deleted user accounts to retain active sessions
-id: SESSION-MANAGEMENT-NEW-001
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+verify:
+  tests:
+  - Verify that all active sessions are terminated when a user account is disabled
+    or deleted
 refs:
   asvs:
   - V7.4.2
   cwe:
   - CWE-384
-requirement: Terminate all active sessions when a user account is disabled or deleted
-  to prevent unauthorized access.
-scope: web-application
-severity: medium
-title: Terminate all active sessions on user account disable or deletion
-verify:
-  tests:
-  - Verify that all active sessions are terminated when a user account is disabled
-    or deleted

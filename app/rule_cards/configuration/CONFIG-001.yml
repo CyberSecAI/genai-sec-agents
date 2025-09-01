@@ -1,12 +1,20 @@
-detect:
-  semgrep:
-  - yaml.docker-compose.security.writable-filesystem-service
-  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+id: CONFIG-001
+title: Disable Debug Modes in Production
+severity: medium
+scope: web-application/api
+requirement: Ensure that debug modes are disabled for all components in production
+  environments to prevent exposure of debugging features and information leakage.
 do:
 - Disable debug modes for all components in production
 dont:
 - Allow debug modes to be enabled in production environments
-id: CONFIG-001
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+verify:
+  tests:
+  - Verify that debug modes are disabled in production
 refs:
   asvs:
   - V13.4.2
@@ -14,11 +22,3 @@ refs:
   - CWE-204
   owasp:
   - A6:2021
-requirement: Ensure that debug modes are disabled for all components in production
-  environments to prevent exposure of debugging features and information leakage.
-scope: web-application/api
-severity: medium
-title: Disable Debug Modes in Production
-verify:
-  tests:
-  - Verify that debug modes are disabled in production

@@ -1,7 +1,9 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-06-015
+title: Prevent Easy to Guess Passwords
+severity: high
+scope: web-application
+requirement: Prevent easy to guess passwords by using a documented list of context
+  specific words....
 do:
 - Use passwords with a minimum of 20 bits of entropy (e.g., 4 random alphanumeric
   characters or 6 random digits)
@@ -11,7 +13,13 @@ do:
 dont:
 - Use biometric authentication mechanisms as primary factors
 - Check TOTPs based on untrusted or client provided time
-id: AUTH-06-015
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 refs:
   asvs:
   - V6.5.4
@@ -23,11 +31,3 @@ refs:
   - CWE-287
   owasp:
   - A07:2021
-requirement: Prevent easy to guess passwords by using a documented list of context
-  specific words....
-scope: web-application
-severity: high
-title: Prevent Easy to Guess Passwords
-verify:
-  tests:
-  - Verify authentication mechanisms and credential handling

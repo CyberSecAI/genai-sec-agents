@@ -1,8 +1,10 @@
-detect:
-  semgrep:
-  - logging.review-policies
-  trufflehog:
-  - Data Retention
+id: LOGGING-013
+title: Regularly review and adjust log rotation and retention policies
+severity: low
+scope: web-application
+requirement: Periodically review log rotation and retention policies to ensure log
+  file sizes are managed effectively, and retention periods comply with legal, regulatory,
+  and operational requirements.
 do:
 - Review log rotation and retention policies at regular intervals
 - Adjust log rotation settings based on changing operational needs
@@ -10,7 +12,15 @@ do:
 dont:
 - Do not neglect reviewing log rotation and retention policies, leading to compliance
   issues
-id: LOGGING-013
+detect:
+  semgrep:
+  - logging.review-policies
+  trufflehog:
+  - Data Retention
+verify:
+  tests:
+  - Verify that log rotation and retention policies are periodically reviewed
+  - Review and adjust log rotation settings during compliance checks
 refs:
   cwe:
   - CWE-778
@@ -18,13 +28,3 @@ refs:
   owasp:
   - A10:2021
   - A13:2021
-requirement: Periodically review log rotation and retention policies to ensure log
-  file sizes are managed effectively, and retention periods comply with legal, regulatory,
-  and operational requirements.
-scope: web-application
-severity: low
-title: Regularly review and adjust log rotation and retention policies
-verify:
-  tests:
-  - Verify that log rotation and retention policies are periodically reviewed
-  - Review and adjust log rotation settings during compliance checks

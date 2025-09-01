@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.hardcoded-password
-  - javascript.lang.security.audit.hardcoded-secret
+id: DATA-PROTECTION-003
+title: Clear authenticated data from client storage
+severity: low
+scope: web-application
+requirement: Authenticated data must be cleared from client storage, such as the browser
+  DOM, after the client or session is terminated.
 do:
 - Implement mechanisms to clear authenticated data from client storage upon session
   termination
 dont:
 - Leave authenticated data lingering in client storage after session termination
-id: DATA-PROTECTION-003
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Verify authenticated data is cleared from client storage after session termination
 refs:
   asvs:
   - V14.3.1
@@ -15,11 +23,3 @@ refs:
   - CWE-200
   owasp:
   - A14:2021
-requirement: Authenticated data must be cleared from client storage, such as the browser
-  DOM, after the client or session is terminated.
-scope: web-application
-severity: low
-title: Clear authenticated data from client storage
-verify:
-  tests:
-  - Verify authenticated data is cleared from client storage after session termination

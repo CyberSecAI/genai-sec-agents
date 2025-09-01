@@ -1,12 +1,21 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTHENTICATION-008
+title: Rate Limit Push Notifications for Multi-Factor Authentication
+severity: high
+scope: web-application
+requirement: Verify that, where push notifications are used for multi-factor authentication,
+  rate limiting is used to prevent push bombing attacks. Number matching may also
+  mitigate this risk.
 do:
 - Implement rate limiting for push notifications to prevent abuse
 dont:
 - Do not rely solely on push notifications without rate limiting
-id: AUTHENTICATION-008
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Test rate limiting functionality for push notifications
 refs:
   asvs:
   - V6.6.4
@@ -14,12 +23,3 @@ refs:
   - CWE-285
   owasp:
   - A3:2021
-requirement: Verify that, where push notifications are used for multi-factor authentication,
-  rate limiting is used to prevent push bombing attacks. Number matching may also
-  mitigate this risk.
-scope: web-application
-severity: high
-title: Rate Limit Push Notifications for Multi-Factor Authentication
-verify:
-  tests:
-  - Test rate limiting functionality for push notifications

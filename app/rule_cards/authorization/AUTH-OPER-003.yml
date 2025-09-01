@@ -1,12 +1,20 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-jwt-not-revoked
-  - python.django.security.audit.avoid-csrf-disable
+id: AUTH-OPER-003
+title: Subject-based access control
+severity: high
+scope: web-application/api
+requirement: Access to an object should be based on the originating subject's permissions,
+  not on any intermediary or service acting on their behalf.
 do:
 - Implement access control based on originating subject's permissions
 dont:
 - Base access control on intermediary permissions
-id: AUTH-OPER-003
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+verify:
+  tests:
+  - Test access control based on subject's permissions
 refs:
   asvs:
   - V8.3.3
@@ -14,11 +22,3 @@ refs:
   - CWE-285
   owasp:
   - A8:2021
-requirement: Access to an object should be based on the originating subject's permissions,
-  not on any intermediary or service acting on their behalf.
-scope: web-application/api
-severity: high
-title: Subject-based access control
-verify:
-  tests:
-  - Test access control based on subject's permissions

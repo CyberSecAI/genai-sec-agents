@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.hardcoded-password
-  - javascript.lang.security.audit.hardcoded-secret
+id: RULE-004
+title: Secure Data Caching and Purging
+severity: high
+scope: web-application
+requirement: Ensure sensitive data is not cached in server components, or securely
+  purge cached data after use.
 do:
 - Implement mechanisms to securely purge cached sensitive data after it is no longer
   needed.
 dont:
 - Cache sensitive data in server components without proper purging mechanisms.
-id: RULE-004
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Test the purging mechanisms for cached sensitive data.
 refs:
   asvs:
   - V14.2.7
@@ -15,11 +23,3 @@ refs:
   - CWE-311
   owasp:
   - A02:2021
-requirement: Ensure sensitive data is not cached in server components, or securely
-  purge cached data after use.
-scope: web-application
-severity: high
-title: Secure Data Caching and Purging
-verify:
-  tests:
-  - Test the purging mechanisms for cached sensitive data.

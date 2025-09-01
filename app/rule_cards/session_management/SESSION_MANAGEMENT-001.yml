@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-httponly-false
+id: SESSION_MANAGEMENT-001
+title: Enforce Absolute Maximum Session Lifetime
+severity: high
+scope: web-application
+requirement: There is an absolute maximum session lifetime such that re-authentication
+  is enforced according to requirements.
 do:
 - Set and enforce an absolute maximum session lifetime
 - Implement re-authentication mechanisms as necessary
 dont:
 - Allow sessions to exceed the absolute maximum lifetime without re-authentication
-id: SESSION_MANAGEMENT-001
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+verify:
+  tests:
+  - Test session lifetime enforcement and re-authentication mechanisms
 refs:
   asvs:
   - V7.6.1:2021
@@ -15,11 +23,3 @@ refs:
   - CWE-384
   owasp:
   - A07:2021
-requirement: There is an absolute maximum session lifetime such that re-authentication
-  is enforced according to requirements.
-scope: web-application
-severity: high
-title: Enforce Absolute Maximum Session Lifetime
-verify:
-  tests:
-  - Test session lifetime enforcement and re-authentication mechanisms

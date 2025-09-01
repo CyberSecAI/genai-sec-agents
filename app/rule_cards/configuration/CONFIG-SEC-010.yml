@@ -1,13 +1,23 @@
-detect:
-  semgrep:
-  - yaml.docker-compose.security.writable-filesystem-service
-  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+id: CONFIG-SEC-010
+title: Implement allowlist for external communications
+severity: medium
+scope: web-application
+requirement: Ensure that an allowlist is used to define the external resources or
+  systems with which the application is permitted to communicate. This allowlist can
+  be implemented at the application layer, web server, firewall, or a combination
+  of different layers.
 do:
 - Implement an allowlist for external communications
 - Define permitted external resources or systems
 dont:
 - Allow communication with unlisted external resources
-id: CONFIG-SEC-010
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+verify:
+  tests:
+  - Review allowlist implementation for external communications
 refs:
   asvs:
   - V13.2.4
@@ -15,13 +25,3 @@ refs:
   - CWE-16
   owasp:
   - A05:2021
-requirement: Ensure that an allowlist is used to define the external resources or
-  systems with which the application is permitted to communicate. This allowlist can
-  be implemented at the application layer, web server, firewall, or a combination
-  of different layers.
-scope: web-application
-severity: medium
-title: Implement allowlist for external communications
-verify:
-  tests:
-  - Review allowlist implementation for external communications

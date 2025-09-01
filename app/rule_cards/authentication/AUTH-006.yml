@@ -1,12 +1,19 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-006
+title: Validate Phone Numbers for PSTN OTP Delivery
+severity: medium
+scope: web-application
+requirement: PSTN OTP delivery should only be offered for validated phone numbers.
 do:
 - Validate phone numbers before offering PSTN OTP delivery
 dont:
 - Allow PSTN OTP delivery for unvalidated phone numbers
-id: AUTH-006
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Test PSTN OTP delivery for validated phone numbers
 refs:
   asvs:
   - V6.6.1
@@ -14,10 +21,3 @@ refs:
   - CWE-601
   owasp:
   - A3:2021
-requirement: PSTN OTP delivery should only be offered for validated phone numbers.
-scope: web-application
-severity: medium
-title: Validate Phone Numbers for PSTN OTP Delivery
-verify:
-  tests:
-  - Test PSTN OTP delivery for validated phone numbers

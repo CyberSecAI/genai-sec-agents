@@ -1,13 +1,21 @@
+id: CRYPTO-007
+title: Minimum Security Strength for Cryptographic Primitives
+severity: medium
+scope: web-application/api/mobile/infrastructure
+requirement: Ensure that all cryptographic primitives utilize a minimum of 128-bits
+  of security based on the algorithm, key size, and configuration
+do:
+- Verify that cryptographic primitives provide a minimum of 128-bits of security
+dont:
+- Use cryptographic primitives with insufficient security strength
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-do:
-- Verify that cryptographic primitives provide a minimum of 128-bits of security
-dont:
-- Use cryptographic primitives with insufficient security strength
-id: CRYPTO-007
+verify:
+  tests:
+  - Verify implementation meets security requirements
 refs:
   asvs:
   - V11.2.3
@@ -17,11 +25,3 @@ refs:
   - CWE-329
   owasp:
   - A10:2021
-requirement: Ensure that all cryptographic primitives utilize a minimum of 128-bits
-  of security based on the algorithm, key size, and configuration
-scope: web-application/api/mobile/infrastructure
-severity: medium
-title: Minimum Security Strength for Cryptographic Primitives
-verify:
-  tests:
-  - Verify implementation meets security requirements

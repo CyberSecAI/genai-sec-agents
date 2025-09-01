@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - yaml.docker-compose.security.writable-filesystem-service
-  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+title: Secret Management Best Practices
+severity: medium
+scope: web-application/api
+requirement: Ensure secrets are securely managed using a secrets management solution
+  and adhere to the principle of least privilege.
 do:
 - Use a secrets management solution to securely create, store, control access to,
   and destroy backend secrets
 - Follow the principle of least privilege for access to secret assets
 dont:
 - Store secrets in application source code or build artifacts
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+verify:
+  tests:
+  - Verify that secrets are securely managed and access is restricted
 refs:
   asvs:
   - V13.3.1
@@ -16,11 +24,3 @@ refs:
   - CWE-798
   owasp:
   - A6:2021
-requirement: Ensure secrets are securely managed using a secrets management solution
-  and adhere to the principle of least privilege.
-scope: web-application/api
-severity: medium
-title: Secret Management Best Practices
-verify:
-  tests:
-  - Verify that secrets are securely managed and access is restricted

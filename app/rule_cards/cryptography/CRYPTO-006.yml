@@ -1,14 +1,22 @@
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
+id: CRYPTO-006
+title: Crypto Agility Design
+severity: medium
+scope: web-application/api/mobile/infrastructure
+requirement: Design with crypto agility to allow reconfiguration, upgrading, or swapping
+  of cryptographic algorithms, key lengths, ciphers, and modes
 do:
 - Implement crypto agility to allow for seamless upgrades and replacements of cryptographic
   components
 dont:
 - Rely on static cryptographic configurations that cannot be easily changed
-id: CRYPTO-006
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
+verify:
+  tests:
+  - Verify implementation meets security requirements
 refs:
   asvs:
   - V11.2.2
@@ -18,11 +26,3 @@ refs:
   - CWE-329
   owasp:
   - A10:2021
-requirement: Design with crypto agility to allow reconfiguration, upgrading, or swapping
-  of cryptographic algorithms, key lengths, ciphers, and modes
-scope: web-application/api/mobile/infrastructure
-severity: medium
-title: Crypto Agility Design
-verify:
-  tests:
-  - Verify implementation meets security requirements

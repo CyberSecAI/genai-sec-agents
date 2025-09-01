@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-009
+title: Prevent Replay Attacks with SAML Assertions
+severity: medium
+scope: web-application
+requirement: Process SAML assertions uniquely and ensure they are used only once within
+  their validity period to prevent replay attacks.
 do:
 - Process SAML assertions uniquely
 - Ensure one-time use of SAML assertions
 dont:
 - Do not reuse SAML assertions
-id: AUTH-009
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Test uniqueness and one-time use of SAML assertions
 refs:
   asvs:
   - V6.8.3
@@ -15,11 +23,3 @@ refs:
   - CWE-287
   owasp:
   - A07:2021
-requirement: Process SAML assertions uniquely and ensure they are used only once within
-  their validity period to prevent replay attacks.
-scope: web-application
-severity: medium
-title: Prevent Replay Attacks with SAML Assertions
-verify:
-  tests:
-  - Test uniqueness and one-time use of SAML assertions

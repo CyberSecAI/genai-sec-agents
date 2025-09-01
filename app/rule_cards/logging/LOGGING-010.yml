@@ -1,15 +1,25 @@
-detect:
-  semgrep:
-  - logging.testing-verification
-  trufflehog:
-  - Sensitive Data Exposure
+id: LOGGING-010
+title: Perform regular testing and verification of logging mechanisms
+severity: low
+scope: web-application
+requirement: Regularly test and verify the functionality of logging mechanisms to
+  ensure they are operational, accurate, and effective in capturing security-relevant
+  events.
 do:
 - Include logging mechanisms in code review and application testing processes
 - Verify that logs are being generated as expected during security verification
 - Test the resilience of logging mechanisms against common attacks and failures
 dont:
 - Do not assume logging mechanisms are functioning correctly without regular testing
-id: LOGGING-010
+detect:
+  semgrep:
+  - logging.testing-verification
+  trufflehog:
+  - Sensitive Data Exposure
+verify:
+  tests:
+  - Conduct regular testing of logging mechanisms to ensure proper functionality
+  - Verify that logs are accurate and complete during security assessments
 refs:
   cwe:
   - CWE-778
@@ -17,13 +27,3 @@ refs:
   owasp:
   - A10:2021
   - A13:2021
-requirement: Regularly test and verify the functionality of logging mechanisms to
-  ensure they are operational, accurate, and effective in capturing security-relevant
-  events.
-scope: web-application
-severity: low
-title: Perform regular testing and verification of logging mechanisms
-verify:
-  tests:
-  - Conduct regular testing of logging mechanisms to ensure proper functionality
-  - Verify that logs are accurate and complete during security assessments

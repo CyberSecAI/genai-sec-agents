@@ -1,11 +1,19 @@
-detect:
-  semgrep:
-  - generic.secrets.security.detected-secret
+id: network_security-12.1.3
+title: Validate mTLS Client Certificates
+severity: medium
+scope: web-application
+requirement: Validate that mTLS client certificates are trusted before using the certificate
+  identity for authentication or authorization.
 do:
 - Ensure mTLS client certificates are trusted
 dont:
 - Accept untrusted mTLS client certificates
-id: network_security-12.1.3
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
+verify:
+  tests:
+  - Verify that mTLS client certificates are validated
 refs:
   asvs:
   - V12.1.3
@@ -13,11 +21,3 @@ refs:
   - CWE-295
   owasp:
   - A06:2021
-requirement: Validate that mTLS client certificates are trusted before using the certificate
-  identity for authentication or authorization.
-scope: web-application
-severity: medium
-title: Validate mTLS Client Certificates
-verify:
-  tests:
-  - Verify that mTLS client certificates are validated

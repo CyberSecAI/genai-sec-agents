@@ -1,11 +1,20 @@
-detect:
-  semgrep:
-  - trusted-certificate-internal-services
+id: RULE-008
+title: Ensure trusted certificates for internal service TLS connections
+severity: high
+scope: infrastructure
+requirement: TLS connections between internal services must use trusted certificates.
+  Configure consuming services to only trust specific internal CAs and self-signed
+  certificates.
 do:
 - Use trusted certificates for internal service TLS connections
 dont:
 - Trust all certificates for internal service communication
-id: RULE-008
+detect:
+  semgrep:
+  - trusted-certificate-internal-services
+verify:
+  tests:
+  - Verify that internal service TLS connections use trusted certificates
 refs:
   asvs:
   - V12.3.4
@@ -13,12 +22,3 @@ refs:
   - CWE-295
   owasp:
   - A06:2021
-requirement: TLS connections between internal services must use trusted certificates.
-  Configure consuming services to only trust specific internal CAs and self-signed
-  certificates.
-scope: infrastructure
-severity: high
-title: Ensure trusted certificates for internal service TLS connections
-verify:
-  tests:
-  - Verify that internal service TLS connections use trusted certificates

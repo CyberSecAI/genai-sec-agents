@@ -1,14 +1,22 @@
-detect:
-  semgrep:
-  - python.requests.security.disabled-cert-validation
-  - javascript.lang.security.audit.tls-min-version
+id: HTTP-HEADERS-X-FRAME-OPTIONS-001
+title: Prevent Clickjacking attacks with X-Frame-Options header
+severity: medium
+scope: web-application
+requirement: Implement X-Frame-Options header to prevent Clickjacking attacks by specifying
+  whether a browser should be allowed to render a page in a frame or iframe.
 do:
 - Set X-Frame-Options header with 'DENY' or 'SAMEORIGIN' directive
 - Ensure the latest recommended versions of the TLS protocol (e.g., TLS 1.2 and TLS
   1.3) are enabled
 dont:
 - Disable X-Frame-Options header
-id: HTTP-HEADERS-X-FRAME-OPTIONS-001
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+verify:
+  tests:
+  - Manually verify X-Frame-Options header is set correctly
 refs:
   asvs:
   - V12.1.1
@@ -16,11 +24,3 @@ refs:
   - CWE-451
   owasp:
   - A06:2021
-requirement: Implement X-Frame-Options header to prevent Clickjacking attacks by specifying
-  whether a browser should be allowed to render a page in a frame or iframe.
-scope: web-application
-severity: medium
-title: Prevent Clickjacking attacks with X-Frame-Options header
-verify:
-  tests:
-  - Manually verify X-Frame-Options header is set correctly

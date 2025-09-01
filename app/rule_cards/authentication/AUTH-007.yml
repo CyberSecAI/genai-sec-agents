@@ -1,12 +1,19 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-007
+title: Bind Out-of-Band Authentication to Request
+severity: medium
+scope: web-application
+requirement: Out-of-band authentication codes must be bound to the original request.
 do:
 - Ensure out-of-band codes are only valid for the original request
 dont:
 - Allow reuse of out-of-band codes for different requests
-id: AUTH-007
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Verify out-of-band code binding to requests
 refs:
   asvs:
   - V6.6.2
@@ -14,10 +21,3 @@ refs:
   - CWE-384
   owasp:
   - A3:2021
-requirement: Out-of-band authentication codes must be bound to the original request.
-scope: web-application
-severity: medium
-title: Bind Out-of-Band Authentication to Request
-verify:
-  tests:
-  - Verify out-of-band code binding to requests

@@ -1,7 +1,9 @@
-detect:
-  semgrep:
-  - python.requests.security.disabled-cert-validation
-  - javascript.lang.security.audit.tls-min-version
+id: HTTP-HEADERS-CONTENT-TYPE-003
+title: Prevent MIME type confusion with X-Content-Type-Options header
+severity: medium
+scope: web-application
+requirement: Implement X-Content-Type-Options header to prevent MIME type sniffing
+  by instructing browsers to follow the declared content type.
 do:
 - Set X-Content-Type-Options header with 'nosniff' to prevent MIME type sniffing
 - Use TLS or another appropriate transport encryption mechanism for all internal,
@@ -10,7 +12,15 @@ do:
 dont:
 - Disable X-Content-Type-Options header or set it to 'nosniff'
 - Allow insecure or unencrypted communications between internal services
-id: HTTP-HEADERS-CONTENT-TYPE-003
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+verify:
+  tests:
+  - Manually verify X-Content-Type-Options header is set to 'nosniff'
+  - Verify appropriate transport encryption mechanism for internal services
+  - Verify trusted certificates for TLS connections between internal services
 refs:
   asvs:
   - V12.3.3
@@ -19,13 +29,3 @@ refs:
   - CWE-434
   owasp:
   - A06:2021
-requirement: Implement X-Content-Type-Options header to prevent MIME type sniffing
-  by instructing browsers to follow the declared content type.
-scope: web-application
-severity: medium
-title: Prevent MIME type confusion with X-Content-Type-Options header
-verify:
-  tests:
-  - Manually verify X-Content-Type-Options header is set to 'nosniff'
-  - Verify appropriate transport encryption mechanism for internal services
-  - Verify trusted certificates for TLS connections between internal services

@@ -1,12 +1,20 @@
-detect:
-  semgrep:
-  - yaml.docker-compose.security.writable-filesystem-service
-  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+id: CONFIG-SEC-008
+title: Least privilege for backend communication accounts
+severity: medium
+scope: web-application
+requirement: Ensure that communications between backend application components are
+  performed with accounts assigned the least necessary privileges.
 do:
 - Assign the least necessary privileges to accounts for backend communication
 dont:
 - Assign excessive privileges to backend communication accounts
-id: CONFIG-SEC-008
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+verify:
+  tests:
+  - Review privileges assigned to backend communication accounts
 refs:
   asvs:
   - V13.2.2
@@ -14,11 +22,3 @@ refs:
   - CWE-16
   owasp:
   - A05:2021
-requirement: Ensure that communications between backend application components are
-  performed with accounts assigned the least necessary privileges.
-scope: web-application
-severity: medium
-title: Least privilege for backend communication accounts
-verify:
-  tests:
-  - Review privileges assigned to backend communication accounts

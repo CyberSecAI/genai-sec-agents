@@ -1,8 +1,9 @@
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
+id: CRYPTO-001
+title: Application Key Protection and Management
+severity: high
+scope: web-application
+requirement: Application encryption keys should be properly protected, not exposed
+  in client-side code or public ...
 do:
 - Implement approved key derivation functions with key stretching parameters when
   deriving secret keys from passwords
@@ -15,7 +16,14 @@ do:
   or as soon as feasible
 dont:
 - Expose application encryption keys in client-side code or public repositories
-id: CRYPTO-001
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
+verify:
+  tests:
+  - Verify implementation meets security requirements
 refs:
   asvs:
   - V11.4.4
@@ -29,11 +37,3 @@ refs:
   - CWE-329
   owasp:
   - A10:2021
-requirement: Application encryption keys should be properly protected, not exposed
-  in client-side code or public ...
-scope: web-application
-severity: high
-title: Application Key Protection and Management
-verify:
-  tests:
-  - Verify implementation meets security requirements

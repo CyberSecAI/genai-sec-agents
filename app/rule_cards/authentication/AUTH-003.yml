@@ -1,12 +1,19 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-003
+title: Revocation of Authentication Factors
+severity: high
+scope: web-application
+requirement: Any authentication factor must be revocable in case of theft or loss.
 do:
 - Implement mechanisms to revoke authentication factors
 dont:
 - Allow unrevokeable authentication factors
-id: AUTH-003
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Test revocation functionality for authentication factors
 refs:
   asvs:
   - V6.5.6
@@ -14,10 +21,3 @@ refs:
   - CWE-602
   owasp:
   - A3:2021
-requirement: Any authentication factor must be revocable in case of theft or loss.
-scope: web-application
-severity: high
-title: Revocation of Authentication Factors
-verify:
-  tests:
-  - Test revocation functionality for authentication factors

@@ -1,15 +1,25 @@
-detect:
-  semgrep:
-  - logging.log-handler
-  trufflehog:
-  - Data Leakage
+id: LOGGING-016
+title: Implement log handler for consistent log generation
+severity: low
+scope: web-application
+requirement: Develop a standardized log handler module that can be used across multiple
+  applications to ensure consistent log generation, format, and content for easier
+  management and analysis.
 do:
 - Create a reusable log handler module for consistent log generation
 - Define a standard interface for logging across different application components
 - Ensure the log handler is thoroughly tested and integrated into approved modules
 dont:
 - Do not rely on ad-hoc logging mechanisms that vary across applications
-id: LOGGING-016
+detect:
+  semgrep:
+  - logging.log-handler
+  trufflehog:
+  - Data Leakage
+verify:
+  tests:
+  - Verify that the log handler module is being used for log generation
+  - Test the consistency of log format and content across applications
 refs:
   cwe:
   - CWE-778
@@ -17,13 +27,3 @@ refs:
   owasp:
   - A10:2021
   - A13:2021
-requirement: Develop a standardized log handler module that can be used across multiple
-  applications to ensure consistent log generation, format, and content for easier
-  management and analysis.
-scope: web-application
-severity: low
-title: Implement log handler for consistent log generation
-verify:
-  tests:
-  - Verify that the log handler module is being used for log generation
-  - Test the consistency of log format and content across applications

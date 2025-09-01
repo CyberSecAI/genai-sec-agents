@@ -1,14 +1,22 @@
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
+id: CRYPTO-004
+title: Approved Key Exchange Algorithms
+severity: high
+scope: web-application
+requirement: Use approved cryptographic algorithms for key exchange with secure parameters
+  to prevent cryptographic breaks
 do:
 - Implement approved cryptographic algorithms for key exchange (e.g., Diffie-Hellman)
   with secure parameters
 dont:
 - Use insecure key exchange algorithms
-id: CRYPTO-004
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
+verify:
+  tests:
+  - Verify implementation meets security requirements
 refs:
   asvs:
   - V11.6.2
@@ -18,11 +26,3 @@ refs:
   - CWE-329
   owasp:
   - A10:2021
-requirement: Use approved cryptographic algorithms for key exchange with secure parameters
-  to prevent cryptographic breaks
-scope: web-application
-severity: high
-title: Approved Key Exchange Algorithms
-verify:
-  tests:
-  - Verify implementation meets security requirements

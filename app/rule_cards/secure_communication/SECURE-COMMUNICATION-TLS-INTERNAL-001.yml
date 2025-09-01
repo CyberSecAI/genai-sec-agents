@@ -1,7 +1,9 @@
-detect:
-  semgrep:
-  - python.requests.security.disabled-cert-validation
-  - javascript.lang.security.audit.tls-min-version
+id: SECURE-COMMUNICATION-TLS-INTERNAL-001
+title: Ensure TLS for internal service communication
+severity: high
+scope: web-application
+requirement: Use TLS for all connectivity between internal, HTTP-based services within
+  the application to prevent insecure or unencrypted communications.
 do:
 - Implement TLS for all internal service communication
 - Configure consuming services to trust specific internal CAs and self-signed certificates
@@ -9,7 +11,16 @@ do:
 - Consider using a service mesh for microservice architectures to enhance security
 dont:
 - Allow insecure or unencrypted communication between internal services
-id: SECURE-COMMUNICATION-TLS-INTERNAL-001
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+verify:
+  tests:
+  - Verify TLS implementation for internal service communication
+  - Verify trust configuration for internal CAs and self-signed certificates
+  - Verify strong authentication methods for intra-service communications
+  - Consider using a service mesh for microservice architectures
 refs:
   asvs:
   - V12.3.3
@@ -19,14 +30,3 @@ refs:
   - CWE-295
   owasp:
   - A06:2021
-requirement: Use TLS for all connectivity between internal, HTTP-based services within
-  the application to prevent insecure or unencrypted communications.
-scope: web-application
-severity: high
-title: Ensure TLS for internal service communication
-verify:
-  tests:
-  - Verify TLS implementation for internal service communication
-  - Verify trust configuration for internal CAs and self-signed certificates
-  - Verify strong authentication methods for intra-service communications
-  - Consider using a service mesh for microservice architectures

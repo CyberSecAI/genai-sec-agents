@@ -1,13 +1,21 @@
-detect:
-  semgrep:
-  - javascript.express.security.audit.express-session-no-secret
-  - python.django.security.audit.session-cookie-secure-false
+id: AUTH-NEW-006
+title: Password Input Field Masking
+severity: low
+scope: web-application
+requirement: Password input fields must use type=password to mask the entry and allow
+  temporary viewing of the entire masked password or the last typed character.
 do:
 - Use type=password for password input fields
 - Allow temporary viewing of the entire masked password or the last typed character
 dont:
 - Use plain text for password input fields
-id: AUTH-NEW-006
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 refs:
   asvs:
   - V6.2.6
@@ -15,11 +23,3 @@ refs:
   - CWE-287
   owasp:
   - A07:2021
-requirement: Password input fields must use type=password to mask the entry and allow
-  temporary viewing of the entire masked password or the last typed character.
-scope: web-application
-severity: low
-title: Password Input Field Masking
-verify:
-  tests:
-  - Verify authentication mechanisms and credential handling

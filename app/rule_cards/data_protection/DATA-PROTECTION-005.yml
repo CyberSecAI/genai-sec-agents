@@ -1,12 +1,20 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.hardcoded-password
-  - javascript.lang.security.audit.hardcoded-secret
+id: DATA-PROTECTION-005
+title: Avoid storing sensitive data in browser storage
+severity: medium
+scope: web-application
+requirement: Data stored in browser storage (e.g., localStorage, sessionStorage, IndexedDB,
+  cookies) must not contain sensitive data, except for session tokens.
 do:
 - Ensure sensitive data is not stored in browser storage
 dont:
 - Store sensitive data in localStorage, sessionStorage, IndexedDB, or cookies
-id: DATA-PROTECTION-005
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Verify sensitive data is not stored in browser storage, except for session tokens
 refs:
   asvs:
   - V14.3.3
@@ -14,11 +22,3 @@ refs:
   - CWE-200
   owasp:
   - A14:2021
-requirement: Data stored in browser storage (e.g., localStorage, sessionStorage, IndexedDB,
-  cookies) must not contain sensitive data, except for session tokens.
-scope: web-application
-severity: medium
-title: Avoid storing sensitive data in browser storage
-verify:
-  tests:
-  - Verify sensitive data is not stored in browser storage, except for session tokens

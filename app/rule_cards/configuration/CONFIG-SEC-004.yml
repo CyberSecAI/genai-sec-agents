@@ -1,13 +1,23 @@
-detect:
-  semgrep:
-  - yaml.docker-compose.security.writable-filesystem-service
-  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+id: CONFIG-SEC-004
+title: Document all communication needs and external services
+severity: medium
+scope: web-application
+requirement: Ensure that all communication needs for the application are documented,
+  including external services which the application relies upon and cases where an
+  end user might be able to provide an external location to which the application
+  will then connect.
 do:
 - Document all communication needs for the application
 - Include external services and potential end user-provided locations
 dont:
 - Neglect documenting communication needs
-id: CONFIG-SEC-004
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+verify:
+  tests:
+  - Review documentation for completeness
 refs:
   asvs:
   - V13.1.1
@@ -15,13 +25,3 @@ refs:
   - CWE-16
   owasp:
   - A05:2021
-requirement: Ensure that all communication needs for the application are documented,
-  including external services which the application relies upon and cases where an
-  end user might be able to provide an external location to which the application
-  will then connect.
-scope: web-application
-severity: medium
-title: Document all communication needs and external services
-verify:
-  tests:
-  - Review documentation for completeness

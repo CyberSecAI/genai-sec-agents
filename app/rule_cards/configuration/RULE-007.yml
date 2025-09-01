@@ -1,11 +1,19 @@
-detect:
-  semgrep:
-  - yaml.docker-compose.security.writable-filesystem-service
-  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+title: Secure Cryptographic Operations
+severity: high
+scope: web-application/api
+requirement: Ensure all cryptographic operations are performed using an isolated security
+  module to protect key material from exposure.
 do:
 - Perform all cryptographic operations using an isolated security module
 dont:
 - Perform cryptographic operations without proper key protection
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+verify:
+  tests:
+  - Verify that cryptographic operations are isolated and key material is protected
 refs:
   asvs:
   - V13.3.3
@@ -13,11 +21,3 @@ refs:
   - CWE-310
   owasp:
   - A6:2021
-requirement: Ensure all cryptographic operations are performed using an isolated security
-  module to protect key material from exposure.
-scope: web-application/api
-severity: high
-title: Secure Cryptographic Operations
-verify:
-  tests:
-  - Verify that cryptographic operations are isolated and key material is protected

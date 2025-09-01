@@ -1,12 +1,21 @@
-detect:
-  semgrep:
-  - python.lang.security.audit.hardcoded-password
-  - javascript.lang.security.audit.hardcoded-secret
+id: DATA-PROTECTION-001
+title: Sensitive information data retention
+severity: high
+scope: web-application
+requirement: Sensitive information must be subject to data retention classification
+  to ensure outdated or unnecessary data is deleted automatically, on a defined schedule,
+  or as the situation requires.
 do:
 - Implement automated data retention policies for sensitive information
 dont:
 - Retain outdated or unnecessary sensitive data
-id: DATA-PROTECTION-001
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+verify:
+  tests:
+  - Verify data retention policies are in place and functioning correctly
 refs:
   asvs:
   - V14.2.7
@@ -14,12 +23,3 @@ refs:
   - CWE-200
   owasp:
   - A14:2021
-requirement: Sensitive information must be subject to data retention classification
-  to ensure outdated or unnecessary data is deleted automatically, on a defined schedule,
-  or as the situation requires.
-scope: web-application
-severity: high
-title: Sensitive information data retention
-verify:
-  tests:
-  - Verify data retention policies are in place and functioning correctly
