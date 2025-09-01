@@ -1,0 +1,33 @@
+id: NODE-002
+title: Set request size limits to prevent DoS attacks
+severity: medium
+scope: web-application
+requirement: Implement request size limits to prevent attackers from sending large
+  request bodies that can exhaust server resources or fill up disk space. Utilize
+  libraries like 'raw-body' to restrict the size of incoming requests based on content
+  type.
+do:
+- Limit request body size for POST, PUT, and DELETE requests
+- Validate request content type before processing
+- Use 'raw-body' or similar libraries to set request size limits
+dont:
+- Do not allow unlimited request body sizes
+- Avoid processing requests without size validation
+detect:
+  semgrep:
+  - javascript.nodejs.security.request-size-limits
+  - javascript.nodejs.security.raw-body-usage
+  - javascript.express.security.audit.express-cors-origin-wildcard
+  - javascript.lang.security.audit.crypto-js-hardcoded-secret
+  - javascript.express.security.audit.express-helmet-disabled
+verify:
+  tests:
+  - Test sending requests with large payloads to verify size limits
+  - Review configuration to ensure request size limits are enforced
+refs:
+  cwe:
+  - CWE-770
+  - CWE-400
+  owasp:
+  - A6:2021
+  - A1:2021

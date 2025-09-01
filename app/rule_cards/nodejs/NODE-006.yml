@@ -1,0 +1,32 @@
+id: NODE-006
+title: Prevent blocking the event loop with asynchronous operations
+severity: high
+scope: web-application
+requirement: Avoid blocking the Node.js event loop with synchronous operations to
+  maintain application responsiveness. Ensure all blocking operations are performed
+  asynchronously to prevent delays in event processing and potential DoS vulnerabilities.
+do:
+- Use asynchronous operations for CPU-intensive tasks
+- Avoid synchronous file operations that can block the event loop
+- Utilize callbacks or Promises for non-blocking execution
+dont:
+- Do not perform synchronous operations in event loop
+- Avoid synchronous file system operations
+detect:
+  semgrep:
+  - javascript.nodejs.security.blocking-event-loop
+  - javascript.nodejs.security.sync-file-operations
+  - javascript.express.security.audit.express-cors-origin-wildcard
+  - javascript.lang.security.audit.crypto-js-hardcoded-secret
+  - javascript.express.security.audit.express-helmet-disabled
+verify:
+  tests:
+  - Profile application performance to identify blocking operations
+  - Review codebase for synchronous calls within event loop
+refs:
+  cwe:
+  - CWE-400
+  - CWE-399
+  owasp:
+  - A7:2021
+  - A1:2021

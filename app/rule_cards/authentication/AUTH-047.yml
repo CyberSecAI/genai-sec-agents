@@ -1,0 +1,22 @@
+id: AUTH-047
+title: Do not require periodic credential rotation
+severity: medium
+scope: web-application
+requirement: A user's password stays valid until it is discovered to be compromised
+  or the user rotates it. The application must not require periodic credential rotation.
+do:
+- Do not enforce periodic password changes
+dont: []
+detect:
+  semgrep:
+  - no-periodic-rotation
+verify:
+  tests:
+  - Verify that periodic password rotation is not enforced
+refs:
+  cwe:
+  - CWE-521
+  asvs:
+  - V6.2.10
+  owasp:
+  - A2:2021

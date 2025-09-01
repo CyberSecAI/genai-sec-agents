@@ -1,0 +1,17 @@
+id: AUTH-050
+title: Allow Long Passwords and Prevent Credential Rotation
+severity: medium
+scope: web-application
+requirement: Passwords of at least 64 characters are permitted and credential rotation
+  is not required.
+do:
+- Allow users to set passwords of at least 64 characters
+- Implement controls to prevent forced credential rotation
+refs:
+  cwe:
+  - CWE-521
+  asvs:
+  - V6.2.9
+  - V6.2.10
+  owasp:
+  - A3:2021

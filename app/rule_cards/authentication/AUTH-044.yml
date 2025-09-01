@@ -1,0 +1,33 @@
+id: AUTH-044
+title: Prevent Easy to Guess Passwords
+severity: high
+scope: web-application
+requirement: Prevent easy to guess passwords by using a documented list of context
+  specific words....
+do:
+- Use passwords with a minimum of 20 bits of entropy (e.g., 4 random alphanumeric
+  characters or 6 random digits)
+- Ensure out-of-band authentication requests have a maximum lifetime of 10 minutes
+- Ensure time-based one-time passwords (TOTPs) have a maximum lifetime of 30 seconds
+- Revoke any authentication factor in case of theft or loss
+dont:
+- Use biometric authentication mechanisms as primary factors
+- Check TOTPs based on untrusted or client provided time
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
+refs:
+  asvs:
+  - V6.5.4
+  - V6.5.5
+  - V6.5.6
+  - V6.5.7
+  - V6.5.8
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
