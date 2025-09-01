@@ -1,23 +1,24 @@
-title: Prevention of Sensitive Data Leakage via HTTP
-severity: high
-scope: web-application
-requirement: Ensure sensitive data is not sent in HTTP message body or header fields,
-  and avoid including sensitive information in URLs or query strings.
+detect:
+  semgrep:
+  - sensitive-data-http-leakage
 do:
 - Avoid sending sensitive data in HTTP message body or headers
 - Do not include sensitive information in URLs or query strings
 dont:
 - Transmit sensitive data in clear text over HTTP
-detect:
-  semgrep:
-  - sensitive-data-http-leakage
+id: RULE-003
+refs:
+  asvs:
+  - V14.2.1
+  cwe:
+  - CWE-200
+  owasp:
+  - A6:2021
+requirement: Ensure sensitive data is not sent in HTTP message body or header fields,
+  and avoid including sensitive information in URLs or query strings.
+scope: web-application
+severity: high
+title: Prevention of Sensitive Data Leakage via HTTP
 verify:
   tests:
   - Verify sensitive data transmission over HTTP
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V14.2.1
-  owasp:
-  - A6:2021

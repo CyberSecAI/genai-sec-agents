@@ -1,23 +1,24 @@
-title: Secure Password Reset Process
-severity: medium
-scope: web-application
-requirement: Implement a secure process for resetting forgotten passwords that does
-  not bypass multi-factor authentication mechanisms.
+detect:
+  semgrep:
+  - insecure-password-reset-process
 do:
 - Require users to verify their identity through multi-factor authentication during
   the password reset process
 dont:
 - Bypass multi-factor authentication during the password reset process
-detect:
-  semgrep:
-  - insecure-password-reset-process
+id: RULE-023
+refs:
+  asvs:
+  - V6.4.3
+  cwe:
+  - CWE-640
+  owasp:
+  - A11:2021
+requirement: Implement a secure process for resetting forgotten passwords that does
+  not bypass multi-factor authentication mechanisms.
+scope: web-application
+severity: medium
+title: Secure Password Reset Process
 verify:
   tests:
   - Verify that the password reset process requires multi-factor authentication
-refs:
-  cwe:
-  - CWE-640
-  asvs:
-  - V6.4.3
-  owasp:
-  - A11:2021

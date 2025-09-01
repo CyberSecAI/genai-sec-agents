@@ -1,24 +1,25 @@
-title: Sensitive Data Protection Requirements Documentation
-severity: medium
-scope: web-application
-requirement: Document protection requirements for all sensitive data protection levels,
-  covering encryption, integrity verification, retention, access controls, and privacy.
+detect:
+  semgrep:
+  - sensitive-data-protection-doc
 do:
 - Document protection requirements for each sensitive data protection level
 - Include encryption, integrity verification, retention, access controls, and privacy
   requirements
 dont:
 - Omit documenting protection requirements for sensitive data
-detect:
-  semgrep:
-  - sensitive-data-protection-doc
+id: RULE-002
+refs:
+  asvs:
+  - V14.1.2
+  cwe:
+  - CWE-311
+  owasp:
+  - A6:2021
+requirement: Document protection requirements for all sensitive data protection levels,
+  covering encryption, integrity verification, retention, access controls, and privacy.
+scope: web-application
+severity: medium
+title: Sensitive Data Protection Requirements Documentation
 verify:
   tests:
   - Review documented protection requirements
-refs:
-  cwe:
-  - CWE-311
-  asvs:
-  - V14.1.2
-  owasp:
-  - A6:2021

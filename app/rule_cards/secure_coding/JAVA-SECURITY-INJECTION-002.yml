@@ -1,4 +1,3 @@
-```yaml
 id: JAVA-SECURITY-INJECTION-002
 title: "Prevent Command Injection in Java applications"
 severity: high
@@ -30,4 +29,3 @@ refs:
   owasp:
     - "A01:2021"
     - "A06:2021"
-```

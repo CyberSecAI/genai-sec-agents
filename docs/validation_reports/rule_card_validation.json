@@ -1,0 +1,11 @@
+{
+  "validation_summary": {
+    "total_issues": 0,
+    "fixes_applied": 0,
+    "high_severity": 0,
+    "medium_severity": 0,
+    "low_severity": 0
+  },
+  "issues": [],
+  "fixes_applied": []
+}

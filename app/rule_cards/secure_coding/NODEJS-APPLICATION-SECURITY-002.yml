@@ -1,4 +1,3 @@
-```yaml
 id: NODEJS-APPLICATION-SECURITY-002
 title: "Set request size limits to prevent DoS attacks"
 severity: medium
@@ -25,4 +24,3 @@ refs:
   owasp:
     - "A06:2021"
     - "A07:2021"
-```

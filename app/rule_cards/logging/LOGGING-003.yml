@@ -1,4 +1,3 @@
-```yaml
 id: LOGGING-003
 title: "Log application errors, system events, and high-risk functionality usage"
 severity: high
@@ -28,4 +27,3 @@ refs:
   owasp:
     - "A06:2021"
     - "A10:2021"
-```

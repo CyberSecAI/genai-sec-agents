@@ -1,4 +1,3 @@
-```yaml
 id: XSS-HTML-SANITIZATION-003
 title: "Implement HTML sanitization for user-generated content"
 severity: medium
@@ -22,4 +21,3 @@ refs:
   owasp:
     - "A05:2021"
     - "A06:2021"
-```

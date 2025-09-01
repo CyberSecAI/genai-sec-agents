@@ -1,22 +1,23 @@
-title: Authorization Documentation and Rules
-severity: low
-scope: web-application
-requirement: Define rules for restricting function-level and data-specific access
-  based on consumer permissions and resource attributes.
+detect:
+  semgrep:
+  - authorization-doc-rules
 do:
 - Document function-level and data-specific access rules
 dont:
 - Neglect documenting access restrictions
-detect:
-  semgrep:
-  - authorization-doc-rules
+id: RULE-001
+refs:
+  asvs:
+  - V8.1.1
+  cwe:
+  - CWE-284
+  owasp:
+  - A1:2021
+requirement: Define rules for restricting function-level and data-specific access
+  based on consumer permissions and resource attributes.
+scope: web-application
+severity: low
+title: Authorization Documentation and Rules
 verify:
   tests:
   - Verify that authorization rules are documented
-refs:
-  cwe:
-  - CWE-284
-  asvs:
-  - V8.1.1
-  owasp:
-  - A1:2021

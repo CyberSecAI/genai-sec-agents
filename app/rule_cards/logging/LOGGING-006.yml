@@ -1,0 +1,32 @@
+detect:
+  semgrep:
+  - logging.log-rotation
+  - logging.retention-policies
+  trufflehog:
+  - Data Retention
+do:
+- Implement log rotation to manage log file sizes and prevent disk space exhaustion
+- Define retention periods for log data based on legal, regulatory, and operational
+  needs
+- Regularly review and adjust log rotation and retention policies as necessary
+dont:
+- Do not neglect log rotation and retention policies, leading to unmanageable log
+  file sizes
+id: LOGGING-006
+refs:
+  cwe:
+  - CWE-778
+  - CWE-117
+  owasp:
+  - A10:2021
+  - A13:2021
+requirement: Establish log rotation and retention policies to manage log file sizes,
+  prevent disk space exhaustion, and comply with legal and regulatory requirements.
+scope: web-application
+severity: medium
+title: Implement log rotation and retention policies
+verify:
+  tests:
+  - Verify that log rotation is functioning as intended
+  - Review log retention policies to ensure compliance with legal and operational
+    requirements

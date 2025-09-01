@@ -1,0 +1,30 @@
+detect:
+  semgrep:
+  - logging.centralized-collection
+  trufflehog:
+  - Data Leakage
+do:
+- Set up a centralized log collection system for aggregating log data
+- Utilize SIEM or SEM tools for log analysis and monitoring
+- Integrate log data from different application components for comprehensive security
+  monitoring
+dont:
+- Do not rely solely on decentralized or siloed log storage systems
+id: LOGGING-009
+refs:
+  cwe:
+  - CWE-778
+  - CWE-117
+  owasp:
+  - A10:2021
+  - A13:2021
+requirement: Implement a centralized log collection and management system (e.g., SIEM
+  or SEM) to aggregate, analyze, and monitor log data from various application components
+  for improved security monitoring and incident response.
+scope: web-application
+severity: medium
+title: Implement centralized log collection and management
+verify:
+  tests:
+  - Verify that log data is being centrally collected and managed
+  - Test the integration of log data from various components during security testing

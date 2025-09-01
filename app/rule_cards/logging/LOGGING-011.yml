@@ -1,0 +1,28 @@
+detect:
+  semgrep:
+  - logging.secure-transmission
+  trufflehog:
+  - Sensitive Data Exposure
+do:
+- Utilize secure transmission protocols (e.g., TLS) for transmitting log data over
+  untrusted networks
+- Encrypt log data before transmission to protect confidentiality and integrity
+dont:
+- Do not transmit log data over untrusted networks without encryption
+id: LOGGING-011
+refs:
+  cwe:
+  - CWE-311
+  - CWE-312
+  owasp:
+  - A10:2021
+  - A13:2021
+requirement: Use secure transmission protocols when sending log data over untrusted
+  networks to prevent interception or tampering of log entries during transit.
+scope: web-application
+severity: low
+title: Implement secure transmission protocols for log data
+verify:
+  tests:
+  - Verify that log data is transmitted using secure protocols
+  - Test the encryption of log data during transmission for effectiveness

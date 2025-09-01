@@ -1,0 +1,29 @@
+detect:
+  semgrep:
+  - logging.time-synchronization
+  trufflehog:
+  - Data Integrity
+do:
+- Implement time synchronization mechanisms for all servers and devices
+- Use network time protocols (NTP) to ensure consistent time across the infrastructure
+- Regularly monitor and adjust time settings to prevent drift
+dont:
+- Do not overlook time synchronization, leading to inaccurate event timestamps
+id: LOGGING-015
+refs:
+  cwe:
+  - CWE-778
+  - CWE-117
+  owasp:
+  - A10:2021
+  - A13:2021
+requirement: Ensure time synchronization across all servers and devices to maintain
+  accurate timestamps in log entries, facilitating correlation and analysis of events
+  across the application environment.
+scope: web-application
+severity: low
+title: Synchronize time across all servers and devices for accurate logging
+verify:
+  tests:
+  - Verify that time synchronization is in place for all servers and devices
+  - Test the accuracy of event timestamps in log entries

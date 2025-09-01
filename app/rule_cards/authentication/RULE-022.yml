@@ -1,23 +1,24 @@
-title: Use of Password Hints and Knowledge-based Authentication
-severity: low
-scope: web-application
-requirement: Do not use password hints or knowledge-based authentication (secret questions)
-  for user authentication.
+detect:
+  semgrep:
+  - password-hints-and-secret-questions
 do:
 - Implement alternative authentication methods that do not rely on password hints
   or secret questions
 dont:
 - Use password hints or knowledge-based authentication for user authentication
-detect:
-  semgrep:
-  - password-hints-and-secret-questions
+id: RULE-022
+refs:
+  asvs:
+  - V6.4.2
+  cwe:
+  - CWE-640
+  owasp:
+  - A11:2021
+requirement: Do not use password hints or knowledge-based authentication (secret questions)
+  for user authentication.
+scope: web-application
+severity: low
+title: Use of Password Hints and Knowledge-based Authentication
 verify:
   tests:
   - Verify that password hints or secret questions are not used for user authentication
-refs:
-  cwe:
-  - CWE-640
-  asvs:
-  - V6.4.2
-  owasp:
-  - A11:2021

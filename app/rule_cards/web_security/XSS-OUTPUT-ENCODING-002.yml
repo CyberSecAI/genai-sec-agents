@@ -1,4 +1,3 @@
-```yaml
 id: XSS-OUTPUT-ENCODING-002
 title: "Implement proper output encoding for different contexts"
 severity: high
@@ -27,4 +26,3 @@ refs:
     - "A02:2021"
     - "A03:2021"
     - "A04:2021"
-```

@@ -1,24 +1,25 @@
-title: Admin-initiated Password Reset Process
-severity: high
-scope: web-application
-requirement: Allow administrative users to initiate the password reset process for
-  users without changing or choosing the user's password.
+detect:
+  semgrep:
+  - admin-initiated-password-reset
 do:
 - Enable administrative users to initiate password reset process for users
 - Ensure administrative users cannot change or choose the user's password
 dont:
 - Allow administrative users to change or choose user passwords
-detect:
-  semgrep:
-  - admin-initiated-password-reset
+id: RULE-026
+refs:
+  asvs:
+  - V6.4.6
+  cwe:
+  - CWE-640
+  owasp:
+  - A11:2021
+requirement: Allow administrative users to initiate the password reset process for
+  users without changing or choosing the user's password.
+scope: web-application
+severity: high
+title: Admin-initiated Password Reset Process
 verify:
   tests:
   - Verify that administrative users can initiate password reset without changing
     user passwords
-refs:
-  cwe:
-  - CWE-640
-  asvs:
-  - V6.4.6
-  owasp:
-  - A11:2021

@@ -1,23 +1,24 @@
-title: Sensitive Data Identification and Classification
-severity: medium
-scope: web-application
-requirement: Identify and classify all sensitive data processed by the application
-  into protection levels, considering data protection and privacy regulations.
+detect:
+  semgrep:
+  - sensitive-data-identification
 do:
 - Implement a process to identify and classify sensitive data
 - Assign appropriate protection levels based on sensitivity
 dont:
 - Neglect to classify sensitive data
-detect:
-  semgrep:
-  - sensitive-data-identification
+id: RULE-001
+refs:
+  asvs:
+  - V14.1.1
+  cwe:
+  - CWE-200
+  owasp:
+  - A3:2021
+requirement: Identify and classify all sensitive data processed by the application
+  into protection levels, considering data protection and privacy regulations.
+scope: web-application
+severity: medium
+title: Sensitive Data Identification and Classification
 verify:
   tests:
   - Verify sensitive data classification process
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V14.1.1
-  owasp:
-  - A3:2021

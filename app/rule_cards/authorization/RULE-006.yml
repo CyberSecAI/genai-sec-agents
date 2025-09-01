@@ -1,22 +1,23 @@
-title: Authorization Design - Data-Specific Access
-severity: medium
-scope: web-application
-requirement: Restrict data-specific access to consumers with explicit permissions
-  to mitigate IDOR and BOLA.
+detect:
+  semgrep:
+  - data-specific-access
 do:
 - Implement data-specific access restrictions
 dont:
 - Allow unauthorized access to specific data items
-detect:
-  semgrep:
-  - data-specific-access
+id: RULE-006
+refs:
+  asvs:
+  - V8.2.2
+  cwe:
+  - CWE-284
+  owasp:
+  - A6:2021
+requirement: Restrict data-specific access to consumers with explicit permissions
+  to mitigate IDOR and BOLA.
+scope: web-application
+severity: medium
+title: Authorization Design - Data-Specific Access
 verify:
   tests:
   - Verify data-specific access restrictions
-refs:
-  cwe:
-  - CWE-284
-  asvs:
-  - V8.2.2
-  owasp:
-  - A6:2021

@@ -1,4 +1,3 @@
-```yaml
 id: NODEJS-APPLICATION-SECURITY-003
 title: "Prevent blocking the event loop for improved performance"
 severity: high
@@ -25,4 +24,3 @@ refs:
   owasp:
     - "A08:2021"
     - "A10:2021"
-```

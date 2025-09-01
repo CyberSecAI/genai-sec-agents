@@ -1,0 +1,30 @@
+detect:
+  semgrep:
+  - logging.alerting-mechanisms
+  trufflehog:
+  - Data Leakage
+do:
+- Configure alerting for critical events such as authentication failures or high-risk
+  activities
+- Monitor log data continuously for anomalies or suspicious activities
+- Integrate log alerts with incident response processes for timely action
+dont:
+- Do not overlook setting up alerts for critical security events in logs
+id: LOGGING-012
+refs:
+  cwe:
+  - CWE-778
+  - CWE-117
+  owasp:
+  - A10:2021
+  - A13:2021
+requirement: Set up alerting mechanisms to notify responsible teams about critical
+  events in the logs and ensure continuous monitoring for immediate response to security
+  incidents.
+scope: web-application
+severity: low
+title: Enable alerting and monitoring for critical events
+verify:
+  tests:
+  - Verify that alerting mechanisms are triggered for critical events
+  - Test the monitoring of log data for timely detection of security incidents
