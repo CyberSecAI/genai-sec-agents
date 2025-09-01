@@ -1,26 +1,26 @@
-id: CRYPTO-005
-title: Industry-Validated Cryptographic Implementations
-severity: medium
-scope: web-application/api/mobile/infrastructure
-requirement: Use industry-validated implementations for cryptographic operations
-do:
-- Ensure that cryptographic operations use industry-validated implementations
-dont:
-- Use unvalidated or custom cryptographic implementations
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+do:
+- Ensure that cryptographic operations use industry-validated implementations
+dont:
+- Use unvalidated or custom cryptographic implementations
+id: CRYPTO-005
 refs:
+  asvs:
+  - V11.2.1
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.2.1
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Use industry-validated implementations for cryptographic operations
+scope: web-application/api/mobile/infrastructure
+severity: medium
+title: Industry-Validated Cryptographic Implementations
+verify:
+  tests:
+  - Verify implementation meets security requirements

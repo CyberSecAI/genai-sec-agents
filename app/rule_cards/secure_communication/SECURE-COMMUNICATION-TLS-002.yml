@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Enable recommended cipher suites with strong preferences
+- Ensure forward secrecy is provided by supported cipher suites
+dont:
+- Allow weak or deprecated cipher suites
+id: SECURE-COMMUNICATION-TLS-002
+refs:
+  asvs:
+  - V12.1.2
+  cwe:
+  - CWE-326
+  owasp:
+  - A06:2021
+requirement: Only recommended cipher suites are enabled, with the strongest cipher
+  suites set as preferred for secure communication.
+scope: web-application
+severity: medium
+title: Use recommended cipher suites for secure communication
+verify:
+  tests:
+  - Manually verify that recommended cipher suites are enabled

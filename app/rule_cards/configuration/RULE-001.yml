@@ -1,0 +1,22 @@
+title: Document all communication needs and external services
+severity: medium
+scope: web-application
+requirement: Ensure that all communication needs for the application are documented,
+  including external services and potential user-provided external locations.
+do:
+- Document all communication requirements in detail
+dont:
+- Neglect documenting external services or user-provided locations
+detect:
+  semgrep:
+  - communication-documentation
+verify:
+  tests:
+  - Review documentation for completeness and accuracy
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V13.1.1
+  owasp:
+  - A6:2021

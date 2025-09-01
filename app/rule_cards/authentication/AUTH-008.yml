@@ -1,24 +1,25 @@
-id: AUTH-008
-title: Protect Code-based Out-of-Band Authentication
-severity: medium
-scope: web-application
-requirement: Code-based out-of-band authentication must be protected against brute
-  force attacks.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Implement rate limiting for code-based out-of-band authentication
 - Use codes with at least 64 bits of entropy
 dont:
 - Neglect rate limiting for authentication codes
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-008
+refs:
+  asvs:
+  - V6.6.3
+  cwe:
+  - CWE-307
+  owasp:
+  - A3:2021
+requirement: Code-based out-of-band authentication must be protected against brute
+  force attacks.
+scope: web-application
+severity: medium
+title: Protect Code-based Out-of-Band Authentication
 verify:
   tests:
   - Test rate limiting and entropy of authentication codes
-refs:
-  cwe:
-  - CWE-307
-  asvs:
-  - V6.6.3
-  owasp:
-  - A3:2021

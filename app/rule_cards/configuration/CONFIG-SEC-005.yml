@@ -1,0 +1,27 @@
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- "Define resource\u2011management strategies for external systems"
+- "Include resource\u2011release procedures, timeout settings, and retry logic"
+dont:
+- "Neglect defining resource\u2011management strategies"
+id: CONFIG-SEC-005
+refs:
+  asvs:
+  - V13.1.3
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: "Ensure that documentation defines resource\u2011management strategies\
+  \ for every external system or service the application uses, including databases,\
+  \ file handles, threads, and HTTP connections. This should include resource\u2011\
+  release procedures, timeout settings, failure handling, and retry logic specifications."
+scope: web-application
+severity: high
+title: Document resource management strategies for external systems
+verify:
+  tests:
+  - Review documentation for completeness

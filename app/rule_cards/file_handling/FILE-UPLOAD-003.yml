@@ -1,39 +1,29 @@
-id: FILE-UPLOAD-003
-title: Implement file size and type validation
-severity: medium
-scope: web-application
-requirement: Enforce file size limits and validate file signatures to prevent DoS
-  attacks and malicious uploads.
-do:
-- Set file size limits to prevent excessive storage usage
-- Validate file signatures in addition to content type
-- Implement request limits for download service to prevent DoS attacks
-dont:
-- Avoid accepting excessively large files without proper validation
-- Do not solely rely on file size limits for security
 detect:
   semgrep:
-  - file-upload.security.file-size-validation
-  - file-upload.security.file-signature-validation
-  - python.django.security.audit.avoid-unsafe-deserialization
-  - python.flask.security.audit.direct-use-of-jinja2
-  - java.spring.security.audit.spring-unvalidated-redirect
-  trufflehog:
-  - DoS Attack via File Upload
-  - Malicious File Upload
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+do:
+- Implement file size limits and validate file signatures
+- Use internally generated or trusted data for file paths
+- Apply strict validation and sanitization for user-submitted filenames
+dont:
+- Accept user-submitted filenames without validation and sanitization
+id: FILE-UPLOAD-003
+refs:
+  asvs:
+  - V5.3.2
+  cwe:
+  - CWE-434
+  owasp:
+  - A01:2021
+requirement: Enforce file size limits and validate file signatures to prevent DoS
+  attacks and malicious uploads. When the application creates file paths for file
+  operations, instead of user-submitted filenames, it uses internally generated or
+  trusted data, or if user-submitted filenames or file metadata must be used, strict
+  validation and sanitization must be applied.
+scope: web-application
+severity: high
+title: Implement file size and type validation
 verify:
   tests:
-  - Test that file size limits are enforced correctly
-  - Verify that file signatures are validated against expected types
-refs:
-  cwe:
-  - CWE-770
-  - CWE-326
-  asvs:
-  - V6.2.1
-  - V6.2.2
-  owasp:
-  - A06:2021
-  - A09:2021
-  standards:
-  - GDPR
+  - Test file upload validation and processing security

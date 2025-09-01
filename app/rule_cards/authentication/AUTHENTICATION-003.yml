@@ -1,23 +1,24 @@
-id: AUTHENTICATION-003
-title: Secure Storage of Cryptographic Authentication Certificates
-severity: high
-scope: web-application
-requirement: The certificates used to verify cryptographic authentication assertions
-  are stored in a way that protects them from modification.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Store cryptographic authentication certificates securely to prevent tampering
 dont:
 - Do not store certificates in plaintext or insecure locations
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-003
+refs:
+  asvs:
+  - V6.7.1
+  cwe:
+  - CWE-311
+  owasp:
+  - A3:2021
+requirement: The certificates used to verify cryptographic authentication assertions
+  are stored in a way that protects them from modification.
+scope: web-application
+severity: high
+title: Secure Storage of Cryptographic Authentication Certificates
 verify:
   tests:
   - Verify secure storage mechanisms for cryptographic certificates
-refs:
-  cwe:
-  - CWE-311
-  asvs:
-  - V6.7.1
-  owasp:
-  - A3:2021

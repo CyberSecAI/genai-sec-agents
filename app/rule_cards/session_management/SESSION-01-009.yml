@@ -1,23 +1,25 @@
-id: SESSION-01-009
-title: Require user consent or action for session creation
-severity: medium
-scope: web-application
-requirement: Ensure that the creation of a session requires either the user's consent
-  or an explicit action to prevent unauthorized session creation.
-do:
-- Implement user consent or action for session creation
-dont:
-- Allow session creation without user interaction
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Implement mechanisms to require user consent or explicit action for session creation
+dont:
+- Allow creation of new application sessions without user interaction
+id: SESSION-01-009
+refs:
+  asvs:
+  - V7.6.2:2021
+  cwe:
+  - CWE-384
+  owasp:
+  - A07:2021
+requirement: Ensure that the creation of a session requires either the user's consent
+  or an explicit action to prevent the creation of new application sessions without
+  user interaction.
+scope: web-application
+severity: medium
+title: Require user consent or action for session creation
 verify:
   tests:
-  - Test the requirement for user consent or action for session creation
-refs:
-  cwe:
-  - CWE-XX
-  asvs:
-  - V7.6.2
-  owasp:
-  - A##:2021
+  - Test session creation process for user consent or explicit action

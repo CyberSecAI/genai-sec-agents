@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Use biometric authentication mechanisms only as secondary factors with something
+  you have or something you know
+dont:
+- Use biometric authentication mechanisms as primary factors
+id: AUTHENTICATION-NEW-002
+refs:
+  asvs:
+  - V6.5.7
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Biometric authentication mechanisms are only used as secondary factors
+  together with either somethin...
+scope: web-application
+severity: high
+title: Biometric Authentication Usage
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling

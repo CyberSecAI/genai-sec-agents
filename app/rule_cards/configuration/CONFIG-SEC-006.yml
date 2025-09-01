@@ -1,0 +1,26 @@
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Define critical secrets for the application
+- Establish a schedule for rotating critical secrets
+dont:
+- Neglect defining critical secrets and rotation schedule
+id: CONFIG-SEC-006
+refs:
+  asvs:
+  - V13.1.4
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that the application's documentation defines the secrets that
+  are critical for the security of the application and a schedule for rotating them,
+  based on the organization's threat model and business requirements.
+scope: web-application
+severity: high
+title: Rotate critical secrets based on threat model
+verify:
+  tests:
+  - Review documentation for completeness

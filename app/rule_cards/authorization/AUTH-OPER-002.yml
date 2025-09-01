@@ -1,25 +1,26 @@
-id: AUTH-OPER-002
-title: Apply immediate changes to authorization decisions
-severity: high
-scope: web-application/api
-requirement: Changes to values on which authorization decisions are made must be applied
-  immediately. Implement mitigating controls to alert when unauthorized actions are
-  attempted and revert the changes if necessary.
-do:
-- Apply authorization changes immediately
-- Implement alerting mechanisms for unauthorized actions
-dont:
-- Delay applying authorization changes
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Test immediate application of authorization changes
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+do:
+- Apply changes to authorization decisions immediately
+- Implement controls to alert and revert unauthorized actions
+dont:
+- Delay applying changes to authorization decisions
+id: AUTH-OPER-002
 refs:
-  cwe:
-  - CWE-285
   asvs:
   - V8.3.2
+  cwe:
+  - CWE-285
   owasp:
-  - A8:2021
+  - A01:2021
+requirement: Changes to values on which authorization decisions are made must be applied
+  immediately. Implement mitigating controls to alert when a consumer performs an
+  action when they are no longer authorized to do so and revert the change.
+scope: web-application
+severity: high
+title: Apply immediate changes to authorization decisions
+verify:
+  tests:
+  - Validate access control enforcement and privilege management

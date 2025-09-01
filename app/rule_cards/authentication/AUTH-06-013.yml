@@ -1,16 +1,25 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Store certificates in a secure location with restricted access
+- Regularly monitor and audit access to certificates
+dont:
+- Store certificates in plaintext or insecure locations
 id: AUTH-06-013
-title: Store Certificates Securely for Cryptographic Authentication
-severity: high
-scope: web-application
+refs:
+  asvs:
+  - V6.7.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
 requirement: Verify that certificates used to verify cryptographic authentication
   assertions are stored securely to protect them from modification.
-do:
-- Store certificates used for cryptographic authentication securely
-- Protect certificates from modification
-refs:
-  cwe:
-  - CWE-311
-  asvs:
-  - V6.7.1:2021
-  owasp:
-  - A6:2021
+scope: web-application
+severity: high
+title: Store Certificates Securely for Cryptographic Authentication
+verify:
+  tests:
+  - Verify access controls and monitoring for certificate storage

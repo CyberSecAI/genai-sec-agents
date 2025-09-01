@@ -1,0 +1,32 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Offer PSTN-based OTPs only after validating the phone number
+- Provide information on security risks to users when offering PSTN-based OTPs
+- Bind out-of-band authentication requests, codes, or tokens to the original authentication
+  request
+- Protect code-based out-of-band authentication mechanisms against brute force attacks
+  with rate limiting
+- Use codes with at least 64 bits of entropy for out-of-band authentication
+dont:
+- Offer phone and SMS as options for Level 3 applications
+id: AUTHENTICATION-NEW-003
+refs:
+  asvs:
+  - V6.6.1
+  - V6.6.2
+  - V6.6.3
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Authentication mechanisms using the Public Switched Telephone Network
+  (PSTN) to deliver One-time Passwords...
+scope: web-application
+severity: medium
+title: Out-of-Band Authentication Mechanisms
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling

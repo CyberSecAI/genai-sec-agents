@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+do:
+- Implement controls to prevent storage of sensitive data in browser storage except
+  for session tokens.
+dont:
+- Allow sensitive data to be stored in browser storage.
+id: DATA-PROTECTION-### (new ID)
+refs:
+  asvs:
+  - V14.3.3
+  cwe:
+  - CWE-311
+  owasp:
+  - A02:2021
+requirement: Ensure data stored in browser storage does not contain sensitive data,
+  except for session tokens.
+scope: web-application
+severity: medium
+title: Restricting Sensitive Data in Browser Storage
+verify:
+  tests:
+  - Verify that only session tokens are stored in browser storage.

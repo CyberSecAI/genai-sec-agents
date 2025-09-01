@@ -1,21 +1,25 @@
-id: AUTH-04
-title: Allow passwords of at least 64 characters
-severity: medium
-scope: web-application
-requirement: Passwords of at least 64 characters are permitted.
-do:
-- Allow passwords with a minimum length of 64 characters
-dont: []
 detect:
   semgrep:
-  - minimum-password-length
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Allow passwords with a minimum length of 64 characters
+- Ensure challenge nonces are at least 64 bits in length and unique
+dont:
+- Enforce passwords shorter than 64 characters
+id: AUTH-04
+refs:
+  asvs:
+  - V6.7.2
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Passwords of at least 64 characters are permitted and challenge nonces
+  are at least 64 bits in length.
+scope: web-application
+severity: high
+title: Allow passwords of at least 64 characters
 verify:
   tests:
-  - Test password creation with 64+ characters
-refs:
-  cwe:
-  - CWE-521
-  asvs:
-  - V6.2.9
-  owasp:
-  - A2:2021
+  - Test password length enforcement and nonce generation

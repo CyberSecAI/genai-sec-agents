@@ -1,24 +1,25 @@
-id: DATA-PROTECTION-008
-title: Secure Configuration of Caching Mechanisms
-severity: high
-scope: web-application
-requirement: Configure caching mechanisms to only cache appropriate content types
-  and prevent caching of sensitive, dynamic content.
-do:
-- Configure caching mechanisms to cache only expected content types
-- Prevent caching of sensitive, dynamic content
-dont:
-- Allow caching of sensitive data inappropriately
 detect:
   semgrep:
-  - caching-configuration
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+do:
+- 'Set anti-caching HTTP response header fields like Cache-Control: no-store for sensitive
+  data.'
+dont:
+- Allow sensitive data to be cached in browsers.
+id: DATA-PROTECTION-008
+refs:
+  asvs:
+  - V14.3.2
+  cwe:
+  - CWE-311
+  owasp:
+  - A02:2021
+requirement: Configure caching mechanisms to only cache appropriate content types
+  and prevent caching of sensitive data.
+scope: web-application
+severity: high
+title: Secure Configuration of Caching Mechanisms
 verify:
   tests:
-  - Verify secure configuration of caching mechanisms
-refs:
-  cwe:
-  - CWE-524
-  asvs:
-  - V14.2.5
-  owasp:
-  - A6:2021
+  - Verify that sensitive data is not cached in browser storage.

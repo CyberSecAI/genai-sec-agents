@@ -1,24 +1,25 @@
-id: SESSION-01-008
-title: Enforce session lifetime and re-authentication between RPs and IdPs
-severity: medium
-scope: web-application
-requirement: Ensure session lifetime and termination between Relying Parties (RPs)
-  and Identity Providers (IdPs) are as documented, requiring re-authentication when
-  necessary.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Configure session lifetime and re-authentication settings between RPs and IdPs
 dont:
 - Neglect session lifetime and re-authentication requirements
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION-01-008
+refs:
+  asvs:
+  - V7.6.1
+  cwe:
+  - CWE-XX
+  owasp:
+  - A07:2021
+requirement: Ensure session lifetime and termination between Relying Parties (RPs)
+  and Identity Providers (IdPs) are as documented, requiring re-authentication when
+  necessary.
+scope: web-application
+severity: medium
+title: Enforce session lifetime and re-authentication between RPs and IdPs
 verify:
   tests:
   - Verify session lifetime and re-authentication behavior between RPs and IdPs
-refs:
-  cwe:
-  - CWE-XX
-  asvs:
-  - V7.6.1
-  owasp:
-  - A##:2021

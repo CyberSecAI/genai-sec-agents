@@ -1,23 +1,25 @@
 detect:
   semgrep:
-  - adaptive-security-controls
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Implement adaptive security controls based on contextual attributes
+- Implement adaptive security controls for authentication
+- Consider environmental and contextual attributes
 dont:
-- Rely solely on static access controls
+- Rely solely on static security controls
 id: RULE-004
 refs:
   asvs:
-  - V8.2.4
+  - V8.4.2
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A4:2021
+  - A01:2021
 requirement: Implement adaptive security controls based on environmental and contextual
-  attributes for authentication and authorization decisions.
+  attributes for authentication.
 scope: web-application
-severity: high
+severity: medium
 title: Adaptive Security Controls
 verify:
   tests:
-  - Verify implementation of adaptive security controls
+  - Validate access control enforcement and privilege management

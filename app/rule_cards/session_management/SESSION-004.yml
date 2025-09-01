@@ -1,24 +1,31 @@
-id: SESSION-004
-title: Generate new session token on user authentication
-severity: medium
-scope: web-application/api
-requirement: Generate a new session token upon user authentication, including re-authentication,
-  and terminate the current session token.
-do:
-- Generate new session token on user authentication and terminate current session
-  token
-dont:
-- Reuse existing session tokens without regeneration
 detect:
   semgrep:
-  - new-session-token-generation
-verify:
-  tests:
-  - Authenticate as a user and verify that a new session token is generated
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Generate a new session token on user authentication
+- Document session inactivity timeout and absolute maximum session lifetime with justification
+dont:
+- Reuse session tokens
+id: SESSION-004
 refs:
+  asvs:
+  - V7.1.1
+  - V7.2.4
+  - V7.3.1
   cwe:
   - CWE-384
-  asvs:
-  - V7.2.4:2021
   owasp:
   - A2:2021
+requirement: Generate a new session token upon user authentication, including re-authentication,
+  and terminate the current session token. Ensure the session inactivity timeout and
+  absolute maximum session lifetime are documented with justification for deviations
+  from NIST SP 800-63B re-authentication requirements.
+scope: web-application
+severity: high
+title: Generate new session token on user authentication
+verify:
+  tests:
+  - Verify new session token generation on user authentication
+  - Review documentation for session inactivity timeout and absolute maximum session
+    lifetime

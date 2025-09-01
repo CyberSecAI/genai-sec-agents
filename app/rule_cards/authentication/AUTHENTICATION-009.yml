@@ -1,24 +1,28 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Validate authentication strength information from the IdP
+- Use a combination of IdP ID and user's ID for user identification
+dont:
+- Do not rely solely on local authentication strength checks
 id: AUTHENTICATION-009
-title: Verify Authentication Strength from Identity Provider
-severity: medium
-scope: web-application
+refs:
+  asvs:
+  - V6.8.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
 requirement: Verify that, if an application uses a separate Identity Provider (IdP)
   and expects specific authentication strength, methods, or recentness for specific
   functions, the application verifies this using the information returned by the IdP.
-do:
-- Validate authentication strength information provided by the IdP
-dont:
-- Do not assume authentication strength without verifying information from IdP
-detect:
-  semgrep:
-  - relevant-scanner-rules
+  The application should register and identify the user using a combination of the
+  IdP ID and the user's ID in the IdP.
+scope: web-application
+severity: medium
+title: Verify Authentication Strength from Identity Provider
 verify:
   tests:
-  - Test verification of authentication strength information from IdP
-refs:
-  cwe:
-  - CWE-354
-  asvs:
-  - V6.8.4
-  owasp:
-  - A2:2021
+  - Verify authentication strength validation from IdP

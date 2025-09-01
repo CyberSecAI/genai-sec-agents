@@ -1,0 +1,24 @@
+detect:
+  semgrep:
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+do:
+- Implement antivirus scanning for files from untrusted sources
+dont:
+- Serve files from untrusted sources without scanning
+id: FILE-HANDLING-001
+refs:
+  asvs:
+  - V5.4.3
+  cwe:
+  - CWE-434
+  owasp:
+  - A01:2021
+requirement: Files obtained from untrusted sources are scanned by antivirus scanners
+  to prevent serving of known malicious content.
+scope: web-application
+severity: medium
+title: Scan files from untrusted sources with antivirus
+verify:
+  tests:
+  - Test file upload validation and processing security

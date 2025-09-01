@@ -1,21 +1,22 @@
-id: AUTHENTICATION-007
-title: Allow passwords of at least 64 characters
-severity: low
-scope: web-application
-requirement: Passwords of at least 64 characters are permitted.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Ensure that passwords are allowed to be at least 64 characters long.
 dont: []
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-007
+refs:
+  asvs:
+  - V6.2.9
+  cwe:
+  - CWE-521
+  owasp:
+  - A3:2021
+requirement: Passwords of at least 64 characters are permitted.
+scope: web-application
+severity: low
+title: Allow passwords of at least 64 characters
 verify:
   tests:
   - Manually verify that passwords can be set to a length of at least 64 characters.
-refs:
-  cwe:
-  - CWE-521
-  asvs:
-  - V6.2.9
-  owasp:
-  - A3:2021

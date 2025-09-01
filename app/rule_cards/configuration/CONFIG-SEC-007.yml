@@ -1,0 +1,28 @@
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Authenticate backend communication components using individual service accounts,
+  short-term tokens, or certificate-based authentication
+- Avoid using unchanging credentials like passwords, API keys, or shared accounts
+dont:
+- Use unchanging credentials for backend communication
+id: CONFIG-SEC-007
+refs:
+  asvs:
+  - V13.2.1
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that communications between backend application components are
+  authenticated using individual service accounts, short-term tokens, or certificate-based
+  authentication and not unchanging credentials such as passwords, API keys, or shared
+  accounts with privileged access.
+scope: web-application
+severity: high
+title: Authenticate backend communication components
+verify:
+  tests:
+  - Review backend communication authentication mechanisms

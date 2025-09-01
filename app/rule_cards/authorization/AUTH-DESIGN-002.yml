@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+do:
+- Implement adaptive controls for authentication based on consumer attributes
+- Consider attributes like time of day, location, IP address, and device
+dont:
+- Do not rely solely on static authentication mechanisms
+id: AUTH-DESIGN-002
+refs:
+  asvs:
+  - V8.1.4
+  cwe:
+  - CWE-285
+  owasp:
+  - A01:2021
+requirement: Implement adaptive security controls based on environmental and contextual
+  attributes for authentication decisions.
+scope: web-application
+severity: medium
+title: Adaptive Security Controls for Authentication
+verify:
+  tests:
+  - Test adaptive controls for authentication effectiveness

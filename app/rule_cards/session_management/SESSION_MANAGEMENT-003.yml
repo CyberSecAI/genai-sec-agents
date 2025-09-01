@@ -1,22 +1,23 @@
-id: SESSION_MANAGEMENT-003
-title: Terminate Sessions on Account Disable/Delete
-severity: low
-scope: web-application
-requirement: Terminates all active sessions when a user account is disabled or deleted.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Terminate all active sessions associated with the disabled/deleted account
 dont:
 - Allow disabled/deleted accounts to have active sessions
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-003
+refs:
+  asvs:
+  - V7.4.2
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: Terminates all active sessions when a user account is disabled or deleted.
+scope: web-application
+severity: low
+title: Terminate Sessions on Account Disable/Delete
 verify:
   tests:
   - Verify that sessions are terminated when accounts are disabled/deleted
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V7.4.2
-  owasp:
-  - A2:2021

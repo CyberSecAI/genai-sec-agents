@@ -1,23 +1,24 @@
-id: SESSION-01-007
-title: Implement further authentication for highly sensitive transactions
-severity: high
-scope: web-application
-requirement: Before performing highly sensitive transactions or operations, further
-  authentication with at least one factor or secondary verification is required.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Implement multi-factor authentication for highly sensitive transactions
 dont:
 - Allow highly sensitive transactions without additional authentication
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION-01-007
+refs:
+  asvs:
+  - V7.5.3
+  cwe:
+  - CWE-XX
+  owasp:
+  - A07:2021
+requirement: Before performing highly sensitive transactions or operations, further
+  authentication with at least one factor or secondary verification is required.
+scope: web-application
+severity: high
+title: Implement further authentication for highly sensitive transactions
 verify:
   tests:
   - Test the implementation of further authentication for highly sensitive transactions
-refs:
-  cwe:
-  - CWE-XX
-  asvs:
-  - V7.5.3
-  owasp:
-  - A##:2021

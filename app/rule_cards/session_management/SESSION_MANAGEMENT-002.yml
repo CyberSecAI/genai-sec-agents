@@ -1,23 +1,24 @@
-id: SESSION_MANAGEMENT-002
-title: Disallow Further Use of Session on Termination
-severity: low
-scope: web-application
-requirement: When session termination is triggered (such as logout or expiration),
-  the application disallows any further use of the session.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Invalidate session data at the application backend on termination
 dont:
 - Allow terminated sessions to be reused
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-002
+refs:
+  asvs:
+  - V7.4.1
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: When session termination is triggered (such as logout or expiration),
+  the application disallows any further use of the session.
+scope: web-application
+severity: low
+title: Disallow Further Use of Session on Termination
 verify:
   tests:
   - Verify that terminated sessions cannot be used
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V7.4.1
-  owasp:
-  - A2:2021

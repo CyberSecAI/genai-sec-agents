@@ -1,23 +1,24 @@
-id: SESSION_MANAGEMENT-005
-title: Provide Visible Logout Functionality
-severity: medium
-scope: web-application
-requirement: All pages that require authentication have easy and visible access to
-  logout functionality.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Ensure logout functionality is easily accessible on authenticated pages
 dont:
 - Hide or make logout functionality hard to find
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-005
+refs:
+  asvs:
+  - V7.4.4
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: All pages that require authentication have easy and visible access to
+  logout functionality.
+scope: web-application
+severity: medium
+title: Provide Visible Logout Functionality
 verify:
   tests:
   - Verify that logout functionality is visible on authenticated pages
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V7.4.4
-  owasp:
-  - A2:2021

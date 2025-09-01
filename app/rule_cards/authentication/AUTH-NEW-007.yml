@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Verify the user's password exactly as received
+- Do not modify the password such as truncation or case transformation
+dont:
+- Modify the user's password before verification
+id: AUTH-NEW-007
+refs:
+  asvs:
+  - V6.2.8
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify the user's password exactly as received without any modifications
+  such as truncation or case transformation.
+scope: web-application
+severity: medium
+title: Password Verification Integrity
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling

@@ -1,23 +1,24 @@
-id: AUTH-004
-title: Secure Use of Biometric Authentication
-severity: high
-scope: web-application
-requirement: Biometric authentication mechanisms should only be used as secondary
-  factors.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Use biometric authentication in conjunction with something you have or know
 dont:
 - Rely solely on biometric authentication
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-004
+refs:
+  asvs:
+  - V6.5.7
+  cwe:
+  - CWE-308
+  owasp:
+  - A3:2021
+requirement: Biometric authentication mechanisms should only be used as secondary
+  factors.
+scope: web-application
+severity: high
+title: Secure Use of Biometric Authentication
 verify:
   tests:
   - Verify biometric authentication is used as a secondary factor
-refs:
-  cwe:
-  - CWE-308
-  asvs:
-  - V6.5.7
-  owasp:
-  - A3:2021

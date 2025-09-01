@@ -1,0 +1,32 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Verify that the password reset process does not bypass multi-factor authentication
+  mechanisms
+- Implement evidence of identity proofing at the same level as during enrollment if
+  a multi-factor authentication factor is lost
+- Send renewal instructions for authentication mechanisms with enough time before
+  expiration, configuring automated reminders if necessary
+dont:
+- Allow password reset processes to bypass multi-factor authentication mechanisms
+id: AUTHENTICATION-NEW-001
+refs:
+  asvs:
+  - V6.4.3
+  - V6.4.4
+  - V6.4.5
+  - V6.4.6
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Implement a secure process for resetting forgotten passwords that does
+  not bypass any enabled multi-factor authentication mechanisms.
+scope: web-application
+severity: medium
+title: Secure Process for Resetting Forgotten Passwords
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling

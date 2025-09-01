@@ -1,23 +1,24 @@
-id: SESSION_MANAGEMENT-006
-title: Ability to Terminate Active Sessions
-severity: medium
-scope: web-application
-requirement: Application administrators are able to terminate active sessions for
-  an individual user or for all users.
-do:
-- Provide application administrators with the ability to terminate active sessions
-dont:
-- Restrict administrators from terminating active sessions
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Verify that administrators can terminate active sessions
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Use trusted backend service for session token verification
+dont:
+- Rely on untrusted services for session token verification
+id: SESSION_MANAGEMENT-006
 refs:
-  cwe:
-  - CWE-384
   asvs:
-  - V7.4.5
+  - V7.2.1
+  cwe:
+  - CWE-346
   owasp:
   - A2:2021
+requirement: Perform all session token verification using a trusted backend service
+  to ensure secure session management.
+scope: web-application
+severity: medium
+title: Use trusted backend service for session token verification
+verify:
+  tests:
+  - Verify session token verification using trusted backend service

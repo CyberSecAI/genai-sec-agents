@@ -1,24 +1,27 @@
-id: AUTH-GEN-003
-title: Consistent Authentication Pathways
-severity: medium
-scope: web-application
-requirement: Verify that if the application includes multiple authentication pathways,
-  there are no undocumented pathways and that security controls are enforced consistently.
-do:
-- Document all authentication pathways
-- Ensure consistent security controls across all pathways
-dont:
-- Allow undocumented authentication pathways
 detect:
   semgrep:
-  - undocumented-authentication-pathways
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement notification system for suspicious authentication attempts
+- Include details of the suspicious activity in the notification
+- Provide guidance on actions to take in response to suspicious attempts
+dont:
+- Ignore or fail to notify users of suspicious authentication attempts
+id: AUTH-GEN-003
+refs:
+  asvs:
+  - V6.3.5:2021
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Users must be notified of suspicious authentication attempts, including
+  unusual locations, partial successful attempts, long periods of inactivity, or multiple
+  unsuccessful attempts.
+scope: web-application
+severity: high
+title: Notification of Suspicious Authentication Attempts
 verify:
   tests:
-  - Verify authentication pathways consistency
-refs:
-  cwe:
-  - CWE-799
-  asvs:
-  - V6.3.4
-  owasp:
-  - A4:2021
+  - Test notification functionality for suspicious authentication attempts

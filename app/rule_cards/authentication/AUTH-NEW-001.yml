@@ -1,23 +1,24 @@
-id: AUTH-NEW-001
-title: Multi-Factor Authentication Requirement
-severity: medium
-scope: web-application
-requirement: Either a multi-factor authentication mechanism or a combination of single-factor
-  authentication mechanisms, must be used in order to access the application...
-do:
-- Implement multi-factor authentication or a combination of single-factor mechanisms
-dont:
-- Rely solely on single-factor authentication
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement rate limiting for push notifications to prevent abuse
+dont:
+- Allow unlimited push notifications without rate limiting
+id: AUTH-NEW-001
+refs:
+  asvs:
+  - V6.6.4
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that rate limiting is used to prevent push bombing attacks when
+  push notifications are used for multi-factor authentication.
+scope: web-application
+severity: high
+title: Rate Limit Push Notifications for Multi-Factor Authentication
 verify:
   tests:
-  - Testing methods
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.3.3
-  owasp:
-  - A##:2021
+  - Test rate limiting functionality for push notifications

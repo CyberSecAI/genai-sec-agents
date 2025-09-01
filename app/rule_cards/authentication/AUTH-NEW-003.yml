@@ -1,23 +1,25 @@
-id: AUTH-NEW-003
-title: Suspicious Authentication Attempt Notification
-severity: high
-scope: web-application
-requirement: Users are notified of suspicious authentication attempts (successful
-  or unsuccessful)...
-do:
-- Implement notification system for suspicious authentication attempts
-dont:
-- Neglect to notify users of suspicious authentication activity
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Validate digital signatures on authentication assertions
+- Reject unsigned or invalid assertions
+dont:
+- Accept assertions without validating digital signatures
+id: AUTH-NEW-003
+refs:
+  asvs:
+  - V6.8.2
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that digital signatures on authentication assertions are always
+  validated, rejecting any unsigned or invalid assertions.
+scope: web-application
+severity: medium
+title: Validate Digital Signatures on Authentication Assertions
 verify:
   tests:
-  - Testing methods
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.3.5
-  owasp:
-  - A##:2021
+  - Test validation of digital signatures on authentication assertions

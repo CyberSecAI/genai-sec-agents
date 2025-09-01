@@ -1,25 +1,25 @@
-id: AUTH-NEW-002
-title: Authentication Pathway Consistency
-severity: medium
-scope: web-application
-requirement: Verify that, if the application includes multiple authentication pathways,
-  there are no undocumented pathways and that security controls and authentication
-  strength are enforced consistently.
-do:
-- Ensure all authentication pathways are documented and enforce consistent security
-  controls
-dont:
-- Allow undocumented authentication pathways
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Use a combination of IdP ID and user's ID to uniquely identify users
+- Implement checks to prevent identity spoofing across multiple IdPs
+dont:
+- Rely solely on user identifier without considering IdP ID
+id: AUTH-NEW-002
+refs:
+  asvs:
+  - V6.8.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that the user's identity cannot be spoofed via another supported
+  identity provider by using a combination of the IdP ID and the user's ID.
+scope: web-application
+severity: medium
+title: Prevent Identity Spoofing with Multiple Identity Providers
 verify:
   tests:
-  - Testing methods
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.3.4
-  owasp:
-  - A##:2021
+  - Test identity verification across multiple IdPs

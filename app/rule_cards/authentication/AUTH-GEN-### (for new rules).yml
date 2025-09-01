@@ -1,0 +1,26 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement rate limiting for push notifications
+- Consider using number matching as an additional mitigation
+dont:
+- Do not allow unlimited push notifications without rate limiting
+id: AUTH-GEN-### (for new rules)
+refs:
+  asvs:
+  - V6.6.4
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that rate limiting is applied to push notifications used for multi-factor
+  authentication to prevent push bombing attacks. Consider implementing number matching
+  as an additional mitigation.
+scope: web-application
+severity: high
+title: Rate Limit Push Notifications for Multi-Factor Authentication
+verify:
+  tests:
+  - Test rate limiting functionality for push notifications

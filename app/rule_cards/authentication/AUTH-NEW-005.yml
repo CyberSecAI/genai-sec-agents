@@ -1,16 +1,25 @@
-id: AUTH-NEW-005
-title: Check Passwords Against Top 3000 Common Passwords
-severity: low
-scope: web-application
-requirement: Passwords submitted during account registration or password change are
-  checked against an available set of, at least, the top 3000 passwords which match
-  the application's password policy, e.g. minimum length.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
-- Check passwords against a list of top 3000 common passwords
+- Validate authentication strength information from the Identity Provider
+- Use returned information to verify authentication methods
+dont:
+- Assume minimum strength authentication without verification
+id: AUTH-NEW-005
 refs:
-  cwe:
-  - CWE-XXX
   asvs:
-  - V6.2.4
+  - V6.8.4
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Verify that the application verifies authentication strength, methods,
+  or recentness using information returned by the Identity Provider.
+scope: web-application
+severity: medium
+title: Verify Authentication Strength from Identity Provider
+verify:
+  tests:
+  - Test verification of authentication strength from IdP information

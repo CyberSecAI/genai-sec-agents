@@ -1,28 +1,28 @@
-id: CRYPTO-008
-title: Constant-Time Cryptographic Operations
-severity: high
-scope: web-application/api/mobile/infrastructure
-requirement: Ensure all cryptographic operations are constant-time to avoid information
-  leakage
-do:
-- Implement cryptographic operations that are constant-time with no 'short-circuit'
-  operations
-dont:
-- Allow timing side-channel attacks by not implementing constant-time operations
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+do:
+- Implement cryptographic operations that are constant-time with no 'short-circuit'
+  operations
+dont:
+- Allow timing side-channel attacks by not implementing constant-time operations
+id: CRYPTO-008
 refs:
+  asvs:
+  - V11.2.4
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.2.4
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Ensure all cryptographic operations are constant-time to avoid information
+  leakage
+scope: web-application/api/mobile/infrastructure
+severity: high
+title: Constant-Time Cryptographic Operations
+verify:
+  tests:
+  - Verify implementation meets security requirements

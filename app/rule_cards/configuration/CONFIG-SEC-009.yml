@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Avoid using default credentials for service authentication
+dont:
+- Use default credentials for service authentication
+id: CONFIG-SEC-009
+refs:
+  asvs:
+  - V13.2.3
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that if a credential has to be used for service authentication,
+  the credential being used by the consumer is not a default credential (e.g., root/root
+  or admin/admin).
+scope: web-application
+severity: medium
+title: Avoid default credentials for service authentication
+verify:
+  tests:
+  - Review service authentication credentials for default values

@@ -1,23 +1,24 @@
-id: AUTH-OTHER-001
-title: Cross-tenant controls for multi-tenant applications
-severity: medium
-scope: web-application/api
-requirement: Multi-tenant applications must use cross-tenant controls to prevent consumer
-  operations from affecting tenants with which they do not have permissions to interact.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
 - Implement cross-tenant controls
 dont:
 - Allow consumer operations to affect unauthorized tenants
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-OTHER-001
+refs:
+  asvs:
+  - V8.4.1
+  cwe:
+  - CWE-285
+  owasp:
+  - A8:2021
+requirement: Multi-tenant applications must use cross-tenant controls to prevent consumer
+  operations from affecting tenants with which they do not have permissions to interact.
+scope: web-application/api
+severity: medium
+title: Cross-tenant controls for multi-tenant applications
 verify:
   tests:
   - Test cross-tenant controls functionality
-refs:
-  cwe:
-  - CWE-285
-  asvs:
-  - V8.4.1
-  owasp:
-  - A8:2021

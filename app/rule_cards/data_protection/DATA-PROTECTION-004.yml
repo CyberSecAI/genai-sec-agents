@@ -1,23 +1,24 @@
-id: DATA-PROTECTION-004
-title: Set anti-caching headers for sensitive data
-severity: medium
-scope: web-application
-requirement: 'Sufficient anti-caching HTTP response header fields (e.g., Cache-Control:
-  no-store) must be set to prevent sensitive data from being cached in browsers.'
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
 - Set anti-caching headers for responses containing sensitive data
 dont:
 - Allow sensitive data to be cached in browsers
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: DATA-PROTECTION-004
+refs:
+  asvs:
+  - V14.3.2
+  cwe:
+  - CWE-200
+  owasp:
+  - A14:2021
+requirement: 'Sufficient anti-caching HTTP response header fields (e.g., Cache-Control:
+  no-store) must be set to prevent sensitive data from being cached in browsers.'
+scope: web-application
+severity: medium
+title: Set anti-caching headers for sensitive data
 verify:
   tests:
   - Verify anti-caching headers are set for sensitive data responses
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V14.3.2
-  owasp:
-  - A14:2021

@@ -1,23 +1,26 @@
 detect:
   semgrep:
-  - data-specific-access
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Implement data-specific access restrictions
+- Restrict data-specific access based on consumer permissions
+- Mitigate IDOR and BOLA risks
+- Ensure access is based on originating subject's permissions
 dont:
-- Allow unauthorized access to specific data items
+- Grant access based on intermediary permissions
 id: RULE-006
 refs:
   asvs:
-  - V8.2.2
+  - V8.3.3
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A6:2021
+  - A01:2021
 requirement: Restrict data-specific access to consumers with explicit permissions
   to mitigate IDOR and BOLA.
 scope: web-application
-severity: medium
+severity: high
 title: Authorization Design - Data-Specific Access
 verify:
   tests:
-  - Verify data-specific access restrictions
+  - Validate access control enforcement and privilege management

@@ -1,23 +1,24 @@
-id: AUTHENTICATION-005
-title: Strong Challenge Nonce for Cryptographic Authentication
-severity: high
-scope: web-application
-requirement: The challenge nonce is at least 64 bits in length, and statistically
-  unique or unique over the lifetime of the cryptographic device.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Generate challenge nonces that are at least 64 bits long and unique
 dont:
 - Do not reuse challenge nonces or use non-unique values
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-005
+refs:
+  asvs:
+  - V6.7.2
+  cwe:
+  - CWE-330
+  owasp:
+  - A3:2021
+requirement: The challenge nonce is at least 64 bits in length, and statistically
+  unique or unique over the lifetime of the cryptographic device.
+scope: web-application
+severity: high
+title: Strong Challenge Nonce for Cryptographic Authentication
 verify:
   tests:
   - Test generation and uniqueness of challenge nonces
-refs:
-  cwe:
-  - CWE-330
-  asvs:
-  - V6.7.2
-  owasp:
-  - A3:2021

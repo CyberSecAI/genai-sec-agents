@@ -1,0 +1,25 @@
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Provide the option to terminate all other active sessions after changing or removing
+  an authentication factor
+dont:
+- Allow active sessions to persist without re-authentication after authentication
+  factor changes
+id: SESSION-MANAGEMENT-NEW-002
+refs:
+  asvs:
+  - V7.4.3
+  cwe:
+  - CWE-384
+requirement: Give the option to terminate all other active sessions after a successful
+  change or removal of any authentication factor to enhance security.
+scope: web-application
+severity: medium
+title: Terminate other active sessions after authentication factor change
+verify:
+  tests:
+  - Verify that users can terminate other active sessions after authentication factor
+    changes

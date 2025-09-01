@@ -1,33 +1,31 @@
-id: HTTP-HEADERS-XSS-PROTECTION-002
-title: Mitigate XSS attacks with X-XSS-Protection header
-severity: high
-scope: web-application
-requirement: Implement X-XSS-Protection header to prevent reflected cross-site scripting
-  (XSS) attacks by stopping pages from loading when XSS attacks are detected.
-do:
-- Use Content Security Policy (CSP) to disable inline JavaScript
-- Consider not setting X-XSS-Protection header or explicitly turning it off
-dont:
-- Do not rely solely on X-XSS-Protection header for XSS protection
 detect:
   semgrep:
-  - http.x-xss-protection.enabled
-  - http.x-xss-protection.disabled
-  - python.django.security.audit.xss.direct-use-of-httpresp-write
-  - javascript.browser.security.audit.dom-based-xss
-  - java.spring.security.audit.spring-xss
-  trufflehog:
-  - X-XSS-Protection
-verify:
-  tests:
-  - Verify X-XSS-Protection header is set to 0 or disabled
-  - Test that XSS attacks are blocked by the header
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Set X-XSS-Protection header with '1; mode=block' to enable XSS protection in supported
+  browsers
+- Validate certificates received before communicating with a TLS server
+- Use strong authentication methods for intra-service communications
+dont:
+- Disable X-XSS-Protection header or set it to '0'
+- Trust certificates without validation
+id: HTTP-HEADERS-XSS-PROTECTION-002
 refs:
+  asvs:
+  - V12.3.2
+  - V12.3.5
   cwe:
   - CWE-79
-  - CWE-116
   owasp:
   - A03:2021
-  - A07:2021
-  standards:
-  - RFC 7748
+requirement: Implement X-XSS-Protection header to prevent reflected cross-site scripting
+  (XSS) attacks by stopping malicious scripts from executing.
+scope: web-application
+severity: high
+title: Mitigate XSS attacks with X-XSS-Protection header
+verify:
+  tests:
+  - Manually verify X-XSS-Protection header is set correctly
+  - Verify TLS client certificate validation
+  - Verify strong authentication methods for intra-service communications

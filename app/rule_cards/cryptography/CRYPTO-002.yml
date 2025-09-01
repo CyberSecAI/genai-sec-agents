@@ -1,28 +1,28 @@
-id: CRYPTO-002
-title: Hash Function Collision Resistance
-severity: medium
-scope: web-application
-requirement: Hash functions used in digital signatures, data authentication, or data
-  integrity must be collision resistant with appropriate bit-lengths
-do:
-- Ensure hash functions used have output length of at least 256 bits for collision
-  resistance or 128 bits for resistance to second pre-image attacks
-dont:
-- Use hash functions with inadequate bit-lengths for required collision resistance
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+do:
+- Ensure hash functions used have output length of at least 256 bits for collision
+  resistance or 128 bits for resistance to second pre-image attacks
+dont:
+- Use hash functions with inadequate bit-lengths for required collision resistance
+id: CRYPTO-002
 refs:
+  asvs:
+  - V11.4.3
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.4.3
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Hash functions used in digital signatures, data authentication, or data
+  integrity must be collision resistant with appropriate bit-lengths
+scope: web-application
+severity: medium
+title: Hash Function Collision Resistance
+verify:
+  tests:
+  - Verify implementation meets security requirements

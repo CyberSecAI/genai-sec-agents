@@ -1,23 +1,26 @@
 detect:
   semgrep:
-  - contextual-attributes
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Document environmental and contextual attributes used in security decisions
+- Ensure explicit permissions are required for data-specific access
+- Mitigate IDOR and BOLA risks by enforcing access controls
+- Consider contextual attributes in data-specific authorization
 dont:
-- Neglect considering contextual attributes in security decisions
+- Do not rely on client-side controls for data-specific access
 id: RULE-003
 refs:
   asvs:
-  - V8.1.3
+  - V8.2.2
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A3:2021
-requirement: Define environmental and contextual attributes used in security decisions,
-  including authentication and authorization.
+  - A01:2021
+requirement: Restrict data-specific access to consumers with explicit permissions
+  to mitigate IDOR and BOLA.
 scope: web-application
 severity: high
-title: Authorization Contextual Attributes
+title: Authorization Design - Data-Specific Access
 verify:
   tests:
-  - Verify usage of contextual attributes in security decisions
+  - Test data-specific access controls for effectiveness

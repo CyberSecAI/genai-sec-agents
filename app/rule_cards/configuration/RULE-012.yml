@@ -1,0 +1,22 @@
+title: Restrict Directory Listings
+severity: medium
+scope: web-application
+requirement: Web servers must not expose directory listings to clients unless explicitly
+  intended
+do:
+- Disable directory listing functionality in web server configuration
+dont:
+- Enable directory listing functionality
+detect:
+  semgrep:
+  - 'http.server.directory-listing.enabled: $true'
+verify:
+  tests:
+  - Manually verify that directory listings are disabled
+refs:
+  cwe:
+  - CWE-548
+  asvs:
+  - V13.4.3
+  owasp:
+  - A6:2021
