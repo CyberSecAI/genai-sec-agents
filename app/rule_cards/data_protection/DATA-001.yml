@@ -7,7 +7,7 @@ do:
   for session tokens.
 dont:
 - Allow sensitive data to be stored in browser storage.
-id: DATA-PROTECTION-### (new ID)
+id: DATA-001
 refs:
   asvs:
   - V14.3.3

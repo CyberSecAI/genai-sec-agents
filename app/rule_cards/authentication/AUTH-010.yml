@@ -7,7 +7,7 @@ do:
 - Consider using number matching as an additional mitigation
 dont:
 - Do not allow unlimited push notifications without rate limiting
-id: AUTH-GEN-### (for new rules)
+id: AUTH-010
 refs:
   asvs:
   - V6.6.4

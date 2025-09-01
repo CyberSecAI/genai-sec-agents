@@ -6,7 +6,7 @@ do:
 - Implement mechanisms for federated re-authentication between RPs and IdPs
 dont:
 - Neglect re-authentication requirements between RPs and IdPs
-id: SESSION-MANAGEMENT-### (for new rules)
+id: SESSION-005
 refs:
   asvs:
   - V7.6.1:2021

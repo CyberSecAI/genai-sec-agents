@@ -7,7 +7,7 @@ do:
 - Ensure one-time use of SAML assertions
 dont:
 - Do not reuse SAML assertions
-id: AUTH-GEN-###
+id: AUTH-009
 refs:
   asvs:
   - V6.8.3

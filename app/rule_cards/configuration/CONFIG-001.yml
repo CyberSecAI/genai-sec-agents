@@ -6,7 +6,7 @@ do:
 - Disable debug modes for all components in production
 dont:
 - Allow debug modes to be enabled in production environments
-id: CONFIG-SEC-### (to be assigned)
+id: CONFIG-001
 refs:
   asvs:
   - V13.4.2

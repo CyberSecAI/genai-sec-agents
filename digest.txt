@@ -1,9 +1,12 @@
 Directory structure:
 └── rule_cards//
     ├── secure_communication/
+    │   ├── SECURE-COMMUNICATION-TLS-001.yml
     │   ├── HTTP-HEADERS-XSS-PROTECTION-002.yml
+    │   ├── SECURE-COMMUNICATION-TLS-INTERNAL-001.yml
     │   ├── HTTP-HEADERS-CONTENT-TYPE-003.yml
-    │   └── HTTP-HEADERS-X-FRAME-OPTIONS-001.yml
+    │   ├── HTTP-HEADERS-X-FRAME-OPTIONS-001.yml
+    │   └── SECURE-COMMUNICATION-TLS-002.yml
     ├── web_security/
     │   ├── DOM-XSS-PREVENTION-RULE1.yml
     │   ├── DOM-XSS-PREVENTION-RULE3.yml
@@ -19,6 +22,24 @@ Directory structure:
     │   ├── COOKIES-SAMESITE-001.yml
     │   └── COOKIES-SECURE-001.yml
     ├── configuration/
+    │   ├── CONFIG-SEC-005.yml
+    │   ├── CONFIG-SEC-004.yml
+    │   ├── RULE-002.yml
+    │   ├── CONFIG-SEC-006.yml
+    │   ├── RULE-012.yml
+    │   ├── RULE-006.yml
+    │   ├── RULE-001.yml
+    │   ├── CONFIG-SEC-008.yml
+    │   ├── CONFIG-SEC-009.yml
+    │   ├── CONFIG-SEC-### (to be assigned).yml
+    │   ├── RULE-015.yml
+    │   ├── RULE-014.yml
+    │   ├── RULE-013.yml
+    │   ├── RULE-007.yml
+    │   ├── RULE-016.yml
+    │   ├── CONFIG-SEC-007.yml
+    │   ├── CONFIG-SEC-010.yml
+    │   └── RULE-005.yml
     ├── genai/
     │   ├── GENAI-PROMPT-001.yml
     │   ├── GENAI-DATA-001.yml
@@ -74,6 +95,7 @@ Directory structure:
     │   ├── DATA-PROTECTION-003.yml
     │   ├── DATA-PROTECTION-005.yml
     │   ├── DATA-PROTECTION-001.yml
+    │   ├── DATA-PROTECTION-### (new ID).yml
     │   ├── DATA-PROTECTION-009.yml
     │   ├── RULE-003.yml
     │   ├── DATA-PROTECTION-007.yml
@@ -90,10 +112,13 @@ Directory structure:
     │   └── CRYPTO-007.yml
     ├── session_management/
     │   ├── SESSION-004.yml
+    │   ├── SESSION-MANAGEMENT-### (for new rules).yml
     │   ├── SESSION-01-009.yml
     │   ├── SESSION-MANAGEMENT-003.yml
     │   ├── SESSION_MANAGEMENT-001.yml
     │   ├── SESSION-002.yml
+    │   ├── SESSION-MANAGEMENT-005.yml
+    │   ├── SESSION-MANAGEMENT-NEW-002.yml
     │   ├── SESSION-003.yml
     │   ├── SESSION-MANAGEMENT-001.yml
     │   ├── SESSION_MANAGEMENT-002.yml
@@ -102,12 +127,14 @@ Directory structure:
     │   ├── SESSION-01-007.yml
     │   ├── SESSION-MANAGEMENT-002.yml
     │   ├── SESSION_MANAGEMENT-003.yml
+    │   ├── SESSION-MANAGEMENT-NEW-001.yml
     │   ├── SESSION-01-008.yml
     │   ├── SESSION_MANAGEMENT-008.yml
     │   ├── SESSION-001.yml
     │   ├── SESSION_MANAGEMENT-006.yml
     │   └── SESSION_MANAGEMENT-004.yml
     ├── file_handling/
+    │   ├── FILE-HANDLING-001.yml
     │   ├── FILE-UPLOAD-003.yml
     │   ├── FILE-UPLOAD-002.yml
     │   └── FILE-UPLOAD-001.yml
@@ -132,11 +159,14 @@ Directory structure:
     ├── docker/
     │   └── DOCKER-USER-001.yml
     ├── authentication/
+    │   ├── AUTH-06-015.yml
     │   ├── AUTH-GEN-006.yml
     │   ├── AUTH-06-013.yml
+    │   ├── AUTHENTICATION-NEW-002.yml
     │   ├── AUTH-04.yml
     │   ├── AUTHENTICATION-009.yml
     │   ├── AUTH-GEN-008.yml
+    │   ├── AUTHENTICATION-NEW-003.yml
     │   ├── AUTH-05.yml
     │   ├── AUTH-NEW-006.yml
     │   ├── RULE-025.yml
@@ -150,18 +180,22 @@ Directory structure:
     │   ├── AUTH-001.yml
     │   ├── AUTH-005.yml
     │   ├── AUTHENTICATION-001.yml
+    │   ├── AUTH-06-014.yml
     │   ├── AUTH-GEN-002.yml
+    │   ├── AUTH-GEN-###.yml
     │   ├── AUTH-NEW-003.yml
     │   ├── AUTHENTICATION-005.yml
     │   ├── AUTH-GEN-004.yml
     │   ├── AUTHENTICATION-006.yml
     │   ├── AUTH-NEW-005.yml
+    │   ├── AUTH-06-017.yml
     │   ├── AUTH-003.yml
     │   ├── AUTH-NEW-001.yml
     │   ├── AUTHENTICATION-002.yml
     │   ├── AUTH-07.yml
     │   ├── AUTH-004.yml
     │   ├── RULE-023.yml
+    │   ├── AUTH-NEW-007.yml
     │   ├── AUTH-GEN-001.yml
     │   ├── AUTHENTICATION-003.yml
     │   ├── AUTH-008.yml
@@ -176,15 +210,19 @@ Directory structure:
     │   ├── RULE-022.yml
     │   ├── AUTHENTICATION-004.yml
     │   ├── RULE-024.yml
+    │   ├── AUTHENTICATION-NEW-001.yml
     │   ├── AUTH-NEW-004.yml
+    │   ├── AUTH-GEN-### (for new rules).yml
     │   ├── AUTH-007.yml
     │   ├── AUTH-01.yml
     │   ├── AUTH-06-009.yml
+    │   ├── AUTH-06-016.yml
     │   ├── RULE-026.yml
     │   └── AUTH-GEN-003.yml
     ├── api_security/
     └── authorization/
         ├── RULE-002.yml
+        ├── AUTH-DESIGN-001.yml
         ├── AUTH-OPER-002.yml
         ├── RULE-006.yml
         ├── RULE-004.yml
@@ -195,121 +233,206 @@ Directory structure:
         ├── AUTH-OPER-001.yml
         ├── AUTH-OTHER-001.yml
         ├── RULE-003.yml
+        ├── AUTH-DESIGN-002.yml
         └── RULE-005.yml
+
+================================================
+File: /secure_communication/SECURE-COMMUNICATION-TLS-001.yml
+================================================
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Enable TLS 1.2 and TLS 1.3 as preferred options
+dont:
+- Allow outdated or insecure TLS versions
+id: SECURE-COMMUNICATION-TLS-001
+refs:
+  asvs:
+  - V12.1.1
+  cwe:
+  - CWE-326
+  owasp:
+  - A06:2021
+requirement: Only the latest recommended versions of the TLS protocol (e.g., TLS 1.2
+  and TLS 1.3) are enabled for secure communication.
+scope: web-application
+severity: high
+title: Enable latest TLS versions for secure communication
+verify:
+  tests:
+  - Manually verify that only TLS 1.2 and TLS 1.3 are enabled
+
 
 ================================================
 File: /secure_communication/HTTP-HEADERS-XSS-PROTECTION-002.yml
 ================================================
-id: HTTP-HEADERS-XSS-PROTECTION-002
-title: Mitigate XSS attacks with X-XSS-Protection header
-severity: high
-scope: web-application
-requirement: Implement X-XSS-Protection header to prevent reflected cross-site scripting
-  (XSS) attacks by stopping pages from loading when XSS attacks are detected.
-do:
-- Use Content Security Policy (CSP) to disable inline JavaScript
-- Consider not setting X-XSS-Protection header or explicitly turning it off
-dont:
-- Do not rely solely on X-XSS-Protection header for XSS protection
 detect:
   semgrep:
-  - http.x-xss-protection.enabled
-  - http.x-xss-protection.disabled
-  - python.django.security.audit.xss.direct-use-of-httpresp-write
-  - javascript.browser.security.audit.dom-based-xss
-  - java.spring.security.audit.spring-xss
-  trufflehog:
-  - X-XSS-Protection
-verify:
-  tests:
-  - Verify X-XSS-Protection header is set to 0 or disabled
-  - Test that XSS attacks are blocked by the header
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Set X-XSS-Protection header with '1; mode=block' to enable XSS protection in supported
+  browsers
+- Validate certificates received before communicating with a TLS server
+- Use strong authentication methods for intra-service communications
+dont:
+- Disable X-XSS-Protection header or set it to '0'
+- Trust certificates without validation
+id: HTTP-HEADERS-XSS-PROTECTION-002
 refs:
+  asvs:
+  - V12.3.2
+  - V12.3.5
   cwe:
   - CWE-79
-  - CWE-116
   owasp:
   - A03:2021
-  - A07:2021
-  standards:
-  - RFC 7748
+requirement: Implement X-XSS-Protection header to prevent reflected cross-site scripting
+  (XSS) attacks by stopping malicious scripts from executing.
+scope: web-application
+severity: high
+title: Mitigate XSS attacks with X-XSS-Protection header
+verify:
+  tests:
+  - Manually verify X-XSS-Protection header is set correctly
+  - Verify TLS client certificate validation
+  - Verify strong authentication methods for intra-service communications
+
+
+================================================
+File: /secure_communication/SECURE-COMMUNICATION-TLS-INTERNAL-001.yml
+================================================
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Implement TLS for all internal service communication
+- Configure consuming services to trust specific internal CAs and self-signed certificates
+- Employ strong authentication methods for intra-service communications
+- Consider using a service mesh for microservice architectures to enhance security
+dont:
+- Allow insecure or unencrypted communication between internal services
+id: SECURE-COMMUNICATION-TLS-INTERNAL-001
+refs:
+  asvs:
+  - V12.3.3
+  - V12.3.4
+  - V12.3.5
+  cwe:
+  - CWE-295
+  owasp:
+  - A06:2021
+requirement: Use TLS for all connectivity between internal, HTTP-based services within
+  the application to prevent insecure or unencrypted communications.
+scope: web-application
+severity: high
+title: Ensure TLS for internal service communication
+verify:
+  tests:
+  - Verify TLS implementation for internal service communication
+  - Verify trust configuration for internal CAs and self-signed certificates
+  - Verify strong authentication methods for intra-service communications
+  - Consider using a service mesh for microservice architectures
 
 
 ================================================
 File: /secure_communication/HTTP-HEADERS-CONTENT-TYPE-003.yml
 ================================================
-id: HTTP-HEADERS-CONTENT-TYPE-003
-title: Prevent MIME type confusion with X-Content-Type-Options header
-severity: medium
-scope: web-application
-requirement: Implement X-Content-Type-Options header to prevent MIME type sniffing
-  by instructing browsers to follow the MIME types advertised in the Content-Type
-  headers.
-do:
-- Set X-Content-Type-Options header to nosniff to block MIME type sniffing
-- Ensure Content-Type header is set correctly throughout the site
-dont:
-- Do not rely solely on X-Content-Type-Options header for MIME type security
 detect:
   semgrep:
-  - http.x-content-type-options.nosniff
-  - python.django.security.audit.xss-filter-disabled
-  - python.flask.security.audit.flask-cors-origin-wildcard
-  - java.spring.security.audit.spring-security-headers
-  trufflehog:
-  - X-Content-Type-Options
-verify:
-  tests:
-  - Verify X-Content-Type-Options header is set to nosniff
-  - Test that browsers follow the correct MIME types
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Set X-Content-Type-Options header with 'nosniff' to prevent MIME type sniffing
+- Use TLS or another appropriate transport encryption mechanism for all internal,
+  HTTP-based services
+- Ensure TLS connections between internal services use trusted certificates
+dont:
+- Disable X-Content-Type-Options header or set it to 'nosniff'
+- Allow insecure or unencrypted communications between internal services
+id: HTTP-HEADERS-CONTENT-TYPE-003
 refs:
+  asvs:
+  - V12.3.3
+  - V12.3.4
   cwe:
   - CWE-434
-  - CWE-116
   owasp:
-  - A03:2021
-  - A07:2021
-  standards:
-  - RFC 7034
+  - A06:2021
+requirement: Implement X-Content-Type-Options header to prevent MIME type sniffing
+  by instructing browsers to follow the declared content type.
+scope: web-application
+severity: medium
+title: Prevent MIME type confusion with X-Content-Type-Options header
+verify:
+  tests:
+  - Manually verify X-Content-Type-Options header is set to 'nosniff'
+  - Verify appropriate transport encryption mechanism for internal services
+  - Verify trusted certificates for TLS connections between internal services
 
 
 ================================================
 File: /secure_communication/HTTP-HEADERS-X-FRAME-OPTIONS-001.yml
 ================================================
-id: HTTP-HEADERS-X-FRAME-OPTIONS-001
-title: Prevent Clickjacking attacks with X-Frame-Options header
-severity: high
-scope: web-application
-requirement: Implement X-Frame-Options header to prevent Clickjacking attacks by specifying
-  whether a browser should be allowed to render a page in a frame.
-do:
-- Set X-Frame-Options header to DENY to disallow displaying the page in a frame
-- Consider using Content Security Policy (CSP) frame-ancestors directive for supporting
-  browsers
-dont:
-- Do not allow the page to be displayed in a frame without proper validation
 detect:
   semgrep:
-  - http.x-frame-options.deny
-  - http.x-frame-options.allow-from
-  - python.django.security.audit.xss-filter-disabled
-  - python.flask.security.audit.flask-cors-origin-wildcard
-  - java.spring.security.audit.spring-security-headers
-  trufflehog:
-  - X-Frame-Options
-verify:
-  tests:
-  - Verify X-Frame-Options header is set to DENY
-  - Test that the page cannot be embedded in a frame
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Set X-Frame-Options header with 'DENY' or 'SAMEORIGIN' directive
+- Ensure the latest recommended versions of the TLS protocol (e.g., TLS 1.2 and TLS
+  1.3) are enabled
+dont:
+- Disable X-Frame-Options header
+id: HTTP-HEADERS-X-FRAME-OPTIONS-001
 refs:
+  asvs:
+  - V12.1.1
   cwe:
-  - CWE-693
-  - CWE-1021
+  - CWE-451
   owasp:
   - A06:2021
-  - A09:2021
-  standards:
-  - RFC 7034
+requirement: Implement X-Frame-Options header to prevent Clickjacking attacks by specifying
+  whether a browser should be allowed to render a page in a frame or iframe.
+scope: web-application
+severity: medium
+title: Prevent Clickjacking attacks with X-Frame-Options header
+verify:
+  tests:
+  - Manually verify X-Frame-Options header is set correctly
+
+
+================================================
+File: /secure_communication/SECURE-COMMUNICATION-TLS-002.yml
+================================================
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+do:
+- Enable recommended cipher suites with strong preferences
+- Ensure forward secrecy is provided by supported cipher suites
+dont:
+- Allow weak or deprecated cipher suites
+id: SECURE-COMMUNICATION-TLS-002
+refs:
+  asvs:
+  - V12.1.2
+  cwe:
+  - CWE-326
+  owasp:
+  - A06:2021
+requirement: Only recommended cipher suites are enabled, with the strongest cipher
+  suites set as preferred for secure communication.
+scope: web-application
+severity: medium
+title: Use recommended cipher suites for secure communication
+verify:
+  tests:
+  - Manually verify that recommended cipher suites are enabled
 
 
 ================================================
@@ -791,6 +914,533 @@ refs:
     - "OWASP Session Management Cheat Sheet"
 
 ================================================
+File: /configuration/CONFIG-SEC-005.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- "Define resource\u2011management strategies for external systems"
+- "Include resource\u2011release procedures, timeout settings, and retry logic"
+dont:
+- "Neglect defining resource\u2011management strategies"
+id: CONFIG-SEC-005
+refs:
+  asvs:
+  - V13.1.3
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: "Ensure that documentation defines resource\u2011management strategies\
+  \ for every external system or service the application uses, including databases,\
+  \ file handles, threads, and HTTP connections. This should include resource\u2011\
+  release procedures, timeout settings, failure handling, and retry logic specifications."
+scope: web-application
+severity: high
+title: Document resource management strategies for external systems
+verify:
+  tests:
+  - Review documentation for completeness
+
+
+================================================
+File: /configuration/CONFIG-SEC-004.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Document all communication needs for the application
+- Include external services and potential end user-provided locations
+dont:
+- Neglect documenting communication needs
+id: CONFIG-SEC-004
+refs:
+  asvs:
+  - V13.1.1
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that all communication needs for the application are documented,
+  including external services which the application relies upon and cases where an
+  end user might be able to provide an external location to which the application
+  will then connect.
+scope: web-application
+severity: medium
+title: Document all communication needs and external services
+verify:
+  tests:
+  - Review documentation for completeness
+
+
+================================================
+File: /configuration/RULE-002.yml
+================================================
+title: Authenticate backend communication components
+severity: high
+scope: web-application
+requirement: Ensure that communications between backend application components are
+  authenticated using individual service accounts, short-term tokens, or certificate-based
+  authentication.
+do:
+- Implement strong authentication mechanisms for backend communication
+dont:
+- Use unchanging credentials such as passwords or shared accounts with privileged
+  access
+detect:
+  semgrep:
+  - backend-authentication
+verify:
+  tests:
+  - Test backend communication authentication mechanisms
+refs:
+  cwe:
+  - CWE-287
+  asvs:
+  - V13.2.1
+  owasp:
+  - A3:2021
+
+
+================================================
+File: /configuration/CONFIG-SEC-006.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Define critical secrets for the application
+- Establish a schedule for rotating critical secrets
+dont:
+- Neglect defining critical secrets and rotation schedule
+id: CONFIG-SEC-006
+refs:
+  asvs:
+  - V13.1.4
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that the application's documentation defines the secrets that
+  are critical for the security of the application and a schedule for rotating them,
+  based on the organization's threat model and business requirements.
+scope: web-application
+severity: high
+title: Rotate critical secrets based on threat model
+verify:
+  tests:
+  - Review documentation for completeness
+
+
+================================================
+File: /configuration/RULE-012.yml
+================================================
+title: Restrict Directory Listings
+severity: medium
+scope: web-application
+requirement: Web servers must not expose directory listings to clients unless explicitly
+  intended
+do:
+- Disable directory listing functionality in web server configuration
+dont:
+- Enable directory listing functionality
+detect:
+  semgrep:
+  - 'http.server.directory-listing.enabled: $true'
+verify:
+  tests:
+  - Manually verify that directory listings are disabled
+refs:
+  cwe:
+  - CWE-548
+  asvs:
+  - V13.4.3
+  owasp:
+  - A6:2021
+
+
+================================================
+File: /configuration/RULE-006.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Use a secrets management solution to securely create, store, control access to,
+  and destroy backend secrets
+- Follow the principle of least privilege for access to secret assets
+dont:
+- Store secrets in application source code or build artifacts
+refs:
+  asvs:
+  - V13.3.1
+  - V13.3.2
+  cwe:
+  - CWE-798
+  owasp:
+  - A6:2021
+requirement: Ensure secrets are securely managed using a secrets management solution
+  and adhere to the principle of least privilege.
+scope: web-application/api
+severity: medium
+title: Secret Management Best Practices
+verify:
+  tests:
+  - Verify that secrets are securely managed and access is restricted
+
+
+================================================
+File: /configuration/RULE-001.yml
+================================================
+title: Document all communication needs and external services
+severity: medium
+scope: web-application
+requirement: Ensure that all communication needs for the application are documented,
+  including external services and potential user-provided external locations.
+do:
+- Document all communication requirements in detail
+dont:
+- Neglect documenting external services or user-provided locations
+detect:
+  semgrep:
+  - communication-documentation
+verify:
+  tests:
+  - Review documentation for completeness and accuracy
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V13.1.1
+  owasp:
+  - A6:2021
+
+
+================================================
+File: /configuration/CONFIG-SEC-008.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Assign the least necessary privileges to accounts for backend communication
+dont:
+- Assign excessive privileges to backend communication accounts
+id: CONFIG-SEC-008
+refs:
+  asvs:
+  - V13.2.2
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that communications between backend application components are
+  performed with accounts assigned the least necessary privileges.
+scope: web-application
+severity: medium
+title: Least privilege for backend communication accounts
+verify:
+  tests:
+  - Review privileges assigned to backend communication accounts
+
+
+================================================
+File: /configuration/CONFIG-SEC-009.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Avoid using default credentials for service authentication
+dont:
+- Use default credentials for service authentication
+id: CONFIG-SEC-009
+refs:
+  asvs:
+  - V13.2.3
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that if a credential has to be used for service authentication,
+  the credential being used by the consumer is not a default credential (e.g., root/root
+  or admin/admin).
+scope: web-application
+severity: medium
+title: Avoid default credentials for service authentication
+verify:
+  tests:
+  - Review service authentication credentials for default values
+
+
+================================================
+File: /configuration/CONFIG-SEC-### (to be assigned).yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Disable debug modes for all components in production
+dont:
+- Allow debug modes to be enabled in production environments
+id: CONFIG-SEC-### (to be assigned)
+refs:
+  asvs:
+  - V13.4.2
+  cwe:
+  - CWE-204
+  owasp:
+  - A6:2021
+requirement: Ensure that debug modes are disabled for all components in production
+  environments to prevent exposure of debugging features and information leakage.
+scope: web-application/api
+severity: medium
+title: Disable Debug Modes in Production
+verify:
+  tests:
+  - Verify that debug modes are disabled in production
+
+
+================================================
+File: /configuration/RULE-015.yml
+================================================
+title: Limit Backend Component Version Information
+severity: high
+scope: web-application
+requirement: Detailed version information of backend components must not be exposed
+do:
+- Configure web server to limit backend component version information
+dont:
+- Expose detailed version information of backend components
+detect:
+  semgrep:
+  - 'http.response.body: $version'
+verify:
+  tests:
+  - Manually verify that backend component version information is limited
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V13.4.6
+  owasp:
+  - A6:2021
+
+
+================================================
+File: /configuration/RULE-014.yml
+================================================
+title: Restrict Documentation and Monitoring Endpoints
+severity: medium
+scope: web-application
+requirement: Documentation and monitoring endpoints should not be exposed unless explicitly
+  intended
+do:
+- Securely restrict access to documentation and monitoring endpoints
+dont:
+- Expose documentation and monitoring endpoints to unauthorized users
+detect:
+  semgrep:
+  - 'http.route.documentation: $true'
+  - 'http.route.monitoring: $true'
+verify:
+  tests:
+  - Manually verify that documentation and monitoring endpoints are restricted
+refs:
+  cwe:
+  - CWE-285
+  asvs:
+  - V13.4.5
+  owasp:
+  - A6:2021
+
+
+================================================
+File: /configuration/RULE-013.yml
+================================================
+title: Disable HTTP TRACE Method
+severity: medium
+scope: web-application
+requirement: The HTTP TRACE method must be disabled in production environments to
+  prevent potential information leakage
+do:
+- Disable HTTP TRACE method in web server configuration
+dont:
+- Allow HTTP TRACE method
+detect:
+  semgrep:
+  - 'http.server.trace.enabled: $true'
+verify:
+  tests:
+  - Manually verify that HTTP TRACE method is disabled
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V13.4.4
+  owasp:
+  - A6:2021
+
+
+================================================
+File: /configuration/RULE-007.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Perform all cryptographic operations using an isolated security module
+dont:
+- Perform cryptographic operations without proper key protection
+refs:
+  asvs:
+  - V13.3.3
+  cwe:
+  - CWE-310
+  owasp:
+  - A6:2021
+requirement: Ensure all cryptographic operations are performed using an isolated security
+  module to protect key material from exposure.
+scope: web-application/api
+severity: high
+title: Secure Cryptographic Operations
+verify:
+  tests:
+  - Verify that cryptographic operations are isolated and key material is protected
+
+
+================================================
+File: /configuration/RULE-016.yml
+================================================
+title: Restrict File Extensions for Web Tier
+severity: high
+scope: web-application
+requirement: Web tier should only serve files with specific file extensions to prevent
+  unintentional leakage
+do:
+- Configure web server to serve only specified file extensions
+dont:
+- Allow serving files with any file extension
+detect:
+  semgrep:
+  - 'http.response.body: $file_extension'
+verify:
+  tests:
+  - Manually verify that only specified file extensions are served
+refs:
+  cwe:
+  - CWE-200
+  asvs:
+  - V13.4.7
+  owasp:
+  - A6:2021
+
+
+================================================
+File: /configuration/CONFIG-SEC-007.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Authenticate backend communication components using individual service accounts,
+  short-term tokens, or certificate-based authentication
+- Avoid using unchanging credentials like passwords, API keys, or shared accounts
+dont:
+- Use unchanging credentials for backend communication
+id: CONFIG-SEC-007
+refs:
+  asvs:
+  - V13.2.1
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that communications between backend application components are
+  authenticated using individual service accounts, short-term tokens, or certificate-based
+  authentication and not unchanging credentials such as passwords, API keys, or shared
+  accounts with privileged access.
+scope: web-application
+severity: high
+title: Authenticate backend communication components
+verify:
+  tests:
+  - Review backend communication authentication mechanisms
+
+
+================================================
+File: /configuration/CONFIG-SEC-010.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Implement an allowlist for external communications
+- Define permitted external resources or systems
+dont:
+- Allow communication with unlisted external resources
+id: CONFIG-SEC-010
+refs:
+  asvs:
+  - V13.2.4
+  cwe:
+  - CWE-16
+  owasp:
+  - A05:2021
+requirement: Ensure that an allowlist is used to define the external resources or
+  systems with which the application is permitted to communicate. This allowlist can
+  be implemented at the application layer, web server, firewall, or a combination
+  of different layers.
+scope: web-application
+severity: medium
+title: Implement allowlist for external communications
+verify:
+  tests:
+  - Review allowlist implementation for external communications
+
+
+================================================
+File: /configuration/RULE-005.yml
+================================================
+detect:
+  semgrep:
+  - yaml.docker-compose.security.writable-filesystem-service
+  - terraform.aws.security.aws-s3-bucket-public-read-prohibited
+do:
+- Implement an allowlist of trusted resources or systems for backend communication
+dont:
+- Allow unrestricted outbound requests from the server
+refs:
+  asvs:
+  - V13.2.5
+  cwe:
+  - CWE-285
+  owasp:
+  - A6:2021
+requirement: Ensure the web or application server is configured with an allowlist
+  of resources or systems to which the server can send requests or load data or files
+  from.
+scope: web-application/api
+severity: medium
+title: Secure Backend Communication Configuration
+verify:
+  tests:
+  - Verify that only specified resources or systems are allowed for communication
+
+
+================================================
 File: /genai/GENAI-PROMPT-001.yml
 ================================================
 id: GENAI-PROMPT-001
@@ -974,29 +1624,29 @@ refs:
 ================================================
 File: /network_security/network_security-12.1.3.yml
 ================================================
-id: network_security-12.1.3
-title: Validate mTLS Client Certificates
-severity: medium
-scope: web-application
-requirement: Validate that mTLS client certificates are trusted before using the certificate
-  identity for authentication or authorization.
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
 do:
 - Ensure mTLS client certificates are trusted
 dont:
 - Accept untrusted mTLS client certificates
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: network_security-12.1.3
+refs:
+  asvs:
+  - V12.1.3
+  cwe:
+  - CWE-295
+  owasp:
+  - A06:2021
+requirement: Validate that mTLS client certificates are trusted before using the certificate
+  identity for authentication or authorization.
+scope: web-application
+severity: medium
+title: Validate mTLS Client Certificates
 verify:
   tests:
   - Verify that mTLS client certificates are validated
-refs:
-  cwe:
-  - CWE-295
-  asvs:
-  - V12.1.3
-  owasp:
-  - A06:2021
 
 
 ================================================
@@ -1088,29 +1738,29 @@ verify:
 ================================================
 File: /network_security/network_security-12.1.4.yml
 ================================================
-id: network_security-12.1.4
-title: Enable Certification Revocation
-severity: high
-scope: web-application
-requirement: Proper certification revocation mechanisms, such as Online Certificate
-  Status Protocol (OCSP) Stapling, are enabled and configured.
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
 do:
 - Enable OCSP Stapling or equivalent mechanism
 dont:
 - Neglect certification revocation mechanisms
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: network_security-12.1.4
+refs:
+  asvs:
+  - V12.1.4
+  cwe:
+  - CWE-346
+  owasp:
+  - A06:2021
+requirement: Proper certification revocation mechanisms, such as Online Certificate
+  Status Protocol (OCSP) Stapling, are enabled and configured.
+scope: web-application
+severity: high
+title: Enable Certification Revocation
 verify:
   tests:
   - Verify that certification revocation mechanisms are enabled
-refs:
-  cwe:
-  - CWE-346
-  asvs:
-  - V12.1.4
-  owasp:
-  - A06:2021
 
 
 ================================================
@@ -1145,89 +1795,89 @@ verify:
 ================================================
 File: /network_security/network_security-12.1.1.yml
 ================================================
-id: network_security-12.1.1
-title: Enable Latest TLS Versions
-severity: low
-scope: web-application
-requirement: Only the latest recommended versions of the TLS protocol (e.g., TLS 1.2
-  and TLS 1.3) are enabled. The latest version of the TLS protocol must be the preferred
-  option.
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
 do:
 - Enable TLS 1.2 and TLS 1.3 as the preferred versions
 dont:
 - Allow outdated or insecure TLS versions
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: network_security-12.1.1
+refs:
+  asvs:
+  - V12.1.1
+  cwe:
+  - CWE-326
+  owasp:
+  - A06:2021
+requirement: Only the latest recommended versions of the TLS protocol (e.g., TLS 1.2
+  and TLS 1.3) are enabled. The latest version of the TLS protocol must be the preferred
+  option.
+scope: web-application
+severity: low
+title: Enable Latest TLS Versions
 verify:
   tests:
   - Verify that only TLS 1.2 and TLS 1.3 are enabled
-refs:
-  cwe:
-  - CWE-326
-  asvs:
-  - V12.1.1
-  owasp:
-  - A06:2021
 
 
 ================================================
 File: /network_security/network_security-12.1.5.yml
 ================================================
-id: network_security-12.1.5
-title: Enable Encrypted Client Hello
-severity: high
-scope: web-application
-requirement: Enable Encrypted Client Hello (ECH) in the application's TLS settings
-  to prevent exposure of sensitive metadata, such as the Server Name Indication (SNI),
-  during TLS handshake processes.
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
 do:
 - Enable Encrypted Client Hello (ECH)
 dont:
 - Expose sensitive metadata during TLS handshake
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: network_security-12.1.5
+refs:
+  asvs:
+  - V12.1.5
+  cwe:
+  - CWE-200
+  owasp:
+  - A06:2021
+requirement: Enable Encrypted Client Hello (ECH) in the application's TLS settings
+  to prevent exposure of sensitive metadata, such as the Server Name Indication (SNI),
+  during TLS handshake processes.
+scope: web-application
+severity: high
+title: Enable Encrypted Client Hello
 verify:
   tests:
   - Verify that ECH is enabled
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V12.1.5
-  owasp:
-  - A06:2021
 
 
 ================================================
 File: /network_security/network_security-12.1.2.yml
 ================================================
-id: network_security-12.1.2
-title: Enable Strong Cipher Suites
-severity: medium
-scope: web-application
-requirement: Only recommended cipher suites are enabled, with the strongest cipher
-  suites set as preferred. L3 applications must only support cipher suites which provide
-  forward secrecy.
+detect:
+  semgrep:
+  - generic.secrets.security.detected-secret
 do:
 - Enable recommended and strong cipher suites
 - Set forward secrecy cipher suites as preferred
 dont:
 - Allow weak or deprecated cipher suites
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: network_security-12.1.2
+refs:
+  asvs:
+  - V12.1.2
+  cwe:
+  - CWE-326
+  owasp:
+  - A06:2021
+requirement: Only recommended cipher suites are enabled, with the strongest cipher
+  suites set as preferred. L3 applications must only support cipher suites which provide
+  forward secrecy.
+scope: web-application
+severity: medium
+title: Enable Strong Cipher Suites
 verify:
   tests:
   - Verify that only recommended and strong cipher suites are enabled
-refs:
-  cwe:
-  - CWE-326
-  asvs:
-  - V12.1.2
-  owasp:
-  - A06:2021
 
 
 ================================================
@@ -2378,13 +3028,14 @@ File: /data_protection/RULE-002.yml
 ================================================
 detect:
   semgrep:
-  - sensitive-data-protection-doc
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
-- Document protection requirements for each sensitive data protection level
-- Include encryption, integrity verification, retention, access controls, and privacy
-  requirements
+- Include requirements related to general encryption, integrity verification, retention,
+  logging, access controls, database-level encryption, and privacy as per ASVS 14.1.2
 dont:
-- Omit documenting protection requirements for sensitive data
+- Omit any sensitive data protection level from having a documented set of protection
+  requirements
 id: RULE-002
 refs:
   asvs:
@@ -2392,100 +3043,106 @@ refs:
   cwe:
   - CWE-311
   owasp:
-  - A6:2021
+  - A02:2021
 requirement: Document protection requirements for all sensitive data protection levels,
-  covering encryption, integrity verification, retention, access controls, and privacy.
+  covering encryption, integrity verification, retention, logging, access controls,
+  database-level encryption, and privacy requirements as per ASVS 14.1.2
 scope: web-application
 severity: medium
 title: Sensitive Data Protection Requirements Documentation
 verify:
   tests:
-  - Review documented protection requirements
+  - Verify that all sensitive data protection levels have documented protection requirements
+    as per ASVS 14.1.2
 
 
 ================================================
 File: /data_protection/DATA-PROTECTION-006.yml
 ================================================
-id: DATA-PROTECTION-006
-title: Protection Against Untrusted Data Sharing
-severity: medium
-scope: web-application
-requirement: Ensure defined sensitive data is not shared with untrusted parties to
-  prevent unauthorized data collection.
-do:
-- Implement controls to prevent sharing sensitive data with untrusted parties
-dont:
-- Share sensitive data with third parties without proper authorization
 detect:
   semgrep:
-  - untrusted-data-sharing
-verify:
-  tests:
-  - Verify prevention of untrusted data sharing
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+do:
+- Prevent sending defined sensitive data to untrusted parties
+dont:
+- Share sensitive data with untrusted parties
+id: DATA-PROTECTION-006
 refs:
-  cwe:
-  - CWE-200
   asvs:
   - V14.2.3
+  cwe:
+  - CWE-311
   owasp:
-  - A6:2021
+  - A02:2021
+requirement: Ensure defined sensitive data is not shared with untrusted parties to
+  prevent unauthorized data collection as per ASVS 14.2.3
+scope: web-application
+severity: medium
+title: Protection Against Untrusted Data Sharing
+verify:
+  tests:
+  - Verify that defined sensitive data is not shared with untrusted parties as per
+    ASVS 14.2.3
 
 
 ================================================
 File: /data_protection/DATA-PROTECTION-008.yml
 ================================================
-id: DATA-PROTECTION-008
-title: Secure Configuration of Caching Mechanisms
-severity: high
-scope: web-application
-requirement: Configure caching mechanisms to only cache appropriate content types
-  and prevent caching of sensitive, dynamic content.
-do:
-- Configure caching mechanisms to cache only expected content types
-- Prevent caching of sensitive, dynamic content
-dont:
-- Allow caching of sensitive data inappropriately
 detect:
   semgrep:
-  - caching-configuration
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+do:
+- 'Set anti-caching HTTP response header fields like Cache-Control: no-store for sensitive
+  data.'
+dont:
+- Allow sensitive data to be cached in browsers.
+id: DATA-PROTECTION-008
+refs:
+  asvs:
+  - V14.3.2
+  cwe:
+  - CWE-311
+  owasp:
+  - A02:2021
+requirement: Configure caching mechanisms to only cache appropriate content types
+  and prevent caching of sensitive data.
+scope: web-application
+severity: high
+title: Secure Configuration of Caching Mechanisms
 verify:
   tests:
-  - Verify secure configuration of caching mechanisms
-refs:
-  cwe:
-  - CWE-524
-  asvs:
-  - V14.2.5
-  owasp:
-  - A6:2021
+  - Verify that sensitive data is not cached in browser storage.
 
 
 ================================================
 File: /data_protection/DATA-PROTECTION-002.yml
 ================================================
-id: DATA-PROTECTION-002
-title: Remove sensitive information from user-submitted file metadata
-severity: high
-scope: web-application
-requirement: Sensitive information must be removed from the metadata of user-submitted
-  files unless storage is explicitly consented to by the user.
-do:
-- Implement mechanisms to strip sensitive metadata from user-submitted files
-dont:
-- Store sensitive information in file metadata without user consent
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Verify sensitive metadata is removed from user-submitted files
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+do:
+- Implement a process to strip sensitive information from file metadata before storage.
+dont:
+- Store user-submitted files with sensitive metadata intact.
+id: DATA-PROTECTION-002
 refs:
-  cwe:
-  - CWE-200
   asvs:
   - V14.2.8
+  cwe:
+  - CWE-311
   owasp:
-  - A14:2021
+  - A02:2021
+requirement: Sensitive information must be removed from the metadata of user-submitted
+  files unless storage is explicitly consented to by the user.
+scope: web-application
+severity: medium
+title: Remove sensitive information from user-submitted file metadata
+verify:
+  tests:
+  - Manually verify that sensitive metadata is not present in stored files.
 
 
 ================================================
@@ -2493,28 +3150,29 @@ File: /data_protection/RULE-004.yml
 ================================================
 detect:
   semgrep:
-  - sensitive-data-caching
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
-- Implement mechanisms to prevent sensitive data caching
-- Securely purge cached data after it is no longer needed
+- Implement mechanisms to securely purge cached sensitive data after it is no longer
+  needed.
 dont:
-- Allow sensitive data to be stored in server caches indefinitely
+- Cache sensitive data in server components without proper purging mechanisms.
 id: RULE-004
 refs:
   asvs:
-  - V14.2.2
+  - V14.2.7
   cwe:
-  - CWE-524
+  - CWE-311
   owasp:
-  - A6:2021
+  - A02:2021
 requirement: Ensure sensitive data is not cached in server components, or securely
   purge cached data after use.
 scope: web-application
-severity: medium
+severity: high
 title: Secure Data Caching and Purging
 verify:
   tests:
-  - Verify data caching and purging mechanisms
+  - Test the purging mechanisms for cached sensitive data.
 
 
 ================================================
@@ -2549,87 +3207,120 @@ verify:
 ================================================
 File: /data_protection/DATA-PROTECTION-003.yml
 ================================================
-id: DATA-PROTECTION-003
-title: Clear authenticated data from client storage
-severity: low
-scope: web-application
-requirement: Authenticated data must be cleared from client storage, such as the browser
-  DOM, after the client or session is terminated.
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
 - Implement mechanisms to clear authenticated data from client storage upon session
   termination
 dont:
 - Leave authenticated data lingering in client storage after session termination
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: DATA-PROTECTION-003
+refs:
+  asvs:
+  - V14.3.1
+  cwe:
+  - CWE-200
+  owasp:
+  - A14:2021
+requirement: Authenticated data must be cleared from client storage, such as the browser
+  DOM, after the client or session is terminated.
+scope: web-application
+severity: low
+title: Clear authenticated data from client storage
 verify:
   tests:
   - Verify authenticated data is cleared from client storage after session termination
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V14.3.1
-  owasp:
-  - A14:2021
 
 
 ================================================
 File: /data_protection/DATA-PROTECTION-005.yml
 ================================================
-id: DATA-PROTECTION-005
-title: Avoid storing sensitive data in browser storage
-severity: medium
-scope: web-application
-requirement: Data stored in browser storage (e.g., localStorage, sessionStorage, IndexedDB,
-  cookies) must not contain sensitive data, except for session tokens.
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
 - Ensure sensitive data is not stored in browser storage
 dont:
 - Store sensitive data in localStorage, sessionStorage, IndexedDB, or cookies
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: DATA-PROTECTION-005
+refs:
+  asvs:
+  - V14.3.3
+  cwe:
+  - CWE-200
+  owasp:
+  - A14:2021
+requirement: Data stored in browser storage (e.g., localStorage, sessionStorage, IndexedDB,
+  cookies) must not contain sensitive data, except for session tokens.
+scope: web-application
+severity: medium
+title: Avoid storing sensitive data in browser storage
 verify:
   tests:
   - Verify sensitive data is not stored in browser storage, except for session tokens
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V14.3.3
-  owasp:
-  - A14:2021
 
 
 ================================================
 File: /data_protection/DATA-PROTECTION-001.yml
 ================================================
-id: DATA-PROTECTION-001
-title: Sensitive information data retention
-severity: high
-scope: web-application
-requirement: Sensitive information must be subject to data retention classification
-  to ensure outdated or unnecessary data is deleted automatically, on a defined schedule,
-  or as the situation requires.
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
 - Implement automated data retention policies for sensitive information
 dont:
 - Retain outdated or unnecessary sensitive data
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: DATA-PROTECTION-001
+refs:
+  asvs:
+  - V14.2.7
+  cwe:
+  - CWE-200
+  owasp:
+  - A14:2021
+requirement: Sensitive information must be subject to data retention classification
+  to ensure outdated or unnecessary data is deleted automatically, on a defined schedule,
+  or as the situation requires.
+scope: web-application
+severity: high
+title: Sensitive information data retention
 verify:
   tests:
   - Verify data retention policies are in place and functioning correctly
+
+
+================================================
+File: /data_protection/DATA-PROTECTION-### (new ID).yml
+================================================
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
+do:
+- Implement controls to prevent storage of sensitive data in browser storage except
+  for session tokens.
+dont:
+- Allow sensitive data to be stored in browser storage.
+id: DATA-PROTECTION-### (new ID)
 refs:
-  cwe:
-  - CWE-200
   asvs:
-  - V14.2.7
+  - V14.3.3
+  cwe:
+  - CWE-311
   owasp:
-  - A14:2021
+  - A02:2021
+requirement: Ensure data stored in browser storage does not contain sensitive data,
+  except for session tokens.
+scope: web-application
+severity: medium
+title: Restricting Sensitive Data in Browser Storage
+verify:
+  tests:
+  - Verify that only session tokens are stored in browser storage.
 
 
 ================================================
@@ -2722,237 +3413,237 @@ refs:
 ================================================
 File: /data_protection/DATA-PROTECTION-004.yml
 ================================================
-id: DATA-PROTECTION-004
-title: Set anti-caching headers for sensitive data
-severity: medium
-scope: web-application
-requirement: 'Sufficient anti-caching HTTP response header fields (e.g., Cache-Control:
-  no-store) must be set to prevent sensitive data from being cached in browsers.'
+detect:
+  semgrep:
+  - python.lang.security.audit.hardcoded-password
+  - javascript.lang.security.audit.hardcoded-secret
 do:
 - Set anti-caching headers for responses containing sensitive data
 dont:
 - Allow sensitive data to be cached in browsers
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: DATA-PROTECTION-004
+refs:
+  asvs:
+  - V14.3.2
+  cwe:
+  - CWE-200
+  owasp:
+  - A14:2021
+requirement: 'Sufficient anti-caching HTTP response header fields (e.g., Cache-Control:
+  no-store) must be set to prevent sensitive data from being cached in browsers.'
+scope: web-application
+severity: medium
+title: Set anti-caching headers for sensitive data
 verify:
   tests:
   - Verify anti-caching headers are set for sensitive data responses
-refs:
-  cwe:
-  - CWE-200
-  asvs:
-  - V14.3.2
-  owasp:
-  - A14:2021
 
 
 ================================================
 File: /cryptography/CRYPTO-003.yml
 ================================================
-id: CRYPTO-003
-title: Secure Random Number Generation
-severity: high
-scope: web-application
-requirement: Generate random numbers and strings using a cryptographically secure
-  pseudo-random number generator (CSPRNG) with at least 128 bits of entropy
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 do:
 - Use CSPRNG for generating non-guessable random values
 - Ensure random number generation mechanism works securely under heavy demand
 dont:
 - Use insecure random number generation methods
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+id: CRYPTO-003
 refs:
+  asvs:
+  - V11.5.1
+  - V11.5.2
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.5.1
-  - V11.5.2
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Generate random numbers and strings using a cryptographically secure
+  pseudo-random number generator (CSPRNG) with at least 128 bits of entropy
+scope: web-application
+severity: high
+title: Secure Random Number Generation
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-002.yml
 ================================================
-id: CRYPTO-002
-title: Hash Function Collision Resistance
-severity: medium
-scope: web-application
-requirement: Hash functions used in digital signatures, data authentication, or data
-  integrity must be collision resistant with appropriate bit-lengths
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 do:
 - Ensure hash functions used have output length of at least 256 bits for collision
   resistance or 128 bits for resistance to second pre-image attacks
 dont:
 - Use hash functions with inadequate bit-lengths for required collision resistance
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+id: CRYPTO-002
 refs:
+  asvs:
+  - V11.4.3
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.4.3
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Hash functions used in digital signatures, data authentication, or data
+  integrity must be collision resistant with appropriate bit-lengths
+scope: web-application
+severity: medium
+title: Hash Function Collision Resistance
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-004.yml
 ================================================
-id: CRYPTO-004
-title: Approved Key Exchange Algorithms
-severity: high
-scope: web-application
-requirement: Use approved cryptographic algorithms for key exchange with secure parameters
-  to prevent cryptographic breaks
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 do:
 - Implement approved cryptographic algorithms for key exchange (e.g., Diffie-Hellman)
   with secure parameters
 dont:
 - Use insecure key exchange algorithms
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+id: CRYPTO-004
 refs:
+  asvs:
+  - V11.6.2
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.6.2
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Use approved cryptographic algorithms for key exchange with secure parameters
+  to prevent cryptographic breaks
+scope: web-application
+severity: high
+title: Approved Key Exchange Algorithms
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-005.yml
 ================================================
-id: CRYPTO-005
-title: Industry-Validated Cryptographic Implementations
-severity: medium
-scope: web-application/api/mobile/infrastructure
-requirement: Use industry-validated implementations for cryptographic operations
-do:
-- Ensure that cryptographic operations use industry-validated implementations
-dont:
-- Use unvalidated or custom cryptographic implementations
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+do:
+- Ensure that cryptographic operations use industry-validated implementations
+dont:
+- Use unvalidated or custom cryptographic implementations
+id: CRYPTO-005
 refs:
+  asvs:
+  - V11.2.1
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.2.1
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Use industry-validated implementations for cryptographic operations
+scope: web-application/api/mobile/infrastructure
+severity: medium
+title: Industry-Validated Cryptographic Implementations
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-006.yml
 ================================================
-id: CRYPTO-006
-title: Crypto Agility Design
-severity: medium
-scope: web-application/api/mobile/infrastructure
-requirement: Design with crypto agility to allow reconfiguration, upgrading, or swapping
-  of cryptographic algorithms, key lengths, ciphers, and modes
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 do:
 - Implement crypto agility to allow for seamless upgrades and replacements of cryptographic
   components
 dont:
 - Rely on static cryptographic configurations that cannot be easily changed
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+id: CRYPTO-006
 refs:
+  asvs:
+  - V11.2.2
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.2.2
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Design with crypto agility to allow reconfiguration, upgrading, or swapping
+  of cryptographic algorithms, key lengths, ciphers, and modes
+scope: web-application/api/mobile/infrastructure
+severity: medium
+title: Crypto Agility Design
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-008.yml
 ================================================
-id: CRYPTO-008
-title: Constant-Time Cryptographic Operations
-severity: high
-scope: web-application/api/mobile/infrastructure
-requirement: Ensure all cryptographic operations are constant-time to avoid information
-  leakage
-do:
-- Implement cryptographic operations that are constant-time with no 'short-circuit'
-  operations
-dont:
-- Allow timing side-channel attacks by not implementing constant-time operations
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+do:
+- Implement cryptographic operations that are constant-time with no 'short-circuit'
+  operations
+dont:
+- Allow timing side-channel attacks by not implementing constant-time operations
+id: CRYPTO-008
 refs:
+  asvs:
+  - V11.2.4
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.2.4
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Ensure all cryptographic operations are constant-time to avoid information
+  leakage
+scope: web-application/api/mobile/infrastructure
+severity: high
+title: Constant-Time Cryptographic Operations
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-001.yml
 ================================================
-id: CRYPTO-001
-title: Application Key Protection and Management
-severity: high
-scope: web-application
-requirement: Application encryption keys should be properly protected, not exposed
-  in client-side code or public ...
+detect:
+  semgrep:
+  - crypto.key-hardcoded
+  - generic.secrets.security.detected-hardcoded-key
+  - crypto.weak-crypto
 do:
 - Implement approved key derivation functions with key stretching parameters when
   deriving secret keys from passwords
@@ -2965,116 +3656,157 @@ do:
   or as soon as feasible
 dont:
 - Expose application encryption keys in client-side code or public repositories
-detect:
-  semgrep:
-  - crypto.key-hardcoded
-  - generic.secrets.security.detected-hardcoded-key
-  - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+id: CRYPTO-001
 refs:
-  cwe:
-  - CWE-327
-  - CWE-328
-  - CWE-329
   asvs:
   - V11.4.4
   - V11.5.1
   - V11.6.1
   - V11.7.1
   - V11.7.2
+  cwe:
+  - CWE-327
+  - CWE-328
+  - CWE-329
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Application encryption keys should be properly protected, not exposed
+  in client-side code or public ...
+scope: web-application
+severity: high
+title: Application Key Protection and Management
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /cryptography/CRYPTO-007.yml
 ================================================
-id: CRYPTO-007
-title: Minimum Security Strength for Cryptographic Primitives
-severity: medium
-scope: web-application/api/mobile/infrastructure
-requirement: Ensure that all cryptographic primitives utilize a minimum of 128-bits
-  of security based on the algorithm, key size, and configuration
-do:
-- Verify that cryptographic primitives provide a minimum of 128-bits of security
-dont:
-- Use cryptographic primitives with insufficient security strength
 detect:
   semgrep:
   - crypto.key-hardcoded
   - generic.secrets.security.detected-hardcoded-key
   - crypto.weak-crypto
-verify:
-  tests:
-  - Testing methods
+do:
+- Verify that cryptographic primitives provide a minimum of 128-bits of security
+dont:
+- Use cryptographic primitives with insufficient security strength
+id: CRYPTO-007
 refs:
+  asvs:
+  - V11.2.3
   cwe:
   - CWE-327
   - CWE-328
   - CWE-329
-  asvs:
-  - V11.2.3
   owasp:
-  - A##:2021
+  - A10:2021
+requirement: Ensure that all cryptographic primitives utilize a minimum of 128-bits
+  of security based on the algorithm, key size, and configuration
+scope: web-application/api/mobile/infrastructure
+severity: medium
+title: Minimum Security Strength for Cryptographic Primitives
+verify:
+  tests:
+  - Verify implementation meets security requirements
 
 
 ================================================
 File: /session_management/SESSION-004.yml
 ================================================
-id: SESSION-004
-title: Generate new session token on user authentication
-severity: medium
-scope: web-application/api
-requirement: Generate a new session token upon user authentication, including re-authentication,
-  and terminate the current session token.
-do:
-- Generate new session token on user authentication and terminate current session
-  token
-dont:
-- Reuse existing session tokens without regeneration
 detect:
   semgrep:
-  - new-session-token-generation
-verify:
-  tests:
-  - Authenticate as a user and verify that a new session token is generated
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Generate a new session token on user authentication
+- Document session inactivity timeout and absolute maximum session lifetime with justification
+dont:
+- Reuse session tokens
+id: SESSION-004
 refs:
+  asvs:
+  - V7.1.1
+  - V7.2.4
+  - V7.3.1
   cwe:
   - CWE-384
-  asvs:
-  - V7.2.4:2021
   owasp:
   - A2:2021
+requirement: Generate a new session token upon user authentication, including re-authentication,
+  and terminate the current session token. Ensure the session inactivity timeout and
+  absolute maximum session lifetime are documented with justification for deviations
+  from NIST SP 800-63B re-authentication requirements.
+scope: web-application
+severity: high
+title: Generate new session token on user authentication
+verify:
+  tests:
+  - Verify new session token generation on user authentication
+  - Review documentation for session inactivity timeout and absolute maximum session
+    lifetime
+
+
+================================================
+File: /session_management/SESSION-MANAGEMENT-### (for new rules).yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Implement mechanisms for federated re-authentication between RPs and IdPs
+dont:
+- Neglect re-authentication requirements between RPs and IdPs
+id: SESSION-MANAGEMENT-### (for new rules)
+refs:
+  asvs:
+  - V7.6.1:2021
+  cwe:
+  - CWE-384
+  owasp:
+  - A07:2021
+requirement: Ensure session lifetime and termination between Relying Parties (RPs)
+  and Identity Providers (IdPs) behave as documented, requiring re-authentication
+  as necessary such as when the maximum time between IdP authentication events is
+  reached.
+scope: web-application
+severity: medium
+title: Federated Re-authentication
+verify:
+  tests:
+  - Test session behavior between RPs and IdPs for re-authentication
 
 
 ================================================
 File: /session_management/SESSION-01-009.yml
 ================================================
-id: SESSION-01-009
-title: Require user consent or action for session creation
-severity: medium
-scope: web-application
-requirement: Ensure that the creation of a session requires either the user's consent
-  or an explicit action to prevent unauthorized session creation.
-do:
-- Implement user consent or action for session creation
-dont:
-- Allow session creation without user interaction
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Implement mechanisms to require user consent or explicit action for session creation
+dont:
+- Allow creation of new application sessions without user interaction
+id: SESSION-01-009
+refs:
+  asvs:
+  - V7.6.2:2021
+  cwe:
+  - CWE-384
+  owasp:
+  - A07:2021
+requirement: Ensure that the creation of a session requires either the user's consent
+  or an explicit action to prevent the creation of new application sessions without
+  user interaction.
+scope: web-application
+severity: medium
+title: Require user consent or action for session creation
 verify:
   tests:
-  - Test the requirement for user consent or action for session creation
-refs:
-  cwe:
-  - CWE-XX
-  asvs:
-  - V7.6.2
-  owasp:
-  - A##:2021
+  - Test session creation process for user consent or explicit action
 
 
 ================================================
@@ -3120,57 +3852,120 @@ refs:
 ================================================
 File: /session_management/SESSION_MANAGEMENT-001.yml
 ================================================
-id: SESSION_MANAGEMENT-001
-title: Enforce Absolute Maximum Session Lifetime
-severity: medium
-scope: web-application
-requirement: There is an absolute maximum session lifetime such that re-authentication
-  is enforced according to risk analysis and documented security decisions.
-do:
-- Set a maximum session lifetime based on risk analysis
-dont:
-- Allow sessions to remain active indefinitely
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Verify that sessions are terminated after the absolute maximum lifetime
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Set and enforce an absolute maximum session lifetime
+- Implement re-authentication mechanisms as necessary
+dont:
+- Allow sessions to exceed the absolute maximum lifetime without re-authentication
+id: SESSION_MANAGEMENT-001
 refs:
+  asvs:
+  - V7.6.1:2021
   cwe:
   - CWE-384
-  asvs:
-  - V7.3.2
   owasp:
-  - A2:2021
+  - A07:2021
+requirement: There is an absolute maximum session lifetime such that re-authentication
+  is enforced according to requirements.
+scope: web-application
+severity: high
+title: Enforce Absolute Maximum Session Lifetime
+verify:
+  tests:
+  - Test session lifetime enforcement and re-authentication mechanisms
 
 
 ================================================
 File: /session_management/SESSION-002.yml
 ================================================
-id: SESSION-002
-title: Use dynamically generated tokens for session management
-severity: medium
-scope: web-application/api
-requirement: Session management should use dynamically generated tokens to enhance
-  security and prevent unauthorized access.
-do:
-- Use self-contained or reference tokens dynamically generated for session management
-dont:
-- Use static API secrets and keys for session management
 detect:
   semgrep:
-  - dynamic-session-tokens
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Generate tokens dynamically for each session
+- Use strong cryptographic algorithms for token generation
+dont:
+- Reuse tokens across sessions
+id: SESSION-002
+refs:
+  asvs:
+  - V7.3.2
+  cwe:
+  - CWE-347
+requirement: Session management should use dynamically generated tokens to enhance
+  security and prevent unauthorized access.
+scope: web-application
+severity: medium
+title: Use dynamically generated tokens for session management
 verify:
   tests:
-  - Verify that session tokens are dynamically generated and not static
+  - Verify that tokens are dynamically generated and not reused
+
+
+================================================
+File: /session_management/SESSION-MANAGEMENT-005.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Document systems in federated identity management ecosystem
+- Define controls for session lifetimes, termination, and re-authentication
+dont:
+- Neglect documenting federated identity management controls
+id: SESSION-MANAGEMENT-005
 refs:
-  cwe:
-  - CWE-321
   asvs:
-  - V7.2.2:2021
+  - V7.1.3
+  cwe:
+  - CWE-200
   owasp:
   - A2:2021
+requirement: Document all systems that create and manage user sessions as part of
+  a federated identity management ecosystem (e.g., SSO systems) along with controls
+  for coordinating session lifetimes, termination, and re-authentication conditions.
+scope: web-application
+severity: medium
+title: Document federated identity management ecosystem controls
+verify:
+  tests:
+  - Review documentation for federated identity management controls
+
+
+================================================
+File: /session_management/SESSION-MANAGEMENT-NEW-002.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Provide the option to terminate all other active sessions after changing or removing
+  an authentication factor
+dont:
+- Allow active sessions to persist without re-authentication after authentication
+  factor changes
+id: SESSION-MANAGEMENT-NEW-002
+refs:
+  asvs:
+  - V7.4.3
+  cwe:
+  - CWE-384
+requirement: Give the option to terminate all other active sessions after a successful
+  change or removal of any authentication factor to enhance security.
+scope: web-application
+severity: medium
+title: Terminate other active sessions after authentication factor change
+verify:
+  tests:
+  - Verify that users can terminate other active sessions after authentication factor
+    changes
 
 
 ================================================
@@ -3241,113 +4036,120 @@ refs:
 ================================================
 File: /session_management/SESSION_MANAGEMENT-002.yml
 ================================================
-id: SESSION_MANAGEMENT-002
-title: Disallow Further Use of Session on Termination
-severity: low
-scope: web-application
-requirement: When session termination is triggered (such as logout or expiration),
-  the application disallows any further use of the session.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Invalidate session data at the application backend on termination
 dont:
 - Allow terminated sessions to be reused
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-002
+refs:
+  asvs:
+  - V7.4.1
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: When session termination is triggered (such as logout or expiration),
+  the application disallows any further use of the session.
+scope: web-application
+severity: low
+title: Disallow Further Use of Session on Termination
 verify:
   tests:
   - Verify that terminated sessions cannot be used
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V7.4.1
-  owasp:
-  - A2:2021
 
 
 ================================================
 File: /session_management/SESSION_MANAGEMENT-005.yml
 ================================================
-id: SESSION_MANAGEMENT-005
-title: Provide Visible Logout Functionality
-severity: medium
-scope: web-application
-requirement: All pages that require authentication have easy and visible access to
-  logout functionality.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Ensure logout functionality is easily accessible on authenticated pages
 dont:
 - Hide or make logout functionality hard to find
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-005
+refs:
+  asvs:
+  - V7.4.4
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: All pages that require authentication have easy and visible access to
+  logout functionality.
+scope: web-application
+severity: medium
+title: Provide Visible Logout Functionality
 verify:
   tests:
   - Verify that logout functionality is visible on authenticated pages
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V7.4.4
-  owasp:
-  - A2:2021
 
 
 ================================================
 File: /session_management/SESSION_MANAGEMENT-007.yml
 ================================================
-id: SESSION_MANAGEMENT-007
-title: Re-authentication for Sensitive Account Attribute Modifications
-severity: medium
-scope: web-application
-requirement: Requires full re-authentication before allowing modifications to sensitive
-  account attributes which may affect authentication.
-do:
-- Implement full re-authentication for sensitive account attribute modifications
-dont:
-- Allow modifications to sensitive attributes without re-authentication
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Verify that re-authentication is required for sensitive attribute modifications
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Use self-contained or reference tokens for session management
+- Ensure reference tokens are unique and generated using CSPRNG with 128 bits of entropy
+dont:
+- Use static API secrets and keys for session tokens
+id: SESSION_MANAGEMENT-007
 refs:
-  cwe:
-  - CWE-384
   asvs:
-  - V7.5.1
+  - V7.2.2
+  - V7.2.3
+  cwe:
+  - CWE-330
   owasp:
   - A2:2021
+requirement: Use either self-contained or reference tokens that are dynamically generated
+  for session management. If reference tokens are used, ensure they are unique, generated
+  using a CSPRNG with at least 128 bits of entropy.
+scope: web-application
+severity: medium
+title: Ensure unique and cryptographically secure session tokens
+verify:
+  tests:
+  - Verify usage of unique and cryptographically secure session tokens
 
 
 ================================================
 File: /session_management/SESSION-01-007.yml
 ================================================
-id: SESSION-01-007
-title: Implement further authentication for highly sensitive transactions
-severity: high
-scope: web-application
-requirement: Before performing highly sensitive transactions or operations, further
-  authentication with at least one factor or secondary verification is required.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Implement multi-factor authentication for highly sensitive transactions
 dont:
 - Allow highly sensitive transactions without additional authentication
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION-01-007
+refs:
+  asvs:
+  - V7.5.3
+  cwe:
+  - CWE-XX
+  owasp:
+  - A07:2021
+requirement: Before performing highly sensitive transactions or operations, further
+  authentication with at least one factor or secondary verification is required.
+scope: web-application
+severity: high
+title: Implement further authentication for highly sensitive transactions
 verify:
   tests:
   - Test the implementation of further authentication for highly sensitive transactions
-refs:
-  cwe:
-  - CWE-XX
-  asvs:
-  - V7.5.3
-  owasp:
-  - A##:2021
 
 
 ================================================
@@ -3388,84 +4190,116 @@ refs:
 ================================================
 File: /session_management/SESSION_MANAGEMENT-003.yml
 ================================================
-id: SESSION_MANAGEMENT-003
-title: Terminate Sessions on Account Disable/Delete
-severity: low
-scope: web-application
-requirement: Terminates all active sessions when a user account is disabled or deleted.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Terminate all active sessions associated with the disabled/deleted account
 dont:
 - Allow disabled/deleted accounts to have active sessions
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-003
+refs:
+  asvs:
+  - V7.4.2
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: Terminates all active sessions when a user account is disabled or deleted.
+scope: web-application
+severity: low
+title: Terminate Sessions on Account Disable/Delete
 verify:
   tests:
   - Verify that sessions are terminated when accounts are disabled/deleted
+
+
+================================================
+File: /session_management/SESSION-MANAGEMENT-NEW-001.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Implement a mechanism to terminate all active sessions upon user account disablement
+  or deletion
+dont:
+- Allow disabled or deleted user accounts to retain active sessions
+id: SESSION-MANAGEMENT-NEW-001
 refs:
-  cwe:
-  - CWE-384
   asvs:
   - V7.4.2
-  owasp:
-  - A2:2021
+  cwe:
+  - CWE-384
+requirement: Terminate all active sessions when a user account is disabled or deleted
+  to prevent unauthorized access.
+scope: web-application
+severity: medium
+title: Terminate all active sessions on user account disable or deletion
+verify:
+  tests:
+  - Verify that all active sessions are terminated when a user account is disabled
+    or deleted
 
 
 ================================================
 File: /session_management/SESSION-01-008.yml
 ================================================
-id: SESSION-01-008
-title: Enforce session lifetime and re-authentication between RPs and IdPs
-severity: medium
-scope: web-application
-requirement: Ensure session lifetime and termination between Relying Parties (RPs)
-  and Identity Providers (IdPs) are as documented, requiring re-authentication when
-  necessary.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Configure session lifetime and re-authentication settings between RPs and IdPs
 dont:
 - Neglect session lifetime and re-authentication requirements
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION-01-008
+refs:
+  asvs:
+  - V7.6.1
+  cwe:
+  - CWE-XX
+  owasp:
+  - A07:2021
+requirement: Ensure session lifetime and termination between Relying Parties (RPs)
+  and Identity Providers (IdPs) are as documented, requiring re-authentication when
+  necessary.
+scope: web-application
+severity: medium
+title: Enforce session lifetime and re-authentication between RPs and IdPs
 verify:
   tests:
   - Verify session lifetime and re-authentication behavior between RPs and IdPs
-refs:
-  cwe:
-  - CWE-XX
-  asvs:
-  - V7.6.1
-  owasp:
-  - A##:2021
 
 
 ================================================
 File: /session_management/SESSION_MANAGEMENT-008.yml
 ================================================
-id: SESSION_MANAGEMENT-008
-title: View and Terminate Active Sessions
-severity: medium
-scope: web-application
-requirement: Users are able to view and terminate any or all currently active sessions.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Allow users to view and terminate active sessions
 dont:
 - Restrict users from managing their active sessions
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-008
+refs:
+  asvs:
+  - V7.5.2
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: Users are able to view and terminate any or all currently active sessions.
+scope: web-application
+severity: medium
+title: View and Terminate Active Sessions
 verify:
   tests:
   - Verify that users can view and terminate their active sessions
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V7.5.2
-  owasp:
-  - A2:2021
 
 
 ================================================
@@ -3499,190 +4333,190 @@ refs:
 ================================================
 File: /session_management/SESSION_MANAGEMENT-006.yml
 ================================================
-id: SESSION_MANAGEMENT-006
-title: Ability to Terminate Active Sessions
-severity: medium
-scope: web-application
-requirement: Application administrators are able to terminate active sessions for
-  an individual user or for all users.
-do:
-- Provide application administrators with the ability to terminate active sessions
-dont:
-- Restrict administrators from terminating active sessions
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Verify that administrators can terminate active sessions
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
+do:
+- Use trusted backend service for session token verification
+dont:
+- Rely on untrusted services for session token verification
+id: SESSION_MANAGEMENT-006
 refs:
-  cwe:
-  - CWE-384
   asvs:
-  - V7.4.5
+  - V7.2.1
+  cwe:
+  - CWE-346
   owasp:
   - A2:2021
+requirement: Perform all session token verification using a trusted backend service
+  to ensure secure session management.
+scope: web-application
+severity: medium
+title: Use trusted backend service for session token verification
+verify:
+  tests:
+  - Verify session token verification using trusted backend service
 
 
 ================================================
 File: /session_management/SESSION_MANAGEMENT-004.yml
 ================================================
-id: SESSION_MANAGEMENT-004
-title: Terminate Other Sessions on Authentication Factor Change
-severity: medium
-scope: web-application
-requirement: Gives the option to terminate all other active sessions after a successful
-  change or removal of any authentication factor.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-httponly-false
 do:
 - Provide the option to terminate all other active sessions after authentication factor
   change
 dont:
 - Keep all other sessions active after authentication factor change
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: SESSION_MANAGEMENT-004
+refs:
+  asvs:
+  - V7.4.3
+  cwe:
+  - CWE-384
+  owasp:
+  - A2:2021
+requirement: Gives the option to terminate all other active sessions after a successful
+  change or removal of any authentication factor.
+scope: web-application
+severity: medium
+title: Terminate Other Sessions on Authentication Factor Change
 verify:
   tests:
   - Verify that users can terminate other sessions after authentication factor change
+
+
+================================================
+File: /file_handling/FILE-HANDLING-001.yml
+================================================
+detect:
+  semgrep:
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+do:
+- Implement antivirus scanning for files from untrusted sources
+dont:
+- Serve files from untrusted sources without scanning
+id: FILE-HANDLING-001
 refs:
-  cwe:
-  - CWE-384
   asvs:
-  - V7.4.3
+  - V5.4.3
+  cwe:
+  - CWE-434
   owasp:
-  - A2:2021
+  - A01:2021
+requirement: Files obtained from untrusted sources are scanned by antivirus scanners
+  to prevent serving of known malicious content.
+scope: web-application
+severity: medium
+title: Scan files from untrusted sources with antivirus
+verify:
+  tests:
+  - Test file upload validation and processing security
 
 
 ================================================
 File: /file_handling/FILE-UPLOAD-003.yml
 ================================================
-id: FILE-UPLOAD-003
-title: Implement file size and type validation
-severity: medium
-scope: web-application
-requirement: Enforce file size limits and validate file signatures to prevent DoS
-  attacks and malicious uploads.
-do:
-- Set file size limits to prevent excessive storage usage
-- Validate file signatures in addition to content type
-- Implement request limits for download service to prevent DoS attacks
-dont:
-- Avoid accepting excessively large files without proper validation
-- Do not solely rely on file size limits for security
 detect:
   semgrep:
-  - file-upload.security.file-size-validation
-  - file-upload.security.file-signature-validation
-  - python.django.security.audit.avoid-unsafe-deserialization
-  - python.flask.security.audit.direct-use-of-jinja2
-  - java.spring.security.audit.spring-unvalidated-redirect
-  trufflehog:
-  - DoS Attack via File Upload
-  - Malicious File Upload
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+do:
+- Implement file size limits and validate file signatures
+- Use internally generated or trusted data for file paths
+- Apply strict validation and sanitization for user-submitted filenames
+dont:
+- Accept user-submitted filenames without validation and sanitization
+id: FILE-UPLOAD-003
+refs:
+  asvs:
+  - V5.3.2
+  cwe:
+  - CWE-434
+  owasp:
+  - A01:2021
+requirement: Enforce file size limits and validate file signatures to prevent DoS
+  attacks and malicious uploads. When the application creates file paths for file
+  operations, instead of user-submitted filenames, it uses internally generated or
+  trusted data, or if user-submitted filenames or file metadata must be used, strict
+  validation and sanitization must be applied.
+scope: web-application
+severity: high
+title: Implement file size and type validation
 verify:
   tests:
-  - Test that file size limits are enforced correctly
-  - Verify that file signatures are validated against expected types
-refs:
-  cwe:
-  - CWE-770
-  - CWE-326
-  asvs:
-  - V6.2.1
-  - V6.2.2
-  owasp:
-  - A06:2021
-  - A09:2021
-  standards:
-  - GDPR
+  - Test file upload validation and processing security
 
 
 ================================================
 File: /file_handling/FILE-UPLOAD-002.yml
 ================================================
-id: FILE-UPLOAD-002
-title: Secure file naming and storage location
-severity: high
-scope: web-application
-requirement: Generate random filenames for uploaded files and store them in a secure
-  location outside the webroot to prevent direct access.
-do:
-- Generate unique filenames using UUID/GUID
-- Implement filename length limits and restrict characters to a safe subset
-- Store files on a different server or outside the webroot
-- Set proper permissions for file storage location
-dont:
-- Avoid using user-provided filenames directly
-- Do not store files in the webroot where they can be accessed directly
 detect:
   semgrep:
-  - file-upload.security.filename-generation
-  - file-upload.security.storage-location
-  - python.django.security.audit.unescaped-file-extension
-  - java.spring.security.audit.spring-file-upload-filename
-  - php.lang.security.file-inclusion.file-inclusion
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+do:
+- Generate random filenames for uploaded files
+- Store files in a secure location outside the webroot
+- Ignore user-provided path information during file processing
+dont:
+- Use predictable filenames for uploaded files
+- Store files in insecure locations within the webroot
+id: FILE-UPLOAD-002
+refs:
+  asvs:
+  - V5.3.3
+  cwe:
+  - CWE-434
+  owasp:
+  - A01:2021
+requirement: Generate random filenames for uploaded files and store them in a secure
+  location outside the webroot. Server-side file processing, such as file decompression,
+  ignores user-provided path information to prevent vulnerabilities such as zip slip.
+scope: web-application
+severity: high
+title: Secure file naming and storage location
 verify:
   tests:
-  - Confirm that filenames are randomized and not predictable
-  - Check that files are stored outside the webroot with restricted access
-refs:
-  cwe:
-  - CWE-116
-  - CWE-379
-  asvs:
-  - V6.3.1
-  - V6.3.2
-  owasp:
-  - A05:2021
-  - A07:2021
-  standards:
-  - PCI DSS v3.2.1
+  - Test file upload validation and processing security
 
 
 ================================================
 File: /file_handling/FILE-UPLOAD-001.yml
 ================================================
-id: FILE-UPLOAD-001
-title: Validate file extensions and content types
-severity: high
-scope: web-application
-requirement: Implement input validation to check file extensions against a whitelist
-  of allowed extensions. Additionally, validate the file's content type to prevent
-  malicious uploads.
-do:
-- List allowed extensions for each file type and validate against them
-- Check file content type in addition to file extension
-- Implement both allowlist and denylist approaches for content type validation
-- Use secure libraries or tools to determine file content type
-dont:
-- Do not rely solely on file extensions for validation
-- Do not trust the Content-Type header provided by users
 detect:
   semgrep:
-  - file-upload.security.extension-validation
-  - file-upload.security.content-type-validation
-  - python.django.security.audit.avoid-unsafe-deserialization
-  - python.flask.security.audit.direct-use-of-jinja2
-  - java.spring.security.audit.spring-unvalidated-redirect
-  trufflehog:
-  - File Extension Bypass
-  - Content-Type Spoofing
-verify:
-  tests:
-  - Verify that only allowed file extensions are accepted
-  - Test that content type validation is effective in blocking malicious uploads
+  - python.lang.security.audit.dangerous-system-call
+  - javascript.lang.security.audit.path-traversal
+do:
+- Check file extensions against a whitelist of allowed extensions
+- Validate or ignore user-submitted filenames in various contexts
+- Specify a filename in the Content-Disposition header field
+dont:
+- Accept file extensions without validation
+- Allow user-submitted filenames without proper handling
+id: FILE-UPLOAD-001
 refs:
+  asvs:
+  - V5.4.1
   cwe:
   - CWE-434
-  - CWE-918
-  asvs:
-  - V6.1.1
-  - V6.1.2
   owasp:
-  - A04:2021
-  - A08:2021
-  standards:
-  - ISO/IEC 27001:2013
+  - A01:2021
+requirement: Implement input validation to check file extensions against a whitelist
+  of allowed extensions. Additionally, validate or ignore user-submitted filenames,
+  including in a JSON, JSONP, or URL parameter, and specify a filename in the Content-Disposition
+  header field in the response.
+scope: web-application
+severity: high
+title: Validate file extensions and content types
+verify:
+  tests:
+  - Test file upload validation and processing security
 
 
 ================================================
@@ -4345,139 +5179,265 @@ refs:
     - "A06:2021"
 
 ================================================
-File: /authentication/AUTH-GEN-006.yml
+File: /authentication/AUTH-06-015.yml
 ================================================
-id: AUTH-GEN-006
-title: Authentication Details Update Notification
-severity: medium
-scope: web-application
-requirement: Users must be notified after updates to authentication details, such
-  as credential resets or modifications.
-do:
-- Ensure that users are notified via email or in-app notifications about any changes
-  to their authentication details.
-- Include details of the change and provide instructions on what to do if the change
-  was not authorized.
-dont:
-- Do not send sensitive information in the notification, such as new passwords or
-  activation codes.
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Use passwords with a minimum of 20 bits of entropy (e.g., 4 random alphanumeric
+  characters or 6 random digits)
+- Ensure out-of-band authentication requests have a maximum lifetime of 10 minutes
+- Ensure time-based one-time passwords (TOTPs) have a maximum lifetime of 30 seconds
+- Revoke any authentication factor in case of theft or loss
+dont:
+- Use biometric authentication mechanisms as primary factors
+- Check TOTPs based on untrusted or client provided time
+id: AUTH-06-015
+refs:
+  asvs:
+  - V6.5.4
+  - V6.5.5
+  - V6.5.6
+  - V6.5.7
+  - V6.5.8
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Prevent easy to guess passwords by using a documented list of context
+  specific words....
+scope: web-application
+severity: high
+title: Prevent Easy to Guess Passwords
 verify:
   tests:
-  - Simulate authentication detail updates and verify that users receive notifications.
+  - Verify authentication mechanisms and credential handling
+
+
+================================================
+File: /authentication/AUTH-GEN-006.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Ensure out-of-band authentication requests have a maximum lifetime of 10 minutes
+- Ensure time-based one-time passwords (TOTPs) have a maximum lifetime of 30 seconds
+dont:
+- Use biometric authentication mechanisms as primary factors
+- Check TOTPs based on untrusted or client provided time
+id: AUTH-GEN-006
 refs:
-  cwe:
-  - CWE-XXX
   asvs:
   - V6.5.5
+  - V6.5.8
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Users must be notified after updates to authentication details, such
+  as credential resets or modific...
+scope: web-application
+severity: medium
+title: Authentication Details Update Notification
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 
 
 ================================================
 File: /authentication/AUTH-06-013.yml
 ================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Store certificates in a secure location with restricted access
+- Regularly monitor and audit access to certificates
+dont:
+- Store certificates in plaintext or insecure locations
 id: AUTH-06-013
-title: Store Certificates Securely for Cryptographic Authentication
-severity: high
-scope: web-application
+refs:
+  asvs:
+  - V6.7.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
 requirement: Verify that certificates used to verify cryptographic authentication
   assertions are stored securely to protect them from modification.
+scope: web-application
+severity: high
+title: Store Certificates Securely for Cryptographic Authentication
+verify:
+  tests:
+  - Verify access controls and monitoring for certificate storage
+
+
+================================================
+File: /authentication/AUTHENTICATION-NEW-002.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
-- Store certificates used for cryptographic authentication securely
-- Protect certificates from modification
+- Use biometric authentication mechanisms only as secondary factors with something
+  you have or something you know
+dont:
+- Use biometric authentication mechanisms as primary factors
+id: AUTHENTICATION-NEW-002
 refs:
-  cwe:
-  - CWE-311
   asvs:
-  - V6.7.1:2021
+  - V6.5.7
+  cwe:
+  - CWE-287
   owasp:
-  - A6:2021
+  - A07:2021
+requirement: Biometric authentication mechanisms are only used as secondary factors
+  together with either somethin...
+scope: web-application
+severity: high
+title: Biometric Authentication Usage
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 
 
 ================================================
 File: /authentication/AUTH-04.yml
 ================================================
-id: AUTH-04
-title: Allow passwords of at least 64 characters
-severity: medium
-scope: web-application
-requirement: Passwords of at least 64 characters are permitted.
-do:
-- Allow passwords with a minimum length of 64 characters
-dont: []
 detect:
   semgrep:
-  - minimum-password-length
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Allow passwords with a minimum length of 64 characters
+- Ensure challenge nonces are at least 64 bits in length and unique
+dont:
+- Enforce passwords shorter than 64 characters
+id: AUTH-04
+refs:
+  asvs:
+  - V6.7.2
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Passwords of at least 64 characters are permitted and challenge nonces
+  are at least 64 bits in length.
+scope: web-application
+severity: high
+title: Allow passwords of at least 64 characters
 verify:
   tests:
-  - Test password creation with 64+ characters
-refs:
-  cwe:
-  - CWE-521
-  asvs:
-  - V6.2.9
-  owasp:
-  - A2:2021
+  - Test password length enforcement and nonce generation
 
 
 ================================================
 File: /authentication/AUTHENTICATION-009.yml
 ================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Validate authentication strength information from the IdP
+- Use a combination of IdP ID and user's ID for user identification
+dont:
+- Do not rely solely on local authentication strength checks
 id: AUTHENTICATION-009
-title: Verify Authentication Strength from Identity Provider
-severity: medium
-scope: web-application
+refs:
+  asvs:
+  - V6.8.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
 requirement: Verify that, if an application uses a separate Identity Provider (IdP)
   and expects specific authentication strength, methods, or recentness for specific
   functions, the application verifies this using the information returned by the IdP.
-do:
-- Validate authentication strength information provided by the IdP
-dont:
-- Do not assume authentication strength without verifying information from IdP
-detect:
-  semgrep:
-  - relevant-scanner-rules
+  The application should register and identify the user using a combination of the
+  IdP ID and the user's ID in the IdP.
+scope: web-application
+severity: medium
+title: Verify Authentication Strength from Identity Provider
 verify:
   tests:
-  - Test verification of authentication strength information from IdP
-refs:
-  cwe:
-  - CWE-354
-  asvs:
-  - V6.8.4
-  owasp:
-  - A2:2021
+  - Verify authentication strength validation from IdP
 
 
 ================================================
 File: /authentication/AUTH-GEN-008.yml
 ================================================
-id: AUTH-GEN-008
-title: Secure Initial Passwords/Activation Codes
-severity: medium
-scope: web-application
-requirement: System generated initial passwords or activation codes must be securely
-  randomly generated, follow p...
-do:
-- Enhance the existing rule by adding ASVS-specific guidance for securing initial
-  passwords/activation codes.
-dont: []
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Generate initial passwords/activation codes securely and randomly
+- Follow password policy requirements for generation
+- Verify authentication strength information from the IdP if applicable
+dont:
+- Do not use predictable or weak initial passwords/activation codes
+id: AUTH-GEN-008
+refs:
+  asvs:
+  - V6.8.4
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: System generated initial passwords or activation codes must be securely
+  randomly generated, follow password policy requirements, and verify authentication
+  strength information from the IdP if applicable.
+scope: web-application
+severity: high
+title: Secure Initial Passwords/Activation Codes
 verify:
   tests:
-  - Testing methods for securing initial passwords/activation codes.
+  - Test generation and verification of initial passwords/activation codes
+
+
+================================================
+File: /authentication/AUTHENTICATION-NEW-003.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Offer PSTN-based OTPs only after validating the phone number
+- Provide information on security risks to users when offering PSTN-based OTPs
+- Bind out-of-band authentication requests, codes, or tokens to the original authentication
+  request
+- Protect code-based out-of-band authentication mechanisms against brute force attacks
+  with rate limiting
+- Use codes with at least 64 bits of entropy for out-of-band authentication
+dont:
+- Offer phone and SMS as options for Level 3 applications
+id: AUTHENTICATION-NEW-003
 refs:
-  cwe:
-  - CWE-XX
   asvs:
-  - V##.##.##
+  - V6.6.1
+  - V6.6.2
+  - V6.6.3
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Authentication mechanisms using the Public Switched Telephone Network
+  (PSTN) to deliver One-time Passwords...
+scope: web-application
+severity: medium
+title: Out-of-Band Authentication Mechanisms
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 
 
 ================================================
@@ -4510,22 +5470,31 @@ refs:
 ================================================
 File: /authentication/AUTH-NEW-006.yml
 ================================================
-id: AUTH-NEW-006
-title: Allow Passwords of Any Composition
-severity: low
-scope: web-application
-requirement: Passwords of any composition can be used, without rules limiting the
-  type of characters permitted. There must be no requirement for a minimum number
-  of upper or lower case characters, numbers, or special characters.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
-- Allow passwords of any composition without restrictions on character types
+- Use type=password for password input fields
+- Allow temporary viewing of the entire masked password or the last typed character
+dont:
+- Use plain text for password input fields
+id: AUTH-NEW-006
 refs:
-  cwe:
-  - CWE-XXX
   asvs:
-  - V6.2.5
+  - V6.2.6
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Password input fields must use type=password to mask the entry and allow
+  temporary viewing of the entire masked password or the last typed character.
+scope: web-application
+severity: low
+title: Password Input Field Masking
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 
 
 ================================================
@@ -4618,87 +5587,90 @@ refs:
 ================================================
 File: /authentication/AUTH-002.yml
 ================================================
-id: AUTH-002
-title: Define Lifetime for Out-of-Band Authentication
-severity: medium
-scope: web-application
-requirement: Out-of-band authentication requests, codes, or tokens must have a defined
-  lifetime.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Set maximum lifetime of 10 minutes for out-of-band requests and 30 seconds for TOTPs
 dont:
 - Allow indefinite lifetime for authentication codes
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-002
+refs:
+  asvs:
+  - V6.5.5
+  cwe:
+  - CWE-613
+  owasp:
+  - A3:2021
+requirement: Out-of-band authentication requests, codes, or tokens must have a defined
+  lifetime.
+scope: web-application
+severity: medium
+title: Define Lifetime for Out-of-Band Authentication
 verify:
   tests:
   - Verify the defined lifetimes for authentication tokens
-refs:
-  cwe:
-  - CWE-613
-  asvs:
-  - V6.5.5
-  owasp:
-  - A3:2021
 
 
 ================================================
 File: /authentication/AUTHENTICATION-008.yml
 ================================================
-id: AUTHENTICATION-008
-title: Rate Limit Push Notifications for Multi-Factor Authentication
-severity: high
-scope: web-application
-requirement: Verify that, where push notifications are used for multi-factor authentication,
-  rate limiting is used to prevent push bombing attacks. Number matching may also
-  mitigate this risk.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Implement rate limiting for push notifications to prevent abuse
 dont:
 - Do not rely solely on push notifications without rate limiting
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-008
+refs:
+  asvs:
+  - V6.6.4
+  cwe:
+  - CWE-285
+  owasp:
+  - A3:2021
+requirement: Verify that, where push notifications are used for multi-factor authentication,
+  rate limiting is used to prevent push bombing attacks. Number matching may also
+  mitigate this risk.
+scope: web-application
+severity: high
+title: Rate Limit Push Notifications for Multi-Factor Authentication
 verify:
   tests:
   - Test rate limiting functionality for push notifications
-refs:
-  cwe:
-  - CWE-285
-  asvs:
-  - V6.6.4
-  owasp:
-  - A3:2021
 
 
 ================================================
 File: /authentication/AUTHENTICATION-010.yml
 ================================================
-id: AUTHENTICATION-010
-title: Secure Time-based One-time Passwords (TOTPs)
-severity: high
-scope: web-application
-requirement: Time-based one-time passwords (TOTPs) are checked based on a time source
-  from a trusted service and not from an untrusted or client provided time.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Use a trusted time source for checking TOTPs to prevent manipulation.
 - Implement mechanisms to ensure TOTPs are not based on client-provided time.
 dont:
 - Do not rely on untrusted time sources for validating TOTPs.
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-010
+refs:
+  asvs:
+  - V6.5.8
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Time-based one-time passwords (TOTPs) are checked based on a time source
+  from a trusted service and not from an untrusted or client provided time.
+scope: web-application
+severity: high
+title: Secure Time-based One-time Passwords (TOTPs)
 verify:
   tests:
   - Verify that TOTPs are validated using a trusted time source.
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.5.8
-  owasp:
-  - A##:2021
 
 
 ================================================
@@ -4754,85 +5726,110 @@ refs:
 ================================================
 File: /authentication/AUTH-001.yml
 ================================================
-id: AUTH-001
-title: Use Strong Secrets for Multi-factor Authentication
-severity: medium
-scope: web-application
-requirement: Lookup secrets and out-of-band authentication codes must have a minimum
-  of 20 bits of entropy.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Generate secrets with at least 20 bits of entropy
 dont:
 - Use weak secrets with insufficient entropy
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-001
+refs:
+  asvs:
+  - V6.5.4
+  cwe:
+  - CWE-326
+  owasp:
+  - A3:2021
+requirement: Lookup secrets and out-of-band authentication codes must have a minimum
+  of 20 bits of entropy.
+scope: web-application
+severity: medium
+title: Use Strong Secrets for Multi-factor Authentication
 verify:
   tests:
   - Test the entropy of generated secrets
-refs:
-  cwe:
-  - CWE-326
-  asvs:
-  - V6.5.4
-  owasp:
-  - A3:2021
 
 
 ================================================
 File: /authentication/AUTH-005.yml
 ================================================
-id: AUTH-005
-title: Secure Time-based One-time Passwords (TOTPs)
-severity: high
-scope: web-application
-requirement: TOTPs must be checked based on a time source from a trusted service.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Validate TOTPs using a trusted time source
 dont:
 - Rely on untrusted or client-provided time for TOTPs
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-005
+refs:
+  asvs:
+  - V6.5.8
+  cwe:
+  - CWE-347
+  owasp:
+  - A3:2021
+requirement: TOTPs must be checked based on a time source from a trusted service.
+scope: web-application
+severity: high
+title: Secure Time-based One-time Passwords (TOTPs)
 verify:
   tests:
   - Verify TOTP validation against trusted time source
-refs:
-  cwe:
-  - CWE-347
-  asvs:
-  - V6.5.8
-  owasp:
-  - A3:2021
 
 
 ================================================
 File: /authentication/AUTHENTICATION-001.yml
 ================================================
-id: AUTHENTICATION-001
-title: Prevent Identity Spoofing with Multiple Identity Providers
-severity: high
-scope: web-application
-requirement: Verify that, if the application supports multiple identity providers
-  (IdPs), the user's identity can...
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Enhance the authentication process to prevent identity spoofing with multiple identity
   providers
 dont:
 - Allow unauthorized access to user accounts through identity provider manipulation
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-001
+refs:
+  asvs:
+  - V6.4.2
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that, if the application supports multiple identity providers
+  (IdPs), the user's identity can...
+scope: web-application
+severity: high
+title: Prevent Identity Spoofing with Multiple Identity Providers
 verify:
   tests:
   - Testing methods to verify prevention of identity spoofing
+
+
+================================================
+File: /authentication/AUTH-06-014.yml
+================================================
+id: AUTH-06-014
+title: Allow Long Passwords and Prevent Credential Rotation
+severity: medium
+scope: web-application
+requirement: Passwords of at least 64 characters are permitted and credential rotation
+  is not required.
+do:
+- Allow users to set passwords of at least 64 characters
+- Implement controls to prevent forced credential rotation
 refs:
   cwe:
-  - CWE-XXX
+  - CWE-521
   asvs:
-  - V6.4.2
+  - V6.2.9
+  - V6.2.10
   owasp:
-  - A##:2021
+  - A3:2021
 
 
 ================================================
@@ -4866,59 +5863,92 @@ refs:
 
 
 ================================================
-File: /authentication/AUTH-NEW-003.yml
+File: /authentication/AUTH-GEN-###.yml
 ================================================
-id: AUTH-NEW-003
-title: Suspicious Authentication Attempt Notification
-severity: high
-scope: web-application
-requirement: Users are notified of suspicious authentication attempts (successful
-  or unsuccessful)...
-do:
-- Implement notification system for suspicious authentication attempts
-dont:
-- Neglect to notify users of suspicious authentication activity
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Process SAML assertions uniquely
+- Ensure one-time use of SAML assertions
+dont:
+- Do not reuse SAML assertions
+id: AUTH-GEN-###
+refs:
+  asvs:
+  - V6.8.3
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Process SAML assertions uniquely and ensure they are used only once within
+  their validity period to prevent replay attacks.
+scope: web-application
+severity: medium
+title: Prevent Replay Attacks with SAML Assertions
 verify:
   tests:
-  - Testing methods
+  - Test uniqueness and one-time use of SAML assertions
+
+
+================================================
+File: /authentication/AUTH-NEW-003.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Validate digital signatures on authentication assertions
+- Reject unsigned or invalid assertions
+dont:
+- Accept assertions without validating digital signatures
+id: AUTH-NEW-003
 refs:
-  cwe:
-  - CWE-XXX
   asvs:
-  - V6.3.5
+  - V6.8.2
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Verify that digital signatures on authentication assertions are always
+  validated, rejecting any unsigned or invalid assertions.
+scope: web-application
+severity: medium
+title: Validate Digital Signatures on Authentication Assertions
+verify:
+  tests:
+  - Test validation of digital signatures on authentication assertions
 
 
 ================================================
 File: /authentication/AUTHENTICATION-005.yml
 ================================================
-id: AUTHENTICATION-005
-title: Strong Challenge Nonce for Cryptographic Authentication
-severity: high
-scope: web-application
-requirement: The challenge nonce is at least 64 bits in length, and statistically
-  unique or unique over the lifetime of the cryptographic device.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Generate challenge nonces that are at least 64 bits long and unique
 dont:
 - Do not reuse challenge nonces or use non-unique values
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-005
+refs:
+  asvs:
+  - V6.7.2
+  cwe:
+  - CWE-330
+  owasp:
+  - A3:2021
+requirement: The challenge nonce is at least 64 bits in length, and statistically
+  unique or unique over the lifetime of the cryptographic device.
+scope: web-application
+severity: high
+title: Strong Challenge Nonce for Cryptographic Authentication
 verify:
   tests:
   - Test generation and uniqueness of challenge nonces
-refs:
-  cwe:
-  - CWE-330
-  asvs:
-  - V6.7.2
-  owasp:
-  - A3:2021
 
 
 ================================================
@@ -4952,137 +5982,171 @@ refs:
 ================================================
 File: /authentication/AUTHENTICATION-006.yml
 ================================================
-id: AUTHENTICATION-006
-title: Use Cryptographically Secure Pseudorandom Number Generators for Authentication
-  Seeds
-severity: medium
-scope: web-application
-requirement: Lookup secrets, out-of-band authentication code, and time-based one-time
-  password seeds, are generated using a Cryptographically Secure Pseudorandom Number
-  Generator (CSPRNG) to avoid predictable values.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Generate authentication seeds using Cryptographically Secure Pseudorandom Number
   Generators
 dont:
 - Use insecure random number generators for authentication seeds
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-006
+refs:
+  asvs:
+  - V6.5.3
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Lookup secrets, out-of-band authentication code, and time-based one-time
+  password seeds, are generated using a Cryptographically Secure Pseudorandom Number
+  Generator (CSPRNG) to avoid predictable values.
+scope: web-application
+severity: medium
+title: Use Cryptographically Secure Pseudorandom Number Generators for Authentication
+  Seeds
 verify:
   tests:
   - Testing methods to ensure secure generation of authentication seeds
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.5.3
-  owasp:
-  - A##:2021
 
 
 ================================================
 File: /authentication/AUTH-NEW-005.yml
 ================================================
-id: AUTH-NEW-005
-title: Check Passwords Against Top 3000 Common Passwords
-severity: low
-scope: web-application
-requirement: Passwords submitted during account registration or password change are
-  checked against an available set of, at least, the top 3000 passwords which match
-  the application's password policy, e.g. minimum length.
-do:
-- Check passwords against a list of top 3000 common passwords
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.2.4
-  owasp:
-  - A##:2021
-
-
-================================================
-File: /authentication/AUTH-003.yml
-================================================
-id: AUTH-003
-title: Revocation of Authentication Factors
-severity: high
-scope: web-application
-requirement: Any authentication factor must be revocable in case of theft or loss.
-do:
-- Implement mechanisms to revoke authentication factors
-dont:
-- Allow unrevokeable authentication factors
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Validate authentication strength information from the Identity Provider
+- Use returned information to verify authentication methods
+dont:
+- Assume minimum strength authentication without verification
+id: AUTH-NEW-005
+refs:
+  asvs:
+  - V6.8.4
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that the application verifies authentication strength, methods,
+  or recentness using information returned by the Identity Provider.
+scope: web-application
+severity: medium
+title: Verify Authentication Strength from Identity Provider
 verify:
   tests:
-  - Test revocation functionality for authentication factors
+  - Test verification of authentication strength from IdP information
+
+
+================================================
+File: /authentication/AUTH-06-017.yml
+================================================
+id: AUTH-06-017
+title: Implement Controls Against Credential Stuffing and Brute Force Attacks
+severity: low
+scope: web-application
+requirement: Implement controls to prevent attacks such as credential stuffing and
+  password brute force.
+do:
+- Implement controls to detect and prevent credential stuffing and brute force attacks
+- Follow the application's security documentation for implementing these controls
 refs:
   cwe:
-  - CWE-602
+  - CWE-521
   asvs:
-  - V6.5.6
+  - V6.3.1
   owasp:
   - A3:2021
 
 
 ================================================
-File: /authentication/AUTH-NEW-001.yml
+File: /authentication/AUTH-003.yml
 ================================================
-id: AUTH-NEW-001
-title: Multi-Factor Authentication Requirement
-severity: medium
-scope: web-application
-requirement: Either a multi-factor authentication mechanism or a combination of single-factor
-  authentication mechanisms, must be used in order to access the application...
-do:
-- Implement multi-factor authentication or a combination of single-factor mechanisms
-dont:
-- Rely solely on single-factor authentication
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement mechanisms to revoke authentication factors
+dont:
+- Allow unrevokeable authentication factors
+id: AUTH-003
+refs:
+  asvs:
+  - V6.5.6
+  cwe:
+  - CWE-602
+  owasp:
+  - A3:2021
+requirement: Any authentication factor must be revocable in case of theft or loss.
+scope: web-application
+severity: high
+title: Revocation of Authentication Factors
 verify:
   tests:
-  - Testing methods
+  - Test revocation functionality for authentication factors
+
+
+================================================
+File: /authentication/AUTH-NEW-001.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement rate limiting for push notifications to prevent abuse
+dont:
+- Allow unlimited push notifications without rate limiting
+id: AUTH-NEW-001
 refs:
-  cwe:
-  - CWE-XXX
   asvs:
-  - V6.3.3
+  - V6.6.4
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Verify that rate limiting is used to prevent push bombing attacks when
+  push notifications are used for multi-factor authentication.
+scope: web-application
+severity: high
+title: Rate Limit Push Notifications for Multi-Factor Authentication
+verify:
+  tests:
+  - Test rate limiting functionality for push notifications
 
 
 ================================================
 File: /authentication/AUTHENTICATION-002.yml
 ================================================
-id: AUTHENTICATION-002
-title: Validate Digital Signatures on Authentication Assertions
-severity: high
-scope: web-application
-requirement: The presence and integrity of digital signatures on authentication assertions
-  are always validated, ...
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Ensure digital signatures on authentication assertions are validated for presence
   and integrity
 dont:
 - Accept authentication assertions without validating digital signatures
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-002
+refs:
+  asvs:
+  - V6.4.2
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: The presence and integrity of digital signatures on authentication assertions
+  are always validated, ...
+scope: web-application
+severity: high
+title: Validate Digital Signatures on Authentication Assertions
 verify:
   tests:
   - Testing methods to validate digital signatures on authentication assertions
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.4.2
-  owasp:
-  - A##:2021
 
 
 ================================================
@@ -5117,29 +6181,30 @@ refs:
 ================================================
 File: /authentication/AUTH-004.yml
 ================================================
-id: AUTH-004
-title: Secure Use of Biometric Authentication
-severity: high
-scope: web-application
-requirement: Biometric authentication mechanisms should only be used as secondary
-  factors.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Use biometric authentication in conjunction with something you have or know
 dont:
 - Rely solely on biometric authentication
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-004
+refs:
+  asvs:
+  - V6.5.7
+  cwe:
+  - CWE-308
+  owasp:
+  - A3:2021
+requirement: Biometric authentication mechanisms should only be used as secondary
+  factors.
+scope: web-application
+severity: high
+title: Secure Use of Biometric Authentication
 verify:
   tests:
   - Verify biometric authentication is used as a secondary factor
-refs:
-  cwe:
-  - CWE-308
-  asvs:
-  - V6.5.7
-  owasp:
-  - A3:2021
 
 
 ================================================
@@ -5169,6 +6234,36 @@ title: Secure Password Reset Process
 verify:
   tests:
   - Verify that the password reset process requires multi-factor authentication
+
+
+================================================
+File: /authentication/AUTH-NEW-007.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Verify the user's password exactly as received
+- Do not modify the password such as truncation or case transformation
+dont:
+- Modify the user's password before verification
+id: AUTH-NEW-007
+refs:
+  asvs:
+  - V6.2.8
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify the user's password exactly as received without any modifications
+  such as truncation or case transformation.
+scope: web-application
+severity: medium
+title: Password Verification Integrity
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
 
 
 ================================================
@@ -5202,58 +6297,60 @@ refs:
 ================================================
 File: /authentication/AUTHENTICATION-003.yml
 ================================================
-id: AUTHENTICATION-003
-title: Secure Storage of Cryptographic Authentication Certificates
-severity: high
-scope: web-application
-requirement: The certificates used to verify cryptographic authentication assertions
-  are stored in a way that protects them from modification.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Store cryptographic authentication certificates securely to prevent tampering
 dont:
 - Do not store certificates in plaintext or insecure locations
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-003
+refs:
+  asvs:
+  - V6.7.1
+  cwe:
+  - CWE-311
+  owasp:
+  - A3:2021
+requirement: The certificates used to verify cryptographic authentication assertions
+  are stored in a way that protects them from modification.
+scope: web-application
+severity: high
+title: Secure Storage of Cryptographic Authentication Certificates
 verify:
   tests:
   - Verify secure storage mechanisms for cryptographic certificates
-refs:
-  cwe:
-  - CWE-311
-  asvs:
-  - V6.7.1
-  owasp:
-  - A3:2021
 
 
 ================================================
 File: /authentication/AUTH-008.yml
 ================================================
-id: AUTH-008
-title: Protect Code-based Out-of-Band Authentication
-severity: medium
-scope: web-application
-requirement: Code-based out-of-band authentication must be protected against brute
-  force attacks.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Implement rate limiting for code-based out-of-band authentication
 - Use codes with at least 64 bits of entropy
 dont:
 - Neglect rate limiting for authentication codes
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-008
+refs:
+  asvs:
+  - V6.6.3
+  cwe:
+  - CWE-307
+  owasp:
+  - A3:2021
+requirement: Code-based out-of-band authentication must be protected against brute
+  force attacks.
+scope: web-application
+severity: medium
+title: Protect Code-based Out-of-Band Authentication
 verify:
   tests:
   - Test rate limiting and entropy of authentication codes
-refs:
-  cwe:
-  - CWE-307
-  asvs:
-  - V6.6.3
-  owasp:
-  - A3:2021
 
 
 ================================================
@@ -5339,31 +6436,31 @@ refs:
 ================================================
 File: /authentication/AUTH-NEW-002.yml
 ================================================
-id: AUTH-NEW-002
-title: Authentication Pathway Consistency
-severity: medium
-scope: web-application
-requirement: Verify that, if the application includes multiple authentication pathways,
-  there are no undocumented pathways and that security controls and authentication
-  strength are enforced consistently.
-do:
-- Ensure all authentication pathways are documented and enforce consistent security
-  controls
-dont:
-- Allow undocumented authentication pathways
 detect:
   semgrep:
-  - relevant-scanner-rules
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Use a combination of IdP ID and user's ID to uniquely identify users
+- Implement checks to prevent identity spoofing across multiple IdPs
+dont:
+- Rely solely on user identifier without considering IdP ID
+id: AUTH-NEW-002
+refs:
+  asvs:
+  - V6.8.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that the user's identity cannot be spoofed via another supported
+  identity provider by using a combination of the IdP ID and the user's ID.
+scope: web-application
+severity: medium
+title: Prevent Identity Spoofing with Multiple Identity Providers
 verify:
   tests:
-  - Testing methods
-refs:
-  cwe:
-  - CWE-XXX
-  asvs:
-  - V6.3.4
-  owasp:
-  - A##:2021
+  - Test identity verification across multiple IdPs
 
 
 ================================================
@@ -5418,54 +6515,56 @@ refs:
 ================================================
 File: /authentication/AUTH-006.yml
 ================================================
-id: AUTH-006
-title: Validate Phone Numbers for PSTN OTP Delivery
-severity: medium
-scope: web-application
-requirement: PSTN OTP delivery should only be offered for validated phone numbers.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Validate phone numbers before offering PSTN OTP delivery
 dont:
 - Allow PSTN OTP delivery for unvalidated phone numbers
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-006
+refs:
+  asvs:
+  - V6.6.1
+  cwe:
+  - CWE-601
+  owasp:
+  - A3:2021
+requirement: PSTN OTP delivery should only be offered for validated phone numbers.
+scope: web-application
+severity: medium
+title: Validate Phone Numbers for PSTN OTP Delivery
 verify:
   tests:
   - Test PSTN OTP delivery for validated phone numbers
-refs:
-  cwe:
-  - CWE-601
-  asvs:
-  - V6.6.1
-  owasp:
-  - A3:2021
 
 
 ================================================
 File: /authentication/AUTHENTICATION-007.yml
 ================================================
-id: AUTHENTICATION-007
-title: Allow passwords of at least 64 characters
-severity: low
-scope: web-application
-requirement: Passwords of at least 64 characters are permitted.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Ensure that passwords are allowed to be at least 64 characters long.
 dont: []
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-007
+refs:
+  asvs:
+  - V6.2.9
+  cwe:
+  - CWE-521
+  owasp:
+  - A3:2021
+requirement: Passwords of at least 64 characters are permitted.
+scope: web-application
+severity: low
+title: Allow passwords of at least 64 characters
 verify:
   tests:
   - Manually verify that passwords can be set to a length of at least 64 characters.
-refs:
-  cwe:
-  - CWE-521
-  asvs:
-  - V6.2.9
-  owasp:
-  - A3:2021
 
 
 ================================================
@@ -5500,29 +6599,30 @@ verify:
 ================================================
 File: /authentication/AUTHENTICATION-004.yml
 ================================================
-id: AUTHENTICATION-004
-title: Unique Processing of SAML Assertions
-severity: medium
-scope: web-application
-requirement: SAML assertions are uniquely processed and used only once within the
-  validity period to prevent replay attacks.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Ensure SAML assertions are processed uniquely and not reused
 dont:
 - Do not reuse SAML assertions within their validity period
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTHENTICATION-004
+refs:
+  asvs:
+  - V6.8.3
+  cwe:
+  - CWE-352
+  owasp:
+  - A2:2021
+requirement: SAML assertions are uniquely processed and used only once within the
+  validity period to prevent replay attacks.
+scope: web-application
+severity: medium
+title: Unique Processing of SAML Assertions
 verify:
   tests:
   - Test uniqueness and non-replay of SAML assertions
-refs:
-  cwe:
-  - CWE-352
-  asvs:
-  - V6.8.3
-  owasp:
-  - A2:2021
 
 
 ================================================
@@ -5556,49 +6656,129 @@ verify:
 
 
 ================================================
+File: /authentication/AUTHENTICATION-NEW-001.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Verify that the password reset process does not bypass multi-factor authentication
+  mechanisms
+- Implement evidence of identity proofing at the same level as during enrollment if
+  a multi-factor authentication factor is lost
+- Send renewal instructions for authentication mechanisms with enough time before
+  expiration, configuring automated reminders if necessary
+dont:
+- Allow password reset processes to bypass multi-factor authentication mechanisms
+id: AUTHENTICATION-NEW-001
+refs:
+  asvs:
+  - V6.4.3
+  - V6.4.4
+  - V6.4.5
+  - V6.4.6
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Implement a secure process for resetting forgotten passwords that does
+  not bypass any enabled multi-factor authentication mechanisms.
+scope: web-application
+severity: medium
+title: Secure Process for Resetting Forgotten Passwords
+verify:
+  tests:
+  - Verify authentication mechanisms and credential handling
+
+
+================================================
 File: /authentication/AUTH-NEW-004.yml
 ================================================
-id: AUTH-NEW-004
-title: Require User's Current and New Password for Password Change
-severity: low
-scope: web-application
-requirement: Password change functionality requires the user's current and new password.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
-- Implement password change functionality that requires both current and new password
+- Implement mechanisms to prevent replay of SAML assertions
+- Ensure unique processing and usage of SAML assertions
+dont:
+- Allow reuse of SAML assertions within validity period
+id: AUTH-NEW-004
 refs:
-  cwe:
-  - CWE-XXX
   asvs:
-  - V6.2.3
+  - V6.8.3
+  cwe:
+  - CWE-287
   owasp:
-  - A##:2021
+  - A07:2021
+requirement: Ensure SAML assertions are uniquely processed and used only once within
+  the validity period to prevent replay attacks.
+scope: web-application
+severity: medium
+title: Prevent Replay Attacks with SAML Assertions
+verify:
+  tests:
+  - Test prevention of replay attacks with SAML assertions
+
+
+================================================
+File: /authentication/AUTH-GEN-### (for new rules).yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement rate limiting for push notifications
+- Consider using number matching as an additional mitigation
+dont:
+- Do not allow unlimited push notifications without rate limiting
+id: AUTH-GEN-### (for new rules)
+refs:
+  asvs:
+  - V6.6.4
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Verify that rate limiting is applied to push notifications used for multi-factor
+  authentication to prevent push bombing attacks. Consider implementing number matching
+  as an additional mitigation.
+scope: web-application
+severity: high
+title: Rate Limit Push Notifications for Multi-Factor Authentication
+verify:
+  tests:
+  - Test rate limiting functionality for push notifications
 
 
 ================================================
 File: /authentication/AUTH-007.yml
 ================================================
-id: AUTH-007
-title: Bind Out-of-Band Authentication to Request
-severity: medium
-scope: web-application
-requirement: Out-of-band authentication codes must be bound to the original request.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
 do:
 - Ensure out-of-band codes are only valid for the original request
 dont:
 - Allow reuse of out-of-band codes for different requests
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-007
+refs:
+  asvs:
+  - V6.6.2
+  cwe:
+  - CWE-384
+  owasp:
+  - A3:2021
+requirement: Out-of-band authentication codes must be bound to the original request.
+scope: web-application
+severity: medium
+title: Bind Out-of-Band Authentication to Request
 verify:
   tests:
   - Verify out-of-band code binding to requests
-refs:
-  cwe:
-  - CWE-384
-  asvs:
-  - V6.6.2
-  owasp:
-  - A3:2021
 
 
 ================================================
@@ -5655,6 +6835,27 @@ NEW RULES: null
 
 
 ================================================
+File: /authentication/AUTH-06-016.yml
+================================================
+id: AUTH-06-016
+title: Check Passwords Against Breached Passwords
+severity: medium
+scope: web-application
+requirement: Check passwords against a set of breached passwords during account registration
+  or password changes.
+do:
+- Implement password checking against a list of breached passwords
+- Notify users if their chosen password has been compromised
+refs:
+  cwe:
+  - CWE-521
+  asvs:
+  - V6.2.12
+  owasp:
+  - A3:2021
+
+
+================================================
 File: /authentication/RULE-026.yml
 ================================================
 detect:
@@ -5687,30 +6888,33 @@ verify:
 ================================================
 File: /authentication/AUTH-GEN-003.yml
 ================================================
-id: AUTH-GEN-003
-title: Consistent Authentication Pathways
-severity: medium
-scope: web-application
-requirement: Verify that if the application includes multiple authentication pathways,
-  there are no undocumented pathways and that security controls are enforced consistently.
-do:
-- Document all authentication pathways
-- Ensure consistent security controls across all pathways
-dont:
-- Allow undocumented authentication pathways
 detect:
   semgrep:
-  - undocumented-authentication-pathways
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+do:
+- Implement notification system for suspicious authentication attempts
+- Include details of the suspicious activity in the notification
+- Provide guidance on actions to take in response to suspicious attempts
+dont:
+- Ignore or fail to notify users of suspicious authentication attempts
+id: AUTH-GEN-003
+refs:
+  asvs:
+  - V6.3.5:2021
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021
+requirement: Users must be notified of suspicious authentication attempts, including
+  unusual locations, partial successful attempts, long periods of inactivity, or multiple
+  unsuccessful attempts.
+scope: web-application
+severity: high
+title: Notification of Suspicious Authentication Attempts
 verify:
   tests:
-  - Verify authentication pathways consistency
-refs:
-  cwe:
-  - CWE-799
-  asvs:
-  - V6.3.4
-  owasp:
-  - A4:2021
+  - Test notification functionality for suspicious authentication attempts
 
 
 ================================================
@@ -5718,57 +6922,92 @@ File: /authorization/RULE-002.yml
 ================================================
 detect:
   semgrep:
-  - field-level-access
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Document field-level access restrictions
+- Specify clear rules for field-level access restrictions
+- Document how consumer permissions and resource attributes are used for field-level
+  authorization
+- Consider other attribute values of the data object, such as state or status
 dont:
-- Allow unrestricted access to fields
+- Do not allow unrestricted access to sensitive fields
 id: RULE-002
 refs:
   asvs:
   - V8.1.2
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A2:2021
+  - A01:2021
 requirement: Define rules for field-level access restrictions based on consumer permissions
   and resource attributes.
 scope: web-application
-severity: medium
+severity: high
 title: Field-Level Access Restrictions
 verify:
   tests:
-  - Verify field-level access restrictions
+  - Review field-level access rules for compliance
+
+
+================================================
+File: /authorization/AUTH-DESIGN-001.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+do:
+- Document environmental and contextual attributes used for security decisions
+- Include attributes like time of day, user location, IP address, and device
+dont:
+- Do not overlook the impact of environmental factors on security decisions
+id: AUTH-DESIGN-001
+refs:
+  asvs:
+  - V8.1.3
+  cwe:
+  - CWE-285
+  owasp:
+  - A01:2021
+requirement: Define environmental and contextual attributes used in security decisions,
+  including authentication and authorization.
+scope: web-application
+severity: low
+title: Environmental and Contextual Attributes in Authorization
+verify:
+  tests:
+  - Review documentation for completeness of attributes
 
 
 ================================================
 File: /authorization/AUTH-OPER-002.yml
 ================================================
-id: AUTH-OPER-002
-title: Apply immediate changes to authorization decisions
-severity: high
-scope: web-application/api
-requirement: Changes to values on which authorization decisions are made must be applied
-  immediately. Implement mitigating controls to alert when unauthorized actions are
-  attempted and revert the changes if necessary.
-do:
-- Apply authorization changes immediately
-- Implement alerting mechanisms for unauthorized actions
-dont:
-- Delay applying authorization changes
 detect:
   semgrep:
-  - relevant-scanner-rules
-verify:
-  tests:
-  - Test immediate application of authorization changes
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+do:
+- Apply changes to authorization decisions immediately
+- Implement controls to alert and revert unauthorized actions
+dont:
+- Delay applying changes to authorization decisions
+id: AUTH-OPER-002
 refs:
-  cwe:
-  - CWE-285
   asvs:
   - V8.3.2
+  cwe:
+  - CWE-285
   owasp:
-  - A8:2021
+  - A01:2021
+requirement: Changes to values on which authorization decisions are made must be applied
+  immediately. Implement mitigating controls to alert when a consumer performs an
+  action when they are no longer authorized to do so and revert the change.
+scope: web-application
+severity: high
+title: Apply immediate changes to authorization decisions
+verify:
+  tests:
+  - Validate access control enforcement and privilege management
 
 
 ================================================
@@ -5776,27 +7015,30 @@ File: /authorization/RULE-006.yml
 ================================================
 detect:
   semgrep:
-  - data-specific-access
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Implement data-specific access restrictions
+- Restrict data-specific access based on consumer permissions
+- Mitigate IDOR and BOLA risks
+- Ensure access is based on originating subject's permissions
 dont:
-- Allow unauthorized access to specific data items
+- Grant access based on intermediary permissions
 id: RULE-006
 refs:
   asvs:
-  - V8.2.2
+  - V8.3.3
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A6:2021
+  - A01:2021
 requirement: Restrict data-specific access to consumers with explicit permissions
   to mitigate IDOR and BOLA.
 scope: web-application
-severity: medium
+severity: high
 title: Authorization Design - Data-Specific Access
 verify:
   tests:
-  - Verify data-specific access restrictions
+  - Validate access control enforcement and privilege management
 
 
 ================================================
@@ -5804,27 +7046,29 @@ File: /authorization/RULE-004.yml
 ================================================
 detect:
   semgrep:
-  - adaptive-security-controls
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Implement adaptive security controls based on contextual attributes
+- Implement adaptive security controls for authentication
+- Consider environmental and contextual attributes
 dont:
-- Rely solely on static access controls
+- Rely solely on static security controls
 id: RULE-004
 refs:
   asvs:
-  - V8.2.4
+  - V8.4.2
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A4:2021
+  - A01:2021
 requirement: Implement adaptive security controls based on environmental and contextual
-  attributes for authentication and authorization decisions.
+  attributes for authentication.
 scope: web-application
-severity: high
+severity: medium
 title: Adaptive Security Controls
 verify:
   tests:
-  - Verify implementation of adaptive security controls
+  - Validate access control enforcement and privilege management
 
 
 ================================================
@@ -5832,27 +7076,31 @@ File: /authorization/RULE-001.yml
 ================================================
 detect:
   semgrep:
-  - authorization-doc-rules
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Document function-level and data-specific access rules
+- Specify clear rules for function-level and data-specific access restrictions
+- Document how consumer permissions and resource attributes are used in authorization
+  decisions
+- Include environmental and contextual attributes in the documentation
 dont:
-- Neglect documenting access restrictions
+- Do not rely solely on user roles for access control
 id: RULE-001
 refs:
   asvs:
   - V8.1.1
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A1:2021
+  - A01:2021
 requirement: Define rules for restricting function-level and data-specific access
   based on consumer permissions and resource attributes.
 scope: web-application
-severity: low
+severity: high
 title: Authorization Documentation and Rules
 verify:
   tests:
-  - Verify that authorization rules are documented
+  - Review authorization documentation for completeness and accuracy
 
 
 ================================================
@@ -5886,114 +7134,118 @@ verify:
 ================================================
 File: /authorization/AUTH-OPER-003.yml
 ================================================
-id: AUTH-OPER-003
-title: Subject-based access control
-severity: high
-scope: web-application/api
-requirement: Access to an object should be based on the originating subject's permissions,
-  not on any intermediary or service acting on their behalf.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
 - Implement access control based on originating subject's permissions
 dont:
 - Base access control on intermediary permissions
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-OPER-003
+refs:
+  asvs:
+  - V8.3.3
+  cwe:
+  - CWE-285
+  owasp:
+  - A8:2021
+requirement: Access to an object should be based on the originating subject's permissions,
+  not on any intermediary or service acting on their behalf.
+scope: web-application/api
+severity: high
+title: Subject-based access control
 verify:
   tests:
   - Test access control based on subject's permissions
-refs:
-  cwe:
-  - CWE-285
-  asvs:
-  - V8.3.3
-  owasp:
-  - A8:2021
 
 
 ================================================
 File: /authorization/AUTH-OTHER-002.yml
 ================================================
-id: AUTH-OTHER-002
-title: Secure access to administrative interfaces
-severity: high
-scope: web-application/api
-requirement: Access to administrative interfaces should incorporate multiple layers
-  of security, including continuous consumer identity verification, device security
-  posture assessment, and contextual risk analysis.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
 - Implement multiple layers of security for administrative interfaces
 dont:
 - Rely solely on network location or trusted endpoints for authorization
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-OTHER-002
+refs:
+  asvs:
+  - V8.4.2
+  cwe:
+  - CWE-285
+  owasp:
+  - A8:2021
+requirement: Access to administrative interfaces should incorporate multiple layers
+  of security, including continuous consumer identity verification, device security
+  posture assessment, and contextual risk analysis.
+scope: web-application/api
+severity: high
+title: Secure access to administrative interfaces
 verify:
   tests:
   - Test security layers for administrative interfaces
-refs:
-  cwe:
-  - CWE-285
-  asvs:
-  - V8.4.2
-  owasp:
-  - A8:2021
 
 
 ================================================
 File: /authorization/AUTH-OPER-001.yml
 ================================================
-id: AUTH-OPER-001
-title: Enforce authorization rules at a trusted service layer
-severity: low
-scope: web-application/api
-requirement: Enforce authorization rules at a trusted service layer and avoid relying
-  on controls that an untrusted consumer could manipulate, such as client-side JavaScript.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
 - Implement authorization checks on the server-side
 dont:
 - Rely solely on client-side authorization logic
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-OPER-001
+refs:
+  asvs:
+  - V8.3.1
+  cwe:
+  - CWE-285
+  owasp:
+  - A8:2021
+requirement: Enforce authorization rules at a trusted service layer and avoid relying
+  on controls that an untrusted consumer could manipulate, such as client-side JavaScript.
+scope: web-application/api
+severity: low
+title: Enforce authorization rules at a trusted service layer
 verify:
   tests:
   - Test server-side authorization enforcement
-refs:
-  cwe:
-  - CWE-285
-  asvs:
-  - V8.3.1
-  owasp:
-  - A8:2021
 
 
 ================================================
 File: /authorization/AUTH-OTHER-001.yml
 ================================================
-id: AUTH-OTHER-001
-title: Cross-tenant controls for multi-tenant applications
-severity: medium
-scope: web-application/api
-requirement: Multi-tenant applications must use cross-tenant controls to prevent consumer
-  operations from affecting tenants with which they do not have permissions to interact.
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
 - Implement cross-tenant controls
 dont:
 - Allow consumer operations to affect unauthorized tenants
-detect:
-  semgrep:
-  - relevant-scanner-rules
+id: AUTH-OTHER-001
+refs:
+  asvs:
+  - V8.4.1
+  cwe:
+  - CWE-285
+  owasp:
+  - A8:2021
+requirement: Multi-tenant applications must use cross-tenant controls to prevent consumer
+  operations from affecting tenants with which they do not have permissions to interact.
+scope: web-application/api
+severity: medium
+title: Cross-tenant controls for multi-tenant applications
 verify:
   tests:
   - Test cross-tenant controls functionality
-refs:
-  cwe:
-  - CWE-285
-  asvs:
-  - V8.4.1
-  owasp:
-  - A8:2021
 
 
 ================================================
@@ -6001,27 +7253,60 @@ File: /authorization/RULE-003.yml
 ================================================
 detect:
   semgrep:
-  - contextual-attributes
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
 do:
-- Document environmental and contextual attributes used in security decisions
+- Ensure explicit permissions are required for data-specific access
+- Mitigate IDOR and BOLA risks by enforcing access controls
+- Consider contextual attributes in data-specific authorization
 dont:
-- Neglect considering contextual attributes in security decisions
+- Do not rely on client-side controls for data-specific access
 id: RULE-003
 refs:
   asvs:
-  - V8.1.3
+  - V8.2.2
   cwe:
-  - CWE-284
+  - CWE-285
   owasp:
-  - A3:2021
-requirement: Define environmental and contextual attributes used in security decisions,
-  including authentication and authorization.
+  - A01:2021
+requirement: Restrict data-specific access to consumers with explicit permissions
+  to mitigate IDOR and BOLA.
 scope: web-application
 severity: high
-title: Authorization Contextual Attributes
+title: Authorization Design - Data-Specific Access
 verify:
   tests:
-  - Verify usage of contextual attributes in security decisions
+  - Test data-specific access controls for effectiveness
+
+
+================================================
+File: /authorization/AUTH-DESIGN-002.yml
+================================================
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-jwt-not-revoked
+  - python.django.security.audit.avoid-csrf-disable
+do:
+- Implement adaptive controls for authentication based on consumer attributes
+- Consider attributes like time of day, location, IP address, and device
+dont:
+- Do not rely solely on static authentication mechanisms
+id: AUTH-DESIGN-002
+refs:
+  asvs:
+  - V8.1.4
+  cwe:
+  - CWE-285
+  owasp:
+  - A01:2021
+requirement: Implement adaptive security controls based on environmental and contextual
+  attributes for authentication decisions.
+scope: web-application
+severity: medium
+title: Adaptive Security Controls for Authentication
+verify:
+  tests:
+  - Test adaptive controls for authentication effectiveness
 
 
 ================================================
