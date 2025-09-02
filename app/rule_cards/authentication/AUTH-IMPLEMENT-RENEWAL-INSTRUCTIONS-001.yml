@@ -1,4 +1,4 @@
-id: AUTH-AUTH-001
+id: AUTH-IMPLEMENT-RENEWAL-INSTRUCTIONS-001
 title: Renewal Instructions for Expiring Authentication Mechanisms
 severity: high
 scope: web-application

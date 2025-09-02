@@ -1,0 +1,25 @@
+id: AUTH-VALIDATE-IDENTITY-PROOFING-001
+title: Evidence of Identity Proofing for Lost Authentication Factor
+severity: medium
+scope: web-application
+requirement: Perform evidence of identity proofing at the same level as during enrollment
+  when recovering lost authentication factors.
+do:
+- Validate identity proofing evidence at same level as initial enrollment
+- Require identity verification for authentication factor recovery
+dont:
+- Allow factor recovery without proper identity verification
+- Use weaker identity proofing than initial enrollment
+detect:
+  semgrep:
+  - identity-proofing-recovery
+verify:
+  tests:
+  - Verify identity proofing level matches enrollment requirements
+refs:
+  asvs:
+  - V6.1.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021

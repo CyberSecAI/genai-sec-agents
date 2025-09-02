@@ -1,0 +1,28 @@
+id: AUTH-RESTRICT-EMAIL-AUTH-001
+title: Email Not Used for Authentication
+severity: high
+scope: web-application
+requirement: Email addresses should not be used as the primary authentication
+  mechanism to prevent email-based attacks and improve security.
+do:
+- Use dedicated authentication mechanisms instead of email
+- Implement proper username/password authentication
+- Reserve email for communication and recovery only
+dont:
+- Use email address as primary authentication
+- Rely on email-based authentication for sensitive operations
+- Send authentication credentials via email
+detect:
+  semgrep:
+  - email-based-authentication
+verify:
+  tests:
+  - Verify email is not used for primary authentication
+  - Test that authentication uses proper mechanisms
+refs:
+  asvs:
+  - V6.1.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021

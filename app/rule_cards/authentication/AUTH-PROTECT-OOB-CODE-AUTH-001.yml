@@ -1,0 +1,28 @@
+id: AUTH-PROTECT-OOB-CODE-AUTH-001
+title: Protect Code-based Out-of-Band Authentication
+severity: medium
+scope: web-application
+requirement: Code-based out-of-band authentication must be protected against brute
+  force attacks, replay attacks, and timing attacks.
+do:
+- Implement rate limiting for out-of-band code attempts
+- Protect against timing attacks in code verification
+- Prevent replay of used authentication codes
+dont:
+- Allow unlimited code verification attempts
+- Use predictable timing for code validation
+- Accept previously used codes
+detect:
+  semgrep:
+  - oob-authentication-protection
+verify:
+  tests:
+  - Test rate limiting on code verification attempts
+  - Verify protection against timing attacks
+refs:
+  asvs:
+  - V6.5.1
+  cwe:
+  - CWE-307
+  owasp:
+  - A07:2021

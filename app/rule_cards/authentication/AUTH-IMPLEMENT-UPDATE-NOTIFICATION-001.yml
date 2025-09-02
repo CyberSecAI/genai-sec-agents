@@ -1,0 +1,27 @@
+id: AUTH-IMPLEMENT-UPDATE-NOTIFICATION-001
+title: Authentication Details Update Notification
+severity: medium
+scope: web-application
+requirement: Send notifications to users when authentication details are updated
+  to ensure visibility and prevent unauthorized changes.
+do:
+- Send notifications when authentication details change
+- Include relevant change information in notifications
+- Provide secure communication channels for notifications
+dont:
+- Update authentication without user notification
+- Send notifications with sensitive authentication data
+detect:
+  semgrep:
+  - authentication-change-notification
+verify:
+  tests:
+  - Verify notifications are sent on authentication updates
+  - Test notification content excludes sensitive data
+refs:
+  asvs:
+  - V6.4.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021

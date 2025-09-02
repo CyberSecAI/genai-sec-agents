@@ -1,0 +1,31 @@
+id: SESSION-IMPLEMENT-SECURE-MECHANISMS-001
+title: Enforce secure session management mechanisms
+severity: critical
+scope: web-application
+requirement: Implement secure session management mechanisms including proper
+  session creation, maintenance, and termination to prevent session-based attacks.
+do:
+- Implement secure session token generation
+- Use cryptographically strong session identifiers
+- Enforce proper session timeout mechanisms
+- Implement secure session storage
+dont:
+- Use predictable session identifiers
+- Store sessions in insecure locations
+- Allow indefinite session duration
+- Reuse session tokens after logout
+detect:
+  semgrep:
+  - session-management-security
+verify:
+  tests:
+  - Verify session token randomness and strength
+  - Test session timeout enforcement
+  - Validate secure session storage
+refs:
+  asvs:
+  - V3.1.1
+  cwe:
+  - CWE-384
+  owasp:
+  - A07:2021

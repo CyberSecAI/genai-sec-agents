@@ -1,0 +1,30 @@
+id: AUTH-IMPLEMENT-BIOMETRIC-AUTH-001
+title: Biometric Authentication Usage
+severity: high
+scope: web-application
+requirement: Implement biometric authentication with proper security controls
+  including template protection and fallback mechanisms.
+do:
+- Implement secure biometric template storage
+- Provide fallback authentication methods
+- Protect biometric data with encryption
+- Use secure biometric comparison algorithms
+dont:
+- Store raw biometric data without protection
+- Rely solely on biometric authentication
+- Transmit biometric templates in plaintext
+detect:
+  semgrep:
+  - biometric-authentication-security
+verify:
+  tests:
+  - Verify biometric template encryption
+  - Test fallback authentication mechanisms
+  - Validate secure biometric comparison
+refs:
+  asvs:
+  - V6.3.1
+  cwe:
+  - CWE-287
+  owasp:
+  - A07:2021

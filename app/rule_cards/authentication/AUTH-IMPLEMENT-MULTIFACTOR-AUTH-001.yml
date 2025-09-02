@@ -1,4 +1,4 @@
-id: AUTH-GEN-002
+id: AUTH-IMPLEMENT-MULTIFACTOR-AUTH-001
 title: Multi-Factor Authentication Usage
 severity: medium
 scope: web-application

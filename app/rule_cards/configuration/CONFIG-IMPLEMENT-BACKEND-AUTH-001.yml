@@ -1,0 +1,30 @@
+id: CONFIG-IMPLEMENT-BACKEND-AUTH-001
+title: Authenticate backend communication components
+severity: high
+scope: web-application
+requirement: Implement authentication mechanisms for all backend communication
+  components to ensure secure inter-service communication.
+do:
+- Authenticate all backend communication components
+- Use mutual TLS or service-to-service authentication
+- Implement proper certificate management
+- Monitor backend authentication failures
+dont:
+- Allow unauthenticated backend communication
+- Use weak authentication between services
+- Skip certificate validation in backend calls
+detect:
+  semgrep:
+  - backend-authentication-missing
+verify:
+  tests:
+  - Verify backend services require authentication
+  - Test certificate validation in backend communication
+  - Validate authentication failure handling
+refs:
+  asvs:
+  - V9.2.1
+  cwe:
+  - CWE-306
+  owasp:
+  - A07:2021
