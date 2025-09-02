@@ -294,11 +294,16 @@ Mock security guidance based on provided rules.
    ```
 ```
 
-## Semantic Search Enhancement (Story 2.4)
+## OWASP & ASVS Semantic Search Enhancement (Story 2.6)
 
 ### Overview
 
-Building on the core sub-agent functionality, Story 2.4 adds **semantic search capabilities** that enhance the compiled rule system with flexible knowledge access. This demonstrates the hybrid architecture combining deterministic rules with optional semantic search.
+Building on Stories 2.4 and 2.5, Story 2.6 delivers **comprehensive OWASP & ASVS semantic search integration** that transforms the compiled rule system into an intelligent security knowledge base. This demonstrates the complete architecture with:
+
+- **102 OWASP CheatSheets**: Processed with YAML front-matter and security domain tags
+- **17 ASVS Verification Standards**: Filtered V1-V17 requirements with intelligent cleanup
+- **Hybrid Architecture**: Semantic search + lexical search + compiled rule cards
+- **Development Integration**: Real-time guidance during coding with Claude Code CLI
 
 ### Test Application: Enhanced Analysis
 
@@ -618,39 +623,39 @@ class CodeContextAnalyzer:
         return self._merge_analysis_results(compiled_results, semantic_results)
 ```
 
-### Story 2.4 Acceptance Criteria Validation
+### Story 2.6 Acceptance Criteria Validation
 
-All acceptance criteria for semantic search integration are met:
+All acceptance criteria for OWASP & ASVS semantic search integration are met:
 
-#### AC1: Corpus Management ✅
-- Rule cards rendered into searchable format
-- Corpus includes all Rule Cards plus OWASP guidance  
-- Automatic updates when rule cards change
-- Versioning and freshness tracking implemented
+#### AC1: OWASP CheatSheets Integration ✅
+- 102 OWASP CheatSheets processed with YAML front-matter
+- Automatic security domain tagging and metadata extraction
+- Git submodule integration with `vendor/owasp-cheatsheets`
+- Intelligent filtering excludes non-guidance files
 
-#### AC2: Local Semantic Search Interface ✅
-- Query interface using semtools with fallback
-- Ranked results with provenance and confidence scores
-- Contextual snippets with security guidance
-- Filtering by language, category, and severity
+#### AC2: ASVS Standards Integration ✅
+- 17 ASVS verification standards (V1-V17) processed
+- Automatic cleanup removes documentation/appendix files
+- Git submodule integration with `vendor/owasp-asvs`
+- SHA256 checksums ensure content integrity
 
-#### AC3: Feature Flag Integration ✅
-- Runtime retrieval OFF by default (secure)
-- Optional per-analysis enablement
-- Comprehensive audit logging
-- Global and scoped configuration management
+#### AC3: Intelligent Corpus Processing ✅
+- Automated orphaned file removal during ingestion
+- Normalization script handles both OWASP and ASVS content
+- Makefile automation with security controls
+- Content deduplication and metadata enrichment
 
-#### AC4: Developer Tools Integration ✅
-- Manual commands enhanced with --semantic option
-- Clear differentiation of compiled vs semantic results
-- Explain mode with semantic enhancement
-- PR review mode with additional context
+#### AC4: Development Workflow Integration ✅
+- Three usage patterns: rule cards, semantic search, lexical search
+- Real-time Claude Code CLI integration examples
+- Contextual security guidance during coding
+- Standards compliance mapping (OWASP/ASVS/CWE)
 
-#### AC5: Performance and Reliability ✅
-- <1 second search requirement consistently met
-- Manageable corpus size (<100MB)
-- Graceful fallback when semantic search unavailable
-- Search quality validated against security scenarios
+#### AC5: Comprehensive Search Architecture ✅
+- Dual architecture diagrams (Mermaid + ASCII)
+- Complete data flow from source repos to search results
+- Security wrapper with query validation and timeouts
+- Makefile targets for easy corpus building and searching
 
 ### Security Requirements Validation
 

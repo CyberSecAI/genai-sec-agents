@@ -15,19 +15,20 @@ Complete guide for using the GenAI Security Agents Policy-as-Code compilation sy
 
 ## Overview
 
-The Agent Compiler Toolchain transforms human-readable YAML Rule Cards into machine-readable JSON agent packages for AI-powered security guidance systems. The system provides:
+The GenAI Security Agents system transforms security knowledge into intelligent development assistance through multiple integrated components:
 
-- **Secure Compilation**: YAML to JSON transformation with security validation
-- **Multi-Agent Support**: 5 specialized security agents from shared Rule Cards
-- **Scanner Integration**: Automated mapping to Semgrep, TruffleHog, CodeQL, and other tools
-- **Standards Compliance**: Automatic CWE, ASVS, and OWASP reference validation
-- **Version Control**: Git-based versioning and source integrity tracking
+- **Semantic Search Corpus**: OWASP CheatSheets (102 files) + ASVS standards (17 files) for comprehensive security guidance
+- **Rule Card Compilation**: YAML to JSON transformation with security validation for Claude Code sub-agents
+- **Development Integration**: Real-time security guidance during coding with Claude Code CLI
+- **Multi-Search Approach**: Semantic search + lexical search + compiled rule cards for comprehensive coverage
+- **Standards Compliance**: Automatic CWE, ASVS, and OWASP reference validation and mapping
 
 ## Installation
 
 ### Prerequisites
 - Python 3.11+ 
 - Git repository access
+- Rust toolchain (for semantic search capabilities)
 - Basic YAML knowledge for Rule Card creation
 
 ### Setup
@@ -36,11 +37,20 @@ The Agent Compiler Toolchain transforms human-readable YAML Rule Cards into mach
 git clone <repository-url>
 cd genai-sec-agents
 
+# Install Rust and semtools for semantic search
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+cargo install semtools
+
+# Build OWASP & ASVS semantic search corpus
+make semsearch-build
+
 # Verify installation
 make help
+make validate
 ```
 
-No additional dependencies required - the compiler uses Python standard library for security.
+The system includes both compiled rule cards (using Python standard library) and semantic search capabilities (using Rust-based semtools).
 
 ## Quick Start
 
@@ -67,6 +77,19 @@ make build
 make test
 ```
 **Output**: Security validation and integration test results
+
+### 5. Use Semantic Search for Development
+```bash
+# Search OWASP guidance for JWT security
+make semsearch q="JWT token validation best practices"
+
+# Search ASVS standards for authentication requirements
+make semsearch-asvs q="password security requirements"
+
+# Use with Claude Code CLI for development assistance
+# See main README.md for comprehensive development workflow examples
+```
+**Output**: Semantic search results from OWASP CheatSheets and ASVS standards
 
 ## Detailed Workflows
 

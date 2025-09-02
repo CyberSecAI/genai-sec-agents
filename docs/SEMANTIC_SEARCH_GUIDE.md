@@ -1,12 +1,13 @@
-# Semantic Search User Guide
+# OWASP & ASVS Semantic Search User Guide
 
 ## Overview
 
-The GenAI Security Agents semantic search integration (Story 2.4) provides **local semantic search capabilities** that enhance the compiled rule system with flexible knowledge access. This hybrid architecture combines:
+The GenAI Security Agents OWASP & ASVS semantic search integration (Story 2.6) provides **comprehensive security knowledge access** that transforms development workflows with intelligent guidance. This complete system combines:
 
-- **Deterministic compiled rules** (Stories 2.1-2.3) for core behavior
-- **Local semantic search** using semtools for extended knowledge access
-- **Feature flag control** ensuring secure defaults (runtime retrieval OFF by default)
+- **102 OWASP CheatSheets**: Complete security guidance corpus with intelligent processing
+- **17 ASVS Verification Standards**: V1-V17 requirements with automated cleanup
+- **Hybrid Search Architecture**: Semantic search + lexical search + compiled rule cards
+- **Development Integration**: Real-time Claude Code CLI assistance during coding
 
 ## Key Features
 
@@ -38,36 +39,43 @@ The GenAI Security Agents semantic search integration (Story 2.4) provides **loc
 ### 1. Install Dependencies
 
 ```bash
+# Install Rust toolchain
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+
 # Install semtools for semantic search functionality
-pip install semtools>=0.1.0
+cargo install semtools
 
 # Verify installation
-python3 -c "from app.semantic import SemanticSearchInterface; print('Semantic search available')"
+search --version
 ```
 
-### 2. Generate Rule Card Corpus
+### 2. Build OWASP & ASVS Corpus
 
 ```bash
-# Generate corpus from existing Rule Cards
-python3 -c "
-from app.semantic import CorpusManager
-cm = CorpusManager()
-corpus = cm.render_corpus_from_packages([])
-print(f'Corpus generated: {len(corpus.content)} bytes')
-print(f'Rule cards processed: {len(corpus.metadata.source_cards)}')
-"
+# Build both OWASP CheatSheets and ASVS standards
+make semsearch-build
+
+# Or build individually
+make semsearch-build-owasp    # 102 OWASP CheatSheets
+make semsearch-build-asvs     # 17 ASVS verification standards
+
+# Verify corpus built successfully
+ls -la research/search_corpus/owasp/ | wc -l
+ls -la research/search_corpus/asvs/ | wc -l
 ```
 
-### 3. Verify Semantic Search Availability
+### 3. Test Semantic Search Functionality
 
 ```bash
-# Check semantic search interface status
-python3 -c "
-from app.semantic import SemanticSearchInterface
-si = SemanticSearchInterface()
-print('Semantic search available:', si.is_available())
-print('Search statistics:', si.get_search_statistics())
-"
+# Test OWASP CheatSheets search
+make semsearch q="JWT token validation"
+
+# Test ASVS standards search  
+make semsearch-asvs q="authentication requirements"
+
+# Direct semtools usage
+search "password security" research/search_corpus/owasp/*.md --top-k 5
 ```
 
 ## Usage Examples
