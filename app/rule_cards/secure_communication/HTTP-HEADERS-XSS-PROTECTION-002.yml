@@ -7,20 +7,14 @@ requirement: Implement X-XSS-Protection header to prevent reflected cross-site s
 do:
 - Set X-XSS-Protection header with '1; mode=block' to enable XSS protection in supported
   browsers
-- Validate certificates received before communicating with a TLS server
-- Use strong authentication methods for intra-service communications
 dont:
 - Disable X-XSS-Protection header or set it to '0'
-- Trust certificates without validation
 detect:
   semgrep:
-  - python.requests.security.disabled-cert-validation
-  - javascript.lang.security.audit.tls-min-version
+  - http.response.header.x-xss-protection
 verify:
   tests:
   - Manually verify X-XSS-Protection header is set correctly
-  - Verify TLS client certificate validation
-  - Verify strong authentication methods for intra-service communications
 refs:
   asvs:
   - V12.3.2

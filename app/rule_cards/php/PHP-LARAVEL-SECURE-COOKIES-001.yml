@@ -1,5 +1,5 @@
-id: PHP-PREVENT-XSS-MGMT-001
-title: Secure cookie settings for Laravel application
+id: PHP-LARAVEL-SECURE-COOKIES-001
+title: Secure Cookie Configuration for Laravel Applications
 severity: medium
 scope: web-application
 requirement: Configure secure cookie attributes to enhance the security of session

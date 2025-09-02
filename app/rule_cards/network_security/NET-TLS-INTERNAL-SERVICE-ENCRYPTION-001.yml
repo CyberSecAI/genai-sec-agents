@@ -1,4 +1,4 @@
-id: SECURE-COMMUNICATION-TLS-INTERNAL-001
+id: NET-TLS-INTERNAL-SERVICE-ENCRYPTION-001
 title: Ensure TLS for internal service communication
 severity: high
 scope: web-application

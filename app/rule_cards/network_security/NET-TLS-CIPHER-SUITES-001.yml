@@ -1,0 +1,28 @@
+id: NET-TLS-CIPHER-SUITES-001
+title: Enable Strong, Recommended Cipher Suites
+severity: medium
+scope: web-application
+requirement: Only recommended cipher suites are enabled, with the strongest cipher
+  suites set as preferred. L3 applications must only support cipher suites which provide
+  forward secrecy.
+do:
+- Enable recommended and strong cipher suites, with the strongest set as preferred.
+- Ensure all supported cipher suites provide forward secrecy, especially for L3 applications.
+dont:
+- Allow weak or deprecated cipher suites.
+detect:
+  semgrep:
+  - python.requests.security.disabled-cert-validation
+  - javascript.lang.security.audit.tls-min-version
+  - generic.secrets.security.detected-secret
+verify:
+  tests:
+  - Verify that only recommended and strong cipher suites are enabled.
+  - Verify that cipher suites providing forward secrecy are preferred.
+refs:
+  asvs:
+  - V12.1.2
+  cwe:
+  - CWE-326
+  owasp:
+  - A06:2021

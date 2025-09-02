@@ -1,4 +1,4 @@
-id: SECURE-COMMUNICATION-TLS-001
+id: NET-TLS-LATEST-VERSIONS-001
 title: Enable latest TLS versions for secure communication
 severity: high
 scope: web-application
