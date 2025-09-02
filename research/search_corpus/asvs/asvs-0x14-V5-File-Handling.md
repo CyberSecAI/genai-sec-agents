@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x14-V5-File-Handling.md
+path: en/0x14-V5-File-Handling.md
 processed_at: null
 security_domains:
 - docker
@@ -9,8 +9,8 @@ security_domains:
 sha256: 2db0512a5fded5d01cefd5233be812ea68a42241d824581c3b1ac0a424c0229d
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 

@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x26-V17-WebRTC.md
+path: en/0x26-V17-WebRTC.md
 processed_at: null
 security_domains:
 - access_control
@@ -13,8 +13,8 @@ security_domains:
 sha256: 11a5b7488c5eec6f4562133059171f6772b82d652ca6a07a271afe8d2baf0b07
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 

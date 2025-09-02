@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x15-V6-Authentication.md
+path: en/0x15-V6-Authentication.md
 processed_at: null
 security_domains:
 - authentication
@@ -12,8 +12,8 @@ security_domains:
 sha256: 7b283d31858a8cbff9b024591ac1917876f650b4932af26d42cd2dae7dd74ee0
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 

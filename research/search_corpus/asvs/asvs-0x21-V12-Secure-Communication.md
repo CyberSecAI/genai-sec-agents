@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x21-V12-Secure-Communication.md
+path: en/0x21-V12-Secure-Communication.md
 processed_at: null
 security_domains:
 - cryptography
@@ -9,8 +9,8 @@ security_domains:
 sha256: 317dad4c6bb1bdf6595d41d3478981d5f99b2578c53a0e95232bd564b30116ac
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 

@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md
+path: en/0x25-V16-Security-Logging-and-Error-Handling.md
 processed_at: null
 security_domains:
 - authorization
@@ -12,8 +12,8 @@ security_domains:
 sha256: 485fbd4aed7148013fd71fd7e2622acdc4b1fdc1718632967920d7ccefb2aeeb
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 

@@ -265,13 +265,50 @@ class OWASPNormalizer:
             logger.error(f"Error processing file {md_file}: {e}")
             return None
 
-    def process_all_content(self, source_type: str = 'owasp') -> Dict[str, int]:
-        """Process content based on source type with security validation"""
+    def _cleanup_orphaned_files(self, source_files: List[Path], source_type: str = 'owasp') -> int:
+        """Remove processed files that no longer exist in source directory"""
+        if not self.output_dir.exists():
+            return 0
+            
+        # Create mapping of expected output files based on source files
+        expected_outputs = set()
+        for source_file in source_files:
+            prefix = 'asvs-' if source_type == 'asvs' else ''
+            output_filename = self._sanitize_filename(f"{prefix}{source_file.stem}.md")
+            expected_outputs.add(output_filename)
+        
+        # Find orphaned files in output directory
+        orphaned_count = 0
+        prefix_filter = 'asvs-' if source_type == 'asvs' else ''
+        
+        for output_file in self.output_dir.glob('*.md'):
+            # Only consider files with matching prefix for this source type
+            if source_type == 'asvs' and not output_file.name.startswith('asvs-'):
+                continue
+            elif source_type == 'owasp' and output_file.name.startswith('asvs-'):
+                continue
+                
+            if output_file.name not in expected_outputs:
+                try:
+                    logger.info(f"Removing orphaned file: {output_file.name}")
+                    output_file.unlink()
+                    orphaned_count += 1
+                except OSError as e:
+                    logger.error(f"Failed to remove orphaned file {output_file}: {e}")
+        
+        if orphaned_count > 0:
+            logger.info(f"Cleaned up {orphaned_count} orphaned {source_type.upper()} files")
+        
+        return orphaned_count
+
+    def process_all_content(self, source_type: str = 'owasp', cleanup: bool = True) -> Dict[str, int]:
+        """Process content based on source type with security validation and cleanup"""
         stats = {
             'processed': 0,
             'skipped': 0,
             'errors': 0,
-            'total_files': 0
+            'total_files': 0,
+            'cleaned_up': 0
         }
         
         # Ensure output directory exists
@@ -301,9 +338,31 @@ class OWASPNormalizer:
             'README.md', 'LICENSE.md', 'COMPILING.md', 'hall_of-fame.md', 
             'pull_request_template.md', 'CODE_OF_CONDUCT.md'
         }
-        md_files = [f for f in md_files if f.name not in excluded_files]
+        
+        # For ASVS, only include actual verification standards (V1-V17), exclude meta/documentation files
+        if source_type == 'asvs':
+            asvs_excluded_patterns = [
+                '0x00-', '0x01-', '0x02-', '0x03-', '0x04-', '0x05-',  # Headers, frontispiece, preface, intro, assessment, migration
+                '0x90-', '0x91-', '0x92-', '0x93-', '0x94-',          # Appendices (glossary, references, crypto, recommendations, contributors)
+                'CONTRIBUTING', 'SUPPORTERS', 'TRANSLATIONS',         # Meta files (removed 'Security' - too broad)
+                'cre_mapping', 'nist', 'standard-asvs-issue'          # Mapping/reference files
+            ]
+            
+            # More precise exclusion for Security.md file specifically
+            asvs_excluded_exact_files = ['Security.md']
+            
+            md_files = [f for f in md_files if f.name not in excluded_files and 
+                       f.name not in asvs_excluded_exact_files and
+                       not any(pattern in f.name for pattern in asvs_excluded_patterns)]
+            logger.info(f"ASVS filtering: excluded non-verification files, {len(md_files)} verification standards remaining")
+        else:
+            md_files = [f for f in md_files if f.name not in excluded_files]
         
         stats['total_files'] = len(md_files)
+        
+        # Cleanup orphaned files before processing
+        if cleanup:
+            stats['cleaned_up'] = self._cleanup_orphaned_files(md_files, source_type)
         
         if md_files:
             logger.info(f"Processing {len(md_files)} {source_type.upper()} files...")
@@ -321,9 +380,10 @@ class OWASPNormalizer:
         else:
             logger.warning(f"No {source_type.upper()} files found in {self.source_dir}")
         
-        # Log summary
+        # Log summary including cleanup
+        cleanup_msg = f", {stats['cleaned_up']} cleaned up" if cleanup else ""
         logger.info(f"Processing complete: {stats['processed']} processed, "
-                   f"{stats['skipped']} skipped, {stats['errors']} errors")
+                   f"{stats['skipped']} skipped, {stats['errors']} errors{cleanup_msg}")
         
         return stats
     
@@ -413,7 +473,7 @@ def main():
         args.process_owasp = True
         args.process_asvs = True
     
-    total_stats = {'processed': 0, 'skipped': 0, 'errors': 0, 'total_files': 0}
+    total_stats = {'processed': 0, 'skipped': 0, 'errors': 0, 'total_files': 0, 'cleaned_up': 0}
         
     try:
         # Process OWASP CheatSheets
@@ -454,6 +514,7 @@ def main():
         print(f"\nProcessing Summary:")
         print(f"  Files processed: {total_stats['processed']}")
         print(f"  Files skipped: {total_stats['skipped']}")
+        print(f"  Files cleaned up: {total_stats['cleaned_up']}")
         print(f"  Errors: {total_stats['errors']}")
         print(f"  Total files: {total_stats['total_files']}")
         

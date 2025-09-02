@@ -12,6 +12,7 @@ This repository implements a complete security rule management and compilation t
 - **Claude Code Sub-Agent**: Real-time security analysis within Claude Code IDE (Story 2.2) ✅
 - **Manual Security Analysis**: On-demand security scans for files and workspaces (Story 2.3) ✅
 - **Semtools Semantic Search**: Local semantic search for extended security knowledge (Story 2.4) ✅
+- **OWASP & ASVS Integration**: Semantic search with OWASP CheatSheets and ASVS standards (Story 2.6) ✅
 - **CI/CD Integration**: Makefile automation with validation and compilation workflows
 
 ## Quick Start
@@ -86,6 +87,37 @@ python3 -c "from app.semantic import CorpusManager; cm = CorpusManager(); corpus
 python3 -c "from app.semantic import SemanticSearchInterface; si = SemanticSearchInterface(); print('Available:', si.is_available()); print('Stats:', si.get_search_statistics())"
 ```
 
+### 8. OWASP & ASVS Semantic Search (Story 2.6) ✅
+```bash
+# Prerequisites: Install Rust and semtools
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+cargo install semtools
+
+# Build OWASP CheatSheets corpus (102 files)
+make semsearch-build-owasp
+
+# Build ASVS standards corpus (335 files)  
+make semsearch-build-asvs
+
+# Build both corpora
+make semsearch-build
+
+# Search OWASP CheatSheets for security guidance
+make semsearch q="JWT token validation"
+make semsearch q="Docker security best practices"
+make semsearch q="input sanitization XSS"
+
+# Search ASVS standards
+make semsearch-asvs q="authentication requirements"
+make semsearch-asvs q="session management controls"
+make semsearch-asvs q="cryptographic standards"
+
+# Direct semtools usage with proper syntax
+search "JWT security" research/search_corpus/owasp/*.md --top-k 5 --n-lines 3
+search "access control" research/search_corpus/asvs/*.md --top-k 10 --max-distance 0.4
+```
+
 ## Generated Agent Packages
 
 The compilation process generates 5 specialized security agent packages:
@@ -128,6 +160,20 @@ app/
 
 .claude/agents/             # Claude Code Sub-Agent Configuration ✅
 └── security-guidance.md    # Sub-agent definition with YAML frontmatter
+
+research/search_corpus/     # Semantic Search Corpus Files (Story 2.6) ✅
+├── owasp/                 # OWASP CheatSheets corpus (102 files)
+│   ├── Access_Control_Cheat_Sheet.md   # Processed with YAML front-matter
+│   ├── Authentication_Cheat_Sheet.md   # Security domain tags and checksums
+│   └── ...                             # Complete OWASP CheatSheet collection
+└── asvs/                  # ASVS standards corpus (335 files) 
+    ├── V1.1_Architecture_Design_and_Threat_Modeling.md
+    ├── V2.1_Password_Security.md
+    └── ...                             # Complete ASVS verification requirements
+
+tools/                      # Enhanced Processing Scripts
+├── render_owasp_for_search.py  # OWASP & ASVS corpus normalization
+└── semsearch.sh               # Semantic search wrapper script
 
 docs/                       # Comprehensive project documentation
 ├── stories/               # User story definitions and completion tracking
@@ -277,6 +323,14 @@ The Claude Code sub-agent now supports manual on-demand security analysis:
 - **🛡️ Security-First**: Comprehensive input validation, audit logging, resource limits
 - **🔄 Graceful Fallback**: Works completely offline when semtools unavailable
 
+**OWASP & ASVS Integration (Story 2.6):**
+- **📚 OWASP CheatSheets**: 102 processed security guidance documents with YAML front-matter
+- **🔒 ASVS Standards**: 335 verification requirements covering all security domains  
+- **🏷️ Smart Tagging**: Automatic security domain classification and metadata extraction
+- **🔍 Fast Search**: Rust-based semtools providing sub-second search across 437 documents
+- **⚙️ Makefile Automation**: Simple `make semsearch q="query"` interface for immediate access
+- **📋 Corpus Integrity**: SHA256 checksums and Git submodule tracking for content validation
+
 ### 📋 **Want to See This in Action?**
 Check out our **[Worked Example](docs/WORKED_EXAMPLE.md)** that demonstrates the sub-agent analyzing a vulnerable Flask application and shows:
 - How Claude Code routes the security task to the sub-agent
@@ -286,6 +340,201 @@ Check out our **[Worked Example](docs/WORKED_EXAMPLE.md)** that demonstrates the
 - Performance measurements and caching behavior
 
 ## Advanced Usage
+
+### Semantic Search Examples (Story 2.6)
+
+#### OWASP CheatSheets Search Examples
+```bash
+# JWT Security
+make semsearch q="JWT token validation best practices"
+# Returns: JWT_Cheat_Sheet.md with token validation guidelines
+
+# Input Validation
+make semsearch q="SQL injection prevention techniques" 
+# Returns: SQL_Injection_Prevention_Cheat_Sheet.md with parameterized queries
+
+# Authentication
+make semsearch q="multi-factor authentication implementation"
+# Returns: Authentication_Cheat_Sheet.md with MFA guidance
+
+# Container Security  
+make semsearch q="Docker container hardening"
+# Returns: Docker_Security_Cheat_Sheet.md with security configurations
+
+# Cross-Site Scripting
+make semsearch q="XSS prevention output encoding"
+# Returns: Cross_Site_Scripting_Prevention_Cheat_Sheet.md with encoding techniques
+```
+
+#### ASVS Standards Search Examples
+```bash
+# Authentication Requirements
+make semsearch-asvs q="password complexity requirements"
+# Returns: V2.1_Password_Security.md with ASVS password standards
+
+# Session Management
+make semsearch-asvs q="session timeout controls"
+# Returns: V3.2_Session_Binding.md with session management requirements
+
+# Access Control
+make semsearch-asvs q="authorization bypass prevention"
+# Returns: V4.1_General_Access_Control_Design.md with access control principles
+
+# Cryptography
+make semsearch-asvs q="encryption algorithm recommendations"
+# Returns: V6.2_Algorithms.md with approved cryptographic algorithms
+
+# Input Validation
+make semsearch-asvs q="input sanitization requirements"
+# Returns: V5.1_Input_Validation.md with validation standards
+```
+
+#### Advanced Search Patterns
+```bash
+# Domain-specific searches
+make semsearch q="API security headers" | head -20        # Focused results
+make semsearch-asvs q="mobile application security"       # ASVS corpus search
+
+# Direct semtools usage (the 'search' command installed via cargo install semtools)
+search "authentication bypass" research/search_corpus/owasp/*.md --top-k 3 --max-distance 0.7
+
+# Advanced semtools options
+search "CSRF protection" research/search_corpus/owasp/*.md --top-k 5 --n-lines 3
+search "access control" research/search_corpus/asvs/*.md --max-distance 0.5 --n-lines 2
+```
+
+#### Semtools CLI Reference
+The semantic search uses the `search` command from semtools with this syntax:
+```
+Usage: search [OPTIONS] <QUERY> [FILES]...
+
+Arguments:
+  <QUERY>     Query to search for (positional argument)
+  [FILES]...  Files or directories to search
+
+Options:
+  -n, --n-lines <N_LINES>            How many lines before/after to return as context [default: 3]
+      --top-k <TOP_K>                The top-k files or texts to return [default: 3]
+  -m, --max-distance <MAX_DISTANCE>  Return all results with distance below threshold (0.0+)
+  -i, --ignore-case                  Perform case-insensitive search
+  -h, --help                         Print help
+  -V, --version                      Print version
+```
+
+#### Worked Example: JWT Security Search
+```bash
+# Search OWASP corpus for JWT security guidance
+$ make semsearch q="JWT token validation best practices"
+
+[semsearch] Query validation passed: 'JWT token validation best practices'
+[semsearch] Using existing OWASP corpus
+[semsearch] Corpus contains 102 files
+[semsearch] Searching corpus at: /home/user/genai-sec-agents/research/search_corpus/owasp
+[semsearch] Query: 'JWT token validation best practices'
+
+Distance: 0.15 | File: JWT_Cheat_Sheet.md
+===== Context =====
+## Token Validation
+
+1. **Always validate the JWT signature** using the appropriate algorithm
+2. **Verify the token expiration (exp claim)** to prevent replay attacks
+3. **Check the issuer (iss claim)** matches your expected authentication server
+4. **Validate the audience (aud claim)** to ensure token is intended for your application
+5. **Implement proper error handling** for invalid or expired tokens
+
+Distance: 0.23 | File: Authentication_Cheat_Sheet.md  
+===== Context =====
+## JWT Implementation Guidelines
+
+- Store JWT secrets securely using environment variables or secure key management
+- Use strong cryptographic algorithms (RS256, ES256) instead of HS256 for production
+- Set appropriate token expiration times (15-30 minutes for access tokens)
+
+[semsearch] Search completed successfully
+
+# Direct semtools command for more control
+$ search "JWT signature validation" research/search_corpus/owasp/*.md --top-k 2 --n-lines 5
+
+Distance: 0.12 | File: research/search_corpus/owasp/JWT_Cheat_Sheet.md
+===== Context =====
+## Signature Verification
+
+Always verify JWT signatures before trusting any claims within the token:
+
+```python
+import jwt
+from jwt.exceptions import InvalidTokenError
+
+try:
+    decoded_token = jwt.decode(
+        token, 
+        public_key, 
+        algorithms=["RS256"],
+        audience="your-app-id",
+        issuer="trusted-auth-server"
+    )
+except InvalidTokenError:
+    # Handle invalid token
+    return False
+```
+
+Distance: 0.18 | File: research/search_corpus/owasp/Web_Service_Security_Cheat_Sheet.md
+===== Context =====
+## API Authentication
+
+For JWT-based API authentication:
+1. Validate signature using appropriate public key
+2. Check token expiration and not-before claims
+3. Verify issuer and audience match expected values
+4. Implement proper token refresh mechanisms
+5. Use secure transport (HTTPS) for all token exchanges
+```
+
+#### Troubleshooting Semantic Search
+
+**Installation Issues:**
+```bash
+# Install Rust toolchain if not present
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+
+# Install semtools with search feature
+cargo install semtools --no-default-features --features=search
+
+# Verify installation
+search --version
+which search  # Should show ~/.cargo/bin/search or system path
+```
+
+**Common Errors:**
+```bash
+# Error: "search binary not found"
+# Solution: Add ~/.cargo/bin to PATH or reinstall semtools
+
+# Error: "Corpus not found or empty" 
+# Solution: Build corpus first
+make semsearch-build
+
+# Error: "Query contains invalid characters"
+# Solution: Use only letters, numbers, spaces, dots, hyphens, underscores
+make semsearch q="valid query here"
+
+# Error: "Search timeout after 10s"
+# Solution: Simplify query or increase timeout
+SEARCH_TIMEOUT=20 make semsearch q="simpler query"
+```
+
+**Performance Tuning:**
+```bash
+# Faster searches with stricter distance threshold
+search "query" research/search_corpus/owasp/*.md --max-distance 0.3
+
+# More context lines for better understanding
+search "query" research/search_corpus/owasp/*.md --n-lines 7
+
+# Return more/fewer results
+search "query" research/search_corpus/owasp/*.md --top-k 10
+```
 
 ### Claude Code Sub-Agent
 ```bash
@@ -381,6 +630,7 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 | **Story 2.3** | Manual On-Demand Execution | ✅ **Complete** | Manual security scans, workspace analysis, CI/CD prediction |
 | **Story 2.4** | Semtools Semantic Search | ✅ **Complete** | Local semantic search, feature flags, corpus management, explain mode |
 | **Story 2.5** | OWASP Cheat Sheet Ingestion | 📋 **Planned** | Automated OWASP content ingestion, 100+ generated Rule Cards, hybrid knowledge base |
+| **Story 2.6** | OWASP & ASVS Semantic Search | ✅ **Complete** | 102 OWASP CheatSheets, 335 ASVS standards, semantic search corpus, Makefile automation |
 
 ### Current Capabilities
 - ✅ **15 Security Rule Cards** covering secrets, web security, GenAI, containers
@@ -393,6 +643,7 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 - ✅ **CI/CD Pipeline Prediction** for pre-commit validation
 - ✅ **Performance Optimization** with caching and timeout handling
 - ✅ **150+ Comprehensive Tests** covering all components, semantic search, and security validation
+- ✅ **OWASP & ASVS Semantic Search** with 437 processed security documents and fast Rust-based search
 
 ## Integration
 
@@ -414,6 +665,44 @@ make compile
 
 # Testing step
 make test || exit 1
+
+# Build semantic search corpus (optional)
+make semsearch-build
+```
+
+### Makefile Targets
+
+#### Core Development
+```bash
+make validate         # Validate all Rule Cards
+make compile         # Compile agent packages
+make build           # Full validation and compilation
+make test           # Run comprehensive test suite
+```
+
+#### Semantic Search (Story 2.6)
+```bash
+# Corpus Building
+make semsearch-build       # Build both OWASP and ASVS corpora
+make semsearch-build-owasp # Build OWASP CheatSheets corpus only
+make semsearch-build-asvs  # Build ASVS standards corpus only
+
+# Semantic Searching (via secure wrapper script)
+make semsearch q="JWT token validation"           # Search OWASP corpus with security controls
+make semsearch-asvs q="authentication controls"  # Search ASVS corpus with validation
+
+# Example Searches (all include input sanitization, timeouts, and path validation)
+make semsearch q="Docker security"               # Container security guidance
+make semsearch q="XSS prevention"               # Cross-site scripting prevention  
+make semsearch-asvs q="session management"      # ASVS session controls
+make semsearch-asvs q="cryptographic requirements" # ASVS crypto standards
+
+# Security features built into Makefile targets:
+# - Query validation and sanitization
+# - 10-second timeout protection
+# - Path traversal prevention
+# - Automatic corpus building if missing
+# - Top-k limited to 5 results (prevents resource exhaustion)
 ```
 
 ### Scanner Tool Integration

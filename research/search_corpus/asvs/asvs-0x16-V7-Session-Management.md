@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x16-V7-Session-Management.md
+path: en/0x16-V7-Session-Management.md
 processed_at: null
 security_domains:
 - authentication
@@ -11,8 +11,8 @@ security_domains:
 sha256: 10068b8982e45726fb9a65de05bba06c1648d5f5c2e727da88cf365201fb58e2
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 

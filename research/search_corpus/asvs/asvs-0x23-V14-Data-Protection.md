@@ -1,6 +1,6 @@
 ---
 license: CC-BY-SA-4.0
-path: owasp-asvs/5.0/en/0x23-V14-Data-Protection.md
+path: en/0x23-V14-Data-Protection.md
 processed_at: null
 security_domains:
 - configuration
@@ -14,8 +14,8 @@ security_domains:
 sha256: 60bbba02e5f0d9bb523ab5d224afc52a7b1701fcd728dba372e49d50ca5f3794
 source: owasp-asvs
 tags:
-- owasp
 - asvs
+- owasp
 verification_standard: ASVS
 ---
 
