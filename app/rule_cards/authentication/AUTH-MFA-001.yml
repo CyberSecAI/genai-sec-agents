@@ -1,0 +1,33 @@
+id: AUTH-MFA-001
+title: Rate Limit Push Notifications for Multi-Factor Authentication
+severity: high
+scope: web-application
+requirement: Verify that rate limiting is applied to push notifications used for multi-factor
+  authentication to prevent push bombing attacks. Number matching may also
+  mitigate this risk by requiring user interaction.
+do:
+- Implement rate limiting for push notifications in multi-factor authentication
+- Consider implementing number matching as an additional mitigation strategy
+- Monitor and log excessive push notification attempts
+dont:
+- Do not allow unlimited push notifications without rate limiting
+- Do not rely solely on push notifications without additional controls
+- Avoid implementing push notifications without abuse prevention mechanisms
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+  - generic.secrets.security.hardcoded-secret
+verify:
+  tests:
+  - Test rate limiting functionality for push notifications
+  - Verify number matching implementation if used
+  - Test push bombing attack scenarios
+refs:
+  asvs:
+  - V6.6.4
+  cwe:
+  - CWE-799
+  - CWE-287
+  owasp:
+  - A07:2021

@@ -1,0 +1,34 @@
+id: AUTH-SPOOFING-001
+title: Prevent Identity Spoofing with Multiple Identity Providers
+severity: high
+scope: web-application
+requirement: Verify that, if the application supports multiple identity providers
+  (IdPs), the user's identity cannot be spoofed via another supported identity provider.
+  The application should register and identify the user using a combination of the
+  IdP ID and the user's ID in the IdP.
+do:
+- Register and identify users using a combination of IdP ID and user's ID in the IdP
+- Implement checks to prevent identity spoofing across multiple identity providers
+- Validate that user identities are unique across all supported IdPs
+dont:
+- Do not rely solely on user identifier without considering IdP ID
+- Do not allow unauthorized access through identity provider manipulation
+- Avoid trusting user identity claims without proper IdP validation
+detect:
+  semgrep:
+  - javascript.express.security.audit.express-session-no-secret
+  - python.django.security.audit.session-cookie-secure-false
+  - generic.secrets.security.hardcoded-secret
+verify:
+  tests:
+  - Test identity verification across multiple identity providers
+  - Verify prevention of identity spoofing scenarios
+  - Test user registration with duplicate identities across IdPs
+refs:
+  asvs:
+  - V6.8.1
+  cwe:
+  - CWE-347
+  - CWE-287
+  owasp:
+  - A07:2021
