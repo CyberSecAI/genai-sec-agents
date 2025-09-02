@@ -1,6 +1,7 @@
 tmp
 venv-security
 test_env
+digest.txt 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

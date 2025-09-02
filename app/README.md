@@ -168,9 +168,36 @@ All rule cards undergo validation for:
 - Verification test completeness
 - Documentation completeness
 
-## Integration
+## Integration with OWASP & ASVS Corpus
+
+These rule cards are automatically enhanced by the OWASP & ASVS semantic search corpus, creating a comprehensive security knowledge base for Claude Code CLI.
+
+### Corpus Integration Points
+
+**1. Rule Card Generation:**
+- OWASP CheatSheets are processed to create additional rule cards
+- ASVS standards provide verification requirements for existing cards
+- Semantic relationships link related security concepts across standards
+
+**2. Real-Time Search Integration:**
+```bash
+# Rule cards trigger corpus searches for additional context
+JWT-SIG-001 → make semsearch q="JWT signature verification OWASP"
+SECRETS-API-001 → make semsearch q="API key security management"
+DOCKER-USER-001 → make semsearch q="container privilege escalation"
+```
+
+**3. Enhanced Guidance:**
+Each rule card now references:
+- **OWASP CheatSheet sections**: Specific implementation guidance
+- **ASVS verification requirements**: Testing and validation criteria
+- **Related security concepts**: Semantic connections to broader security topics
+
+### Development Integration
 
 These rule cards integrate with:
+- **Claude Code CLI** for real-time security analysis during development
+- **Semantic Search** for contextual security guidance (119 OWASP + 17 ASVS documents)
 - **CI/CD pipelines** for automated security scanning
 - **Security dashboards** for compliance reporting  
 - **Developer tools** for real-time security feedback
@@ -186,6 +213,3 @@ When contributing new rule cards:
 4. Provide detailed verification tests
 5. Validate all references and mappings
 
-## License
-
-This security rule card collection is provided for defensive security purposes only.

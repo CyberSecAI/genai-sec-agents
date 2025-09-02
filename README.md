@@ -88,6 +88,130 @@ python3 -c "from app.semantic import SemanticSearchInterface; si = SemanticSearc
 ```
 
 ### 8. OWASP & ASVS Semantic Search (Story 2.6) ✅
+
+#### Architecture Overview
+
+**Mermaid Diagram (Interactive):**
+```mermaid
+graph TB
+    subgraph "Source Repositories"
+        A1[OWASP CheatSheets<br/>git submodule<br/>102 files]
+        A2[OWASP ASVS<br/>git submodule<br/>17 standards V1-V17]
+    end
+    
+    subgraph "Processing Layer"
+        B[render_owasp_for_search.py<br/>• Content normalization<br/>• YAML front-matter generation<br/>• Security domain tagging<br/>• SHA256 checksums<br/>• Intelligent filtering<br/>• Orphaned file cleanup]
+    end
+    
+    subgraph "Search Corpus"
+        C1[research/search_corpus/owasp/<br/>102 processed .md files<br/>with YAML metadata]
+        C2[research/search_corpus/asvs/<br/>17 processed .md files<br/>with YAML metadata]
+    end
+    
+    subgraph "Makefile Automation"
+        D1[make semsearch-build-owasp]
+        D2[make semsearch-build-asvs] 
+        D3[make semsearch-build]
+    end
+    
+    subgraph "Search Interface"
+        E1["make semsearch q=query"]
+        E2["make semsearch-asvs q=query"]
+    end
+    
+    subgraph "Search Layer"
+        F[tools/semsearch.sh<br/>• Query validation<br/>• Input sanitization<br/>• Timeout controls<br/>• Path validation<br/>• Security logging]
+        G[semtools Rust Engine<br/>• Fast semantic search<br/>• Vector similarity<br/>• Distance thresholding<br/>• Context extraction<br/>• Relevance ranking]
+    end
+    
+    subgraph "Results"
+        H[Structured Search Results<br/>• Distance scoring<br/>• Context highlighting<br/>• Relevance ranking<br/>• Security-focused output]
+    end
+    
+    A1 --> B
+    A2 --> B
+    B --> C1
+    B --> C2
+    
+    D1 --> B
+    D2 --> B
+    D3 --> B
+    
+    E1 --> F
+    E2 --> F
+    F --> G
+    G --> C1
+    G --> C2
+    G --> H
+    
+    style A1 fill:#e1f5fe
+    style A2 fill:#e1f5fe  
+    style B fill:#f3e5f5
+    style C1 fill:#e8f5e8
+    style C2 fill:#e8f5e8
+    style F fill:#fff3e0
+    style G fill:#ffebee
+    style H fill:#f1f8e9
+```
+
+**ASCII Diagram (Terminal-friendly):**
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                          OWASP & ASVS Semantic Search Architecture                  │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────┐    ┌──────────────────────┐    ┌─────────────────────┐
+│   Source Repos      │    │   Processing Layer   │    │   Search Corpus     │
+│                     │    │                      │    │                     │
+│ ┌─────────────────┐ │    │ ┌──────────────────┐ │    │ ┌─────────────────┐ │
+│ │ OWASP CheatSheets│ │───▶│ │render_owasp_for_ │ │───▶│ │research/search_ │ │
+│ │ (git submodule) │ │    │ │search.py         │ │    │ │corpus/owasp/    │ │
+│ │ 102 files       │ │    │ │                  │ │    │ │ 102 processed   │ │
+│ └─────────────────┘ │    │ │• Normalization   │ │    │ │ .md files       │ │
+│                     │    │ │• YAML front-matter│ │    │ └─────────────────┘ │
+│ ┌─────────────────┐ │    │ │• Security tagging│ │    │                     │
+│ │ OWASP ASVS      │ │───▶│ │• SHA256 checksums│ │───▶│ ┌─────────────────┐ │
+│ │ (git submodule) │ │    │ │• Content cleanup │ │    │ │research/search_ │ │
+│ │ 17 standards    │ │    │ │• Orphan removal  │ │    │ │corpus/asvs/     │ │
+│ └─────────────────┘ │    │ └──────────────────┘ │    │ │ 17 processed    │ │
+└─────────────────────┘    └──────────────────────┘    │ │ .md files       │ │
+                                     │                 │ └─────────────────┘ │
+                                     ▼                 └─────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                              Makefile Automation                                    │
+│  make semsearch-build       make semsearch-build-owasp    make semsearch-build-asvs │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                               Search Layer                                          │
+│                                                                                     │
+│ ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────────────────────┐ │
+│ │ Makefile Targets│───▶│tools/semsearch.sh│───▶│        semtools (Rust)          │ │
+│ │                 │    │                   │    │                                 │ │
+│ │ • semsearch     │    │ • Query validation│    │ • Fast semantic search          │ │
+│ │ • semsearch-asvs│    │ • Input sanitization│  │ • Vector similarity             │ │
+│ └─────────────────┘    │ • Timeout controls│    │ • Distance thresholding         │ │
+│                        │ • Path validation │    │ • Context extraction            │ │
+│                        │ • Security logging│    │ • Relevance ranking             │ │
+│                        └──────────────────┘    └─────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                             Search Results                                          │
+│                                                                                     │
+│  Distance: 0.15 | File: JWT_Cheat_Sheet.md                                        │
+│  ===== Context =====                                                               │
+│  ## Token Validation                                                               │
+│  1. **Always validate the JWT signature** using the appropriate algorithm         │
+│  2. **Verify the token expiration (exp claim)** to prevent replay attacks         │
+│  ...                                                                               │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+
+```
+
+#### Quick Start Commands
 ```bash
 # Prerequisites: Install Rust and semtools
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -97,7 +221,7 @@ cargo install semtools
 # Build OWASP CheatSheets corpus (102 files)
 make semsearch-build-owasp
 
-# Build ASVS standards corpus (335 files)  
+# Build ASVS standards corpus (17 files)  
 make semsearch-build-asvs
 
 # Build both corpora
@@ -117,6 +241,336 @@ make semsearch-asvs q="cryptographic standards"
 search "JWT security" research/search_corpus/owasp/*.md --top-k 5 --n-lines 3
 search "access control" research/search_corpus/asvs/*.md --top-k 10 --max-distance 0.4
 ```
+
+#### Architecture Components
+
+**Source Layer:**
+- **OWASP CheatSheets**: Git submodule with 102 security guidance documents
+- **OWASP ASVS**: Git submodule with verification standards, filtered to 17 core requirements (V1-V17)
+
+**Processing Layer:**
+- **render_owasp_for_search.py**: Intelligent processing script that normalizes content, adds YAML front-matter with security domain tags, generates SHA256 checksums, and automatically removes orphaned files
+- **Filtering Logic**: Excludes non-guidance files (prefaces, appendices) while preserving all verification standards
+- **Cleanup System**: Tracks source files and removes processed files that no longer exist in source
+
+**Search Layer:**
+- **Makefile Integration**: Simple `make semsearch q="query"` interface with built-in security controls
+- **Security Wrapper**: `tools/semsearch.sh` provides query validation, input sanitization, timeout protection, and path validation
+- **Semtools Engine**: Rust-based semantic search with vector similarity, distance thresholding, and context extraction
+
+**Output Layer:**
+- **Structured Results**: Distance scoring, context highlighting, and relevance ranking
+- **Multiple Formats**: Interactive terminal output with highlighted matches and context
+
+## Using the Security Corpus During Development
+
+The OWASP & ASVS corpus serves three critical functions during development with Claude Code CLI, enabling intelligent security assistance throughout the coding process.
+
+### 1. Rule Card Generation for Sub-Agents
+
+The semantic corpus automatically enhances Claude Code's security sub-agents by converting OWASP and ASVS guidance into structured rule cards:
+
+**How it works:**
+```bash
+# Corpus content is processed into rule cards for sub-agents
+python3 app/claude_code/corpus_to_rules.py --source owasp --target JWT_security
+# Generates: JWT-SIG-001, JWT-ALG-001, JWT-KEY-001 rule cards
+
+# Sub-agent automatically uses these during analysis
+claude-code analyze jwt_implementation.js
+# Sub-agent references: OWASP JWT Cheat Sheet → JWT-SIG-001 rule card
+```
+
+**Development Workflow:**
+```javascript
+// You're writing JWT code
+const token = jwt.sign(payload, secret, { algorithm: 'HS256' });
+
+// Claude Code sub-agent automatically:
+// 1. Detects JWT usage
+// 2. Searches OWASP corpus for JWT guidance
+// 3. Applies rule card JWT-ALG-001 (algorithm validation)
+// 4. Suggests: "Consider RS256 instead of HS256 for production"
+```
+
+### 2. Real-Time Semantic Search Integration
+
+During active development, Claude Code CLI integrates semantic search to provide contextual security guidance:
+
+**Interactive Development Example:**
+```bash
+# You ask Claude Code about authentication
+$ claude-code security --context "implementing user login with passwords"
+
+# Claude Code internally executes:
+$ make semsearch q="password authentication security requirements"
+# Returns: Authentication_Cheat_Sheet.md with password guidelines
+
+# Claude Code responds with contextualized guidance:
+"Based on OWASP Authentication guidelines, implement these password requirements:
+- Minimum 8 characters (preferably 12+)
+- Support Unicode characters including spaces
+- Check against common password lists
+- Implement proper password hashing with bcrypt/Argon2"
+```
+
+**Code Review Integration:**
+```python
+# Your code under review
+def login(username, password):
+    user = User.query.filter_by(username=username).first()
+    if user and user.password == password:  # ⚠️ Problematic
+        return create_session(user)
+    
+# Claude Code automatically:
+# 1. Detects password comparison
+# 2. Searches: make semsearch q="password verification security"
+# 3. References Password_Storage_Cheat_Sheet.md
+# 4. Flags: "Password comparison should use secure hashing"
+```
+
+### 3. Lexical Search for Rapid Reference
+
+For quick lookups and exact matches, Claude Code uses traditional grep-style search alongside semantic search:
+
+**Fast Reference Lookups:**
+```bash
+# Quick command injection check
+$ claude-code security --lookup "command injection"
+# Internally uses: grep -r "command injection" research/search_corpus/
+
+# Specific ASVS requirement lookup
+$ claude-code security --asvs "V5.3.4"
+# Internally uses: grep -r "V5.3.4" research/search_corpus/asvs/
+# Returns: Exact ASVS requirement with verification details
+```
+
+**Combined Search Strategy:**
+```bash
+# Claude Code uses hybrid search approach:
+
+# 1. Lexical search for exact terms
+grep -r "SQL injection" research/search_corpus/owasp/
+# → SQL_Injection_Prevention_Cheat_Sheet.md (exact match)
+
+# 2. Semantic search for related concepts  
+make semsearch q="database query security parameterization"
+# → Additional context from Input_Validation_Cheat_Sheet.md
+
+# 3. Rule card application
+# → Applies SECRETS-DB-001 and INPUT-VALID-001 rules
+```
+
+## Development Workflow Examples
+
+### Example 1: JWT Implementation Assistance
+
+**Scenario:** Developer implementing JWT authentication
+
+```bash
+# Developer starts coding JWT handler
+$ claude-code start jwt_auth.js
+
+# Claude Code detects JWT context and automatically:
+# 1. Searches corpus: make semsearch q="JWT security implementation"
+# 2. Loads relevant rule cards: JWT-SIG-001, JWT-ALG-001, JWT-KEY-001
+# 3. Provides proactive guidance
+
+# Developer writes problematic code:
+const jwt = require('jsonwebtoken');
+const token = jwt.sign({userId: 123}, 'hardcoded-secret', {algorithm: 'none'});
+
+# Claude Code immediately flags:
+# - Rule violation: JWT-KEY-001 (hardcoded secret)
+# - Security issue: JWT-ALG-001 (insecure algorithm 'none')
+# - References: JWT_Cheat_Sheet.md sections on key management and algorithms
+```
+
+**Interactive Correction:**
+```bash
+$ claude-code fix jwt_auth.js --security
+
+# Claude Code searches corpus and suggests:
+Based on OWASP JWT Cheat Sheet, here's the secure implementation:
+
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET; // From environment
+const token = jwt.sign(
+    {userId: 123}, 
+    secret, 
+    {
+        algorithm: 'RS256',  // Asymmetric algorithm
+        expiresIn: '15m',    // Short expiration
+        issuer: 'your-app',
+        audience: 'your-users'
+    }
+);
+
+# References:
+# - OWASP JWT Cheat Sheet: Algorithm security
+# - ASVS V3.1.1: Cryptographic verification
+# - Rule Card JWT-ALG-001: Algorithm validation
+```
+
+### Example 2: Database Security Review
+
+**Scenario:** Code review for database operations
+
+```python
+# Code under review
+def get_user_data(user_id):
+    query = f"SELECT * FROM users WHERE id = {user_id}"
+    return db.execute(query)
+```
+
+```bash
+# Reviewer uses Claude Code for security analysis
+$ claude-code review database_operations.py --security
+
+# Claude Code process:
+# 1. Detects SQL query construction
+# 2. Lexical search: grep -r "SQL injection" research/search_corpus/
+# 3. Semantic search: make semsearch q="database query parameterization"  
+# 4. Applies rule cards: INPUT-VALID-001, DB-QUERY-001
+
+# Claude Code report:
+🚨 SQL Injection Vulnerability Detected
+
+Issue: String formatting in SQL query construction
+File: database_operations.py:2
+Rule: INPUT-VALID-001 (Input Validation)
+Reference: OWASP SQL Injection Prevention Cheat Sheet
+
+Recommendation:
+def get_user_data(user_id):
+    query = "SELECT * FROM users WHERE id = %s"
+    return db.execute(query, (user_id,))  # Parameterized query
+
+ASVS Compliance: V5.3.4 - SQL injection prevention
+CWE Reference: CWE-89 - Improper Neutralization of Special Elements
+```
+
+### Example 3: Container Security Analysis
+
+**Scenario:** Dockerfile security hardening
+
+```dockerfile
+# Dockerfile under analysis
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y python3
+COPY . /app
+USER root
+CMD ["python3", "/app/main.py"]
+```
+
+```bash
+# Security analysis request
+$ claude-code security --analyze Dockerfile
+
+# Claude Code process:
+# 1. Detects Docker context
+# 2. Searches: make semsearch q="container security hardening"
+# 3. References: Docker_Security_Cheat_Sheet.md
+# 4. Applies: DOCKER-USER-001, DOCKER-IMAGE-001 rule cards
+
+# Security recommendations:
+🔒 Container Security Improvements
+
+Issues Found:
+1. Root user execution (HIGH)
+2. Latest tag usage (MEDIUM)  
+3. Missing security updates (MEDIUM)
+
+Recommended Dockerfile:
+FROM ubuntu:22.04  # Specific version
+RUN apt-get update && apt-get install -y python3 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY . /app
+RUN adduser --disabled-password appuser  # Non-root user
+USER appuser
+CMD ["python3", "/app/main.py"]
+
+References:
+- OWASP Docker Security Cheat Sheet: User privileges
+- ASVS V14.2.1: Container isolation
+- CWE-250: Execution with unnecessary privileges
+```
+
+### Example 4: API Security Development
+
+**Scenario:** Building REST API with security-first approach
+
+```bash
+# Starting new API development
+$ claude-code start api_server.py --template secure-api
+
+# Claude Code automatically:
+# 1. Searches: make semsearch q="REST API security requirements"
+# 2. Loads: REST_Security_Cheat_Sheet.md
+# 3. Applies rule cards: API-AUTH-001, API-RATE-001, API-CORS-001
+# 4. Generates secure boilerplate
+
+# Generated secure API template:
+from flask import Flask, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+app = Flask(__name__)
+# Rate limiting (OWASP REST Security guideline)
+limiter = Limiter(app, key_func=get_remote_address)
+
+@app.before_request  
+def security_headers():
+    # OWASP security headers
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+
+@app.route('/api/users/<user_id>')
+@limiter.limit("100 per hour")  # Rate limiting
+def get_user(user_id):
+    # Input validation (ASVS V5.1.1)
+    if not user_id.isdigit():
+        return jsonify({'error': 'Invalid user ID'}), 400
+    # Implementation continues...
+```
+
+### Development Environment Integration
+
+**CLAUDE.md Configuration for Security Corpus:**
+```markdown
+# Add to your project's CLAUDE.md file
+
+## Security Knowledge Base
+This project uses OWASP & ASVS semantic search for real-time security guidance:
+
+### Available Commands:
+- `make semsearch q="security topic"` - Search OWASP guidance
+- `make semsearch-asvs q="requirement"` - Search ASVS standards  
+- `claude-code security --context "your context"` - Get contextual advice
+
+### Integration Points:
+1. **Rule Cards**: Automatic security rule application
+2. **Semantic Search**: Contextual security guidance
+3. **Lexical Search**: Exact requirement lookup
+4. **Compliance**: ASVS/CWE/OWASP mapping
+
+### Security Domains Covered:
+- Authentication & Authorization
+- Input Validation & Output Encoding
+- Session Management
+- Cryptography
+- API Security
+- Container Security
+- Data Protection
+```
+
+This corpus-driven approach transforms Claude Code into a security-aware development assistant that provides:
+- **Proactive Guidance**: Security advice before problems occur
+- **Contextual Analysis**: Relevant security standards for your specific code
+- **Standards Compliance**: Automatic ASVS/OWASP/CWE mapping
+- **Comprehensive Coverage**: 119 OWASP CheatSheets + 17 ASVS standards
+- **Fast Access**: Sub-second semantic search for immediate assistance
 
 ## Generated Agent Packages
 
