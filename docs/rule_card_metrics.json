@@ -1,0 +1,1589 @@
+{
+  "total_rule_cards": 197,
+  "total_domains": 21,
+  "empty_domains": [
+    "api_security"
+  ],
+  "populated_domains": [
+    "authentication",
+    "authorization",
+    "configuration",
+    "cookies",
+    "cryptography",
+    "data_protection",
+    "docker",
+    "file_handling",
+    "genai",
+    "input_validation",
+    "java",
+    "jwt",
+    "logging",
+    "network_security",
+    "nodejs",
+    "php",
+    "secrets",
+    "secure_communication",
+    "session_management",
+    "web_security"
+  ],
+  "domain_breakdown": {
+    "api_security": {
+      "rule_count": 0,
+      "rules": []
+    },
+    "authentication": {
+      "rule_count": 49,
+      "rules": [
+        {
+          "id": "AUTH-PROTECT-OOB-CODE-AUTH-001",
+          "title": "Protect Code-based Out-of-Band Authentication",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-CONFIGURE-PASSWORD-INPUT-001",
+          "title": "Password input fields must use type=password",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-CSP-AUTH-SECRET-002",
+          "title": "Use Cryptographically Secure Pseudorandom Number Generators for Authentication Seeds",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-VALIDATE-IDENTITY-PROOFING-001",
+          "title": "Evidence of Identity Proofing for Lost Authentication Factor",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-GEN-008",
+          "title": "Secure Initial Passwords/Activation Codes",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTHENTICATION-NEW-003",
+          "title": "Out-of-Band Authentication Mechanisms",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PREVENT-SAML-001",
+          "title": "Unique Processing of SAML Assertions",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-LIFETIME-001",
+          "title": "Strong Challenge Nonce for Cryptographic Authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-IMPLEMENT-MULTIFACTOR-AUTH-001",
+          "title": "Multi-Factor Authentication Usage",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-ALLOW-PASSWORD-004",
+          "title": "Allow passwords of at least 64 characters",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-NEW-006",
+          "title": "Password Input Field Masking",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-SPOOFING-001",
+          "title": "Prevent Identity Spoofing with Multiple Identity Providers",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-BIOMETRIC-001",
+          "title": "Secure Use of Biometric Authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-FACTOR-REVOCATION-001",
+          "title": "Revocation of Authentication Factors",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-GEN-007",
+          "title": "Protection Against User Enumeration",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-ALLOW-PASSWORD-003",
+          "title": "Admin-initiated Password Reset Process",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-ALLOW-PASSWORD-005",
+          "title": "Allow 'paste' functionality and external password managers",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PASSWORD-001",
+          "title": "Secure Time-based One-time Passwords (TOTPs)",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-CREDENTIAL-PASSWORD-001",
+          "title": "Do not require periodic credential rotation",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-OOB-LIFETIME-DEFINITION-001",
+          "title": "Define Lifetime for Out-of-Band Authentication",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-GEN-004",
+          "title": "Suspicious Authentication Attempts Notification",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-SECRET-PASSWORD-001",
+          "title": "Use of Password Hints and Knowledge-based Authentication",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-IMPLEMENT-UPDATE-NOTIFICATION-001",
+          "title": "Authentication Details Update Notification",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PREVENT-SAML-002",
+          "title": "Prevent Replay Attacks with SAML Assertions",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PREVENT-CREDENTIAL-PASSWORD-001",
+          "title": "Implement Controls Against Credential Stuffing and Brute Force Attacks",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-IMPLEMENT-RENEWAL-INSTRUCTIONS-001",
+          "title": "Renewal Instructions for Expiring Authentication Mechanisms",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-SECRET-MFA-001",
+          "title": "One-time Use of Multi-factor Authentication Secrets",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-RESTRICT-EMAIL-AUTH-001",
+          "title": "Email Not Used for Authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-VALIDATE-PHONE-NUMBERS-001",
+          "title": "Validate Phone Numbers for PSTN OTP Delivery",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-ALLOW-PREVENT-CREDENTIAL-001",
+          "title": "Allow Long Passwords and Prevent Credential Rotation",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-004",
+          "title": "Verify Authentication Strength from Identity Provider",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-CSP-AUTH-SECRET-001",
+          "title": "Use of Cryptographically Secure Pseudorandom Number Generators",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PASSWORD-004",
+          "title": "Verify user's password exactly as received",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-NEW-007",
+          "title": "Password Verification Integrity",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-GEN-001",
+          "title": "Default User Accounts Absence",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-MFA-PASSWORD-001",
+          "title": "Secure Password Reset Process",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-MFA-001",
+          "title": "Rate Limit Push Notifications for Multi-Factor Authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-CERT-001",
+          "title": "Secure Storage of Cryptographic Authentication Certificates",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-CERT-002",
+          "title": "Store Certificates Securely for Cryptographic Authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-IMPLEMENT-BIOMETRIC-AUTH-001",
+          "title": "Biometric Authentication Usage",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-HASH-SECRET-SALT-001",
+          "title": "Secure Storage of Lookup Secrets",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-LIFETIME-002",
+          "title": "Ensure Challenge Nonce Length for Cryptographic Authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PREVENT-PASSWORD-001",
+          "title": "Prevent Easy to Guess Passwords",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTHENTICATION-NEW-001",
+          "title": "Secure Process for Resetting Forgotten Passwords",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-AUTH-CODE-002",
+          "title": "Bind Out-of-Band Authentication to Request",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-MFA-STRONG-SECRETS-001",
+          "title": "Use Strong Secrets for Multi-factor Authentication",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-SIGNATURE-001",
+          "title": "Validate Digital Signatures on Authentication Assertions",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-PASSWORD-003",
+          "title": "Check Passwords Against Breached Passwords",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-GEN-003",
+          "title": "Notification of Suspicious Authentication Attempts",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "authorization": {
+      "rule_count": 13,
+      "rules": [
+        {
+          "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-005",
+          "title": "Authorization Design - Function-Level Access",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTHZ-AUTH-ENVIRONMENT-001",
+          "title": "Adaptive Security Controls",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-DESIGN-001",
+          "title": "Environmental and Contextual Attributes in Authorization",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-OPER-002",
+          "title": "Apply immediate changes to authorization decisions",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-004",
+          "title": "Authorization Documentation and Rules",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-OPER-003",
+          "title": "Subject-based access control",
+          "severity": "high",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "AUTHZ-RESTRICT-PERMISSION-ACCESS-001",
+          "title": "Field-Level Access Restrictions",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-OTHER-002",
+          "title": "Secure access to administrative interfaces",
+          "severity": "high",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "AUTH-OPER-001",
+          "title": "Enforce authorization rules at a trusted service layer",
+          "severity": "low",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "AUTH-OTHER-001",
+          "title": "Cross-tenant controls for multi-tenant applications",
+          "severity": "medium",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-003",
+          "title": "Authorization Design - Field-Level Access",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTH-DESIGN-002",
+          "title": "Adaptive Security Controls for Authentication",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-001",
+          "title": "Authorization Design - Data-Specific Access",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "configuration": {
+      "rule_count": 16,
+      "rules": [
+        {
+          "id": "CONFIG-RESOURCE-MANAGEMENT-DOCUMENTATION-001",
+          "title": "Document resource management strategies for external systems",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-COMMUNICATION-DOCUMENTATION-001",
+          "title": "Document all communication needs and external services",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-LIMIT-BACKEND-COMPONENT-001",
+          "title": "Limit Backend Component Version Information",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-SECRET-ROTATION-THREAT-MODEL-001",
+          "title": "Rotate critical secrets based on threat model",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-PREVENT-ENVIRONMENT-DISABLE-002",
+          "title": "Disable HTTP TRACE Method",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-PRIVILEGE-SECRET-MGMT-001",
+          "title": "Secret Management Best Practices",
+          "severity": "medium",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "CONFIG-IMPLEMENT-BACKEND-AUTH-001",
+          "title": "Authenticate backend communication components",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-ALLOW-CONFIG-001",
+          "title": "Secure Backend Communication Configuration",
+          "severity": "medium",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "CONFIG-KEY-001",
+          "title": "Secure Cryptographic Operations",
+          "severity": "high",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "CONFIG-PREVENT-ENVIRONMENT-DISABLE-001",
+          "title": "Disable Debug Modes in Production",
+          "severity": "medium",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "CONFIG-SEC-008",
+          "title": "Least privilege for backend communication accounts",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-SEC-009",
+          "title": "Avoid default credentials for service authentication",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-PREVENT-RESTRICT-001",
+          "title": "Restrict File Extensions for Web Tier",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-RESTRICT-001",
+          "title": "Restrict Directory Listings",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-SEC-010",
+          "title": "Implement allowlist for external communications",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CONFIG-MONITORING-RESTRICT-001",
+          "title": "Restrict Documentation and Monitoring Endpoints",
+          "severity": "medium",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "cookies": {
+      "rule_count": 3,
+      "rules": [
+        {
+          "id": "COOKIES-HTTPONLY-001",
+          "title": "Session and security-sensitive cookies must use HttpOnly attribute",
+          "severity": "high",
+          "scope": "web-applications"
+        },
+        {
+          "id": "COOKIES-SAMESITE-001",
+          "title": "Authentication and session cookies must use appropriate SameSite attribute",
+          "severity": "medium",
+          "scope": "web-applications"
+        },
+        {
+          "id": "COOKIES-SECURE-001",
+          "title": "Security-sensitive cookies must use Secure attribute for HTTPS transmission",
+          "severity": "high",
+          "scope": "web-applications"
+        }
+      ]
+    },
+    "cryptography": {
+      "rule_count": 8,
+      "rules": [
+        {
+          "id": "CRYPTO-PREVENT-KEY-001",
+          "title": "Approved Key Exchange Algorithms",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CRYPTO-HASH-AUTH-001",
+          "title": "Hash Function Collision Resistance",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "CRYPTO-ALLOW-KEY-CIPHER-001",
+          "title": "Crypto Agility Design",
+          "severity": "medium",
+          "scope": "web-application/api/mobile/infrastructure"
+        },
+        {
+          "id": "CRYPTO-PROTECT-KEY-MGMT-001",
+          "title": "Application Key Protection and Management",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CRYPTO-IMPL-001",
+          "title": "Industry-Validated Cryptographic Implementations",
+          "severity": "medium",
+          "scope": "web-application/api/mobile/infrastructure"
+        },
+        {
+          "id": "CRYPTO-CSP-001",
+          "title": "Secure Random Number Generation",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CRYPTO-CONSTANT-TIME-CRYPTOGRAPHIC-001",
+          "title": "Constant-Time Cryptographic Operations",
+          "severity": "high",
+          "scope": "web-application/api/mobile/infrastructure"
+        },
+        {
+          "id": "CRYPTO-KEY-CONFIG-001",
+          "title": "Minimum Security Strength for Cryptographic Primitives",
+          "severity": "medium",
+          "scope": "web-application/api/mobile/infrastructure"
+        }
+      ]
+    },
+    "data_protection": {
+      "rule_count": 14,
+      "rules": [
+        {
+          "id": "DATA-RESTRICT-TOKEN-SESSION-001",
+          "title": "Restricting Sensitive Data in Browser Storage",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECT-VERIFY-ENCRYPT-001",
+          "title": "Sensitive Data Protection Requirements Documentation",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-006",
+          "title": "Protection Against Untrusted Data Sharing",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-008",
+          "title": "Secure Configuration of Caching Mechanisms",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-002",
+          "title": "Remove sensitive information from user-submitted file metadata",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-003",
+          "title": "Clear authenticated data from client storage",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-005",
+          "title": "Avoid storing sensitive data in browser storage",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-001",
+          "title": "Sensitive information data retention",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECT-001",
+          "title": "Sensitive Data Identification and Classification",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-009",
+          "title": "Minimum Disclosure of Sensitive Data",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-SECURE-DATA-CACHING-001",
+          "title": "Secure Data Caching and Purging",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-007",
+          "title": "Implementation of Defined Data Protection Controls",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PROTECTION-004",
+          "title": "Set anti-caching headers for sensitive data",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DATA-PREVENT-001",
+          "title": "Prevention of Sensitive Data Leakage via HTTP",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "docker": {
+      "rule_count": 1,
+      "rules": [
+        {
+          "id": "DOCKER-USER-001",
+          "title": "Docker containers must not run as root user",
+          "severity": "high",
+          "scope": "dockerfile"
+        }
+      ]
+    },
+    "file_handling": {
+      "rule_count": 4,
+      "rules": [
+        {
+          "id": "FILE-HANDLING-001",
+          "title": "Scan files from untrusted sources with antivirus",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "FILE-UPLOAD-003",
+          "title": "Implement file size and type validation",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "FILE-UPLOAD-002",
+          "title": "Secure file naming and storage location",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "FILE-UPLOAD-001",
+          "title": "Validate file extensions and content types",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "genai": {
+      "rule_count": 3,
+      "rules": [
+        {
+          "id": "GENAI-PROMPT-001",
+          "title": "GenAI applications must implement prompt injection prevention controls",
+          "severity": "high",
+          "scope": "genai-applications"
+        },
+        {
+          "id": "GENAI-DATA-001",
+          "title": "GenAI applications must protect sensitive data from exposure through model outputs",
+          "severity": "critical",
+          "scope": "genai-applications"
+        },
+        {
+          "id": "GENAI-MODEL-001",
+          "title": "GenAI model access and inference must be secured with appropriate authentication and authorization",
+          "severity": "high",
+          "scope": "genai-applications"
+        }
+      ]
+    },
+    "input_validation": {
+      "rule_count": 6,
+      "rules": [
+        {
+          "id": "SQL-INJECTION-PREVENTION-001",
+          "title": "Prevent SQL Injection with Prepared Statements",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "INPUT-VALIDATION-003",
+          "title": "Implement email address validation with syntactic and semantic checks",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "INPUT-VALIDATION-001",
+          "title": "Implement syntactic and semantic input validation for all user inputs",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "INPUT-VALIDATION-002",
+          "title": "Implement allowlist validation for all user inputs",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SQL-INJECTION-PREVENTION-002",
+          "title": "Implement Secure Stored Procedures",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SQL-INJECTION-PREVENTION-003",
+          "title": "Implement Allow-list Input Validation",
+          "severity": "medium",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "java": {
+      "rule_count": 3,
+      "rules": [
+        {
+          "id": "JAVA-PREVENT-INJECTION-COMMAND-001",
+          "title": "Prevent Command Injection in Java applications",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "JAVA-PREVENT-INJECTION-XPATH-001",
+          "title": "Prevent XPath Injection in Java applications",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "JAVA-PREVENT-INJECTION-SQL-001",
+          "title": "Prevent SQL Injection in Java applications",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "jwt": {
+      "rule_count": 4,
+      "rules": [
+        {
+          "id": "JWT-SIG-001",
+          "title": "JWT signatures must be properly verified before processing claims",
+          "severity": "critical",
+          "scope": "jwt-implementations"
+        },
+        {
+          "id": "JWT-KEY-001",
+          "title": "JWT signing and verification keys must be securely managed",
+          "severity": "critical",
+          "scope": "jwt-implementations"
+        },
+        {
+          "id": "JWT-EXP-001",
+          "title": "JWT tokens must include expiration claims and be validated",
+          "severity": "high",
+          "scope": "jwt-implementations"
+        },
+        {
+          "id": "JWT-ALG-001",
+          "title": "JWT algorithm claims must be validated against allowed algorithms",
+          "severity": "high",
+          "scope": "jwt-implementations"
+        }
+      ]
+    },
+    "logging": {
+      "rule_count": 18,
+      "rules": [
+        {
+          "id": "LOG-ENVIRONMENT-LOGGING-001",
+          "title": "Synchronize time across all servers and devices for accurate logging",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-LOG-APPLICATION-ERRORS-001",
+          "title": "Log application errors, system events, and high-risk functionality usage",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-PREVENT-KEY-SANITIZE-001",
+          "title": "Implement log sanitization to protect sensitive data",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-MONITORING-ENABLE-001",
+          "title": "Enable alerting and monitoring for critical events",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-ACCESS-001",
+          "title": "Encrypt log data in transit and at rest",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "ERROR-HANDLING-001",
+          "title": "Implement global error handling for Java web applications",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "ERROR-HANDLING-002",
+          "title": "Implement global error handling for SpringMVC/SpringBoot applications",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-PREVENT-001",
+          "title": "Implement log rotation and retention policies",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-VALID-001",
+          "title": "Log all input validation failures and output validation failures",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-AUTH-AUTHZ-ACCESS-001",
+          "title": "Log authentication successes, failures, and authorization failures",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-VERIFY-LOGGING-001",
+          "title": "Perform regular testing and verification of logging mechanisms",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-MONITORING-MGMT-001",
+          "title": "Implement centralized log collection and management",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "ERROR-HANDLING-003",
+          "title": "Implement global error handling for ASP.NET Core web applications",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-LOGGING-001",
+          "title": "Implement customizable logging levels",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-PREVENT-002",
+          "title": "Implement secure transmission protocols for log data",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-MGMT-001",
+          "title": "Implement log handler for consistent log generation",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-REGULARLY-REVIEW-ADJUST-001",
+          "title": "Regularly review and adjust log rotation and retention policies",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "LOG-MONITORING-SCRIPT-001",
+          "title": "Include sufficient event attributes in log entries",
+          "severity": "medium",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "network_security": {
+      "rule_count": 8,
+      "rules": [
+        {
+          "id": "NET-TLS-CERT-001",
+          "title": "Ensure trusted certificates for internal service TLS connections",
+          "severity": "high",
+          "scope": "infrastructure"
+        },
+        {
+          "id": "NET-TLS-CERT-002",
+          "title": "Ensure TLS clients validate certificates before communicating with a server",
+          "severity": "medium",
+          "scope": "infrastructure"
+        },
+        {
+          "id": "NET-CERTIFICATE-REVOCATION-OCSP-001",
+          "title": "Enable Certification Revocation",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "NETWORK-SEC-004",
+          "title": "Implement strong authentication for intra-service communications",
+          "severity": "high",
+          "scope": "infrastructure"
+        },
+        {
+          "id": "NET-MTLS-CLIENT-CERTIFICATE-VALIDATION-001",
+          "title": "Validate mTLS Client Certificates",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "NET-STRONG-CIPHER-SUITES-001",
+          "title": "Enable Strong Cipher Suites",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "NET-ENCRYPTED-CLIENT-HELLO-001",
+          "title": "Enable Encrypted Client Hello",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "NET-TLS-ENCRYPT-001",
+          "title": "Ensure secure transport encryption for internal service communication",
+          "severity": "high",
+          "scope": "infrastructure"
+        }
+      ]
+    },
+    "nodejs": {
+      "rule_count": 3,
+      "rules": [
+        {
+          "id": "NODE-PREVENT-001",
+          "title": "Prevent blocking the event loop with asynchronous operations",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "NODE-PREVENT-RESTRICT-001",
+          "title": "Set request size limits to prevent DoS attacks",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "NODE-PREVENT-CODE-HANDLING-001",
+          "title": "Use flat Promise chains to avoid Callback Hell",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "php": {
+      "rule_count": 3,
+      "rules": [
+        {
+          "id": "PHP-PREVENT-XSS-MGMT-001",
+          "title": "Secure cookie settings for Laravel application",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "PHP-PREVENT-ENVIRONMENT-DISABLE-001",
+          "title": "Disable debug mode in production environment",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "PHP-KEY-ENCRYPT-001",
+          "title": "Generate and secure application key",
+          "severity": "high",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "secrets": {
+      "rule_count": 4,
+      "rules": [
+        {
+          "id": "SECRETS-JWT-001",
+          "title": "JWT signing secrets must not be hardcoded or use weak values",
+          "severity": "critical",
+          "scope": "jwt-implementations"
+        },
+        {
+          "id": "SECRETS-DB-001",
+          "title": "Database credentials must not be hardcoded in applications",
+          "severity": "critical",
+          "scope": "all-languages"
+        },
+        {
+          "id": "SECRETS-CLOUD-001",
+          "title": "Cloud service credentials and access keys must be secured",
+          "severity": "critical",
+          "scope": "cloud-applications"
+        },
+        {
+          "id": "SECRETS-API-001",
+          "title": "API keys must not be hardcoded in source code",
+          "severity": "critical",
+          "scope": "all-languages"
+        }
+      ]
+    },
+    "secure_communication": {
+      "rule_count": 6,
+      "rules": [
+        {
+          "id": "SECURE-COMMUNICATION-TLS-001",
+          "title": "Enable latest TLS versions for secure communication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "HTTP-HEADERS-XSS-PROTECTION-002",
+          "title": "Mitigate XSS attacks with X-XSS-Protection header",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SECURE-COMMUNICATION-TLS-INTERNAL-001",
+          "title": "Ensure TLS for internal service communication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "HTTP-HEADERS-CONTENT-TYPE-003",
+          "title": "Prevent MIME type confusion with X-Content-Type-Options header",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "HTTP-HEADERS-X-FRAME-OPTIONS-001",
+          "title": "Prevent Clickjacking attacks with X-Frame-Options header",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SECURE-COMMUNICATION-TLS-002",
+          "title": "Use recommended cipher suites for secure communication",
+          "severity": "medium",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "session_management": {
+      "rule_count": 22,
+      "rules": [
+        {
+          "id": "SESSION-SECURE-TOKEN-GENERATION-001",
+          "title": "Ensure unique and cryptographically secure session tokens",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-TERMINATION-INVALIDATION-001",
+          "title": "Disallow Further Use of Session on Termination",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-AUTH-VERIFY-001",
+          "title": "Implement further authentication for highly sensitive transactions",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-MANAGEMENT-005",
+          "title": "Document federated identity management ecosystem controls",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-MAXIMUM-LIFETIME-ENFORCEMENT-001",
+          "title": "Enforce Absolute Maximum Session Lifetime",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-AUTH-LIFETIME-ENFORCE-001",
+          "title": "Enforce session lifetime and re-authentication between RPs and IdPs",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-VERIFY-TOKEN-SESSION-001",
+          "title": "Perform session token verification using a trusted backend service",
+          "severity": "medium",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "SESSION-ACCOUNT-TERMINATION-001",
+          "title": "Terminate Sessions on Account Disable/Delete",
+          "severity": "low",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-MANAGEMENT-NEW-002",
+          "title": "Terminate other active sessions after authentication factor change",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-VISIBLE-LOGOUT-FUNCTIONALITY-001",
+          "title": "Provide Visible Logout Functionality",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-MANAGEMENT-001",
+          "title": "Use generic session ID names to avoid fingerprinting",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-AUTH-FACTOR-TERMINATION-001",
+          "title": "Terminate Other Sessions on Authentication Factor Change",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-AUTH-LIFETIME-TIMEOUT-001",
+          "title": "Generate new session token on user authentication",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-AUTH-LIFETIME-SESSION-001",
+          "title": "Federated Re-authentication",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-TOKEN-SESSION-001",
+          "title": "Generate unique reference tokens with sufficient entropy",
+          "severity": "medium",
+          "scope": "web-application/api"
+        },
+        {
+          "id": "SESSION-PREVENT-SESSION-001",
+          "title": "Require user consent or action for session creation",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-ACTIVE-MANAGEMENT-TERMINATION-001",
+          "title": "View and Terminate Active Sessions",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-PREVENT-MGMT-TOKEN-001",
+          "title": "Use dynamically generated tokens for session management",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-MANAGEMENT-002",
+          "title": "Implement strong session ID entropy to prevent brute-force attacks",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-MANAGEMENT-NEW-001",
+          "title": "Terminate all active sessions on user account disable or deletion",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-IMPLEMENT-SECURE-MECHANISMS-001",
+          "title": "Enforce secure session management mechanisms",
+          "severity": "critical",
+          "scope": "web-application"
+        },
+        {
+          "id": "SESSION-TRUSTED-BACKEND-VERIFICATION-001",
+          "title": "Use trusted backend service for session token verification",
+          "severity": "medium",
+          "scope": "web-application"
+        }
+      ]
+    },
+    "web_security": {
+      "rule_count": 9,
+      "rules": [
+        {
+          "id": "DOM-XSS-PREVENTION-RULE1",
+          "title": "HTML and JavaScript Encoding for Untrusted Data in HTML Subcontext",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "DOM-XSS-PREVENTION-RULE3",
+          "title": "Avoid Untrusted Data in Event Handler and JavaScript Code Subcontexts",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "XSS-FRAMEWORK-001",
+          "title": "Understand XSS prevention mechanisms in modern web frameworks",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CLICKJACKING-DEFENSE-003",
+          "title": "Secure session cookies with SameSite attribute to mitigate Clickjacking",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "DOM-XSS-PREVENTION-RULE2",
+          "title": "JavaScript Escape for Untrusted Data in HTML Attribute Subcontext",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "XSS-HTML-SANITIZATION-003",
+          "title": "Implement HTML sanitization for user-generated content",
+          "severity": "medium",
+          "scope": "web-application"
+        },
+        {
+          "id": "XSS-OUTPUT-ENCODING-002",
+          "title": "Implement proper output encoding for different contexts",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CLICKJACKING-DEFENSE-001",
+          "title": "Implement X-Frame-Options header to prevent Clickjacking",
+          "severity": "high",
+          "scope": "web-application"
+        },
+        {
+          "id": "CLICKJACKING-DEFENSE-002",
+          "title": "Utilize Content Security Policy (CSP) frame-ancestors to prevent Clickjacking",
+          "severity": "medium",
+          "scope": "web-application"
+        }
+      ]
+    }
+  },
+  "severity_distribution": {
+    "medium": 84,
+    "low": 20,
+    "high": 85,
+    "critical": 8
+  },
+  "scope_distribution": {
+    "web-application": 164,
+    "web-application/api": 10,
+    "web-applications": 3,
+    "web-application/api/mobile/infrastructure": 4,
+    "dockerfile": 1,
+    "genai-applications": 3,
+    "jwt-implementations": 5,
+    "infrastructure": 4,
+    "all-languages": 2,
+    "cloud-applications": 1
+  },
+  "asvs_references": [
+    "V1.7.1",
+    "V1.7.2",
+    "V11.1.1",
+    "V11.2.1",
+    "V11.2.2",
+    "V11.2.3",
+    "V11.2.4",
+    "V11.4.3",
+    "V11.4.4",
+    "V11.5.1",
+    "V11.5.2",
+    "V11.6.1",
+    "V11.6.2",
+    "V11.7.1",
+    "V11.7.2",
+    "V12.1.1",
+    "V12.1.2",
+    "V12.1.3",
+    "V12.1.4",
+    "V12.1.5",
+    "V12.3.2",
+    "V12.3.3",
+    "V12.3.4",
+    "V12.3.5",
+    "V13.1.1",
+    "V13.1.3",
+    "V13.1.4",
+    "V13.2.2",
+    "V13.2.3",
+    "V13.2.4",
+    "V13.2.5",
+    "V13.3.1",
+    "V13.3.2",
+    "V13.3.3",
+    "V13.4.2",
+    "V13.4.3",
+    "V13.4.4",
+    "V13.4.5",
+    "V13.4.6",
+    "V13.4.7",
+    "V14.1.1",
+    "V14.1.2",
+    "V14.1.3",
+    "V14.2.1",
+    "V14.2.3",
+    "V14.2.4",
+    "V14.2.6",
+    "V14.2.7",
+    "V14.2.8",
+    "V14.3.1",
+    "V14.3.2",
+    "V14.3.3",
+    "V2.1.1",
+    "V2.1.12",
+    "V3.1.1",
+    "V3.1.3",
+    "V3.3.1",
+    "V3.3.3",
+    "V3.4.1",
+    "V3.4.2",
+    "V4.1.1",
+    "V4.2.1",
+    "V4.2.2",
+    "V5.1.1",
+    "V5.1.3",
+    "V5.3.1",
+    "V5.3.2",
+    "V5.3.3",
+    "V5.4.1",
+    "V5.4.3",
+    "V6.1.1",
+    "V6.1.2",
+    "V6.2.1",
+    "V6.2.10",
+    "V6.2.12",
+    "V6.2.2",
+    "V6.2.6",
+    "V6.2.7",
+    "V6.2.8",
+    "V6.2.9",
+    "V6.3.1",
+    "V6.3.2",
+    "V6.3.3",
+    "V6.3.5",
+    "V6.3.5:2021",
+    "V6.3.8",
+    "V6.4.1",
+    "V6.4.2",
+    "V6.4.3",
+    "V6.4.4",
+    "V6.4.5",
+    "V6.4.6",
+    "V6.5.1",
+    "V6.5.2",
+    "V6.5.3",
+    "V6.5.4",
+    "V6.5.5",
+    "V6.5.6",
+    "V6.5.7",
+    "V6.5.8",
+    "V6.6.1",
+    "V6.6.2",
+    "V6.6.3",
+    "V6.6.4",
+    "V6.7.1",
+    "V6.7.2",
+    "V6.7.2:2021",
+    "V6.8.1",
+    "V6.8.2",
+    "V6.8.3",
+    "V6.8.4",
+    "V7.1.1",
+    "V7.1.3",
+    "V7.2.1",
+    "V7.2.1:2021",
+    "V7.2.2",
+    "V7.2.3",
+    "V7.2.3:2021",
+    "V7.2.4",
+    "V7.3.1",
+    "V7.3.2",
+    "V7.4.1",
+    "V7.4.2",
+    "V7.4.3",
+    "V7.4.4",
+    "V7.5.2",
+    "V7.5.3",
+    "V7.6.1",
+    "V7.6.1:2021",
+    "V7.6.2:2021",
+    "V8.1.1",
+    "V8.1.2",
+    "V8.1.3",
+    "V8.1.4",
+    "V8.2.1",
+    "V8.2.2",
+    "V8.2.3",
+    "V8.3.1",
+    "V8.3.2",
+    "V8.3.3",
+    "V8.3.4",
+    "V8.4.1",
+    "V8.4.2",
+    "V9.1.3",
+    "V9.2.1",
+    "V9.2.3"
+  ],
+  "cwe_references": [
+    "CWE-1004",
+    "CWE-1021",
+    "CWE-116",
+    "CWE-117",
+    "CWE-16",
+    "CWE-20",
+    "CWE-200",
+    "CWE-204",
+    "CWE-209",
+    "CWE-256",
+    "CWE-259",
+    "CWE-284",
+    "CWE-285",
+    "CWE-287",
+    "CWE-295",
+    "CWE-306",
+    "CWE-307",
+    "CWE-308",
+    "CWE-310",
+    "CWE-311",
+    "CWE-312",
+    "CWE-315",
+    "CWE-319",
+    "CWE-321",
+    "CWE-323",
+    "CWE-326",
+    "CWE-327",
+    "CWE-328",
+    "CWE-329",
+    "CWE-330",
+    "CWE-338",
+    "CWE-345",
+    "CWE-346",
+    "CWE-347",
+    "CWE-352",
+    "CWE-359",
+    "CWE-384",
+    "CWE-399",
+    "CWE-400",
+    "CWE-434",
+    "CWE-451",
+    "CWE-521",
+    "CWE-522",
+    "CWE-523",
+    "CWE-532",
+    "CWE-540",
+    "CWE-548",
+    "CWE-564",
+    "CWE-601",
+    "CWE-602",
+    "CWE-613",
+    "CWE-614",
+    "CWE-640",
+    "CWE-691",
+    "CWE-693",
+    "CWE-77",
+    "CWE-770",
+    "CWE-778",
+    "CWE-78",
+    "CWE-79",
+    "CWE-798",
+    "CWE-799",
+    "CWE-829",
+    "CWE-88",
+    "CWE-89",
+    "CWE-91",
+    "CWE-918",
+    "CWE-94",
+    "CWE-XX"
+  ],
+  "owasp_references": [
+    "A01:2021",
+    "A02:2021",
+    "A03:2021",
+    "A04:2021",
+    "A05:2021",
+    "A06:2021",
+    "A07:2021",
+    "A08:2021",
+    "A09:2021",
+    "A10:2021",
+    "A11:2021",
+    "A13:2021",
+    "A14:2021",
+    "A1:2021",
+    "A2:2021",
+    "A3:2021",
+    "A4:2021",
+    "A5:2021",
+    "A6:2021",
+    "A7:2021",
+    "A8:2021",
+    "C3:2024",
+    "LLM01:2023",
+    "LLM02:2023",
+    "LLM04:2023"
+  ],
+  "detection_tools": {
+    "semgrep": 192,
+    "codeql": 19,
+    "hadolint": 1,
+    "custom": 6,
+    "trufflehog": 37
+  },
+  "generation_timestamp": "2025-09-02T13:47:16.958654"
+}

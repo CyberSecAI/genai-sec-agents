@@ -574,7 +574,7 @@ This corpus-driven approach transforms Claude Code into a security-aware develop
 
 ## Generated Agent Packages
 
-The compilation process generates 5 specialized security agent packages:
+The compilation process generates 5 specialized security agent packages from **197 comprehensive rule cards**:
 
 | Agent | Description | Rules | Domains |
 |-------|-------------|-------|---------|
@@ -582,17 +582,32 @@ The compilation process generates 5 specialized security agent packages:
 | **web-security-specialist** | Web application security (cookies, JWT) | 7 | Cookie security, JWT validation, Web authentication |
 | **genai-security-specialist** | GenAI security controls | 3 | Prompt injection, Data protection, Model access |
 | **container-security-specialist** | Container security | 1 | Docker security, Container privileges |
-| **comprehensive-security-agent** | Multi-domain security agent | 15 | All security domains combined |
+| **comprehensive-security-agent** | Multi-domain security agent | 197 | **All 20 security domains** - authentication (49), session_management (22), logging (18), configuration (16), data_protection (14), authorization (13), web_security (9), network_security (8), cryptography (8), secure_communication (6), input_validation (6), file_handling (4), jwt (4), secrets (4), cookies (3), genai (3), java (3), nodejs (3), php (3), docker (1) |
 
 ## Repository Structure
 ```
 app/
-├── rule_cards/              # YAML Rule Cards organized by security domain
-│   ├── secrets/            # Hardcoded secrets prevention (4 cards)
-│   ├── cookies/            # Secure cookie configuration (3 cards)  
-│   ├── jwt/                # JWT security validation (4 cards)
-│   ├── genai/              # GenAI security controls (3 cards)
-│   └── docker/             # Container security (1 card)
+├── rule_cards/              # YAML Rule Cards organized by security domain (197 total)
+│   ├── authentication/    # Authentication security (49 cards)
+│   ├── session_management/ # Session management (22 cards)
+│   ├── logging/           # Security logging (18 cards)
+│   ├── configuration/     # Security configuration (16 cards)
+│   ├── data_protection/   # Data protection (14 cards)
+│   ├── authorization/     # Access control (13 cards)
+│   ├── web_security/      # Web application security (9 cards)
+│   ├── network_security/  # Network security (8 cards)
+│   ├── cryptography/      # Cryptographic controls (8 cards)
+│   ├── secure_communication/ # Secure communication (6 cards)
+│   ├── input_validation/  # Input validation (6 cards)
+│   ├── file_handling/     # File security (4 cards)
+│   ├── jwt/               # JWT security validation (4 cards)
+│   ├── secrets/           # Hardcoded secrets prevention (4 cards)
+│   ├── cookies/           # Secure cookie configuration (3 cards)
+│   ├── genai/             # GenAI security controls (3 cards)
+│   ├── java/              # Java security patterns (3 cards)
+│   ├── nodejs/            # Node.js security patterns (3 cards)
+│   ├── php/               # PHP security patterns (3 cards)
+│   └── docker/            # Container security (1 card)
 ├── runtime/                 # AgenticRuntime core components (Story 2.1)
 │   ├── core.py             # Main runtime engine for dynamic guidance
 │   └── ...                 # Runtime supporting modules
@@ -1087,9 +1102,9 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 | **Story 2.6** | OWASP & ASVS Semantic Search | ✅ **Complete** | 102 OWASP CheatSheets, 335 ASVS standards, semantic search corpus, Makefile automation |
 
 ### Current Capabilities
-- ✅ **15 Security Rule Cards** covering secrets, web security, GenAI, containers
-- ✅ **5 Specialized Agents** with domain expertise
-- ✅ **Secure Compiler Toolchain** with comprehensive validation
+- ✅ **197 Security Rule Cards** across 20 populated security domains (authenticated, session_management, logging, configuration, data_protection, authorization, web_security, network_security, cryptography, secure_communication, input_validation, file_handling, jwt, secrets, cookies, genai, java, nodejs, php, docker)
+- ✅ **5 Specialized Agents** with domain expertise compiled from comprehensive rule card library
+- ✅ **Secure Compiler Toolchain** with comprehensive validation and enhanced naming conventions
 - ✅ **AgenticRuntime** for dynamic rule selection and guidance
 - ✅ **Claude Code Sub-Agent** with real-time security analysis
 - ✅ **Manual Security Analysis** with file and workspace scanning
@@ -1097,7 +1112,9 @@ See [SECURITY_GUIDE.md](docs/SECURITY_GUIDE.md) for complete security practices.
 - ✅ **CI/CD Pipeline Prediction** for pre-commit validation
 - ✅ **Performance Optimization** with caching and timeout handling
 - ✅ **150+ Comprehensive Tests** covering all components, semantic search, and security validation
-- ✅ **OWASP & ASVS Semantic Search** with 437 processed security documents and fast Rust-based search
+- ✅ **OWASP & ASVS Integration** complete with 7 ASVS sections (V5-V8, V12-V14) successfully integrated into rule cards
+- ✅ **Duplicate Consolidation** - 18 duplicate rule cards eliminated with enhanced system quality
+- ✅ **Enhanced Naming Convention** - Descriptive rule card names implemented for better clarity
 
 ## Integration
 
@@ -1224,12 +1241,21 @@ python3 -m pytest tests/claude_code/test_manual_execution.py::TestSecurityValida
 
 ## Standards Compliance
 
-Rule Cards implement security controls based on:
-- **CWE**: Common Weakness Enumeration (30 unique references)
-- **ASVS**: Application Security Verification Standard (28 unique references)  
-- **OWASP**: Top 10 and security guidelines
+**197 Rule Cards** implement security controls based on comprehensive standards integration:
+- **CWE**: Common Weakness Enumeration (69 unique references) - Enhanced through duplicate consolidation
+- **ASVS**: Application Security Verification Standard (146 unique references) - **Significantly enhanced** through V5-V8, V12-V14 integration  
+- **OWASP**: Top 10 and security guidelines (25 unique references) - Comprehensive coverage
 - **NIST**: Cybersecurity Framework and Privacy Framework
 - **RFC**: Internet standards (JWT, cookies, etc.)
+
+### ASVS Integration Highlights
+- ✅ **V6 Authentication**: Complete integration with 49 authentication rule cards
+- ✅ **V8 Session Management**: Full coverage with 22 session management rule cards
+- ✅ **V13 Configuration**: Comprehensive integration with 16 configuration rule cards (**domain no longer empty**)
+- ✅ **V7 Data Protection**: Complete coverage with 14 data protection rule cards
+- ✅ **V12 Network Security**: Full integration with 8 network security rule cards
+- ✅ **V5 Authorization**: Complete coverage with 13 authorization rule cards
+- ✅ **V14 Secure Configuration**: Distributed across configuration and web_security domains
 
 ## License
 [To be determined]
