@@ -140,8 +140,10 @@ class SemanticSearchInterface:
         if SEMTOOLS_AVAILABLE:
             self._initialize_semtools()
         
-        # Query cache for performance
+        # Query cache for performance with size limit
         self._query_cache = {} if self.cache_enabled else None
+        self._max_cache_size = 1000  # Prevent memory leaks from unbounded cache
+        self._cache_access_order = [] if self.cache_enabled else None  # Track access for LRU
         
     def _initialize_semtools(self):
         """Initialize semtools search engine."""
@@ -365,6 +367,9 @@ class SemanticSearchInterface:
             # Check cache if enabled
             cache_key = f"{sanitized_query}:{hash(str(filters.to_dict() if filters else {}))}"
             if self._query_cache is not None and cache_key in self._query_cache:
+                # Update access order for LRU
+                self._cache_access_order.remove(cache_key)
+                self._cache_access_order.append(cache_key)
                 cached_result = self._query_cache[cache_key]
                 logger.info(f"Returning cached result for query: {sanitized_query[:50]}...")
                 return cached_result
@@ -400,9 +405,16 @@ class SemanticSearchInterface:
             # Create results
             results = SemanticSearchResults(sanitized_query, matches, provenance)
             
-            # Cache results if enabled
+            # Cache results if enabled with LRU eviction
             if self._query_cache is not None:
+                # Implement LRU cache with size limit to prevent memory leaks
+                if len(self._query_cache) >= self._max_cache_size:
+                    # Remove least recently used item
+                    lru_key = self._cache_access_order.pop(0)
+                    del self._query_cache[lru_key]
+                
                 self._query_cache[cache_key] = results
+                self._cache_access_order.append(cache_key)
             
             # Log results for audit
             self.audit_logger.log_search_results(results)
@@ -511,6 +523,13 @@ class SemanticSearchInterface:
         except Exception as e:
             logger.error(f"Semantic search availability check failed: {e}")
             return False
+    
+    def clear_cache(self) -> None:
+        """Clear query cache to free memory."""
+        if self._query_cache is not None:
+            self._query_cache.clear()
+            self._cache_access_order.clear()
+            logger.info("Query cache cleared")
     
     def get_search_statistics(self) -> Dict[str, Any]:
         """Get search performance and usage statistics."""
