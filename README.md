@@ -1,54 +1,74 @@
 # GenAI Security Agents - Policy-as-Code Engine
 
-A comprehensive Policy-as-Code system that transforms human-readable security Rule Cards into machine-readable JSON agent packages for AI-powered security guidance systems, featuring **Claude Code integration for real-time security analysis**.
+A comprehensive Policy-as-Code system that **creates** security knowledge from standards and **delivers** it through Claude Code CLI integration.
 
-## Overview
-This repository implements a complete security rule management and compilation toolchain with AI-powered runtime capabilities:
+## 🏗️ **Two-Phase Architecture**
 
-- **Rule Cards**: Human-readable YAML security policies with scanner integration
-- **Compiler Toolchain**: Secure compilation system transforming YAML to JSON agent packages  
-- **Specialized Agents**: 5 domain-specific security agents compiled from Rule Cards
-- **AgenticRuntime**: AI-powered runtime for dynamic security guidance (Story 2.1)
-- **Claude Code Sub-Agent**: Real-time security analysis within Claude Code IDE (Story 2.2) ✅
-- **Manual Security Analysis**: On-demand security scans for files and workspaces (Story 2.3) ✅
-- **Semtools Semantic Search**: Local semantic search for extended security knowledge (Story 2.4) ✅
-- **OWASP & ASVS Integration**: Semantic search with OWASP CheatSheets and ASVS standards (Story 2.6) ✅
-- **CI/CD Integration**: Makefile automation with validation and compilation workflows
+### **Phase 1: Content Creation & Compilation (Python)**
+Python code that **creates** your security agents and knowledge base:
 
-## Quick Start
+- **📥 Data Ingestion**: Fetch OWASP CheatSheets, ASVS standards, and other security sources
+- **🤖 LLM Generation**: Convert raw security content into structured YAML Rule Cards
+- **🔧 Compilation**: Transform 195+ YAML Rule Cards into 21 specialized JSON agents
+- **🔍 Content Processing**: Build semantic search corpus from security standards
 
-### 1. Validate Existing Rule Cards
+### **Phase 2: Runtime Usage (Claude Code CLI Only)**
+Pure Claude Code integration with **no Python runtime**:
+
+- **🎯 Agent Routing**: Claude Code routes security tasks to specialist agents
+- **📚 Semantic Search**: Query OWASP/ASVS knowledge via `semantic-search` agent
+- **🛡️ Security Analysis**: Apply 191+ security rules through domain specialists
+- **⚡ Tool Integration**: Use Semgrep, CodeQL, TruffleHog via agent validation hooks
+
+## 🎯 **Key Principle**
+**Python code creates the knowledge. Claude Code CLI uses the knowledge.**
+
+## 🚀 **Quick Start**
+
+### **Phase 1: Create Security Knowledge (One-Time Setup)**
+
+#### 1. **Ingest Security Standards** (Optional - Rule Cards already created)
 ```bash
-make validate
-# or: python3 app/tools/validate_cards.py app/rule_cards/
+# Fetch latest OWASP CheatSheets and generate rule cards
+python3 app/ingestion/complete_owasp_migration.py
+
+# Fetch ASVS standards and generate rule cards  
+python3 app/ingestion/complete_asvs_integration.py
 ```
 
-### 2. Compile Agent Packages
+#### 2. **Compile Rule Cards into JSON Agents**
 ```bash
+# Transform 195+ YAML rule cards → 21 JSON specialist agents
+python3 app/tools/compile_agents.py --verbose
+
+# Or use makefile
 make compile
-# or: python3 app/tools/compile_agents.py --verbose
 ```
 
-### 3. Complete Build Workflow
+#### 3. **Build Semantic Search Corpus**
 ```bash
-make build  # Validates Rule Cards then compiles agent packages
+# Create OWASP & ASVS search corpus for semantic queries
+make semsearch-build
 ```
 
-### 4. Run Tests
+### **Phase 2: Use Security Knowledge (Claude Code CLI)**
+
+#### 4. **Security Analysis via Claude Code**
 ```bash
-make test   # Runs comprehensive test suite with security validation
+# Route to specialist agents (NO Python runtime needed)
+claude-code → Task(subagent_type="authentication-specialist")
+claude-code → Task(subagent_type="web-security-specialist") 
+claude-code → Task(subagent_type="secrets-specialist")
+
+# Semantic search for security knowledge
+claude-code → Task(subagent_type="semantic-search", prompt="JWT security best practices")
 ```
 
-### 5. Claude Code Sub-Agent (Real-Time Security Analysis)
+#### 5. **Direct Tool Usage** (Advanced)
 ```bash
-# Initialize Claude Code security runtime
-python3 app/claude_code/initialize_security_runtime.py
-
-# Analyze code for security issues 
-python3 app/claude_code/analyze_context.py /path/to/your/code.py --format=guidance
-
-# JSON output for programmatic use
-python3 app/claude_code/analyze_context.py /path/to/your/code.py --format=json
+# Use security tools directly (integrated with agents)
+semgrep --config=auto  # Uses rules from agent validation hooks
+tools/semsearch.sh "input validation OWASP"  # Direct semantic search
 ```
 
 ### 6. Manual Security Analysis Commands (Story 2.3)
@@ -412,9 +432,9 @@ const token = jwt.sign(
 # - Rule Card JWT-ALG-001: Algorithm validation
 ```
 
-### Example 2: Database Security Review
+### Example 2: Database Security Review with Agent Integration
 
-**Scenario:** Code review for database operations
+**Scenario:** Code review for database operations using security agents
 
 ```python
 # Code under review
@@ -424,22 +444,27 @@ def get_user_data(user_id):
 ```
 
 ```bash
-# Reviewer uses Claude Code for security analysis
-$ claude-code review database_operations.py --security
+# Reviewer uses Claude Code with input-validation-specialist agent
+$ claude-code security --agent input-validation-specialist database_operations.py
 
 # Claude Code process:
-# 1. Detects SQL query construction
-# 2. Lexical search: grep -r "SQL injection" research/search_corpus/
-# 3. Semantic search: make semsearch q="database query parameterization"  
-# 4. Applies rule cards: INPUT-VALID-001, DB-QUERY-001
+# 1. Routes to input-validation-specialist agent (4 rule cards)
+# 2. Agent runs Semgrep rules: semgrep.dev/owasp.python.lang.security.audit.sqli
+# 3. Agent queries semantic search: make semsearch q="database query parameterization"
+# 4. Agent applies rule cards: SQL-INJECT-001, INPUT-VALID-001
 
-# Claude Code report:
-🚨 SQL Injection Vulnerability Detected
+# Agent-powered security report:
+🚨 SQL Injection Vulnerability Detected (Agent: input-validation-specialist)
 
 Issue: String formatting in SQL query construction
 File: database_operations.py:2
-Rule: INPUT-VALID-001 (Input Validation)
+Rule: SQL-INJECT-001 (SQL Injection Prevention)
 Reference: OWASP SQL Injection Prevention Cheat Sheet
+
+Detected by Agent Tools:
+✓ Semgrep rule: owasp.python.lang.security.audit.sqli.python-sqli-string-concat
+✓ TruffleHog scan: No hardcoded credentials found
+✓ CodeQL analysis: Available for CI integration
 
 Recommendation:
 def get_user_data(user_id):
@@ -450,9 +475,9 @@ ASVS Compliance: V5.3.4 - SQL injection prevention
 CWE Reference: CWE-89 - Improper Neutralization of Special Elements
 ```
 
-### Example 3: Container Security Analysis
+### Example 3: Container Security Analysis with Specialized Agent
 
-**Scenario:** Dockerfile security hardening
+**Scenario:** Dockerfile security hardening using container security agent
 
 ```dockerfile
 # Dockerfile under analysis
@@ -464,22 +489,27 @@ CMD ["python3", "/app/main.py"]
 ```
 
 ```bash
-# Security analysis request
-$ claude-code security --analyze Dockerfile
+# Security analysis with secure-coding-specialist agent
+$ claude-code security --agent secure-coding-specialist Dockerfile
 
 # Claude Code process:
-# 1. Detects Docker context
-# 2. Searches: make semsearch q="container security hardening"
-# 3. References: Docker_Security_Cheat_Sheet.md
-# 4. Applies: DOCKER-USER-001, DOCKER-IMAGE-001 rule cards
+# 1. Routes to secure-coding-specialist agent (12 rule cards)
+# 2. Agent applies Dockerfile security rules: DOCKER-USER-001, DOCKER-IMAGE-001  
+# 3. Agent runs container security tools: docker-bench-security (if available)
+# 4. Agent queries semantic search: make semsearch q="container security hardening"
 
-# Security recommendations:
-🔒 Container Security Improvements
+# Agent-powered security analysis:
+🔒 Container Security Improvements (Agent: secure-coding-specialist)
 
 Issues Found:
-1. Root user execution (HIGH)
-2. Latest tag usage (MEDIUM)  
-3. Missing security updates (MEDIUM)
+1. Root user execution (HIGH) - Rule: DOCKER-USER-001
+2. Latest tag usage (MEDIUM) - Rule: DOCKER-IMAGE-001
+3. Missing security updates (MEDIUM) - Best practice violation
+
+Agent Tool Integration:
+✓ Hadolint: Available for static Dockerfile analysis
+✓ Docker Scout: Available for vulnerability scanning  
+✓ Semgrep: Container security rules applied
 
 Recommended Dockerfile:
 FROM ubuntu:22.04  # Specific version
@@ -494,23 +524,27 @@ References:
 - OWASP Docker Security Cheat Sheet: User privileges
 - ASVS V14.2.1: Container isolation
 - CWE-250: Execution with unnecessary privileges
+
+Available for CI Integration:
+- docker run --rm -v $(pwd):/app hadolint/hadolint hadolint Dockerfile
+- docker scout cves ./Dockerfile
 ```
 
-### Example 4: API Security Development
+### Example 4: API Security Development with Multi-Agent Support
 
-**Scenario:** Building REST API with security-first approach
+**Scenario:** Building REST API with security-first approach using multiple specialist agents
 
 ```bash
-# Starting new API development
-$ claude-code start api_server.py --template secure-api
+# Starting new API development with web-security-specialist
+$ claude-code init api_server.py --agent web-security-specialist
 
-# Claude Code automatically:
-# 1. Searches: make semsearch q="REST API security requirements"
-# 2. Loads: REST_Security_Cheat_Sheet.md
-# 3. Applies rule cards: API-AUTH-001, API-RATE-001, API-CORS-001
-# 4. Generates secure boilerplate
+# Claude Code process:
+# 1. Routes to web-security-specialist agent (9 rule cards)
+# 2. Agent applies API security rules: API-AUTH-001, API-RATE-001, API-CORS-001
+# 3. Agent integrates security tools: OWASP ZAP for API testing
+# 4. Agent references: REST_Security_Cheat_Sheet.md via semantic search
 
-# Generated secure API template:
+# Agent-generated secure API template:
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -521,18 +555,24 @@ limiter = Limiter(app, key_func=get_remote_address)
 
 @app.before_request  
 def security_headers():
-    # OWASP security headers
+    # OWASP security headers - Applied by web-security-specialist
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
 
 @app.route('/api/users/<user_id>')
 @limiter.limit("100 per hour")  # Rate limiting
 def get_user(user_id):
-    # Input validation (ASVS V5.1.1)
+    # Input validation (ASVS V5.1.1) - Validated by agent rule cards
     if not user_id.isdigit():
         return jsonify({'error': 'Invalid user ID'}), 400
     # Implementation continues...
+
+# Agent-provided security testing integration:
+# ✓ OWASP ZAP: zap-baseline.py -t http://localhost:5000/api
+# ✓ Burp Suite: API security scanning available
+# ✓ Security headers testing: curl -I http://localhost:5000/api
 ```
 
 ### Development Environment Integration
@@ -547,13 +587,14 @@ This project uses OWASP & ASVS semantic search for real-time security guidance:
 ### Available Commands:
 - `make semsearch q="security topic"` - Search OWASP guidance
 - `make semsearch-asvs q="requirement"` - Search ASVS standards  
-- `claude-code security --context "your context"` - Get contextual advice
+- `claude-code security --agent [specialist] [files]` - Agent-powered security analysis
 
-### Integration Points:
-1. **Rule Cards**: Automatic security rule application
-2. **Semantic Search**: Contextual security guidance
-3. **Lexical Search**: Exact requirement lookup
-4. **Compliance**: ASVS/CWE/OWASP mapping
+### Security Agent Integration:
+1. **Rule Cards**: Automatic security rule application by specialized agents
+2. **Agent Tools**: Semgrep, TruffleHog, CodeQL, OWASP ZAP integration via agents
+3. **Semantic Search**: Contextual security guidance through agent knowledge
+4. **CI/CD Integration**: Security tools available for both agent analysis AND pipeline automation
+5. **Compliance**: ASVS/CWE/OWASP mapping through agent expertise
 
 ### Security Domains Covered:
 - Authentication & Authorization
