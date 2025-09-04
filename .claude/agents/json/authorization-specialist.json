@@ -1,0 +1,491 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:34Z",
+    "compiler_version": "1.0.0",
+    "description": "Authorization and access control specialist for RBAC, permissions, and privilege management",
+    "domains": [
+      "Role-based access control",
+      "Permission management",
+      "Privilege escalation prevention",
+      "Access control policies"
+    ],
+    "name": "authorization-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009194"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "function-level-access"
+        ]
+      },
+      "do": [
+        "Implement function-level access restrictions"
+      ],
+      "dont": [
+        "Allow unauthorized access to functions"
+      ],
+      "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-005",
+      "refs": {
+        "asvs": [
+          "V8.2.1"
+        ],
+        "cwe": [
+          "CWE-284"
+        ],
+        "owasp": [
+          "A5:2021"
+        ]
+      },
+      "requirement": "Restrict function-level access to consumers with explicit permissions.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Authorization Design - Function-Level Access",
+      "verify": {
+        "tests": [
+          "Verify function-level access restrictions"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Implement adaptive security controls for authentication",
+        "Consider environmental and contextual attributes"
+      ],
+      "dont": [
+        "Rely solely on static security controls"
+      ],
+      "id": "AUTHZ-AUTH-ENVIRONMENT-001",
+      "refs": {
+        "asvs": [
+          "V8.4.2"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Implement adaptive security controls based on environmental and contextual attributes for authentication.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Adaptive Security Controls",
+      "verify": {
+        "tests": [
+          "Validate access control enforcement and privilege management"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Document environmental and contextual attributes used for security decisions",
+        "Include attributes like time of day, user location, IP address, and device"
+      ],
+      "dont": [
+        "Do not overlook the impact of environmental factors on security decisions"
+      ],
+      "id": "AUTH-DESIGN-001",
+      "refs": {
+        "asvs": [
+          "V8.1.3"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Define environmental and contextual attributes used in security decisions, including authentication and authorization.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Environmental and Contextual Attributes in Authorization",
+      "verify": {
+        "tests": [
+          "Review documentation for completeness of attributes"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Apply changes to authorization decisions immediately",
+        "Implement controls to alert and revert unauthorized actions"
+      ],
+      "dont": [
+        "Delay applying changes to authorization decisions"
+      ],
+      "id": "AUTH-OPER-002",
+      "refs": {
+        "asvs": [
+          "V8.3.2"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Changes to values on which authorization decisions are made must be applied immediately. Implement mitigating controls to alert when a consumer performs an action when they are no longer authorized to do so and revert the change.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Apply immediate changes to authorization decisions",
+      "verify": {
+        "tests": [
+          "Validate access control enforcement and privilege management"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Specify clear rules for function-level and data-specific access restrictions",
+        "Document how consumer permissions and resource attributes are used in authorization decisions",
+        "Include environmental and contextual attributes in the documentation"
+      ],
+      "dont": [
+        "Do not rely solely on user roles for access control"
+      ],
+      "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-004",
+      "refs": {
+        "asvs": [
+          "V8.1.1"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Define rules for restricting function-level and data-specific access based on consumer permissions and resource attributes.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Authorization Documentation and Rules",
+      "verify": {
+        "tests": [
+          "Review authorization documentation for completeness and accuracy"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Implement access control based on originating subject's permissions"
+      ],
+      "dont": [
+        "Base access control on intermediary permissions"
+      ],
+      "id": "AUTH-OPER-003",
+      "refs": {
+        "asvs": [
+          "V8.3.3"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A8:2021"
+        ]
+      },
+      "requirement": "Access to an object should be based on the originating subject's permissions, not on any intermediary or service acting on their behalf.",
+      "scope": "web-application/api",
+      "severity": "high",
+      "title": "Subject-based access control",
+      "verify": {
+        "tests": [
+          "Test access control based on subject's permissions"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Specify clear rules for field-level access restrictions",
+        "Document how consumer permissions and resource attributes are used for field-level authorization",
+        "Consider other attribute values of the data object, such as state or status"
+      ],
+      "dont": [
+        "Do not allow unrestricted access to sensitive fields"
+      ],
+      "id": "AUTHZ-RESTRICT-PERMISSION-ACCESS-001",
+      "refs": {
+        "asvs": [
+          "V8.1.2"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Define rules for field-level access restrictions based on consumer permissions and resource attributes.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Field-Level Access Restrictions",
+      "verify": {
+        "tests": [
+          "Review field-level access rules for compliance"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Implement multiple layers of security for administrative interfaces"
+      ],
+      "dont": [
+        "Rely solely on network location or trusted endpoints for authorization"
+      ],
+      "id": "AUTH-OTHER-002",
+      "refs": {
+        "asvs": [
+          "V8.4.2"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A8:2021"
+        ]
+      },
+      "requirement": "Access to administrative interfaces should incorporate multiple layers of security, including continuous consumer identity verification, device security posture assessment, and contextual risk analysis.",
+      "scope": "web-application/api",
+      "severity": "high",
+      "title": "Secure access to administrative interfaces",
+      "verify": {
+        "tests": [
+          "Test security layers for administrative interfaces"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Implement authorization checks on the server-side"
+      ],
+      "dont": [
+        "Rely solely on client-side authorization logic"
+      ],
+      "id": "AUTH-OPER-001",
+      "refs": {
+        "asvs": [
+          "V8.3.1"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A8:2021"
+        ]
+      },
+      "requirement": "Enforce authorization rules at a trusted service layer and avoid relying on controls that an untrusted consumer could manipulate, such as client-side JavaScript.",
+      "scope": "web-application/api",
+      "severity": "low",
+      "title": "Enforce authorization rules at a trusted service layer",
+      "verify": {
+        "tests": [
+          "Test server-side authorization enforcement"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Implement cross-tenant controls"
+      ],
+      "dont": [
+        "Allow consumer operations to affect unauthorized tenants"
+      ],
+      "id": "AUTH-OTHER-001",
+      "refs": {
+        "asvs": [
+          "V8.4.1"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A8:2021"
+        ]
+      },
+      "requirement": "Multi-tenant applications must use cross-tenant controls to prevent consumer operations from affecting tenants with which they do not have permissions to interact.",
+      "scope": "web-application/api",
+      "severity": "medium",
+      "title": "Cross-tenant controls for multi-tenant applications",
+      "verify": {
+        "tests": [
+          "Test cross-tenant controls functionality"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "field-level-access"
+        ]
+      },
+      "do": [
+        "Implement field-level access restrictions"
+      ],
+      "dont": [
+        "Allow unauthorized access to specific fields"
+      ],
+      "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-003",
+      "refs": {
+        "asvs": [
+          "V8.2.3"
+        ],
+        "cwe": [
+          "CWE-284"
+        ],
+        "owasp": [
+          "A7:2021"
+        ]
+      },
+      "requirement": "Restrict field-level access to consumers with explicit permissions to mitigate BOPLA.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Authorization Design - Field-Level Access",
+      "verify": {
+        "tests": [
+          "Verify field-level access restrictions"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Implement adaptive controls for authentication based on consumer attributes",
+        "Consider attributes like time of day, location, IP address, and device"
+      ],
+      "dont": [
+        "Do not rely solely on static authentication mechanisms"
+      ],
+      "id": "AUTH-DESIGN-002",
+      "refs": {
+        "asvs": [
+          "V8.1.4"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Implement adaptive security controls based on environmental and contextual attributes for authentication decisions.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Adaptive Security Controls for Authentication",
+      "verify": {
+        "tests": [
+          "Test adaptive controls for authentication effectiveness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-jwt-not-revoked",
+          "python.django.security.audit.avoid-csrf-disable"
+        ]
+      },
+      "do": [
+        "Ensure explicit permissions are required for data-specific access",
+        "Mitigate IDOR and BOLA risks by enforcing access controls",
+        "Consider contextual attributes in data-specific authorization"
+      ],
+      "dont": [
+        "Do not rely on client-side controls for data-specific access"
+      ],
+      "id": "AUTHZ-RESTRICT-PERMISSION-AUTHZ-001",
+      "refs": {
+        "asvs": [
+          "V8.2.2"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Restrict data-specific access to consumers with explicit permissions to mitigate IDOR and BOLA.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Authorization Design - Data-Specific Access",
+      "verify": {
+        "tests": [
+          "Test data-specific access controls for effectiveness"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "semgrep": [
+      "field-level-access",
+      "function-level-access",
+      "javascript.express.security.audit.express-jwt-not-revoked",
+      "python.django.security.audit.avoid-csrf-disable"
+    ]
+  }
+}

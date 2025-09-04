@@ -1,0 +1,265 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:35Z",
+    "compiler_version": "1.0.0",
+    "description": "Generative AI security specialist for prompt injection, data exposure, and AI model security",
+    "domains": [
+      "Prompt injection prevention",
+      "AI data exposure protection",
+      "AI model access security",
+      "AI training data protection"
+    ],
+    "name": "genai-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009195"
+  },
+  "rules": [
+    {
+      "detect": {
+        "custom": [
+          "Detect string concatenation patterns in prompt construction",
+          "Identify missing input validation in prompt processing functions",
+          "Flag direct user input insertion into system prompts"
+        ],
+        "semgrep": [
+          "generic.genai.security.prompt-injection",
+          "python.genai.security.unsafe-prompt-concatenation",
+          "javascript.genai.security.prompt-template-injection",
+          "generic.genai.security.system-prompt-exposure"
+        ]
+      },
+      "do": [
+        "Implement input validation and sanitization for all user prompts",
+        "Use prompt templates with parameterized inputs rather than string concatenation",
+        "Apply content filtering to detect and block prompt injection patterns",
+        "Implement rate limiting and throttling for prompt processing",
+        "Use separate contexts for system instructions and user inputs",
+        "Log and monitor suspicious prompt patterns for security analysis"
+      ],
+      "dont": [
+        "Do not directly concatenate user input into system prompts",
+        "Do not trust user input without validation and sanitization",
+        "Do not expose internal system prompts or instructions to users",
+        "Do not allow unlimited or uncontrolled prompt processing",
+        "Do not ignore or bypass prompt injection detection mechanisms",
+        "Do not store sensitive information in prompt templates accessible to users"
+      ],
+      "id": "GENAI-PROMPT-001",
+      "refs": {
+        "asvs": [
+          "V5.1.1",
+          "V5.1.3",
+          "V5.3.1",
+          "V12.1.1"
+        ],
+        "cwe": [
+          "CWE-77",
+          "CWE-78",
+          "CWE-94",
+          "CWE-20"
+        ],
+        "owasp": [
+          "LLM01:2023",
+          "A03:2021"
+        ],
+        "standards": [
+          "OWASP Top 10 for Large Language Model Applications",
+          "NIST AI RMF 1.0",
+          "ISO/IEC 27001:2022"
+        ]
+      },
+      "requirement": "Generative AI applications must validate, sanitize, and control user inputs to prevent prompt injection attacks that could compromise system behavior, data access, or generate harmful content.",
+      "scope": "genai-applications",
+      "severity": "high",
+      "title": "GenAI applications must implement prompt injection prevention controls",
+      "verify": {
+        "tests": [
+          "Verify prompt injection attempts are detected and blocked",
+          "Test that system instructions remain isolated from user inputs",
+          "Confirm input validation prevents malicious prompt patterns",
+          "Validate rate limiting prevents prompt abuse",
+          "Test content filtering blocks harmful or manipulative inputs"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "sensitive-data-exposure",
+          "uncontrolled-data-used-in-path-expression"
+        ],
+        "semgrep": [
+          "generic.genai.security.sensitive-data-exposure",
+          "python.genai.security.pii-in-prompts",
+          "javascript.genai.security.data-leakage",
+          "generic.secrets.hardcoded-sensitive-data"
+        ],
+        "trufflehog": [
+          "Personally Identifiable Information",
+          "Financial Data",
+          "Health Records"
+        ]
+      },
+      "do": [
+        "Implement data classification and labeling for sensitive information",
+        "Use data sanitization and redaction before processing with GenAI models",
+        "Apply output filtering to detect and block sensitive data in responses",
+        "Implement access controls and data governance for GenAI training data",
+        "Use differential privacy techniques where appropriate for model training",
+        "Monitor and audit GenAI outputs for data leakage incidents"
+      ],
+      "dont": [
+        "Do not include sensitive data in GenAI training datasets without protection",
+        "Do not process personal information without proper consent and controls",
+        "Do not ignore data classification when designing GenAI workflows",
+        "Do not allow unrestricted access to GenAI models with sensitive training data",
+        "Do not skip output validation that could expose confidential information",
+        "Do not store or log sensitive data processed by GenAI systems"
+      ],
+      "id": "GENAI-DATA-001",
+      "refs": {
+        "asvs": [
+          "V1.7.1",
+          "V1.7.2",
+          "V8.3.1",
+          "V8.3.4"
+        ],
+        "cwe": [
+          "CWE-200",
+          "CWE-209",
+          "CWE-532",
+          "CWE-359"
+        ],
+        "owasp": [
+          "LLM02:2023",
+          "A01:2021",
+          "A09:2021"
+        ],
+        "standards": [
+          "GDPR Article 25",
+          "CCPA Section 1798.100",
+          "NIST Privacy Framework",
+          "ISO/IEC 27701:2019"
+        ]
+      },
+      "requirement": "Generative AI applications must implement data loss prevention controls to prevent sensitive information, personal data, or confidential business information from being exposed through model responses or training data.",
+      "scope": "genai-applications",
+      "severity": "critical",
+      "title": "GenAI applications must protect sensitive data from exposure through model outputs",
+      "verify": {
+        "tests": [
+          "Verify sensitive data is detected and redacted before GenAI processing",
+          "Test that PII and confidential data do not appear in model outputs",
+          "Confirm data access controls prevent unauthorized GenAI model usage",
+          "Validate output filtering blocks sensitive information leakage",
+          "Test data governance policies are enforced in GenAI workflows"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "missing-authentication-for-critical-function",
+          "weak-authentication-protocol",
+          "hardcoded-credentials"
+        ],
+        "semgrep": [
+          "generic.genai.security.weak-model-authentication",
+          "python.genai.security.missing-api-auth",
+          "javascript.genai.security.hardcoded-api-keys",
+          "generic.genai.security.unauthorized-model-access"
+        ]
+      },
+      "do": [
+        "Implement strong authentication for GenAI model API access",
+        "Apply role-based access control (RBAC) for different model capabilities",
+        "Use API keys, tokens, or certificates for model authentication",
+        "Implement usage quotas and rate limiting per user or application",
+        "Log and monitor all GenAI model access and usage patterns",
+        "Apply principle of least privilege for model access permissions"
+      ],
+      "dont": [
+        "Do not allow anonymous or unauthenticated access to GenAI models",
+        "Do not use shared credentials for GenAI model access across users",
+        "Do not implement weak or easily guessable API keys",
+        "Do not skip authorization checks for sensitive model operations",
+        "Do not allow unlimited model usage without proper controls",
+        "Do not expose internal model endpoints without security controls"
+      ],
+      "id": "GENAI-MODEL-001",
+      "refs": {
+        "asvs": [
+          "V2.1.1",
+          "V4.1.1",
+          "V4.2.1",
+          "V11.1.1"
+        ],
+        "cwe": [
+          "CWE-287",
+          "CWE-306",
+          "CWE-284",
+          "CWE-798"
+        ],
+        "owasp": [
+          "LLM04:2023",
+          "A07:2021",
+          "A01:2021"
+        ],
+        "standards": [
+          "NIST Cybersecurity Framework",
+          "ISO/IEC 27001:2022",
+          "OpenAI Usage Policies",
+          "OWASP API Security Top 10"
+        ]
+      },
+      "requirement": "Generative AI model access must implement robust authentication, authorization, and usage controls to prevent unauthorized access, model abuse, and ensure compliance with usage policies.",
+      "scope": "genai-applications",
+      "severity": "high",
+      "title": "GenAI model access and inference must be secured with appropriate authentication and authorization",
+      "verify": {
+        "tests": [
+          "Verify GenAI model access requires valid authentication",
+          "Test that unauthorized users cannot access restricted models",
+          "Confirm rate limiting and quotas are enforced per user/application",
+          "Validate proper authorization for different model capabilities",
+          "Test that API keys and tokens are properly validated and rotated"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "codeql": [
+      "hardcoded-credentials",
+      "missing-authentication-for-critical-function",
+      "sensitive-data-exposure",
+      "uncontrolled-data-used-in-path-expression",
+      "weak-authentication-protocol"
+    ],
+    "custom": [
+      "Detect string concatenation patterns in prompt construction",
+      "Flag direct user input insertion into system prompts",
+      "Identify missing input validation in prompt processing functions"
+    ],
+    "semgrep": [
+      "generic.genai.security.prompt-injection",
+      "generic.genai.security.sensitive-data-exposure",
+      "generic.genai.security.system-prompt-exposure",
+      "generic.genai.security.unauthorized-model-access",
+      "generic.genai.security.weak-model-authentication",
+      "generic.secrets.hardcoded-sensitive-data",
+      "javascript.genai.security.data-leakage",
+      "javascript.genai.security.hardcoded-api-keys",
+      "javascript.genai.security.prompt-template-injection",
+      "python.genai.security.missing-api-auth",
+      "python.genai.security.pii-in-prompts",
+      "python.genai.security.unsafe-prompt-concatenation"
+    ],
+    "trufflehog": [
+      "Financial Data",
+      "Health Records",
+      "Personally Identifiable Information"
+    ]
+  }
+}

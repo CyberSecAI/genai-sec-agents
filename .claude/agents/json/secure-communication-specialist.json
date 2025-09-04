@@ -1,0 +1,96 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:35Z",
+    "compiler_version": "1.0.0",
+    "description": "Secure communication specialist for HTTPS, TLS, and secure protocols",
+    "domains": [
+      "HTTPS configuration",
+      "TLS security",
+      "Secure protocol implementation",
+      "Certificate validation"
+    ],
+    "name": "secure-communication-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009195"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "http.response.header.x-xss-protection"
+        ]
+      },
+      "do": [
+        "Set X-XSS-Protection header with '1; mode=block' to enable XSS protection in supported browsers"
+      ],
+      "dont": [
+        "Disable X-XSS-Protection header or set it to '0'"
+      ],
+      "id": "HTTP-HEADERS-XSS-PROTECTION-002",
+      "refs": {
+        "asvs": [
+          "V12.3.2",
+          "V12.3.5"
+        ],
+        "cwe": [
+          "CWE-79"
+        ],
+        "owasp": [
+          "A03:2021"
+        ]
+      },
+      "requirement": "Implement X-XSS-Protection header to prevent reflected cross-site scripting (XSS) attacks by stopping malicious scripts from executing.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Mitigate XSS attacks with X-XSS-Protection header",
+      "verify": {
+        "tests": [
+          "Manually verify X-XSS-Protection header is set correctly"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.response.header.x-content-type-options"
+        ]
+      },
+      "do": [
+        "Set X-Content-Type-Options header with 'nosniff' to prevent MIME type sniffing"
+      ],
+      "dont": [
+        "Disable X-Content-Type-Options header"
+      ],
+      "id": "HTTP-HEADERS-CONTENT-TYPE-003",
+      "refs": {
+        "asvs": [
+          "V12.3.3",
+          "V12.3.4"
+        ],
+        "cwe": [
+          "CWE-434"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Implement X-Content-Type-Options header to prevent MIME type sniffing by instructing browsers to follow the declared content type.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Prevent MIME type confusion with X-Content-Type-Options header",
+      "verify": {
+        "tests": [
+          "Manually verify X-Content-Type-Options header is set to 'nosniff'"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "semgrep": [
+      "http.response.header.x-content-type-options",
+      "http.response.header.x-xss-protection"
+    ]
+  }
+}

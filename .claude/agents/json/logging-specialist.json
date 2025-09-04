@@ -1,0 +1,824 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:33Z",
+    "compiler_version": "1.0.0",
+    "description": "Security logging and monitoring specialist for audit trails and security events",
+    "domains": [
+      "Security event logging",
+      "Audit trail management",
+      "Log integrity",
+      "Monitoring controls"
+    ],
+    "name": "logging-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009193"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "logging.time-synchronization"
+        ],
+        "trufflehog": [
+          "Data Integrity"
+        ]
+      },
+      "do": [
+        "Implement time synchronization mechanisms for all servers and devices",
+        "Use network time protocols (NTP) to ensure consistent time across the infrastructure",
+        "Regularly monitor and adjust time settings to prevent drift"
+      ],
+      "dont": [
+        "Do not overlook time synchronization, leading to inaccurate event timestamps"
+      ],
+      "id": "LOG-ENVIRONMENT-LOGGING-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Ensure time synchronization across all servers and devices to maintain accurate timestamps in log entries, facilitating correlation and analysis of events across the application environment.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Synchronize time across all servers and devices for accurate logging",
+      "verify": {
+        "tests": [
+          "Verify that time synchronization is in place for all servers and devices",
+          "Test the accuracy of event timestamps in log entries"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.application-errors",
+          "logging.system-events",
+          "logging.high-risk-functionality-usage"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Implement logging for application errors and system events",
+        "Log the usage of high-risk functionality such as user administration actions and encryption activities",
+        "Include detailed information like event timestamp, severity, and description in the logs"
+      ],
+      "dont": [
+        "Do not overlook logging application errors, system events, and critical functionality usage"
+      ],
+      "id": "LOG-LOG-APPLICATION-ERRORS-001",
+      "refs": {
+        "cwe": [
+          "CWE-209",
+          "CWE-778"
+        ],
+        "owasp": [
+          "A06:2021",
+          "A10:2021"
+        ]
+      },
+      "requirement": "Log application errors, system events, and usage of high-risk functionality to identify potential security vulnerabilities, performance issues, and unauthorized activities within the application.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Log application errors, system events, and high-risk functionality usage",
+      "verify": {
+        "tests": [
+          "Verify that application errors, system events, and high-risk functionality usage are logged",
+          "Test the logging of critical events during security testing to ensure completeness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.sanitization"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Implement log sanitization to remove sensitive data before logging",
+        "Mask or encrypt sensitive information like passwords and personal data in log entries",
+        "Consider pseudonymization techniques for indirect identifiers in log data"
+      ],
+      "dont": [
+        "Do not log sensitive information in clear text without sanitization"
+      ],
+      "id": "LOG-PREVENT-KEY-SANITIZE-001",
+      "refs": {
+        "cwe": [
+          "CWE-312",
+          "CWE-315"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Apply log sanitization techniques to remove or mask sensitive data such as passwords, personal information, and encryption keys from log entries to prevent exposure of confidential information.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Implement log sanitization to protect sensitive data",
+      "verify": {
+        "tests": [
+          "Verify that log sanitization techniques are applied to sensitive data",
+          "Test the effectiveness of data masking in log entries during security assessments"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.alerting-mechanisms"
+        ],
+        "trufflehog": [
+          "Data Leakage"
+        ]
+      },
+      "do": [
+        "Configure alerting for critical events such as authentication failures or high-risk activities",
+        "Monitor log data continuously for anomalies or suspicious activities",
+        "Integrate log alerts with incident response processes for timely action"
+      ],
+      "dont": [
+        "Do not overlook setting up alerts for critical security events in logs"
+      ],
+      "id": "LOG-MONITORING-ENABLE-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Set up alerting mechanisms to notify responsible teams about critical events in the logs and ensure continuous monitoring for immediate response to security incidents.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Enable alerting and monitoring for critical events",
+      "verify": {
+        "tests": [
+          "Verify that alerting mechanisms are triggered for critical events",
+          "Test the monitoring of log data for timely detection of security incidents"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.encryption-transit",
+          "logging.encryption-rest"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Use secure transmission protocols for sending log data over untrusted networks",
+        "Encrypt log data stored at rest using strong encryption algorithms",
+        "Consider data masking or encryption for sensitive log entries"
+      ],
+      "dont": [
+        "Do not transmit log data over untrusted networks without encryption"
+      ],
+      "id": "LOG-ACCESS-001",
+      "refs": {
+        "cwe": [
+          "CWE-311",
+          "CWE-312"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Encrypt log data both in transit and at rest to protect sensitive information from unauthorized access or interception.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Encrypt log data in transit and at rest",
+      "verify": {
+        "tests": [
+          "Verify that log data is encrypted in transit and at rest",
+          "Test encryption mechanisms during security testing to ensure effectiveness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "custom": [
+          "Manual code review to ensure error handling is implemented correctly"
+        ],
+        "semgrep": [
+          "java.servlet.error-page",
+          "java.servlet.error-handler",
+          "python.logging.security.audit.logging-sensitive-data",
+          "java.lang.security.audit.system-exit",
+          "javascript.express.security.audit.express-expose-sensitive-data"
+        ],
+        "trufflehog": [
+          "Java Error Handling Configuration"
+        ]
+      },
+      "do": [
+        "Configure the web.xml file to define error-page for java.lang.Exception",
+        "Create an error.jsp file to log the error, set HTTP response header, and return a generic JSON response",
+        "Ensure the error.jsp file handles unexpected errors and returns a 500 status code"
+      ],
+      "dont": [
+        "Avoid exposing detailed error messages to users in production environments"
+      ],
+      "id": "ERROR-HANDLING-001",
+      "refs": {
+        "asvs": [
+          "V6.4.1",
+          "V6.4.2"
+        ],
+        "cwe": [
+          "CWE-209",
+          "CWE-116"
+        ],
+        "owasp": [
+          "A06:2021",
+          "A07:2021"
+        ],
+        "standards": [
+          "RFC 7807"
+        ]
+      },
+      "requirement": "Configure a global error handler in Java web applications to redirect to an error page, trace the error, and return a generic response without revealing implementation details.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Implement global error handling for Java web applications",
+      "verify": {
+        "tests": [
+          "Verify that unexpected errors redirect to the error page",
+          "Test that error.jsp logs errors and returns a generic response",
+          "Confirm that detailed error messages are not exposed to users"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "custom": [
+          "Manual code review to validate error handling implementation"
+        ],
+        "semgrep": [
+          "spring.exception-handler",
+          "spring.problem-detail",
+          "python.logging.security.audit.logging-sensitive-data",
+          "java.lang.security.audit.system-exit",
+          "javascript.express.security.audit.express-expose-sensitive-data"
+        ],
+        "trufflehog": [
+          "Spring Error Handling Configuration"
+        ]
+      },
+      "do": [
+        "Create a RestResponseEntityExceptionHandler class to handle exceptions extending java.lang.Exception",
+        "Use ProblemDetail class to create the response object with a generic message",
+        "Ensure the response includes an internal server error status code (500)"
+      ],
+      "dont": [
+        "Avoid returning detailed error messages to clients in production environments"
+      ],
+      "id": "ERROR-HANDLING-002",
+      "refs": {
+        "asvs": [
+          "V6.4.1",
+          "V6.4.2"
+        ],
+        "cwe": [
+          "CWE-209",
+          "CWE-116"
+        ],
+        "owasp": [
+          "A06:2021",
+          "A07:2021"
+        ],
+        "standards": [
+          "RFC 7807"
+        ]
+      },
+      "requirement": "Define a global error handler in SpringMVC or SpringBoot applications to return a generic response for unexpected errors without exposing sensitive information.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Implement global error handling for SpringMVC/SpringBoot applications",
+      "verify": {
+        "tests": [
+          "Validate that the global error handler responds with a generic message for all exceptions",
+          "Test that the response includes an internal server error status code",
+          "Confirm that no sensitive information is exposed in error responses"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.log-rotation",
+          "logging.retention-policies"
+        ],
+        "trufflehog": [
+          "Data Retention"
+        ]
+      },
+      "do": [
+        "Implement log rotation to manage log file sizes and prevent disk space exhaustion",
+        "Define retention periods for log data based on legal, regulatory, and operational needs",
+        "Regularly review and adjust log rotation and retention policies as necessary"
+      ],
+      "dont": [
+        "Do not neglect log rotation and retention policies, leading to unmanageable log file sizes"
+      ],
+      "id": "LOG-PREVENT-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Establish log rotation and retention policies to manage log file sizes, prevent disk space exhaustion, and comply with legal and regulatory requirements.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Implement log rotation and retention policies",
+      "verify": {
+        "tests": [
+          "Verify that log rotation is functioning as intended",
+          "Review log retention policies to ensure compliance with legal and operational requirements"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.input-validation-failure",
+          "logging.output-validation-failure"
+        ],
+        "trufflehog": [
+          "Sensitive Data Leakage"
+        ]
+      },
+      "do": [
+        "Implement logging mechanisms to capture input validation failures",
+        "Implement logging mechanisms to capture output validation failures",
+        "Include details such as timestamp, user identity, and description in the log entries"
+      ],
+      "dont": [
+        "Do not ignore input validation failures or output validation failures in logs"
+      ],
+      "id": "LOG-VALID-001",
+      "refs": {
+        "cwe": [
+          "CWE-117",
+          "CWE-778"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A06:2021"
+        ]
+      },
+      "requirement": "Ensure that all input validation failures (e.g., protocol violations, invalid parameter values) and output validation failures (e.g., database record set mismatch) are logged to provide visibility into potential security issues.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Log all input validation failures and output validation failures",
+      "verify": {
+        "tests": [
+          "Verify that input validation failures and output validation failures are logged",
+          "Test the logging mechanism during security testing to ensure proper functionality"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.authentication-success",
+          "logging.authentication-failure",
+          "logging.authorization-failure"
+        ],
+        "trufflehog": [
+          "Credentials Exposure"
+        ]
+      },
+      "do": [
+        "Implement logging for successful authentications",
+        "Implement logging for failed authentication attempts",
+        "Implement logging for authorization failures",
+        "Include user identity, timestamp, and event description in the log entries"
+      ],
+      "dont": [
+        "Do not neglect logging authentication and authorization events"
+      ],
+      "id": "LOG-AUTH-AUTHZ-ACCESS-001",
+      "refs": {
+        "cwe": [
+          "CWE-285",
+          "CWE-306"
+        ],
+        "owasp": [
+          "A03:2021",
+          "A07:2021"
+        ]
+      },
+      "requirement": "Ensure that authentication successes, authentication failures, and authorization failures are logged to monitor and track access control activities within the application.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Log authentication successes, failures, and authorization failures",
+      "verify": {
+        "tests": [
+          "Verify that authentication successes, failures, and authorization failures are properly logged",
+          "Test the logging of authentication and authorization events during security testing"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.testing-verification"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Include logging mechanisms in code review and application testing processes",
+        "Verify that logs are being generated as expected during security verification",
+        "Test the resilience of logging mechanisms against common attacks and failures"
+      ],
+      "dont": [
+        "Do not assume logging mechanisms are functioning correctly without regular testing"
+      ],
+      "id": "LOG-VERIFY-LOGGING-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Regularly test and verify the functionality of logging mechanisms to ensure they are operational, accurate, and effective in capturing security-relevant events.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Perform regular testing and verification of logging mechanisms",
+      "verify": {
+        "tests": [
+          "Conduct regular testing of logging mechanisms to ensure proper functionality",
+          "Verify that logs are accurate and complete during security assessments"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.centralized-collection"
+        ],
+        "trufflehog": [
+          "Data Leakage"
+        ]
+      },
+      "do": [
+        "Set up a centralized log collection system for aggregating log data",
+        "Utilize SIEM or SEM tools for log analysis and monitoring",
+        "Integrate log data from different application components for comprehensive security monitoring"
+      ],
+      "dont": [
+        "Do not rely solely on decentralized or siloed log storage systems"
+      ],
+      "id": "LOG-MONITORING-MGMT-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Implement a centralized log collection and management system (e.g., SIEM or SEM) to aggregate, analyze, and monitor log data from various application components for improved security monitoring and incident response.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Implement centralized log collection and management",
+      "verify": {
+        "tests": [
+          "Verify that log data is being centrally collected and managed",
+          "Test the integration of log data from various components during security testing"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "custom": [
+          "Manual inspection to ensure error handling is correctly implemented"
+        ],
+        "semgrep": [
+          "aspnetcore.error-handler",
+          "aspnetcore.json-error-response",
+          "python.logging.security.audit.logging-sensitive-data",
+          "java.lang.security.audit.system-exit",
+          "javascript.express.security.audit.express-expose-sensitive-data"
+        ],
+        "trufflehog": [
+          "ASP.NET Core Error Handling Configuration"
+        ]
+      },
+      "do": [
+        "Create an ErrorController API Controller to handle all unexpected exceptions",
+        "Build a generic JSON response with a message indicating an error occurred",
+        "Set the HTTP status code to 500 for internal server errors"
+      ],
+      "dont": [
+        "Avoid leaking implementation details in error responses"
+      ],
+      "id": "ERROR-HANDLING-003",
+      "refs": {
+        "asvs": [
+          "V6.4.1",
+          "V6.4.2"
+        ],
+        "cwe": [
+          "CWE-209",
+          "CWE-116"
+        ],
+        "owasp": [
+          "A06:2021",
+          "A07:2021"
+        ],
+        "standards": [
+          "RFC 7807"
+        ]
+      },
+      "requirement": "Define a global error handler in ASP.NET Core applications to return a generic JSON response for unexpected errors and log error details without exposing sensitive information.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Implement global error handling for ASP.NET Core web applications",
+      "verify": {
+        "tests": [
+          "Ensure the ErrorController handles all types of exceptions",
+          "Verify that the response includes a generic error message",
+          "Confirm that the HTTP status code is set to 500 for internal server errors"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.customizable-levels"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Allow customization of logging levels to adjust verbosity",
+        "Ensure default logging level provides sufficient detail for operational needs",
+        "Prevent deactivation of critical event logging or compliance-required logs"
+      ],
+      "dont": [
+        "Do not allow complete deactivation of application logging or critical event logging"
+      ],
+      "id": "LOG-LOGGING-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Implement customizable logging levels to adjust the verbosity of logging based on severity, threat level, and operational needs while ensuring critical events are always captured.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Implement customizable logging levels",
+      "verify": {
+        "tests": [
+          "Verify that logging levels can be customized as needed",
+          "Test the default logging level to ensure it captures essential events"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.secure-transmission"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Utilize secure transmission protocols (e.g., TLS) for transmitting log data over untrusted networks",
+        "Encrypt log data before transmission to protect confidentiality and integrity"
+      ],
+      "dont": [
+        "Do not transmit log data over untrusted networks without encryption"
+      ],
+      "id": "LOG-PREVENT-002",
+      "refs": {
+        "cwe": [
+          "CWE-311",
+          "CWE-312"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Use secure transmission protocols when sending log data over untrusted networks to prevent interception or tampering of log entries during transit.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Implement secure transmission protocols for log data",
+      "verify": {
+        "tests": [
+          "Verify that log data is transmitted using secure protocols",
+          "Test the encryption of log data during transmission for effectiveness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.log-handler"
+        ],
+        "trufflehog": [
+          "Data Leakage"
+        ]
+      },
+      "do": [
+        "Create a reusable log handler module for consistent log generation",
+        "Define a standard interface for logging across different application components",
+        "Ensure the log handler is thoroughly tested and integrated into approved modules"
+      ],
+      "dont": [
+        "Do not rely on ad-hoc logging mechanisms that vary across applications"
+      ],
+      "id": "LOG-MGMT-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Develop a standardized log handler module that can be used across multiple applications to ensure consistent log generation, format, and content for easier management and analysis.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Implement log handler for consistent log generation",
+      "verify": {
+        "tests": [
+          "Verify that the log handler module is being used for log generation",
+          "Test the consistency of log format and content across applications"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.review-policies"
+        ],
+        "trufflehog": [
+          "Data Retention"
+        ]
+      },
+      "do": [
+        "Review log rotation and retention policies at regular intervals",
+        "Adjust log rotation settings based on changing operational needs",
+        "Ensure retention periods align with legal and regulatory obligations"
+      ],
+      "dont": [
+        "Do not neglect reviewing log rotation and retention policies, leading to compliance issues"
+      ],
+      "id": "LOG-REGULARLY-REVIEW-ADJUST-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Periodically review log rotation and retention policies to ensure log file sizes are managed effectively, and retention periods comply with legal, regulatory, and operational requirements.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Regularly review and adjust log rotation and retention policies",
+      "verify": {
+        "tests": [
+          "Verify that log rotation and retention policies are periodically reviewed",
+          "Review and adjust log rotation settings during compliance checks"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "logging.event-attributes"
+        ],
+        "trufflehog": [
+          "Sensitive Data Exposure"
+        ]
+      },
+      "do": [
+        "Include timestamp, user identity, event type, and description in each log entry",
+        "Consider additional attributes like severity, action, object, and result status for comprehensive event logging"
+      ],
+      "dont": [
+        "Do not omit critical event attributes in log entries, hindering analysis and monitoring"
+      ],
+      "id": "LOG-MONITORING-SCRIPT-001",
+      "refs": {
+        "cwe": [
+          "CWE-778",
+          "CWE-117"
+        ],
+        "owasp": [
+          "A10:2021",
+          "A13:2021"
+        ]
+      },
+      "requirement": "Ensure that each log entry includes essential event attributes such as timestamp, user identity, event type, and description for effective monitoring and analysis.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Include sufficient event attributes in log entries",
+      "verify": {
+        "tests": [
+          "Verify that essential event attributes are present in all log entries",
+          "Test the completeness of event attributes during security testing"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "custom": [
+      "Manual code review to ensure error handling is implemented correctly",
+      "Manual code review to validate error handling implementation",
+      "Manual inspection to ensure error handling is correctly implemented"
+    ],
+    "semgrep": [
+      "aspnetcore.error-handler",
+      "aspnetcore.json-error-response",
+      "java.lang.security.audit.system-exit",
+      "java.servlet.error-handler",
+      "java.servlet.error-page",
+      "javascript.express.security.audit.express-expose-sensitive-data",
+      "logging.alerting-mechanisms",
+      "logging.application-errors",
+      "logging.authentication-failure",
+      "logging.authentication-success",
+      "logging.authorization-failure",
+      "logging.centralized-collection",
+      "logging.customizable-levels",
+      "logging.encryption-rest",
+      "logging.encryption-transit",
+      "logging.event-attributes",
+      "logging.high-risk-functionality-usage",
+      "logging.input-validation-failure",
+      "logging.log-handler",
+      "logging.log-rotation",
+      "logging.output-validation-failure",
+      "logging.retention-policies",
+      "logging.review-policies",
+      "logging.sanitization",
+      "logging.secure-transmission",
+      "logging.system-events",
+      "logging.testing-verification",
+      "logging.time-synchronization",
+      "python.logging.security.audit.logging-sensitive-data",
+      "spring.exception-handler",
+      "spring.problem-detail"
+    ],
+    "trufflehog": [
+      "ASP.NET Core Error Handling Configuration",
+      "Credentials Exposure",
+      "Data Integrity",
+      "Data Leakage",
+      "Data Retention",
+      "Java Error Handling Configuration",
+      "Sensitive Data Exposure",
+      "Sensitive Data Leakage",
+      "Spring Error Handling Configuration"
+    ]
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:34Z",
+    "compiler_version": "1.0.0",
+    "description": "Java security specialist for Java-specific vulnerabilities and secure coding patterns",
+    "domains": [
+      "Java injection prevention",
+      "Java serialization security",
+      "Java cryptography",
+      "Java secure coding"
+    ],
+    "name": "java-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009194"
+  },
+  "rules": [
+    {
+      "detect": {
+        "codeql": [
+          "command-injection"
+        ],
+        "semgrep": [
+          "java.command-injection",
+          "java.os-command-injection"
+        ],
+        "trufflehog": [
+          "Command Injection"
+        ]
+      },
+      "do": [
+        "Use Java API features for system interactions instead of constructing commands",
+        "Sanitize and validate user input before using it in system commands",
+        "Implement input validation using allowlist approach to restrict user input"
+      ],
+      "dont": [
+        "Do not build system commands by concatenating user input directly",
+        "Avoid executing system commands without proper validation"
+      ],
+      "id": "JAVA-PREVENT-INJECTION-COMMAND-001",
+      "refs": {
+        "cwe": [
+          "CWE-78",
+          "CWE-88"
+        ],
+        "owasp": [
+          "A01:2021",
+          "A06:2021"
+        ]
+      },
+      "requirement": "Avoid building Operating System commands using untrusted user input directly in Strings. Utilize technology stack APIs to prevent command injection vulnerabilities.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Prevent Command Injection in Java applications",
+      "verify": {
+        "tests": [
+          "Review code to ensure system commands are constructed safely",
+          "Perform security testing to validate command injection protections"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "xpath-injection"
+        ],
+        "semgrep": [
+          "java.xpath-injection",
+          "java.xpath-variable-injection"
+        ],
+        "trufflehog": [
+          "XPath Injection"
+        ]
+      },
+      "do": [
+        "Implement XPath Variable Resolver to define parameters for XPath expressions",
+        "Sanitize and validate user input before using it in XPath queries",
+        "Apply input validation using allowlist approach to restrict user input"
+      ],
+      "dont": [
+        "Do not concatenate user input directly into XPath queries",
+        "Avoid using String manipulation to build XPath queries"
+      ],
+      "id": "JAVA-PREVENT-INJECTION-XPATH-001",
+      "refs": {
+        "cwe": [
+          "CWE-91",
+          "CWE-918"
+        ],
+        "owasp": [
+          "A01:2021",
+          "A06:2021"
+        ]
+      },
+      "requirement": "Use XPath Variable Resolver to prevent XPath injection in Java applications. Avoid building XPath queries using untrusted user input directly in Strings.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Prevent XPath Injection in Java applications",
+      "verify": {
+        "tests": [
+          "Verify XPath queries are constructed safely without user input manipulation",
+          "Conduct security testing to confirm XPath injection vulnerabilities are mitigated"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "sql-injection"
+        ],
+        "semgrep": [
+          "java.sql.SQLInjection",
+          "java.jdbc.SQLInjection"
+        ],
+        "trufflehog": [
+          "SQL Injection"
+        ]
+      },
+      "do": [
+        "Use Prepared Statements with parameterized queries for SQL operations",
+        "Sanitize and validate user input before using it in SQL queries",
+        "Implement input validation using allowlist approach to restrict user input"
+      ],
+      "dont": [
+        "Do not concatenate user input directly into SQL queries",
+        "Avoid using String manipulation to build SQL queries"
+      ],
+      "id": "JAVA-PREVENT-INJECTION-SQL-001",
+      "refs": {
+        "cwe": [
+          "CWE-89",
+          "CWE-564"
+        ],
+        "owasp": [
+          "A01:2021",
+          "A02:2021",
+          "A06:2021"
+        ]
+      },
+      "requirement": "Use Query Parameterization to prevent SQL injection in Java applications. Avoid building SQL queries using untrusted user input directly in Strings.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Prevent SQL Injection in Java applications",
+      "verify": {
+        "tests": [
+          "Perform code reviews to ensure SQL queries are parameterized",
+          "Conduct security testing to verify SQL injection vulnerabilities are mitigated"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "codeql": [
+      "command-injection",
+      "sql-injection",
+      "xpath-injection"
+    ],
+    "semgrep": [
+      "java.command-injection",
+      "java.jdbc.SQLInjection",
+      "java.os-command-injection",
+      "java.sql.SQLInjection",
+      "java.xpath-injection",
+      "java.xpath-variable-injection"
+    ],
+    "trufflehog": [
+      "Command Injection",
+      "SQL Injection",
+      "XPath Injection"
+    ]
+  }
+}

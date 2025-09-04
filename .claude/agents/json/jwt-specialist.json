@@ -1,0 +1,315 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:34Z",
+    "compiler_version": "1.0.0",
+    "description": "JWT security specialist for token validation, algorithm security, and key management",
+    "domains": [
+      "JWT signature verification",
+      "JWT algorithm validation",
+      "JWT key management",
+      "JWT expiration handling"
+    ],
+    "name": "jwt-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009194"
+  },
+  "rules": [
+    {
+      "detect": {
+        "codeql": [
+          "jwt-signature-not-verified",
+          "jwt-none-algorithm-accepted"
+        ],
+        "semgrep": [
+          "javascript.jsonwebtoken.security.jwt-verify-none",
+          "python.jwt.security.jwt-none-alg",
+          "java.jwt.security.jwt-signature-bypass",
+          "generic.jwt.security.disabled-signature-verification"
+        ]
+      },
+      "do": [
+        "Verify JWT signature before accessing token claims or making authorization decisions",
+        "Use strong cryptographic algorithms (RS256, ES256) for JWT signing",
+        "Implement proper key management for JWT verification keys",
+        "Validate the JWT header algorithm matches expected signing algorithm",
+        "Use well-established JWT libraries with security updates",
+        "Log signature verification failures for security monitoring"
+      ],
+      "dont": [
+        "Do not process JWT claims without verifying the signature first",
+        "Do not accept JWT tokens with 'none' algorithm in production",
+        "Do not ignore JWT signature verification failures",
+        "Do not use weak or deprecated signing algorithms (HS256 with weak keys)",
+        "Do not implement custom JWT signature verification without security review",
+        "Do not trust JWT claims from unverified tokens"
+      ],
+      "id": "JWT-SIG-001",
+      "refs": {
+        "asvs": [
+          "V3.1.1",
+          "V6.2.1",
+          "V6.2.2"
+        ],
+        "cwe": [
+          "CWE-347",
+          "CWE-295",
+          "CWE-287"
+        ],
+        "owasp": [
+          "A02:2021",
+          "A07:2021"
+        ],
+        "standards": [
+          "RFC 7515",
+          "RFC 7519",
+          "OWASP JWT Security Cheat Sheet"
+        ]
+      },
+      "requirement": "All JWT tokens must undergo complete signature verification using the correct algorithm and key before any claims are processed or authorization decisions are made.",
+      "scope": "jwt-implementations",
+      "severity": "critical",
+      "title": "JWT signatures must be properly verified before processing claims",
+      "verify": {
+        "tests": [
+          "Verify JWT tokens with invalid signatures are rejected",
+          "Test that tokens with 'none' algorithm are refused in production",
+          "Confirm signature verification occurs before claim processing",
+          "Validate proper error handling for signature verification failures",
+          "Test JWT verification with wrong signing keys fails appropriately"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "hardcoded-jwt-key",
+          "weak-jwt-key-generation"
+        ],
+        "semgrep": [
+          "javascript.jsonwebtoken.security.jwt-hardcode-key",
+          "python.jwt.security.jwt-hardcode-key",
+          "java.jwt.security.jwt-hardcoded-key",
+          "generic.jwt.security.weak-key-generation"
+        ],
+        "trufflehog": [
+          "JWT Signing Key",
+          "Private Key"
+        ]
+      },
+      "do": [
+        "Generate JWT signing keys using cryptographically secure random number generators",
+        "Store JWT signing keys in dedicated key management systems or secure storage",
+        "Implement key rotation procedures with overlap periods for verification",
+        "Use key identifiers (kid) to support multiple active keys during rotation",
+        "Validate verification keys against trusted key sources (JWKS endpoints with HTTPS)",
+        "Implement key revocation mechanisms for compromised keys"
+      ],
+      "dont": [
+        "Do not use predictable or weak keys for JWT signing",
+        "Do not store JWT signing keys in application configuration or source code",
+        "Do not reuse JWT keys across different environments or applications",
+        "Do not fetch verification keys from untrusted or unencrypted sources",
+        "Do not skip key validation when retrieving keys from external sources",
+        "Do not use the same key indefinitely without rotation"
+      ],
+      "id": "JWT-KEY-001",
+      "refs": {
+        "asvs": [
+          "V6.1.1",
+          "V6.4.1",
+          "V6.4.2",
+          "V3.1.1"
+        ],
+        "cwe": [
+          "CWE-321",
+          "CWE-798",
+          "CWE-330",
+          "CWE-295"
+        ],
+        "owasp": [
+          "A02:2021"
+        ],
+        "standards": [
+          "RFC 7517",
+          "RFC 7519",
+          "NIST SP 800-57"
+        ]
+      },
+      "requirement": "JWT signing keys must be generated with sufficient entropy, stored securely, rotated regularly, and verification keys must be obtained through secure channels with proper validation.",
+      "scope": "jwt-implementations",
+      "severity": "critical",
+      "title": "JWT signing and verification keys must be securely managed",
+      "verify": {
+        "tests": [
+          "Verify JWT signing keys are not present in source code or configuration",
+          "Test key rotation procedures maintain token validation capability",
+          "Confirm verification keys are retrieved securely with proper validation",
+          "Validate key identifier (kid) handling supports multiple active keys",
+          "Test key revocation procedures properly invalidate compromised keys"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "jwt-without-expiration",
+          "jwt-expiration-not-validated"
+        ],
+        "semgrep": [
+          "javascript.jsonwebtoken.security.jwt-missing-expiration",
+          "python.jwt.security.jwt-missing-exp",
+          "java.jwt.security.jwt-no-expiration",
+          "generic.jwt.security.missing-expiration-claim"
+        ]
+      },
+      "do": [
+        "Include 'exp' claim in all JWT tokens with reasonable expiration times",
+        "Validate JWT expiration before processing token claims",
+        "Set appropriate expiration based on token purpose (short for access, longer for refresh)",
+        "Implement token refresh mechanisms before expiration",
+        "Log and monitor expired token usage attempts",
+        "Use synchronized time sources for expiration validation"
+      ],
+      "dont": [
+        "Do not create JWT tokens without expiration claims",
+        "Do not accept expired JWT tokens in authorization decisions",
+        "Do not set excessively long expiration times (>24 hours for access tokens)",
+        "Do not skip expiration validation during token verification",
+        "Do not rely on client-side expiration checking alone"
+      ],
+      "id": "JWT-EXP-001",
+      "refs": {
+        "asvs": [
+          "V3.1.3",
+          "V3.3.1",
+          "V3.3.3"
+        ],
+        "cwe": [
+          "CWE-613",
+          "CWE-287"
+        ],
+        "owasp": [
+          "A07:2021"
+        ],
+        "standards": [
+          "RFC 7519",
+          "OWASP JWT Security Cheat Sheet"
+        ]
+      },
+      "requirement": "All JWT tokens must include expiration (exp) claims with appropriate time limits, and applications must validate expiration before accepting tokens to prevent indefinite token usage.",
+      "scope": "jwt-implementations",
+      "severity": "high",
+      "title": "JWT tokens must include expiration claims and be validated",
+      "verify": {
+        "tests": [
+          "Verify all generated JWT tokens contain 'exp' claim",
+          "Test that expired JWT tokens are rejected during validation",
+          "Confirm appropriate expiration times based on token type and use case",
+          "Validate token refresh mechanisms work before expiration",
+          "Test system behavior with tokens having past expiration dates"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "codeql": [
+          "jwt-algorithm-confusion",
+          "jwt-none-algorithm",
+          "weak-jwt-algorithm"
+        ],
+        "semgrep": [
+          "javascript.jsonwebtoken.security.jwt-algorithm-none",
+          "python.jwt.security.jwt-none-algorithm",
+          "java.jwt.security.jwt-weak-algorithm",
+          "generic.jwt.security.algorithm-confusion"
+        ]
+      },
+      "do": [
+        "Maintain an explicit allowlist of permitted JWT algorithms",
+        "Validate JWT algorithm header against the allowed algorithms list",
+        "Use asymmetric algorithms (RS256, ES256) for distributed systems",
+        "Reject tokens with algorithm mismatches or unexpected algorithms",
+        "Implement algorithm-specific key validation and verification",
+        "Document approved algorithms and their use cases for development teams"
+      ],
+      "dont": [
+        "Do not accept JWT tokens with 'none' algorithm",
+        "Do not allow algorithm switching without explicit validation",
+        "Do not use weak or deprecated algorithms (HS256 with shared secrets in distributed systems)",
+        "Do not trust algorithm claims without verification against allowed list",
+        "Do not implement algorithm detection based solely on token header"
+      ],
+      "id": "JWT-ALG-001",
+      "refs": {
+        "asvs": [
+          "V6.2.1",
+          "V6.2.2",
+          "V3.1.1"
+        ],
+        "cwe": [
+          "CWE-347",
+          "CWE-327",
+          "CWE-345"
+        ],
+        "owasp": [
+          "A02:2021"
+        ],
+        "standards": [
+          "RFC 7515",
+          "RFC 7518",
+          "OWASP JWT Security Cheat Sheet"
+        ]
+      },
+      "requirement": "JWT verification must validate that the algorithm specified in the token header matches an explicitly allowed list of secure algorithms, preventing algorithm confusion attacks.",
+      "scope": "jwt-implementations",
+      "severity": "high",
+      "title": "JWT algorithm claims must be validated against allowed algorithms",
+      "verify": {
+        "tests": [
+          "Verify tokens with 'none' algorithm are rejected",
+          "Test that only explicitly allowed algorithms are accepted",
+          "Confirm algorithm confusion attacks are prevented",
+          "Validate proper error handling for unsupported algorithms",
+          "Test algorithm validation occurs before signature verification"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "codeql": [
+      "hardcoded-jwt-key",
+      "jwt-algorithm-confusion",
+      "jwt-expiration-not-validated",
+      "jwt-none-algorithm",
+      "jwt-none-algorithm-accepted",
+      "jwt-signature-not-verified",
+      "jwt-without-expiration",
+      "weak-jwt-algorithm",
+      "weak-jwt-key-generation"
+    ],
+    "semgrep": [
+      "generic.jwt.security.algorithm-confusion",
+      "generic.jwt.security.disabled-signature-verification",
+      "generic.jwt.security.missing-expiration-claim",
+      "generic.jwt.security.weak-key-generation",
+      "java.jwt.security.jwt-hardcoded-key",
+      "java.jwt.security.jwt-no-expiration",
+      "java.jwt.security.jwt-signature-bypass",
+      "java.jwt.security.jwt-weak-algorithm",
+      "javascript.jsonwebtoken.security.jwt-algorithm-none",
+      "javascript.jsonwebtoken.security.jwt-hardcode-key",
+      "javascript.jsonwebtoken.security.jwt-missing-expiration",
+      "javascript.jsonwebtoken.security.jwt-verify-none",
+      "python.jwt.security.jwt-hardcode-key",
+      "python.jwt.security.jwt-missing-exp",
+      "python.jwt.security.jwt-none-alg",
+      "python.jwt.security.jwt-none-algorithm"
+    ],
+    "trufflehog": [
+      "JWT Signing Key",
+      "Private Key"
+    ]
+  }
+}

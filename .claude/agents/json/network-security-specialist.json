@@ -1,0 +1,385 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:34Z",
+    "compiler_version": "1.0.0",
+    "description": "Network security specialist for TLS, certificates, and network controls",
+    "domains": [
+      "Network security controls",
+      "TLS configuration",
+      "Certificate management",
+      "Network isolation"
+    ],
+    "name": "network-security-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009194"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "trusted-certificate-internal-services"
+        ]
+      },
+      "do": [
+        "Use trusted certificates for internal service TLS connections"
+      ],
+      "dont": [
+        "Trust all certificates for internal service communication"
+      ],
+      "id": "NET-TLS-CERT-001",
+      "refs": {
+        "asvs": [
+          "V12.3.4"
+        ],
+        "cwe": [
+          "CWE-295"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "TLS connections between internal services must use trusted certificates. Configure consuming services to only trust specific internal CAs and self-signed certificates.",
+      "scope": "infrastructure",
+      "severity": "high",
+      "title": "Ensure trusted certificates for internal service TLS connections",
+      "verify": {
+        "tests": [
+          "Verify that internal service TLS connections use trusted certificates"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "python.requests.security.disabled-cert-validation",
+          "javascript.lang.security.audit.tls-min-version",
+          "generic.secrets.security.detected-secret"
+        ]
+      },
+      "do": [
+        "Enable recommended and strong cipher suites, with the strongest set as preferred.",
+        "Ensure all supported cipher suites provide forward secrecy, especially for L3 applications."
+      ],
+      "dont": [
+        "Allow weak or deprecated cipher suites."
+      ],
+      "id": "NET-TLS-CIPHER-SUITES-001",
+      "refs": {
+        "asvs": [
+          "V12.1.2"
+        ],
+        "cwe": [
+          "CWE-326"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Only recommended cipher suites are enabled, with the strongest cipher suites set as preferred. L3 applications must only support cipher suites which provide forward secrecy.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Enable Strong, Recommended Cipher Suites",
+      "verify": {
+        "tests": [
+          "Verify that only recommended and strong cipher suites are enabled.",
+          "Verify that cipher suites providing forward secrecy are preferred."
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "tls-client-certificate-validation"
+        ]
+      },
+      "do": [
+        "Implement certificate validation in TLS clients"
+      ],
+      "dont": [
+        "Ignore certificate validation errors"
+      ],
+      "id": "NET-TLS-CERT-002",
+      "refs": {
+        "asvs": [
+          "V12.3.2"
+        ],
+        "cwe": [
+          "CWE-295"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "TLS clients must validate certificates received before communicating with a TLS server.",
+      "scope": "infrastructure",
+      "severity": "medium",
+      "title": "Ensure TLS clients validate certificates before communicating with a server",
+      "verify": {
+        "tests": [
+          "Manually verify that TLS clients validate certificates"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "python.requests.security.disabled-cert-validation",
+          "javascript.lang.security.audit.tls-min-version"
+        ]
+      },
+      "do": [
+        "Enable TLS 1.2 and TLS 1.3 as preferred options"
+      ],
+      "dont": [
+        "Allow outdated or insecure TLS versions"
+      ],
+      "id": "NET-TLS-LATEST-VERSIONS-001",
+      "refs": {
+        "asvs": [
+          "V12.1.1"
+        ],
+        "cwe": [
+          "CWE-326"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Only the latest recommended versions of the TLS protocol (e.g., TLS 1.2 and TLS 1.3) are enabled for secure communication.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Enable latest TLS versions for secure communication",
+      "verify": {
+        "tests": [
+          "Manually verify that only TLS 1.2 and TLS 1.3 are enabled"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "generic.secrets.security.detected-secret"
+        ]
+      },
+      "do": [
+        "Enable OCSP Stapling or equivalent mechanism"
+      ],
+      "dont": [
+        "Neglect certification revocation mechanisms"
+      ],
+      "id": "NET-CERTIFICATE-REVOCATION-OCSP-001",
+      "refs": {
+        "asvs": [
+          "V12.1.4"
+        ],
+        "cwe": [
+          "CWE-346"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Proper certification revocation mechanisms, such as Online Certificate Status Protocol (OCSP) Stapling, are enabled and configured.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Enable Certification Revocation",
+      "verify": {
+        "tests": [
+          "Verify that certification revocation mechanisms are enabled"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "strong-authentication-intra-service"
+        ]
+      },
+      "do": [
+        "Implement strong authentication for intra-service communications"
+      ],
+      "dont": [
+        "Allow insecure authentication methods for intra-service communication"
+      ],
+      "id": "NETWORK-SEC-004",
+      "refs": {
+        "asvs": [
+          "V12.3.5"
+        ],
+        "cwe": [
+          "CWE-287"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Ensure that services communicating internally within a system use strong authentication to verify each endpoint. Employ strong authentication methods like TLS client authentication using public-key infrastructure.",
+      "scope": "infrastructure",
+      "severity": "high",
+      "title": "Implement strong authentication for intra-service communications",
+      "verify": {
+        "tests": [
+          "Verify strong authentication implementation for intra-service communications"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "python.requests.security.disabled-cert-validation",
+          "javascript.lang.security.audit.tls-min-version"
+        ]
+      },
+      "do": [
+        "Implement TLS for all internal service communication",
+        "Configure consuming services to trust specific internal CAs and self-signed certificates",
+        "Employ strong authentication methods for intra-service communications",
+        "Consider using a service mesh for microservice architectures to enhance security"
+      ],
+      "dont": [
+        "Allow insecure or unencrypted communication between internal services"
+      ],
+      "id": "NET-TLS-INTERNAL-SERVICE-ENCRYPTION-001",
+      "refs": {
+        "asvs": [
+          "V12.3.3",
+          "V12.3.4",
+          "V12.3.5"
+        ],
+        "cwe": [
+          "CWE-295"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Use TLS for all connectivity between internal, HTTP-based services within the application to prevent insecure or unencrypted communications.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Ensure TLS for internal service communication",
+      "verify": {
+        "tests": [
+          "Verify TLS implementation for internal service communication",
+          "Verify trust configuration for internal CAs and self-signed certificates",
+          "Verify strong authentication methods for intra-service communications",
+          "Consider using a service mesh for microservice architectures"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "generic.secrets.security.detected-secret"
+        ]
+      },
+      "do": [
+        "Ensure mTLS client certificates are trusted"
+      ],
+      "dont": [
+        "Accept untrusted mTLS client certificates"
+      ],
+      "id": "NET-MTLS-CLIENT-CERTIFICATE-VALIDATION-001",
+      "refs": {
+        "asvs": [
+          "V12.1.3"
+        ],
+        "cwe": [
+          "CWE-295"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Validate that mTLS client certificates are trusted before using the certificate identity for authentication or authorization.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Validate mTLS Client Certificates",
+      "verify": {
+        "tests": [
+          "Verify that mTLS client certificates are validated"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "generic.secrets.security.detected-secret"
+        ]
+      },
+      "do": [
+        "Enable Encrypted Client Hello (ECH)"
+      ],
+      "dont": [
+        "Expose sensitive metadata during TLS handshake"
+      ],
+      "id": "NET-ENCRYPTED-CLIENT-HELLO-001",
+      "refs": {
+        "asvs": [
+          "V12.1.5"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Enable Encrypted Client Hello (ECH) in the application's TLS settings to prevent exposure of sensitive metadata, such as the Server Name Indication (SNI), during TLS handshake processes.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Enable Encrypted Client Hello",
+      "verify": {
+        "tests": [
+          "Verify that ECH is enabled"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "tls-internal-service-communication"
+        ]
+      },
+      "do": [
+        "Implement TLS for internal service communication"
+      ],
+      "dont": [
+        "Allow insecure or unencrypted communication between internal services"
+      ],
+      "id": "NET-TLS-ENCRYPT-001",
+      "refs": {
+        "asvs": [
+          "V12.3.3"
+        ],
+        "cwe": [
+          "CWE-319"
+        ],
+        "owasp": [
+          "A06:2021"
+        ]
+      },
+      "requirement": "Use TLS or another appropriate transport encryption mechanism for all connectivity between internal, HTTP-based services within the application, and do not fall back to insecure or unencrypted communications.",
+      "scope": "infrastructure",
+      "severity": "high",
+      "title": "Ensure secure transport encryption for internal service communication",
+      "verify": {
+        "tests": [
+          "Verify that internal service communication is encrypted"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "semgrep": [
+      "generic.secrets.security.detected-secret",
+      "javascript.lang.security.audit.tls-min-version",
+      "python.requests.security.disabled-cert-validation",
+      "strong-authentication-intra-service",
+      "tls-client-certificate-validation",
+      "tls-internal-service-communication",
+      "trusted-certificate-internal-services"
+    ]
+  }
+}

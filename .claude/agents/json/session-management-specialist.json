@@ -1,0 +1,826 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:33Z",
+    "compiler_version": "1.0.0",
+    "description": "Session security specialist for session lifecycle, tokens, and state management",
+    "domains": [
+      "Session lifecycle",
+      "Session tokens",
+      "Session state management",
+      "Session security controls"
+    ],
+    "name": "session-management-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009193"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Use self-contained or reference tokens for session management",
+        "Ensure reference tokens are unique and generated using CSPRNG with 128 bits of entropy"
+      ],
+      "dont": [
+        "Use static API secrets and keys for session tokens"
+      ],
+      "id": "SESSION-SECURE-TOKEN-GENERATION-001",
+      "refs": {
+        "asvs": [
+          "V7.2.2",
+          "V7.2.3"
+        ],
+        "cwe": [
+          "CWE-330"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Use either self-contained or reference tokens that are dynamically generated for session management. If reference tokens are used, ensure they are unique, generated using a CSPRNG with at least 128 bits of entropy.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Ensure unique and cryptographically secure session tokens",
+      "verify": {
+        "tests": [
+          "Verify usage of unique and cryptographically secure session tokens"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Invalidate session data at the application backend on termination"
+      ],
+      "dont": [
+        "Allow terminated sessions to be reused"
+      ],
+      "id": "SESSION-TERMINATION-INVALIDATION-001",
+      "refs": {
+        "asvs": [
+          "V7.4.1"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "When session termination is triggered (such as logout or expiration), the application disallows any further use of the session.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Disallow Further Use of Session on Termination",
+      "verify": {
+        "tests": [
+          "Verify that terminated sessions cannot be used"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Implement multi-factor authentication for highly sensitive transactions"
+      ],
+      "dont": [
+        "Allow highly sensitive transactions without additional authentication"
+      ],
+      "id": "SESSION-AUTH-VERIFY-001",
+      "refs": {
+        "asvs": [
+          "V7.5.3"
+        ],
+        "cwe": [
+          "CWE-XX"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "Before performing highly sensitive transactions or operations, further authentication with at least one factor or secondary verification is required.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Implement further authentication for highly sensitive transactions",
+      "verify": {
+        "tests": [
+          "Test the implementation of further authentication for highly sensitive transactions"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Document systems in federated identity management ecosystem",
+        "Define controls for session lifetimes, termination, and re-authentication"
+      ],
+      "dont": [
+        "Neglect documenting federated identity management controls"
+      ],
+      "id": "SESSION-MANAGEMENT-005",
+      "refs": {
+        "asvs": [
+          "V7.1.3"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Document all systems that create and manage user sessions as part of a federated identity management ecosystem (e.g., SSO systems) along with controls for coordinating session lifetimes, termination, and re-authentication conditions.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Document federated identity management ecosystem controls",
+      "verify": {
+        "tests": [
+          "Review documentation for federated identity management controls"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Set and enforce an absolute maximum session lifetime",
+        "Implement re-authentication mechanisms as necessary"
+      ],
+      "dont": [
+        "Allow sessions to exceed the absolute maximum lifetime without re-authentication"
+      ],
+      "id": "SESSION-MAXIMUM-LIFETIME-ENFORCEMENT-001",
+      "refs": {
+        "asvs": [
+          "V7.6.1:2021"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "There is an absolute maximum session lifetime such that re-authentication is enforced according to requirements.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Enforce Absolute Maximum Session Lifetime",
+      "verify": {
+        "tests": [
+          "Test session lifetime enforcement and re-authentication mechanisms"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Configure session lifetime and re-authentication settings between RPs and IdPs"
+      ],
+      "dont": [
+        "Neglect session lifetime and re-authentication requirements"
+      ],
+      "id": "SESSION-AUTH-LIFETIME-ENFORCE-001",
+      "refs": {
+        "asvs": [
+          "V7.6.1"
+        ],
+        "cwe": [
+          "CWE-XX"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "Ensure session lifetime and termination between Relying Parties (RPs) and Identity Providers (IdPs) are as documented, requiring re-authentication when necessary.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Enforce session lifetime and re-authentication between RPs and IdPs",
+      "verify": {
+        "tests": [
+          "Verify session lifetime and re-authentication behavior between RPs and IdPs"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "session-token-verification-trusted-backend"
+        ]
+      },
+      "do": [
+        "Implement backend service for session token verification"
+      ],
+      "dont": [
+        "Perform session token verification on the client-side"
+      ],
+      "id": "SESSION-VERIFY-TOKEN-SESSION-001",
+      "refs": {
+        "asvs": [
+          "V7.2.1:2021"
+        ],
+        "cwe": [
+          "CWE-613"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "All session token verification must be performed using a trusted backend service to ensure security and integrity.",
+      "scope": "web-application/api",
+      "severity": "medium",
+      "title": "Perform session token verification using a trusted backend service",
+      "verify": {
+        "tests": [
+          "Manually verify that session token verification is handled by the backend service"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Terminate all active sessions associated with the disabled/deleted account"
+      ],
+      "dont": [
+        "Allow disabled/deleted accounts to have active sessions"
+      ],
+      "id": "SESSION-ACCOUNT-TERMINATION-001",
+      "refs": {
+        "asvs": [
+          "V7.4.2"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Terminates all active sessions when a user account is disabled or deleted.",
+      "scope": "web-application",
+      "severity": "low",
+      "title": "Terminate Sessions on Account Disable/Delete",
+      "verify": {
+        "tests": [
+          "Verify that sessions are terminated when accounts are disabled/deleted"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Provide the option to terminate all other active sessions after changing or removing an authentication factor"
+      ],
+      "dont": [
+        "Allow active sessions to persist without re-authentication after authentication factor changes"
+      ],
+      "id": "SESSION-MANAGEMENT-NEW-002",
+      "refs": {
+        "asvs": [
+          "V7.4.3"
+        ],
+        "cwe": [
+          "CWE-384"
+        ]
+      },
+      "requirement": "Give the option to terminate all other active sessions after a successful change or removal of any authentication factor to enhance security.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Terminate other active sessions after authentication factor change",
+      "verify": {
+        "tests": [
+          "Verify that users can terminate other active sessions after authentication factor changes"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Ensure logout functionality is easily accessible on authenticated pages"
+      ],
+      "dont": [
+        "Hide or make logout functionality hard to find"
+      ],
+      "id": "SESSION-VISIBLE-LOGOUT-FUNCTIONALITY-001",
+      "refs": {
+        "asvs": [
+          "V7.4.4"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "All pages that require authentication have easy and visible access to logout functionality.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Provide Visible Logout Functionality",
+      "verify": {
+        "tests": [
+          "Verify that logout functionality is visible on authenticated pages"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.cookie-session-id-fingerprinting",
+          "http.cookie-session-id-disclosure",
+          "python.django.security.audit.session-cookie-secure-false",
+          "python.django.security.audit.session-cookie-httponly-false",
+          "java.spring.security.audit.spring-csrf-disabled"
+        ],
+        "trufflehog": [
+          "Generic API Key"
+        ]
+      },
+      "do": [
+        "Update session ID names to generic terms to prevent fingerprinting",
+        "Implement a random session ID generator with at least 64 bits of entropy",
+        "Ensure session ID names do not reveal sensitive information"
+      ],
+      "dont": [
+        "Use default session ID names like 'PHPSESSID', 'JSESSIONID', 'ASP.NET_SessionId'"
+      ],
+      "id": "SESSION-MANAGEMENT-001",
+      "refs": {
+        "cwe": [
+          "CWE-200",
+          "CWE-384"
+        ],
+        "owasp": [
+          "A3:2021",
+          "A6:2021"
+        ]
+      },
+      "requirement": "Change default session ID names to generic names like 'id' to avoid disclosing technologies and programming languages used by the web application.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Use generic session ID names to avoid fingerprinting",
+      "verify": {
+        "tests": [
+          "Verify session ID names are generic and do not disclose sensitive information",
+          "Test session ID generation for at least 64 bits of entropy"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Provide the option to terminate all other active sessions after authentication factor change"
+      ],
+      "dont": [
+        "Keep all other sessions active after authentication factor change"
+      ],
+      "id": "SESSION-AUTH-FACTOR-TERMINATION-001",
+      "refs": {
+        "asvs": [
+          "V7.4.3"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Gives the option to terminate all other active sessions after a successful change or removal of any authentication factor.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Terminate Other Sessions on Authentication Factor Change",
+      "verify": {
+        "tests": [
+          "Verify that users can terminate other sessions after authentication factor change"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Generate a new session token on user authentication",
+        "Document session inactivity timeout and absolute maximum session lifetime with justification"
+      ],
+      "dont": [
+        "Reuse session tokens"
+      ],
+      "id": "SESSION-AUTH-LIFETIME-TIMEOUT-001",
+      "refs": {
+        "asvs": [
+          "V7.1.1",
+          "V7.2.4",
+          "V7.3.1"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Generate a new session token upon user authentication, including re-authentication, and terminate the current session token. Ensure the session inactivity timeout and absolute maximum session lifetime are documented with justification for deviations from NIST SP 800-63B re-authentication requirements.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Generate new session token on user authentication",
+      "verify": {
+        "tests": [
+          "Verify new session token generation on user authentication",
+          "Review documentation for session inactivity timeout and absolute maximum session lifetime"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Implement mechanisms for federated re-authentication between RPs and IdPs"
+      ],
+      "dont": [
+        "Neglect re-authentication requirements between RPs and IdPs"
+      ],
+      "id": "SESSION-AUTH-LIFETIME-SESSION-001",
+      "refs": {
+        "asvs": [
+          "V7.6.1:2021"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "Ensure session lifetime and termination between Relying Parties (RPs) and Identity Providers (IdPs) behave as documented, requiring re-authentication as necessary such as when the maximum time between IdP authentication events is reached.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Federated Re-authentication",
+      "verify": {
+        "tests": [
+          "Test session behavior between RPs and IdPs for re-authentication"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "unique-reference-tokens"
+        ]
+      },
+      "do": [
+        "Generate unique reference tokens using CSPRNG with at least 128 bits of entropy"
+      ],
+      "dont": [
+        "Reuse reference tokens or generate them without sufficient entropy"
+      ],
+      "id": "SESSION-TOKEN-SESSION-001",
+      "refs": {
+        "asvs": [
+          "V7.2.3:2021"
+        ],
+        "cwe": [
+          "CWE-330"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "If reference tokens are used for user sessions, ensure they are unique and possess sufficient entropy for security.",
+      "scope": "web-application/api",
+      "severity": "medium",
+      "title": "Generate unique reference tokens with sufficient entropy",
+      "verify": {
+        "tests": [
+          "Check that reference tokens are unique and have sufficient entropy"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Implement mechanisms to require user consent or explicit action for session creation"
+      ],
+      "dont": [
+        "Allow creation of new application sessions without user interaction"
+      ],
+      "id": "SESSION-PREVENT-SESSION-001",
+      "refs": {
+        "asvs": [
+          "V7.6.2:2021"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "Ensure that the creation of a session requires either the user's consent or an explicit action to prevent the creation of new application sessions without user interaction.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Require user consent or action for session creation",
+      "verify": {
+        "tests": [
+          "Test session creation process for user consent or explicit action"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Allow users to view and terminate active sessions"
+      ],
+      "dont": [
+        "Restrict users from managing their active sessions"
+      ],
+      "id": "SESSION-ACTIVE-MANAGEMENT-TERMINATION-001",
+      "refs": {
+        "asvs": [
+          "V7.5.2"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Users are able to view and terminate any or all currently active sessions.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "View and Terminate Active Sessions",
+      "verify": {
+        "tests": [
+          "Verify that users can view and terminate their active sessions"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Generate tokens dynamically for each session",
+        "Use strong cryptographic algorithms for token generation"
+      ],
+      "dont": [
+        "Reuse tokens across sessions"
+      ],
+      "id": "SESSION-PREVENT-MGMT-TOKEN-001",
+      "refs": {
+        "asvs": [
+          "V7.3.2"
+        ],
+        "cwe": [
+          "CWE-347"
+        ]
+      },
+      "requirement": "Session management should use dynamically generated tokens to enhance security and prevent unauthorized access.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Use dynamically generated tokens for session management",
+      "verify": {
+        "tests": [
+          "Verify that tokens are dynamically generated and not reused"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.session-id-weak-entropy",
+          "http.session-id-brute-force",
+          "python.django.security.audit.session-cookie-secure-false",
+          "python.django.security.audit.session-cookie-httponly-false",
+          "java.spring.security.audit.spring-csrf-disabled"
+        ]
+      },
+      "do": [
+        "Use a strong CSPRNG to generate session IDs",
+        "Ensure session IDs have at least 64 bits of entropy",
+        "Consider different encoding methods to achieve required entropy"
+      ],
+      "dont": [
+        "Use predictable or weak session ID generation algorithms"
+      ],
+      "id": "SESSION-MANAGEMENT-002",
+      "refs": {
+        "cwe": [
+          "CWE-330",
+          "CWE-338"
+        ],
+        "owasp": [
+          "A3:2021",
+          "A6:2021"
+        ]
+      },
+      "requirement": "Generate session IDs with at least 64 bits of entropy using a cryptographically secure pseudorandom number generator to prevent brute-force guessing attacks.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Implement strong session ID entropy to prevent brute-force attacks",
+      "verify": {
+        "tests": [
+          "Test session ID generation algorithm for entropy strength",
+          "Verify session IDs have at least 64 bits of entropy"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Implement a mechanism to terminate all active sessions upon user account disablement or deletion"
+      ],
+      "dont": [
+        "Allow disabled or deleted user accounts to retain active sessions"
+      ],
+      "id": "SESSION-MANAGEMENT-NEW-001",
+      "refs": {
+        "asvs": [
+          "V7.4.2"
+        ],
+        "cwe": [
+          "CWE-384"
+        ]
+      },
+      "requirement": "Terminate all active sessions when a user account is disabled or deleted to prevent unauthorized access.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Terminate all active sessions on user account disable or deletion",
+      "verify": {
+        "tests": [
+          "Verify that all active sessions are terminated when a user account is disabled or deleted"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "session-management-security"
+        ]
+      },
+      "do": [
+        "Implement secure session token generation",
+        "Use cryptographically strong session identifiers",
+        "Enforce proper session timeout mechanisms",
+        "Implement secure session storage"
+      ],
+      "dont": [
+        "Use predictable session identifiers",
+        "Store sessions in insecure locations",
+        "Allow indefinite session duration",
+        "Reuse session tokens after logout"
+      ],
+      "id": "SESSION-IMPLEMENT-SECURE-MECHANISMS-001",
+      "refs": {
+        "asvs": [
+          "V3.1.1"
+        ],
+        "cwe": [
+          "CWE-384"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "Implement secure session management mechanisms including proper session creation, maintenance, and termination to prevent session-based attacks.",
+      "scope": "web-application",
+      "severity": "critical",
+      "title": "Enforce secure session management mechanisms",
+      "verify": {
+        "tests": [
+          "Verify session token randomness and strength",
+          "Test session timeout enforcement",
+          "Validate secure session storage"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "javascript.express.security.audit.express-session-no-secret",
+          "python.django.security.audit.session-cookie-httponly-false"
+        ]
+      },
+      "do": [
+        "Use trusted backend service for session token verification"
+      ],
+      "dont": [
+        "Rely on untrusted services for session token verification"
+      ],
+      "id": "SESSION-TRUSTED-BACKEND-VERIFICATION-001",
+      "refs": {
+        "asvs": [
+          "V7.2.1"
+        ],
+        "cwe": [
+          "CWE-346"
+        ],
+        "owasp": [
+          "A2:2021"
+        ]
+      },
+      "requirement": "Perform all session token verification using a trusted backend service to ensure secure session management.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Use trusted backend service for session token verification",
+      "verify": {
+        "tests": [
+          "Verify session token verification using trusted backend service"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "semgrep": [
+      "http.cookie-session-id-disclosure",
+      "http.cookie-session-id-fingerprinting",
+      "http.session-id-brute-force",
+      "http.session-id-weak-entropy",
+      "java.spring.security.audit.spring-csrf-disabled",
+      "javascript.express.security.audit.express-session-no-secret",
+      "python.django.security.audit.session-cookie-httponly-false",
+      "python.django.security.audit.session-cookie-secure-false",
+      "session-management-security",
+      "session-token-verification-trusted-backend",
+      "unique-reference-tokens"
+    ],
+    "trufflehog": [
+      "Generic API Key"
+    ]
+  }
+}

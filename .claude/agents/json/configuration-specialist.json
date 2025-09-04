@@ -1,0 +1,601 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:34Z",
+    "compiler_version": "1.0.0",
+    "description": "Security configuration specialist for secure defaults and hardening",
+    "domains": [
+      "Secure configuration",
+      "Security hardening",
+      "Default security settings",
+      "Configuration management"
+    ],
+    "name": "configuration-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009194"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Define resource\u2011management strategies for external systems",
+        "Include resource\u2011release procedures, timeout settings, and retry logic"
+      ],
+      "dont": [
+        "Neglect defining resource\u2011management strategies"
+      ],
+      "id": "CONFIG-RESOURCE-MANAGEMENT-DOCUMENTATION-001",
+      "refs": {
+        "asvs": [
+          "V13.1.3"
+        ],
+        "cwe": [
+          "CWE-16"
+        ],
+        "owasp": [
+          "A05:2021"
+        ]
+      },
+      "requirement": "Ensure that documentation defines resource\u2011management strategies for every external system or service the application uses, including databases, file handles, threads, and HTTP connections. This should include resource\u2011release procedures, timeout settings, failure handling, and retry logic specifications.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Document resource management strategies for external systems",
+      "verify": {
+        "tests": [
+          "Review documentation for completeness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Document all communication needs for the application",
+        "Include external services and potential end user-provided locations"
+      ],
+      "dont": [
+        "Neglect documenting communication needs"
+      ],
+      "id": "CONFIG-COMMUNICATION-DOCUMENTATION-001",
+      "refs": {
+        "asvs": [
+          "V13.1.1"
+        ],
+        "cwe": [
+          "CWE-16"
+        ],
+        "owasp": [
+          "A05:2021"
+        ]
+      },
+      "requirement": "Ensure that all communication needs for the application are documented, including external services which the application relies upon and cases where an end user might be able to provide an external location to which the application will then connect.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Document all communication needs and external services",
+      "verify": {
+        "tests": [
+          "Review documentation for completeness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.response.body: $version"
+        ]
+      },
+      "do": [
+        "Configure web server to limit backend component version information"
+      ],
+      "dont": [
+        "Expose detailed version information of backend components"
+      ],
+      "id": "CONFIG-LIMIT-BACKEND-COMPONENT-001",
+      "refs": {
+        "asvs": [
+          "V13.4.6"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Detailed version information of backend components must not be exposed",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Limit Backend Component Version Information",
+      "verify": {
+        "tests": [
+          "Manually verify that backend component version information is limited"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Define critical secrets for the application",
+        "Establish a schedule for rotating critical secrets"
+      ],
+      "dont": [
+        "Neglect defining critical secrets and rotation schedule"
+      ],
+      "id": "CONFIG-SECRET-ROTATION-THREAT-MODEL-001",
+      "refs": {
+        "asvs": [
+          "V13.1.4"
+        ],
+        "cwe": [
+          "CWE-16"
+        ],
+        "owasp": [
+          "A05:2021"
+        ]
+      },
+      "requirement": "Ensure that the application's documentation defines the secrets that are critical for the security of the application and a schedule for rotating them, based on the organization's threat model and business requirements.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Rotate critical secrets based on threat model",
+      "verify": {
+        "tests": [
+          "Review documentation for completeness"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.server.trace.enabled: $true"
+        ]
+      },
+      "do": [
+        "Disable HTTP TRACE method in web server configuration"
+      ],
+      "dont": [
+        "Allow HTTP TRACE method"
+      ],
+      "id": "CONFIG-PREVENT-ENVIRONMENT-DISABLE-002",
+      "refs": {
+        "asvs": [
+          "V13.4.4"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "The HTTP TRACE method must be disabled in production environments to prevent potential information leakage",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Disable HTTP TRACE Method",
+      "verify": {
+        "tests": [
+          "Manually verify that HTTP TRACE method is disabled"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Use a secrets management solution to securely create, store, control access to, and destroy backend secrets",
+        "Follow the principle of least privilege for access to secret assets"
+      ],
+      "dont": [
+        "Store secrets in application source code or build artifacts"
+      ],
+      "id": "CONFIG-PRIVILEGE-SECRET-MGMT-001",
+      "refs": {
+        "asvs": [
+          "V13.3.1",
+          "V13.3.2"
+        ],
+        "cwe": [
+          "CWE-798"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Ensure secrets are securely managed using a secrets management solution and adhere to the principle of least privilege.",
+      "scope": "web-application/api",
+      "severity": "medium",
+      "title": "Secret Management Best Practices",
+      "verify": {
+        "tests": [
+          "Verify that secrets are securely managed and access is restricted"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "backend-authentication-missing"
+        ]
+      },
+      "do": [
+        "Authenticate all backend communication components",
+        "Use mutual TLS or service-to-service authentication",
+        "Implement proper certificate management",
+        "Monitor backend authentication failures"
+      ],
+      "dont": [
+        "Allow unauthenticated backend communication",
+        "Use weak authentication between services",
+        "Skip certificate validation in backend calls"
+      ],
+      "id": "CONFIG-IMPLEMENT-BACKEND-AUTH-001",
+      "refs": {
+        "asvs": [
+          "V9.2.1"
+        ],
+        "cwe": [
+          "CWE-306"
+        ],
+        "owasp": [
+          "A07:2021"
+        ]
+      },
+      "requirement": "Implement authentication mechanisms for all backend communication components to ensure secure inter-service communication.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Authenticate backend communication components",
+      "verify": {
+        "tests": [
+          "Verify backend services require authentication",
+          "Test certificate validation in backend communication",
+          "Validate authentication failure handling"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Implement an allowlist of trusted resources or systems for backend communication"
+      ],
+      "dont": [
+        "Allow unrestricted outbound requests from the server"
+      ],
+      "id": "CONFIG-ALLOW-CONFIG-001",
+      "refs": {
+        "asvs": [
+          "V13.2.5"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Ensure the web or application server is configured with an allowlist of resources or systems to which the server can send requests or load data or files from.",
+      "scope": "web-application/api",
+      "severity": "medium",
+      "title": "Secure Backend Communication Configuration",
+      "verify": {
+        "tests": [
+          "Verify that only specified resources or systems are allowed for communication"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Perform all cryptographic operations using an isolated security module"
+      ],
+      "dont": [
+        "Perform cryptographic operations without proper key protection"
+      ],
+      "id": "CONFIG-KEY-001",
+      "refs": {
+        "asvs": [
+          "V13.3.3"
+        ],
+        "cwe": [
+          "CWE-310"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Ensure all cryptographic operations are performed using an isolated security module to protect key material from exposure.",
+      "scope": "web-application/api",
+      "severity": "high",
+      "title": "Secure Cryptographic Operations",
+      "verify": {
+        "tests": [
+          "Verify that cryptographic operations are isolated and key material is protected"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Disable debug modes for all components in production"
+      ],
+      "dont": [
+        "Allow debug modes to be enabled in production environments"
+      ],
+      "id": "CONFIG-PREVENT-ENVIRONMENT-DISABLE-001",
+      "refs": {
+        "asvs": [
+          "V13.4.2"
+        ],
+        "cwe": [
+          "CWE-204"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Ensure that debug modes are disabled for all components in production environments to prevent exposure of debugging features and information leakage.",
+      "scope": "web-application/api",
+      "severity": "medium",
+      "title": "Disable Debug Modes in Production",
+      "verify": {
+        "tests": [
+          "Verify that debug modes are disabled in production"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Assign the least necessary privileges to accounts for backend communication"
+      ],
+      "dont": [
+        "Assign excessive privileges to backend communication accounts"
+      ],
+      "id": "CONFIG-SEC-008",
+      "refs": {
+        "asvs": [
+          "V13.2.2"
+        ],
+        "cwe": [
+          "CWE-16"
+        ],
+        "owasp": [
+          "A05:2021"
+        ]
+      },
+      "requirement": "Ensure that communications between backend application components are performed with accounts assigned the least necessary privileges.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Least privilege for backend communication accounts",
+      "verify": {
+        "tests": [
+          "Review privileges assigned to backend communication accounts"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Avoid using default credentials for service authentication"
+      ],
+      "dont": [
+        "Use default credentials for service authentication"
+      ],
+      "id": "CONFIG-SEC-009",
+      "refs": {
+        "asvs": [
+          "V13.2.3"
+        ],
+        "cwe": [
+          "CWE-16"
+        ],
+        "owasp": [
+          "A05:2021"
+        ]
+      },
+      "requirement": "Ensure that if a credential has to be used for service authentication, the credential being used by the consumer is not a default credential (e.g., root/root or admin/admin).",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Avoid default credentials for service authentication",
+      "verify": {
+        "tests": [
+          "Review service authentication credentials for default values"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.response.body: $file_extension"
+        ]
+      },
+      "do": [
+        "Configure web server to serve only specified file extensions"
+      ],
+      "dont": [
+        "Allow serving files with any file extension"
+      ],
+      "id": "CONFIG-PREVENT-RESTRICT-001",
+      "refs": {
+        "asvs": [
+          "V13.4.7"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Web tier should only serve files with specific file extensions to prevent unintentional leakage",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Restrict File Extensions for Web Tier",
+      "verify": {
+        "tests": [
+          "Manually verify that only specified file extensions are served"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.server.directory-listing.enabled: $true"
+        ]
+      },
+      "do": [
+        "Disable directory listing functionality in web server configuration"
+      ],
+      "dont": [
+        "Enable directory listing functionality"
+      ],
+      "id": "CONFIG-RESTRICT-001",
+      "refs": {
+        "asvs": [
+          "V13.4.3"
+        ],
+        "cwe": [
+          "CWE-548"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Web servers must not expose directory listings to clients unless explicitly intended",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Restrict Directory Listings",
+      "verify": {
+        "tests": [
+          "Manually verify that directory listings are disabled"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "yaml.docker-compose.security.writable-filesystem-service",
+          "terraform.aws.security.aws-s3-bucket-public-read-prohibited"
+        ]
+      },
+      "do": [
+        "Implement an allowlist for external communications",
+        "Define permitted external resources or systems"
+      ],
+      "dont": [
+        "Allow communication with unlisted external resources"
+      ],
+      "id": "CONFIG-SEC-010",
+      "refs": {
+        "asvs": [
+          "V13.2.4"
+        ],
+        "cwe": [
+          "CWE-16"
+        ],
+        "owasp": [
+          "A05:2021"
+        ]
+      },
+      "requirement": "Ensure that an allowlist is used to define the external resources or systems with which the application is permitted to communicate. This allowlist can be implemented at the application layer, web server, firewall, or a combination of different layers.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Implement allowlist for external communications",
+      "verify": {
+        "tests": [
+          "Review allowlist implementation for external communications"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "http.route.documentation: $true",
+          "http.route.monitoring: $true"
+        ]
+      },
+      "do": [
+        "Securely restrict access to documentation and monitoring endpoints"
+      ],
+      "dont": [
+        "Expose documentation and monitoring endpoints to unauthorized users"
+      ],
+      "id": "CONFIG-MONITORING-RESTRICT-001",
+      "refs": {
+        "asvs": [
+          "V13.4.5"
+        ],
+        "cwe": [
+          "CWE-285"
+        ],
+        "owasp": [
+          "A6:2021"
+        ]
+      },
+      "requirement": "Documentation and monitoring endpoints should not be exposed unless explicitly intended",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Restrict Documentation and Monitoring Endpoints",
+      "verify": {
+        "tests": [
+          "Manually verify that documentation and monitoring endpoints are restricted"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "semgrep": [
+      "backend-authentication-missing",
+      "http.response.body: $file_extension",
+      "http.response.body: $version",
+      "http.route.documentation: $true",
+      "http.route.monitoring: $true",
+      "http.server.directory-listing.enabled: $true",
+      "http.server.trace.enabled: $true",
+      "terraform.aws.security.aws-s3-bucket-public-read-prohibited",
+      "yaml.docker-compose.security.writable-filesystem-service"
+    ]
+  }
+}

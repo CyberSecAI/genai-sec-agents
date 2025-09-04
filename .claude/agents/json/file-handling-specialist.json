@@ -1,0 +1,174 @@
+{
+  "agent": {
+    "attribution": "# Attribution and Acknowledgments\n\n## Project Information\n- **Project**: GenAI Security Agents - Policy-as-Code Engine\n- **Repository**: genai-sec-agents\n- **License**: [To be determined]\n\n## Rule Card Sources\nRule Cards in this repository are based on:\n- Industry security standards and best practices\n- OWASP guidelines and recommendations  \n- CIS Benchmarks and controls\n- NIST Cybersecurity Framework\n- ASVS (Application Security Verification Standard)\n\n## Third-Party Components\n- **PyYAML**: YAML processing library\n- **jsonschema**: JSON Schema validation\n- **pytest**: Testing framework\n\n## OWASP CheatSheet Series\n- **Source**: https://github.com/OWASP/CheatSheetSeries\n- **License**: CC BY-SA 4.0\n- **Usage**: Semantic search corpus for security guidance\n- **Attribution**: \u00a9 OWASP Foundation, licensed under Creative Commons Attribution-ShareAlike 4.0 International License\n- **Local Path**: `vendor/owasp-cheatsheets/`\n- **Purpose**: Used to create normalized search corpus in `research/search_corpus/owasp/` for local semantic search capabilities\n\n## Contributors\n- Lead AppSec Engineer: [Name]\n- Development Team: [Names]\n\n## Standards References\nThis project implements security controls based on recognized industry standards. All Rule Cards include proper attribution to source standards in the `refs` section.",
+    "build_date": "2025-09-04T18:06:34Z",
+    "compiler_version": "1.0.0",
+    "description": "File security specialist for upload validation, path traversal, and file system security",
+    "domains": [
+      "File upload security",
+      "Path traversal prevention",
+      "File system permissions",
+      "File type validation"
+    ],
+    "name": "file-handling-specialist",
+    "source_digest": "sha256:1d670f362a6a6b58b8ed484dde6669f82f10a8d3f0d2aedd082f138b0d22322c",
+    "version": "4ea80e36-1757009194"
+  },
+  "rules": [
+    {
+      "detect": {
+        "semgrep": [
+          "python.lang.security.audit.dangerous-system-call",
+          "javascript.lang.security.audit.path-traversal"
+        ]
+      },
+      "do": [
+        "Implement antivirus scanning for files from untrusted sources"
+      ],
+      "dont": [
+        "Serve files from untrusted sources without scanning"
+      ],
+      "id": "FILE-HANDLING-001",
+      "refs": {
+        "asvs": [
+          "V5.4.3"
+        ],
+        "cwe": [
+          "CWE-434"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Files obtained from untrusted sources are scanned by antivirus scanners to prevent serving of known malicious content.",
+      "scope": "web-application",
+      "severity": "medium",
+      "title": "Scan files from untrusted sources with antivirus",
+      "verify": {
+        "tests": [
+          "Test file upload validation and processing security"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "python.lang.security.audit.dangerous-system-call",
+          "javascript.lang.security.audit.path-traversal"
+        ]
+      },
+      "do": [
+        "Implement file size limits and validate file signatures",
+        "Use internally generated or trusted data for file paths",
+        "Apply strict validation and sanitization for user-submitted filenames"
+      ],
+      "dont": [
+        "Accept user-submitted filenames without validation and sanitization"
+      ],
+      "id": "FILE-UPLOAD-003",
+      "refs": {
+        "asvs": [
+          "V5.3.2"
+        ],
+        "cwe": [
+          "CWE-434"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Enforce file size limits and validate file signatures to prevent DoS attacks and malicious uploads. When the application creates file paths for file operations, instead of user-submitted filenames, it uses internally generated or trusted data, or if user-submitted filenames or file metadata must be used, strict validation and sanitization must be applied.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Implement file size and type validation",
+      "verify": {
+        "tests": [
+          "Test file upload validation and processing security"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "python.lang.security.audit.dangerous-system-call",
+          "javascript.lang.security.audit.path-traversal"
+        ]
+      },
+      "do": [
+        "Generate random filenames for uploaded files",
+        "Store files in a secure location outside the webroot",
+        "Ignore user-provided path information during file processing"
+      ],
+      "dont": [
+        "Use predictable filenames for uploaded files",
+        "Store files in insecure locations within the webroot"
+      ],
+      "id": "FILE-UPLOAD-002",
+      "refs": {
+        "asvs": [
+          "V5.3.3"
+        ],
+        "cwe": [
+          "CWE-434"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Generate random filenames for uploaded files and store them in a secure location outside the webroot. Server-side file processing, such as file decompression, ignores user-provided path information to prevent vulnerabilities such as zip slip.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Secure file naming and storage location",
+      "verify": {
+        "tests": [
+          "Test file upload validation and processing security"
+        ]
+      }
+    },
+    {
+      "detect": {
+        "semgrep": [
+          "python.lang.security.audit.dangerous-system-call",
+          "javascript.lang.security.audit.path-traversal"
+        ]
+      },
+      "do": [
+        "Check file extensions against a whitelist of allowed extensions",
+        "Validate or ignore user-submitted filenames in various contexts",
+        "Specify a filename in the Content-Disposition header field"
+      ],
+      "dont": [
+        "Accept file extensions without validation",
+        "Allow user-submitted filenames without proper handling"
+      ],
+      "id": "FILE-UPLOAD-001",
+      "refs": {
+        "asvs": [
+          "V5.4.1"
+        ],
+        "cwe": [
+          "CWE-434"
+        ],
+        "owasp": [
+          "A01:2021"
+        ]
+      },
+      "requirement": "Implement input validation to check file extensions against a whitelist of allowed extensions. Additionally, validate or ignore user-submitted filenames, including in a JSON, JSONP, or URL parameter, and specify a filename in the Content-Disposition header field in the response.",
+      "scope": "web-application",
+      "severity": "high",
+      "title": "Validate file extensions and content types",
+      "verify": {
+        "tests": [
+          "Test file upload validation and processing security"
+        ]
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "validation_hooks": {
+    "semgrep": [
+      "javascript.lang.security.audit.path-traversal",
+      "python.lang.security.audit.dangerous-system-call"
+    ]
+  }
+}
