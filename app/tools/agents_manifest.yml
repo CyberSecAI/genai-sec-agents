@@ -1,57 +1,270 @@
 version: "1.0"
-description: "Agent configuration manifest defining specialized security agents and their Rule Card associations"
+description: "Domain-based agent configuration manifest with one specialist agent per security domain directory"
 
 agents:
+  # Core Authentication Security (49 rules)
+  - name: "authentication-specialist"
+    description: "Authentication security specialist covering login, MFA, password policies, and credential management"
+    rule_cards:
+      - "authentication/*.yml"
+    output_file: "authentication-specialist.json"
+    domains:
+      - "User authentication"
+      - "Multi-factor authentication"
+      - "Password security"
+      - "Credential management"
+
+  # Session Management Security (22 rules)
+  - name: "session-management-specialist"
+    description: "Session security specialist for session lifecycle, tokens, and state management"
+    rule_cards:
+      - "session_management/*.yml"
+    output_file: "session-management-specialist.json"
+    domains:
+      - "Session lifecycle"
+      - "Session tokens"
+      - "Session state management"
+      - "Session security controls"
+
+  # Security Logging and Monitoring (18 rules)
+  - name: "logging-specialist"
+    description: "Security logging and monitoring specialist for audit trails and security events"
+    rule_cards:
+      - "logging/*.yml"
+    output_file: "logging-specialist.json"
+    domains:
+      - "Security event logging"
+      - "Audit trail management"
+      - "Log integrity"
+      - "Monitoring controls"
+
+  # Security Configuration Management (16 rules)
+  - name: "configuration-specialist"
+    description: "Security configuration specialist for secure defaults and hardening"
+    rule_cards:
+      - "configuration/*.yml"
+    output_file: "configuration-specialist.json"
+    domains:
+      - "Secure configuration"
+      - "Security hardening"
+      - "Default security settings"
+      - "Configuration management"
+
+  # Data Protection and Privacy (14 rules)
+  - name: "data-protection-specialist"
+    description: "Data protection and privacy specialist for GDPR, encryption at rest, and data handling"
+    rule_cards:
+      - "data_protection/*.yml"
+    output_file: "data-protection-specialist.json"
+    domains:
+      - "Data privacy"
+      - "Data encryption"
+      - "Data retention"
+      - "GDPR compliance"
+
+  # Authorization and Access Control (13 rules)
+  - name: "authorization-specialist"
+    description: "Authorization and access control specialist for RBAC, permissions, and privilege management"
+    rule_cards:
+      - "authorization/*.yml"
+    output_file: "authorization-specialist.json"
+    domains:
+      - "Role-based access control"
+      - "Permission management"
+      - "Privilege escalation prevention"
+      - "Access control policies"
+
+  # Network Security (10 rules)
+  - name: "network-security-specialist"
+    description: "Network security specialist for TLS, certificates, and network controls"
+    rule_cards:
+      - "network_security/*.yml"
+    output_file: "network-security-specialist.json"
+    domains:
+      - "Network security controls"
+      - "TLS configuration"
+      - "Certificate management"
+      - "Network isolation"
+
+  # Web Application Security (9 rules)
+  - name: "web-security-specialist"
+    description: "Web application security specialist for XSS, CSRF, clickjacking, and web-specific attacks"
+    rule_cards:
+      - "web_security/*.yml"
+    output_file: "web-security-specialist.json"
+    domains:
+      - "Cross-site scripting prevention"
+      - "CSRF protection"
+      - "Clickjacking defense"
+      - "Web security headers"
+
+  # Cryptography Security (8 rules)
+  - name: "cryptography-specialist"
+    description: "Cryptography specialist for encryption algorithms, key management, and crypto implementations"
+    rule_cards:
+      - "cryptography/*.yml"
+    output_file: "cryptography-specialist.json"
+    domains:
+      - "Encryption algorithms"
+      - "Cryptographic key management"
+      - "Hash functions"
+      - "Digital signatures"
+
+  # Input Validation Security (6 rules)
+  - name: "input-validation-specialist"
+    description: "Input validation specialist for injection prevention and data sanitization"
+    rule_cards:
+      - "input_validation/*.yml"
+    output_file: "input-validation-specialist.json"
+    domains:
+      - "SQL injection prevention"
+      - "Command injection prevention"
+      - "Input sanitization"
+      - "Data validation"
+
+  # JWT Security (4 rules)
+  - name: "jwt-specialist"
+    description: "JWT security specialist for token validation, algorithm security, and key management"
+    rule_cards:
+      - "jwt/*.yml"
+    output_file: "jwt-specialist.json"
+    domains:
+      - "JWT signature verification"
+      - "JWT algorithm validation"
+      - "JWT key management"
+      - "JWT expiration handling"
+
+  # File Handling Security (4 rules)
+  - name: "file-handling-specialist"
+    description: "File security specialist for upload validation, path traversal, and file system security"
+    rule_cards:
+      - "file_handling/*.yml"
+    output_file: "file-handling-specialist.json"
+    domains:
+      - "File upload security"
+      - "Path traversal prevention"
+      - "File system permissions"
+      - "File type validation"
+
+  # Secrets Management (4 rules)
   - name: "secrets-specialist"
-    description: "Specialized in detecting and preventing hardcoded secrets across applications"
+    description: "Secrets management specialist for API keys, credentials, and sensitive data protection"
     rule_cards:
       - "secrets/*.yml"
     output_file: "secrets-specialist.json"
     domains:
       - "API key security"
       - "Database credential protection"
-      - "JWT signing secret security"
-      - "Cloud service credential security"
+      - "Hardcoded secrets prevention"
+      - "Secret rotation"
 
-  - name: "web-security-specialist"
-    description: "Web application security specialist covering cookies and JWT implementation"
+  # Java Security (3 rules)
+  - name: "java-specialist"
+    description: "Java security specialist for Java-specific vulnerabilities and secure coding patterns"
+    rule_cards:
+      - "java/*.yml"
+    output_file: "java-specialist.json"
+    domains:
+      - "Java injection prevention"
+      - "Java serialization security"
+      - "Java cryptography"
+      - "Java secure coding"
+
+  # PHP Security (3 rules)
+  - name: "php-specialist"
+    description: "PHP security specialist for PHP-specific vulnerabilities and secure coding patterns"
+    rule_cards:
+      - "php/*.yml"
+    output_file: "php-specialist.json"
+    domains:
+      - "PHP injection prevention"
+      - "PHP configuration security"
+      - "PHP secure coding"
+      - "PHP session security"
+
+  # Cookie Security (3 rules)
+  - name: "cookie-specialist"
+    description: "Cookie security specialist for secure cookie attributes and session cookies"
     rule_cards:
       - "cookies/*.yml"
-      - "jwt/*.yml"
-    output_file: "web-security-specialist.json"
+    output_file: "cookie-specialist.json"
     domains:
       - "Secure cookie configuration"
-      - "JWT signature verification"
-      - "JWT algorithm validation"
-      - "JWT key management"
-      - "JWT expiration handling"
+      - "HttpOnly cookies"
+      - "SameSite protection"
+      - "Cookie security attributes"
 
-  - name: "genai-security-specialist"
-    description: "Generative AI security specialist for prompt injection and data protection"
+  # GenAI Security (3 rules)
+  - name: "genai-specialist"
+    description: "Generative AI security specialist for prompt injection, data exposure, and AI model security"
     rule_cards:
       - "genai/*.yml"
-    output_file: "genai-security-specialist.json"
+    output_file: "genai-specialist.json"
     domains:
       - "Prompt injection prevention"
-      - "GenAI data exposure protection"
-      - "GenAI model access security"
+      - "AI data exposure protection"
+      - "AI model access security"
+      - "AI training data protection"
 
-  - name: "container-security-specialist"
-    description: "Container and infrastructure security specialist"
+  # Node.js Security (3 rules)
+  - name: "nodejs-specialist"
+    description: "Node.js security specialist for Node.js-specific vulnerabilities and secure coding patterns"
+    rule_cards:
+      - "nodejs/*.yml"
+    output_file: "nodejs-specialist.json"
+    domains:
+      - "Node.js injection prevention"
+      - "Node.js dependency security"
+      - "Node.js secure coding"
+      - "Express.js security"
+
+  # Secure Communication (2 rules)
+  - name: "secure-communication-specialist"
+    description: "Secure communication specialist for HTTPS, TLS, and secure protocols"
+    rule_cards:
+      - "secure_communication/*.yml"
+    output_file: "secure-communication-specialist.json"
+    domains:
+      - "HTTPS configuration"
+      - "TLS security"
+      - "Secure protocol implementation"
+      - "Certificate validation"
+
+  # Container Security (1 rule)
+  - name: "container-specialist"
+    description: "Container security specialist for Docker, Kubernetes, and containerization security"
     rule_cards:
       - "docker/*.yml"
-    output_file: "container-security-specialist.json"
+    output_file: "container-specialist.json"
     domains:
       - "Docker container security"
       - "Container privilege management"
+      - "Container image security"
+      - "Kubernetes security"
 
+  # Comprehensive Multi-Domain Agent
   - name: "comprehensive-security-agent"
-    description: "Multi-domain security agent with access to all Rule Cards"
+    description: "Multi-domain security agent with access to all Rule Cards for complex cross-domain analysis"
     rule_cards:
-      - "secrets/*.yml"
-      - "cookies/*.yml"
+      - "authentication/*.yml"
+      - "session_management/*.yml"
+      - "logging/*.yml"
+      - "configuration/*.yml"
+      - "data_protection/*.yml"
+      - "authorization/*.yml"
+      - "network_security/*.yml"
+      - "web_security/*.yml"
+      - "cryptography/*.yml"
+      - "input_validation/*.yml"
       - "jwt/*.yml"
+      - "file_handling/*.yml"
+      - "secrets/*.yml"
+      - "java/*.yml"
+      - "php/*.yml"
+      - "cookies/*.yml"
       - "genai/*.yml"
+      - "nodejs/*.yml"
+      - "secure_communication/*.yml"
       - "docker/*.yml"
     output_file: "comprehensive-security-agent.json"
     domains:
