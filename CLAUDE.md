@@ -196,6 +196,80 @@ You're absolutely right! If PostgreSQL+pgvector is the preferred architecture ch
 - Use `*doc-status` to check documentation compliance
 - Use `*archive-docs [epic-name]` to archive implementation docs
 
+## SECURITY-FIRST DEVELOPMENT WORKFLOW
+
+This repository contains **defensive security tools** with specialized security agents. **MANDATORY**: Use security specialist agents for any security-related code changes.
+
+### Automatic Security Agent Triggering
+
+**CRITICAL**: Call appropriate security specialist agents based on the type of change:
+
+#### Code Change Type → Required Agent
+- **Authentication/Login code** → `authentication-specialist`
+- **Authorization/Access control** → `authorization-specialist`  
+- **Input validation/User data** → `input-validation-specialist`
+- **Cryptographic operations** → `comprehensive-security-agent` (has crypto rules)
+- **Session management** → `session-management-specialist`
+- **Secret/Credential handling** → `secrets-specialist`
+- **Configuration changes** → `configuration-specialist`
+- **Logging/Monitoring** → `logging-specialist`
+- **Web security (XSS/CSRF)** → `web-security-specialist`
+- **Data handling** → `data-protection-specialist`
+- **Multiple domains** → `comprehensive-security-agent`
+
+#### Security Agent Usage Pattern
+```javascript
+// BEFORE implementing security-related changes:
+use the .claude/agents/[agent-name].md agent to review [description of change]
+
+// EXAMPLE: Before modifying crypto code
+use the .claude/agents/comprehensive-security-agent.md agent to validate the MD5 to SHA-256 cryptographic fix implementation
+```
+
+### Security Change Process
+1. **IDENTIFY** the security domain(s) affected by your change
+2. **CALL** the appropriate specialist agent(s) BEFORE coding
+3. **IMPLEMENT** following agent recommendations and loaded security rules
+4. **VALIDATE** with security tests
+5. **DOCUMENT** security decisions and compliance
+
+### Security Red Flags - Immediate Agent Required
+🚨 **Cryptographic algorithms** (MD5, SHA1, weak ciphers)
+🚨 **SQL queries or database operations** 
+🚨 **User input processing**
+🚨 **File system operations**
+🚨 **Network requests/HTTP clients**
+🚨 **Authentication/session logic**
+🚨 **Environment variable handling**
+🚨 **Error messages with sensitive data**
+
+### Available Security Agents
+- `authentication-specialist` - Login, MFA, password policies (45+ rules)
+- `authorization-specialist` - RBAC, permissions, access control (13+ rules)
+- `input-validation-specialist` - Injection prevention (6+ rules)  
+- `session-management-specialist` - Session security (22+ rules)
+- `secrets-specialist` - Credential management (8+ rules)
+- `logging-specialist` - Security logging (15+ rules)
+- `configuration-specialist` - Secure defaults (16+ rules)
+- `data-protection-specialist` - Privacy, encryption (14+ rules)
+- `web-security-specialist` - XSS, CSRF prevention (varies)
+- `comprehensive-security-agent` - Multi-domain analysis (191+ rules)
+
+### Example Security-First Workflow
+```
+User: "Fix the MD5 usage in rule_id_cleaner.py"
+
+✅ CORRECT Process:
+1. Call comprehensive-security-agent to validate crypto fix
+2. Implement SHA-256 replacement following agent recommendations  
+3. Create security tests validating the fix
+4. Run security validation scripts
+
+❌ WRONG Process:
+1. Direct implementation without agent consultation
+2. Risk missing security best practices and rule compliance
+```
+
 ## MCP Server Instructions
 When implementing ALWAYS use sequentialthinking and decisionframework. When fixing ALWAYS use debuggingapproach.
 
@@ -209,6 +283,16 @@ When implementing ALWAYS use sequentialthinking and decisionframework. When fixi
 🚫 Writing tests after implementation
 🚫 Skip running tests to see them fail first
 
+### Security Red Flags - NEVER DO THESE
+🚨 **Implementing security changes without calling specialist agents**
+🚨 **Using deprecated cryptographic algorithms (MD5, SHA1, DES)**
+🚨 **Hardcoding secrets, API keys, or credentials**
+🚨 **Processing user input without validation/sanitization**
+🚨 **Ignoring security test failures or warnings**
+🚨 **Implementing authentication/authorization without expert review**
+🚨 **Copying security code from untrusted sources**
+🚨 **Disabling security features for "convenience"**
+
 ## Reality Checks
 Ask yourself frequently:
 - "Have I tested this with the real system?"
@@ -217,6 +301,16 @@ Ask yourself frequently:
 - "Am I hiding problems with elaborate abstractions?"
 - "Would a simpler solution work just as well?"
 - "Did I write the test first and see it fail?"
+
+### Security Reality Checks
+Ask for EVERY security-related change:
+- "Did I call the appropriate security specialist agent BEFORE coding?"
+- "Am I following loaded security rules and best practices?"
+- "Does this change affect authentication, authorization, or cryptography?"
+- "Have I created security tests to validate the implementation?"
+- "Could this introduce injection, XSS, or other vulnerabilities?"
+- "Are secrets and credentials properly protected?"
+- "Does this meet compliance requirements (OWASP, ASVS, CWE)?"
 
 ## When You Get Stuck
 1. **Stop coding** - More code won't fix understanding problems
