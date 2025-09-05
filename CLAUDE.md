@@ -222,27 +222,29 @@ This repository contains **defensive security tools** with specialized security 
 // STEP 1: Research security guidance BEFORE implementing
 use the .claude/agents/semantic-search.md agent to search for [security topic] guidance in research corpus
 
-// STEP 2: SINGLE DOMAIN - Use one agent for focused changes
-use the .claude/agents/[agent-name].md agent to review [description of change]
+// STEP 2: Get implementation guidance (BEFORE coding)
+use the .claude/agents/[agent-name].md agent to provide guidance for implementing [security feature] following security rules
 
-// STEP 2: MULTIPLE DOMAINS - Use multiple agents IN PARALLEL (same message)
-// CRITICAL: Call multiple agents simultaneously to save time
-use the .claude/agents/input-validation-specialist.md agent to check for injection vulnerabilities
-use the .claude/agents/secrets-specialist.md agent to scan for credential exposures  
-use the .claude/agents/configuration-specialist.md agent to validate security settings
+// STEP 3: Implement code with loaded context
 
-// EXAMPLE: Complete crypto fix workflow
+// STEP 4: Validate implementation (AFTER coding)
+use the .claude/agents/[agent-name].md agent to validate [implemented code] against security rules and detect vulnerabilities
+
+// EXAMPLE: Complete crypto fix workflow  
 use the .claude/agents/semantic-search.md agent to find cryptographic best practices for hash algorithms
-use the .claude/agents/comprehensive-security-agent.md agent to validate the MD5 to SHA-256 cryptographic fix implementation
+use the .claude/agents/comprehensive-security-agent.md agent to provide guidance for secure hash algorithm implementation
+// [implement code with guidance]
+use the .claude/agents/comprehensive-security-agent.md agent to validate the implemented MD5 to SHA-256 fix
 ```
 
 ### Security Change Process
 1. **RESEARCH** security guidance using semantic-search agent on research corpus
 2. **IDENTIFY** the security domain(s) affected by your change
-3. **CALL** the appropriate specialist agent(s) BEFORE coding (**IN PARALLEL** for multiple domains)
-4. **IMPLEMENT** following research findings, agent recommendations, and loaded security rules
-5. **VALIDATE** with security tests
-6. **DOCUMENT** security decisions and compliance
+3. **GET GUIDANCE** from specialist agent(s) for implementation patterns and security rules (**IN PARALLEL** for multiple domains)
+4. **IMPLEMENT** code following research findings, agent guidance, and loaded security rules
+5. **VALIDATE** implementation with specialist agent(s) to verify rule compliance and detect issues
+6. **TEST** with security tests and validation scripts
+7. **DOCUMENT** security decisions and compliance
 
 ### Parallel Agent Execution - PERFORMANCE CRITICAL
 **ALWAYS use parallel execution for multiple security agents:**
