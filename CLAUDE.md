@@ -219,19 +219,48 @@ This repository contains **defensive security tools** with specialized security 
 
 #### Security Agent Usage Pattern
 ```javascript
-// BEFORE implementing security-related changes:
+// SINGLE DOMAIN: Use one agent for focused changes
 use the .claude/agents/[agent-name].md agent to review [description of change]
 
-// EXAMPLE: Before modifying crypto code
+// MULTIPLE DOMAINS: Use multiple agents IN PARALLEL (same message)
+// CRITICAL: Call multiple agents simultaneously to save time
+use the .claude/agents/input-validation-specialist.md agent to check for injection vulnerabilities
+use the .claude/agents/secrets-specialist.md agent to scan for credential exposures  
+use the .claude/agents/configuration-specialist.md agent to validate security settings
+
+// EXAMPLE: Crypto fix validation
 use the .claude/agents/comprehensive-security-agent.md agent to validate the MD5 to SHA-256 cryptographic fix implementation
 ```
 
 ### Security Change Process
 1. **IDENTIFY** the security domain(s) affected by your change
-2. **CALL** the appropriate specialist agent(s) BEFORE coding
+2. **CALL** the appropriate specialist agent(s) BEFORE coding (**IN PARALLEL** for multiple domains)
 3. **IMPLEMENT** following agent recommendations and loaded security rules
 4. **VALIDATE** with security tests
 5. **DOCUMENT** security decisions and compliance
+
+### Parallel Agent Execution - PERFORMANCE CRITICAL
+**ALWAYS use parallel execution for multiple security agents:**
+
+✅ **EFFICIENT (3 minutes):**
+```javascript
+// Single message with multiple tool calls - agents run in parallel
+use the .claude/agents/input-validation-specialist.md agent to check injection risks
+use the .claude/agents/secrets-specialist.md agent to scan credential handling
+use the .claude/agents/configuration-specialist.md agent to validate security settings
+```
+
+❌ **INEFFICIENT (7+ minutes):**
+```javascript  
+// Separate messages - agents run sequentially
+use the .claude/agents/input-validation-specialist.md agent to check injection risks
+// Wait for completion, then:
+use the .claude/agents/secrets-specialist.md agent to scan credential handling  
+// Wait for completion, then:
+use the .claude/agents/configuration-specialist.md agent to validate security settings
+```
+
+**Performance Impact:** Parallel execution can save 50-70% of analysis time
 
 ### Security Red Flags - Immediate Agent Required
 🚨 **Cryptographic algorithms** (MD5, SHA1, weak ciphers)
@@ -257,17 +286,28 @@ use the .claude/agents/comprehensive-security-agent.md agent to validate the MD5
 
 ### Example Security-First Workflow
 ```
-User: "Fix the MD5 usage in rule_id_cleaner.py"
+User: "Perform comprehensive security review of @app/ directory"
 
-✅ CORRECT Process:
-1. Call comprehensive-security-agent to validate crypto fix
-2. Implement SHA-256 replacement following agent recommendations  
-3. Create security tests validating the fix
-4. Run security validation scripts
+✅ CORRECT Process (PARALLEL - saves 4+ minutes):
+1. Call multiple agents simultaneously in one message:
+   - input-validation-specialist for injection prevention  
+   - secrets-specialist for credential exposure
+   - configuration-specialist for security hardening
+   - comprehensive-security-agent for multi-domain analysis
+2. Implement fixes following all agent recommendations
+3. Create comprehensive security tests
+4. Run validation scripts and document findings
 
-❌ WRONG Process:
-1. Direct implementation without agent consultation
-2. Risk missing security best practices and rule compliance
+❌ WRONG Process (SEQUENTIAL - wastes time):  
+1. Call input-validation-specialist, wait 2m 13s
+2. Call secrets-specialist, wait 2m 24s  
+3. Call configuration-specialist, wait 2m 40s
+4. Call comprehensive-security-agent, wait 2m 13s
+5. Total: 9+ minutes instead of 3 minutes
+
+❌ WORST Process:
+1. Direct implementation without any agent consultation
+2. Risk missing security vulnerabilities and rule compliance
 ```
 
 ## MCP Server Instructions
