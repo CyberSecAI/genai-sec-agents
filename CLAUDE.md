@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## CRITICAL: GIT Commit
   - Start with a present-tense verb (Fix, Add, Implement, etc.)
-  - Not include adjectives that sound like praise (comprehensive, best practices, essential)
+  - Do not include adjectives that sound like praise (comprehensive, best practices, essential)
 - Commit messages should not include a Claude attribution footer
   - Don't write: 🤖 Generated with [Claude Code](https://claude.ai/code)
   - Don't write: Co-Authored-By: Claude <noreply@anthropic.com>
@@ -261,6 +261,8 @@ use the .claude/agents/configuration-specialist.md agent to validate security se
 ```
 
 **Performance Impact:** Parallel execution can save 50-70% of analysis time
+
+**For this repository:** Use **Multiple Specialists (Parallel)** - security-critical codebase justifies maximum detection capability
 
 ### Security Red Flags - Immediate Agent Required
 🚨 **Cryptographic algorithms** (MD5, SHA1, weak ciphers)
