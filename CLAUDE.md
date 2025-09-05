@@ -200,6 +200,105 @@ You're absolutely right! If PostgreSQL+pgvector is the preferred architecture ch
 
 This repository contains **defensive security tools** with specialized security agents. **MANDATORY**: Use security specialist agents for any security-related code changes.
 
+## ESSENTIAL SECURITY AWARENESS
+
+### Never Implement These Patterns (Auto-Trigger Agent Calls)
+🚨 **Weak Cryptography** → `hashlib.md5|.sha1|DES` → Use SHA-256+ → Call comprehensive-security-agent  
+🚨 **Hardcoded Secrets** → `api_key = "sk-..."|password = "..."` → Environment variables only → Call secrets-specialist  
+🚨 **Unvalidated Input** → `request.form|input()|sys.argv` without validation → Always sanitize → Call input-validation-specialist  
+🚨 **Command Injection** → `subprocess.*shell=True|os.system|os.popen` → Use parameterized arrays → Call input-validation-specialist  
+🚨 **SQL Injection** → String concatenation in queries → Use prepared statements → Call input-validation-specialist  
+🚨 **Path Traversal** → `open(user_input)|Path(user_input)` → Validate paths → Call input-validation-specialist  
+🚨 **Insecure HTTP** → `requests.*verify=False|urllib.*` → Always verify SSL → Call configuration-specialist  
+
+### Auto-Trigger Security Agents Based on Code Patterns
+
+**When code contains these patterns, IMMEDIATELY call the specified agent:**
+
+```python
+# Cryptographic operations
+hashlib.md5|.sha1|.des → comprehensive-security-agent
+random.random|uuid.uuid4 → comprehensive-security-agent (if used for security)
+ssl.|tls.|certificate → comprehensive-security-agent
+
+# Input/Output processing  
+request.form|request.args|request.json → input-validation-specialist
+input()|sys.argv|click.argument → input-validation-specialist
+subprocess.|os.system|os.popen → input-validation-specialist
+
+# Authentication/Authorization
+password|login|authenticate|session → authentication-specialist  
+authorize|permission|role|access → authorization-specialist
+token|jwt|bearer|oauth → session-management-specialist
+
+# Secret/Credential handling
+api_key|secret|credential|private_key → secrets-specialist
+getenv|environ|config → secrets-specialist (if accessing secrets)
+
+# File/Network operations
+open(|Path(|file(|urllib|requests → configuration-specialist
+connect|socket|server|client → configuration-specialist
+
+# Logging/Monitoring
+logger|log.|print(|sys.stdout → logging-specialist (if may log secrets)
+```
+
+### Security Implementation Patterns (Always Use)
+
+```python
+# ✅ SECURE: Cryptographic hashing
+import hashlib
+hash_value = hashlib.sha256(data.encode()).hexdigest()
+
+# ✅ SECURE: Environment variables for secrets
+import os
+api_key = os.getenv('API_KEY')
+if not api_key:
+    raise ValueError("API_KEY environment variable required")
+
+# ✅ SECURE: Input validation
+from app.security.input_validation import InputValidator
+validated_input = InputValidator.validate_string_field(user_input, "username")
+
+# ✅ SECURE: Subprocess calls
+subprocess.run(['git', 'status'], cwd=safe_path, timeout=10, shell=False)
+
+# ✅ SECURE: HTTP requests with SSL verification
+response = requests.get(url, verify=True, timeout=30)
+
+# ✅ SECURE: Path validation
+from app.security.path_security import PathValidator
+safe_path = PathValidator.validate_file_path(user_path, base_dir)
+```
+
+### Mandatory Security Checks Before Any Implementation
+
+**ALWAYS ask yourself:**
+- "Does this code handle user input?" → input-validation-specialist
+- "Does this code use cryptography?" → comprehensive-security-agent  
+- "Does this code access secrets/credentials?" → secrets-specialist
+- "Does this code authenticate/authorize users?" → authentication-specialist + authorization-specialist
+- "Does this code make network requests?" → configuration-specialist
+- "Does this code log information?" → logging-specialist
+
+### Security Decision Tree
+
+```
+Code Change Type → Required Security Agent(s)
+│
+├─ Cryptographic operations → comprehensive-security-agent
+├─ User input processing → input-validation-specialist
+├─ Authentication/login → authentication-specialist  
+├─ Authorization/permissions → authorization-specialist
+├─ Session management → session-management-specialist
+├─ Secret/credential handling → secrets-specialist
+├─ Configuration/network → configuration-specialist
+├─ Logging/monitoring → logging-specialist
+├─ Web security (XSS/CSRF) → web-security-specialist
+├─ Data handling/privacy → data-protection-specialist
+└─ Multiple domains → comprehensive-security-agent (+ parallel specialists)
+```
+
 ### Automatic Security Agent Triggering
 
 **CRITICAL**: Call appropriate security specialist agents based on the type of change:

@@ -45,14 +45,14 @@ class RuleIdCleaner:
             return {}
     
     def get_content_hash(self, rule_data: Dict) -> str:
-        """Generate hash of rule content (excluding ID) for duplicate detection."""
+        """Generate SHA-256 hash of rule content (excluding ID) for duplicate detection."""
         # Create a copy without the ID field for comparison
         content_for_hash = rule_data.copy()
         content_for_hash.pop('id', None)
         
-        # Convert to string and hash
+        # Convert to string and hash with SHA-256 (secure cryptographic hash)
         content_str = str(sorted(content_for_hash.items()))
-        return hashlib.md5(content_str.encode()).hexdigest()
+        return hashlib.sha256(content_str.encode()).hexdigest()
     
     def find_duplicates_in_domain(self, domain_path: Path) -> Dict[str, List[Path]]:
         """Find duplicate rules within a domain based on content."""
