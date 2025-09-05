@@ -219,25 +219,30 @@ This repository contains **defensive security tools** with specialized security 
 
 #### Security Agent Usage Pattern
 ```javascript
-// SINGLE DOMAIN: Use one agent for focused changes
+// STEP 1: Research security guidance BEFORE implementing
+use the .claude/agents/semantic-search.md agent to search for [security topic] guidance in research corpus
+
+// STEP 2: SINGLE DOMAIN - Use one agent for focused changes
 use the .claude/agents/[agent-name].md agent to review [description of change]
 
-// MULTIPLE DOMAINS: Use multiple agents IN PARALLEL (same message)
+// STEP 2: MULTIPLE DOMAINS - Use multiple agents IN PARALLEL (same message)
 // CRITICAL: Call multiple agents simultaneously to save time
 use the .claude/agents/input-validation-specialist.md agent to check for injection vulnerabilities
 use the .claude/agents/secrets-specialist.md agent to scan for credential exposures  
 use the .claude/agents/configuration-specialist.md agent to validate security settings
 
-// EXAMPLE: Crypto fix validation
+// EXAMPLE: Complete crypto fix workflow
+use the .claude/agents/semantic-search.md agent to find cryptographic best practices for hash algorithms
 use the .claude/agents/comprehensive-security-agent.md agent to validate the MD5 to SHA-256 cryptographic fix implementation
 ```
 
 ### Security Change Process
-1. **IDENTIFY** the security domain(s) affected by your change
-2. **CALL** the appropriate specialist agent(s) BEFORE coding (**IN PARALLEL** for multiple domains)
-3. **IMPLEMENT** following agent recommendations and loaded security rules
-4. **VALIDATE** with security tests
-5. **DOCUMENT** security decisions and compliance
+1. **RESEARCH** security guidance using semantic-search agent on research corpus
+2. **IDENTIFY** the security domain(s) affected by your change
+3. **CALL** the appropriate specialist agent(s) BEFORE coding (**IN PARALLEL** for multiple domains)
+4. **IMPLEMENT** following research findings, agent recommendations, and loaded security rules
+5. **VALIDATE** with security tests
+6. **DOCUMENT** security decisions and compliance
 
 ### Parallel Agent Execution - PERFORMANCE CRITICAL
 **ALWAYS use parallel execution for multiple security agents:**
@@ -275,6 +280,7 @@ use the .claude/agents/configuration-specialist.md agent to validate security se
 🚨 **Error messages with sensitive data**
 
 ### Available Security Agents
+- `semantic-search` - Research security guidance from OWASP/ASVS corpus
 - `authentication-specialist` - Login, MFA, password policies (45+ rules)
 - `authorization-specialist` - RBAC, permissions, access control (13+ rules)
 - `input-validation-specialist` - Injection prevention (6+ rules)  
@@ -288,28 +294,25 @@ use the .claude/agents/configuration-specialist.md agent to validate security se
 
 ### Example Security-First Workflow
 ```
-User: "Perform comprehensive security review of @app/ directory"
+User: "Fix MD5 cryptographic vulnerability in rule_id_cleaner.py"
 
-✅ CORRECT Process (PARALLEL - saves 4+ minutes):
-1. Call multiple agents simultaneously in one message:
-   - input-validation-specialist for injection prevention  
-   - secrets-specialist for credential exposure
-   - configuration-specialist for security hardening
-   - comprehensive-security-agent for multi-domain analysis
-2. Implement fixes following all agent recommendations
-3. Create comprehensive security tests
-4. Run validation scripts and document findings
+✅ CORRECT Process (RESEARCH-FIRST):
+1. Research security guidance:
+   use the .claude/agents/semantic-search.md agent to find best practices for cryptographic hash algorithms
+2. Call security validation agent:
+   use the .claude/agents/comprehensive-security-agent.md agent to validate the MD5 to SHA-256 fix
+3. Implement fixes following research findings and agent recommendations
+4. Create security tests validating the implementation
+5. Run validation scripts and document compliance
 
-❌ WRONG Process (SEQUENTIAL - wastes time):  
-1. Call input-validation-specialist, wait 2m 13s
-2. Call secrets-specialist, wait 2m 24s  
-3. Call configuration-specialist, wait 2m 40s
-4. Call comprehensive-security-agent, wait 2m 13s
-5. Total: 9+ minutes instead of 3 minutes
+❌ WRONG Process (NO RESEARCH):
+1. Call agents without research context
+2. Risk implementing solutions that miss latest security guidance
+3. May not align with OWASP/ASVS best practices in corpus
 
 ❌ WORST Process:
-1. Direct implementation without any agent consultation
-2. Risk missing security vulnerabilities and rule compliance
+1. Direct implementation without research or agent consultation
+2. Risk missing security vulnerabilities and established best practices
 ```
 
 ## MCP Server Instructions
