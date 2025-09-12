@@ -1,4 +1,11 @@
-PyYAML>=6.0
-jsonschema>=4.0.0
-pytest>=7.0.0
-semtools>=0.1.0
+# Core Dependencies
+PyYAML>=6.0              # YAML parsing for rule cards and configurations
+jsonschema>=4.0.0        # JSON schema validation for compiled agents
+requests>=2.28.0         # HTTP requests for OWASP/ASVS content fetching
+
+# Development and Testing
+pytest>=7.0.0            # Testing framework for comprehensive test suite
+
+# Optional Dependencies (not required for core functionality)
+# semtools>=0.1.0        # Rust binary for semantic search (install via: cargo install semtools)
+#                        # Note: semtools is a Rust binary, not a Python package
