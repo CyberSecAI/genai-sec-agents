@@ -1,6 +1,11 @@
-# Agent Compiler Toolchain - User Guide
+# GenAI Security Agents - User Guide
 
-Complete guide for using the GenAI Security Agents Policy-as-Code compilation system.
+Complete guide for using the GenAI Security Agents Policy-as-Code system, from rule card development to Claude Code integration.
+
+**🔗 Navigation:**
+- **[← Documentation Overview](README.md)** - Complete documentation hub and reading order
+- **[← Main README](../README.md)** - Repository overview and quick start
+- **[⭐ Worked Example](WORKED_EXAMPLE.md)** - Hands-on demonstration with Flask app
 
 ## Table of Contents
 - [Overview](#overview)
@@ -471,4 +476,14 @@ print(f'Loaded {len(manifest[\"agents\"])} agents')
 - **Documentation**: Keep user guide and examples current with changes
 - **Knowledge Sharing**: Document domain expertise and security rationale
 
-This comprehensive user guide provides everything needed to effectively use and extend the Agent Compiler Toolchain. For additional support, refer to the project documentation in the `docs/` directory or the implementation plans and stories.
+This comprehensive user guide provides everything needed to effectively use and extend the GenAI Security Agents system. 
+
+**🔗 Related Documentation:**
+- **[📋 Documentation Overview](README.md)** - Complete documentation hub with reading order
+- **[⭐ Worked Example](WORKED_EXAMPLE.md)** - Step-by-step demonstration with real code analysis
+- **[🏗️ System Architecture](architecture.md)** - Technical architecture and design patterns
+- **[📊 Implementation Stories](stories/)** - Detailed user stories and completion tracking
+
+---
+
+**Need Help?** Check the [main documentation hub](README.md) for the complete documentation ecosystem and proper reading order.

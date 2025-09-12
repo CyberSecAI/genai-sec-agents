@@ -1,6 +1,6 @@
-# BMad Security Agent Documentation
+# GenAI Security Agents Documentation
 
-This directory contains the complete documentation for the **BMad Security Agent** project - an AI-powered DevSecOps assistant designed to provide developers with just-in-time, actionable security guidance directly within their IDE.
+This directory contains the complete documentation for the **GenAI Security Agents** project - a comprehensive Policy-as-Code system that creates security knowledge from standards and delivers it through Claude Code CLI integration for real-time security guidance.
 
 ## Document Reading Order
 
@@ -140,4 +140,11 @@ Ready to begin CI/CD advisory integration with complete semantic search foundati
 
 ---
 
-This documentation provides the complete foundation for developing a secure, effective AI-powered DevSecOps assistant that bridges the gap between security policy and developer workflow.
+This documentation provides the complete foundation for developing a secure, effective GenAI Security Agents system that transforms security standards into actionable, intelligent development assistance through Policy-as-Code principles.
+
+---
+
+**🔗 Navigation Links:**
+- **[← Back to Main README](../README.md)** - Repository overview and quick start
+- **[📖 User Guide](USER_GUIDE.md)** - Detailed usage instructions and workflows
+- **[⭐ Worked Example](WORKED_EXAMPLE.md)** - Hands-on Flask application security demonstration

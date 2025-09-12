@@ -1,6 +1,11 @@
-# Claude Code Sub-Agent: Worked Example
+# GenAI Security Agents: Worked Example
 
-This document provides a comprehensive worked example demonstrating how the Claude Code sub-agent meets Story 2.2 user story requirements using a real vulnerable Flask application.
+This document provides a comprehensive worked example demonstrating how the GenAI Security Agents system with Claude Code integration meets real-world security analysis requirements using a vulnerable Flask application.
+
+**🔗 Navigation:**
+- **[← Documentation Overview](README.md)** - Complete documentation hub and reading order
+- **[← Main README](../README.md)** - Repository overview and system architecture
+- **[📖 User Guide](USER_GUIDE.md)** - Detailed usage instructions and workflows
 
 ## User Story Recap
 
@@ -722,17 +727,27 @@ The implementation provides a comprehensive hybrid security analysis system that
 
 ## Next Steps for Production Use
 
-### Core Sub-Agent (Story 2.2)
+### Core System Enhancement
 1. **Enable Rule Matching**: Replace mock guidance with actual rule-based analysis
 2. **Expand Rule Coverage**: Add more Rule Cards for comprehensive security coverage
 3. **Performance Tuning**: Further optimize for even faster response times
 4. **Integration Testing**: Test with actual Claude Code environment
 5. **User Experience Refinement**: Gather developer feedback and iterate on display format
 
-### Semantic Search Enhancement (Story 2.4)
+### Semantic Search Enhancement
 1. **Corpus Expansion**: Add specialized security guidance beyond Rule Cards
 2. **Feature Flag Policies**: Establish governance for runtime retrieval enablement
 3. **Performance Monitoring**: Implement detailed performance analytics and alerting
 4. **User Training**: Provide guidance on when and how to use semantic search effectively
 5. **Feedback Loop**: Capture user feedback on semantic search quality and relevance
 6. **Compliance Integration**: Ensure semantic search audit trails meet organizational requirements
+
+---
+
+**🔗 Related Documentation:**
+- **[📋 Documentation Hub](README.md)** - Complete documentation overview and reading order
+- **[📖 User Guide](USER_GUIDE.md)** - Comprehensive usage guide with examples and troubleshooting
+- **[🏗️ System Architecture](architecture.md)** - Complete technical architecture and design patterns
+- **[📊 Implementation Status](README.md#current-status)** - Current capabilities and completion tracking
+
+**Want to Get Started?** Follow the [Quick Start Guide](../README.md#quick-start) in the main README for immediate hands-on experience.
