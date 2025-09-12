@@ -1,4 +1,4 @@
-<!-- cSpell:words clickjacking asvs genai hashlib timedelta urlsafe hexdigest utcnow popen ASVS semtools sqli Semgrep adduser appuser cves jsonify nosniff isdigit frontmatter HTTPONLY MGMT Agentic semsearch thresholding tlsv dont pytest -->
+<!-- cSpell:words clickjacking asvs genai hashlib timedelta urlsafe hexdigest utcnow popen ASVS semtools sqli Semgrep adduser appuser cves jsonify nosniff isdigit frontmatter HTTPONLY MGMT Agentic semsearch thresholding tlsv dont pytest Daniella CISO Priya -->
 
 # GenAI Security Agents - Policy-as-Code Engine
 
@@ -13,6 +13,22 @@ Transform security standards (OWASP, ASVS) into intelligent, real-time developme
 - **🔍 Semantic Search**: Query 119+ security documents (OWASP CheatSheets + ASVS standards) 
 - **⚡ Real-Time Analysis**: Provide immediate security guidance during coding
 - **🛡️ Standards Compliance**: Automatic CWE/OWASP/ASVS reference validation
+
+## 👥 **Who This Is For**
+
+This system addresses real security challenges for development teams. See our [User Personas & Scenarios](docs/BMadSecurityAgent_Personas_Scenarios.md) to understand how different roles benefit:
+
+- **🧑‍💻 Daniella (Developer)**: Get immediate, actionable security feedback while coding - fix vulnerabilities before they reach CI/CD
+- **🛡️ Leo (AppSec Engineer)**: Codify security lessons learned into automated guardrails that scale across all teams
+- **⚙️ Sara (SRE/Pipeline Architect)**: Enforce consistent security policies in CI/CD with clear, actionable feedback
+- **📊 Charlotte (CISO)**: Demonstrate compliance with auditable trails mapping internal rules to industry standards (ASVS, NIST)
+- **📋 Priya (Product Manager)**: Make security predictable - prevent last-minute vulnerabilities from derailing releases
+
+**Problem**: Security guidance is often abstract, lives in wikis developers don't read, and catches issues too late in the development cycle.
+
+**Solution**: Transform security standards into intelligent agents that provide just-in-time guidance during development and enforce consistent policy in CI/CD pipelines.
+
+📊 **[View System Overview Slides](GenAI_SWE.pdf)** - High-level presentation of the architecture and key concepts
 
 ## 🏗️ **Two-Phase Architecture**
 
