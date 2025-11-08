@@ -72,10 +72,10 @@
           "V6.2.6"
         ],
         "cwe": [
-          "CWE-312"
+          "CWE-549"
         ],
         "owasp": [
-          "A2:2021"
+          "A07:2021"
         ]
       },
       "requirement": "Password input fields must use type=password to mask the entry. Applications may allow the user to temporarily view the entire masked password, or the last typed character of the password.",
@@ -350,11 +350,11 @@
         ]
       },
       "do": [
-        "Allow passwords with a minimum length of 64 characters",
+        "Permit password lengths of at least 64 characters",
         "Ensure challenge nonces are at least 64 bits in length and unique"
       ],
       "dont": [
-        "Enforce passwords shorter than 64 characters"
+        "Cap password length below 64 characters"
       ],
       "id": "AUTH-ALLOW-PASSWORD-004",
       "refs": {
@@ -371,7 +371,7 @@
       "requirement": "Passwords of at least 64 characters are permitted and challenge nonces are at least 64 bits in length.",
       "scope": "web-application",
       "severity": "high",
-      "title": "Allow passwords of at least 64 characters",
+      "title": "Permit long passwords (≥64 chars)",
       "verify": {
         "tests": [
           "Test password length enforcement and nonce generation"
@@ -510,11 +510,9 @@
         "asvs": [
           "V6.5.6"
         ],
-        "cwe": [
-          "CWE-602"
-        ],
+        "cwe": [],
         "owasp": [
-          "A3:2021"
+          "A07:2021"
         ]
       },
       "requirement": "Any authentication factor must be revocable in case of theft or loss.",
@@ -1419,7 +1417,7 @@
         ]
       },
       "do": [
-        "Use passwords with a minimum of 20 bits of entropy (e.g., 4 random alphanumeric characters or 6 random digits)",
+        "Ensure OTP/lookup codes have ≥20 bits of entropy (e.g., 6 random digits)",
         "Ensure out-of-band authentication requests have a maximum lifetime of 10 minutes",
         "Ensure time-based one-time passwords (TOTPs) have a maximum lifetime of 30 seconds",
         "Revoke any authentication factor in case of theft or loss"
@@ -1444,10 +1442,10 @@
           "A07:2021"
         ]
       },
-      "requirement": "Prevent easy to guess passwords by using a documented list of context specific words....",
+      "requirement": "OTP/lookup secrets and out-of-band authentication codes must have a minimum of 20 bits of entropy.",
       "scope": "web-application",
       "severity": "high",
-      "title": "Prevent Easy to Guess Passwords",
+      "title": "OTP/lookup secrets have ≥20 bits of entropy",
       "verify": {
         "tests": [
           "Verify authentication mechanisms and credential handling"
