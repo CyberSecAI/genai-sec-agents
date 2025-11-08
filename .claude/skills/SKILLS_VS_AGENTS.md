@@ -665,77 +665,254 @@ if __name__ == "__main__":
 
 ---
 
-## Migration Strategy
+## Migration Strategy: Validation-First Approach
 
-### Current State (Already Implemented)
+### Current State (Verified Reality)
 
-- ✅ 15+ agents in `.claude/agents/` with compiled JSON rule cards
-- ✅ Authentication-security skill prototype in `.claude/skills/`
-- ✅ Symlink architecture (skills reference agent JSON)
-- ✅ Single source of truth for security rules
+**What Actually Exists:**
+- ✅ 21 JSON rule files in `.claude/agents/json/` (not "15+" - actual count: 21)
+- ✅ 1 skill implemented: `authentication-security/SKILL.md`
+- ✅ Symlink confirmed: `authentication-security/rules.json` → `../agents/json/authentication-specialist.json`
+- ✅ Agent markdown files in `.claude/agents/` for sub-agent invocation
 
-### Next Steps: Complete Three-Layer Implementation
+**What Does NOT Exist:**
+- ❌ No `.claude/settings.json` (hooks not implemented)
+- ❌ No `.claude/hooks/` directory or validation scripts
+- ❌ No evidence that `authentication-security` skill auto-activates
+- ❌ No metrics on skill activation rates, token usage, or effectiveness
+- ❌ No validation of semantic matching behavior
 
-**Phase 1: Create Remaining Skills (2-3 weeks) - Layer 1**
-- Convert each agent to skill format
-- Focus on rich descriptions for semantic matching
-- Add progressive disclosure structure
-- Test auto-activation patterns
-- **Goal:** Proactive guidance reduces violations at creation time
+**Critical Gap:** We have infrastructure but ZERO validation that it works as designed.
 
-**Skills to create:**
-- ✅ authentication-security (completed)
-- ⬜ session-management-security
-- ⬜ secrets-management-security
-- ⬜ input-validation-security
-- ⬜ cryptography-security
-- ⬜ authorization-security
-- ⬜ logging-security
-- ⬜ data-protection-security
-- ⬜ web-security
-- ⬜ configuration-security
-- ⬜ [... remaining 10 domains]
+### Migration Principle: Verify Before Scale
 
-**Phase 2: Implement Security Hooks (1 week) - Layer 2**
-- Create `.claude/settings.json` hook configuration
-- Implement `.claude/hooks/security_validator.py` validation script
-- Add PreToolUse hooks for Write and Bash tools
-- Validate against all 191 security rules from JSON files
-- Test blocking behavior and `permissionDecision` feedback
-- **Goal:** 100% guaranteed security enforcement before commits
+**DO NOT create 14 more skills before validating the first one works.**
 
-**Hook deliverables:**
-- `.claude/settings.json` - Hook configuration with PreToolUse matchers
-- `.claude/hooks/security_validator.py` - Validation script using permissionDecision
-- `.claude/hooks/utils/` - Rule loading and pattern matching
-- Documentation on hook behavior and debugging
+**DO NOT implement hooks before proving skills provide value.**
 
-**Phase 3: Integrate Hooks with Agents (1 week) - Layer 3**
-- Hooks trigger agent invocation on violations
-- Configure parallel agent execution
-- Implement detailed remediation feedback loop
-- Test end-to-end: violation → agent analysis → remediation
-- **Goal:** Deep analysis and actionable guidance when violations occur
+**DO NOT set numeric targets (">85% activation") without baseline measurements.**
 
-**Integration deliverables:**
-- Hook-to-agent invocation logic
-- Parallel execution configuration
-- Remediation feedback templates
-- End-to-end validation tests
+### Phase 0: Validate Core Assumptions (REQUIRED - 2-3 days)
 
-**Phase 4: Validate Three-Layer Architecture (1 week)**
-- Test complete flow: Skills → Hooks → Agents
-- Measure effectiveness of each layer
-- Document activation rates and violation detection
-- Refine descriptions and detection patterns
-- **Goal:** Verify defense-in-depth provides comprehensive protection
+**This phase MUST succeed before proceeding to Phase 1.**
 
-**Validation metrics:**
-- Skill activation rate (target: >85%)
-- Hook violation detection rate (target: 100%)
-- Agent remediation effectiveness (target: >95%)
-- False positive rate (target: <5%)
-- End-to-end security coverage (target: 100%)
+#### Test 1: Skill Auto-Activation Validation
+
+**Goal:** Prove `authentication-security` skill actually auto-activates based on semantic matching
+
+**Method:**
+1. Create 20 test prompts:
+   - 10 authentication-related: "Review login code", "Check password hashing", "Analyze JWT authentication", etc.
+   - 10 unrelated: "Parse JSON file", "Optimize database query", "Fix CSS layout", etc.
+2. For each prompt, observe Claude's behavior
+3. Document which prompts trigger skill activation
+4. Measure actual token usage during activation
+
+**Success Criteria:**
+- ✅ Skill loads on ≥8/10 authentication-related prompts (80% true positive)
+- ✅ Skill does NOT load on ≥9/10 unrelated prompts (<10% false positive)
+- ✅ Can articulate WHY certain prompts matched (semantic understanding)
+- ✅ Have actual token measurements (not guesses)
+
+**If FAILS:**
+- Refine skill description
+- Test alternative descriptions
+- If still fails: skills may not work as documented → STOP and reassess
+
+#### Test 2: Progressive Disclosure Validation
+
+**Goal:** Verify skills load incrementally, not all-at-once
+
+**Method:**
+1. Monitor what gets loaded when skill activates
+2. Check if `rules.json` loads immediately or on-demand
+3. Test with simple prompt vs complex violation
+4. Measure token usage at each stage
+
+**Success Criteria:**
+- ✅ Evidence of staged loading (description → SKILL.md → rules.json)
+- ✅ Actual token measurements for each stage
+- ✅ Rules.json only loads when needed (not always)
+
+**If FAILS:**
+- Skills may load too much context upfront
+- May need restructuring
+
+#### Test 3: Skill Value Validation
+
+**Goal:** Prove skills actually provide security guidance
+
+**Method:**
+1. Give Claude code with auth vulnerabilities (MD5 password hashing, hardcoded secrets)
+2. Test WITH skill activated
+3. Test WITHOUT skill activated (control)
+4. Compare quality of security recommendations
+
+**Success Criteria:**
+- ✅ WITH skill: Claude catches vulnerabilities
+- ✅ WITHOUT skill: Claude misses or provides weaker guidance
+- ✅ Measurable difference in security advice quality
+
+**If FAILS:**
+- Skills may not add value
+- May need better content in SKILL.md
+- Consider whether agent invocation is sufficient
+
+**STOP GATE:** Phase 0 must demonstrate measurable value before proceeding.
+
+---
+
+### Phase 1: Incremental Skill Creation (CONDITIONAL - timing TBD)
+
+**Prerequisites:** Phase 0 tests pass with clear evidence skills work
+
+**Process:** Create ONE skill at a time, validate, then proceed
+
+**Per-Skill Validation Process:**
+1. Create `{domain}-security/SKILL.md`
+2. Test auto-activation (minimum 10 prompts)
+3. Measure true positive rate, false positive rate
+4. Refine description if activation rate <70%
+5. ONLY create next skill after validation succeeds
+
+**Skills Priority Order (by expected frequency):**
+1. ✅ authentication-security (exists - validate in Phase 0)
+2. ⬜ input-validation-security (high frequency - SQL injection, XSS)
+3. ⬜ secrets-management-security (high frequency - API keys, credentials)
+4. ⬜ session-management-security (moderate frequency)
+5. ⬜ cryptography-security (moderate frequency)
+6. ⬜ [Continue ONLY if previous skills validate successfully]
+
+**Stop Conditions:**
+- Any skill fails validation (<70% true positive OR >20% false positive)
+- Token usage per skill exceeds reasonable limits (define limit based on Phase 0 data)
+- Diminishing returns (skill provides no new value over existing skills)
+
+**DO NOT create all 14 skills blindly.** Create, validate, learn, adjust.
+
+---
+
+### Phase 2: Minimal Hook Implementation (CONDITIONAL - 1 week)
+
+**Prerequisites:**
+- Phase 0 proves skills provide value
+- At least 3 skills validated and working
+- Clear understanding of token costs
+
+**Step 1: Minimal Viable Hook (1-2 days)**
+
+Create simplest possible hook to validate mechanism works:
+
+```json
+// .claude/settings.json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Write",
+      "hooks": [{
+        "type": "command",
+        "command": "python3 .claude/hooks/minimal_validator.py"
+      }]
+    }]
+  }
+}
+```
+
+```python
+# .claude/hooks/minimal_validator.py
+# Test: detect hardcoded "password123" only
+import json, sys, os
+
+input_data = os.getenv("CLAUDE_TOOL_INPUT", "")
+if "password123" in input_data:
+    print(json.dumps({
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "deny",
+            "permissionDecisionReason": "Hardcoded password detected (test)",
+            "updatedInput": None
+        }
+    }))
+    sys.exit(1)
+
+print(json.dumps({
+    "hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "allow",
+        "permissionDecisionReason": "No test violation",
+        "updatedInput": None
+    }
+}))
+sys.exit(0)
+```
+
+**Validation:**
+- ✅ Hook actually executes on Write tool use
+- ✅ `permissionDecision: "deny"` actually blocks the write
+- ✅ Claude receives and understands the feedback
+- ✅ Can unblock by removing violation
+
+**If FAILS:** Fix hook mechanism before adding complexity
+
+**Step 2: Single Real Rule (1-2 days)**
+
+Add ONE security rule (e.g., detect `hashlib.md5` in Python code):
+
+- Test detection works on real code
+- Measure false positive rate
+- Test Claude's response to violation feedback
+- Verify violation → fix → retry flow works
+
+**Step 3: Expand Incrementally (ONLY if Step 1+2 succeed)**
+
+- Add rules one domain at a time
+- Validate each addition doesn't spike false positives
+- Monitor performance impact
+- Roll back if accuracy degrades
+
+**DO NOT load all 191 rules at once.** Incremental, validated expansion only.
+
+---
+
+### Phase 3: Hook-Agent Integration (CONDITIONAL - timing TBD)
+
+**Prerequisites:**
+- Phase 0: Skills validated
+- Phase 2: Hooks validated with acceptable false positive rate
+- Clear metrics on when agent invocation adds value
+
+**Goal:** Hooks trigger agent analysis on violations
+
+**Implementation:**
+- Hook detects violation
+- Hook calls Agent SDK to invoke specialist agent
+- Agent provides detailed remediation
+- Feedback loops back to Claude
+
+**Validation:**
+- Measure remediation quality WITH agent vs WITHOUT
+- Measure token cost of agent invocation
+- Measure time cost
+- Ensure agent adds value beyond hook message
+
+**If agent doesn't add measurable value over hook feedback alone: Skip this phase**
+
+---
+
+### Validation Metrics (Measured, Not Targets)
+
+**DO NOT set targets before baseline measurement.**
+
+**Metrics to MEASURE (not predict):**
+- Skill activation rate (true positive, false positive, false negative)
+- Token usage per skill activation (actual numbers)
+- Hook detection accuracy (true positive, false positive rates)
+- Agent remediation value (measurable improvement vs hook-only)
+- End-to-end time cost
+
+**After measurement, THEN decide if metrics are acceptable.**
+
+**If metrics show approach isn't working: pivot or stop, don't force it.**
 
 ---
 
