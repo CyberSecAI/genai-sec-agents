@@ -4,9 +4,9 @@
 
 | Use Case | Use | Why |
 |----------|-----|-----|
-| Parallel execution of multiple security checks | **Agents** | Task tool supports parallel agent invocation |
+| Parallel execution of multiple security checks | **Agents** | Agent SDK supports parallel sub-agent execution |
 | Understanding what security capabilities exist | **Skills** | Progressive disclosure, human-readable |
-| Automated pre-commit validation hooks | **Agents** | Programmatic invocation via Task system |
+| Automated pre-commit validation hooks | **Agents** | Programmatic invocation via Agent SDK |
 | Composing multiple security domains | **Skills** | Skills designed for composition |
 | CI/CD security scanning | **Agents** | Fast, parallel execution |
 | Learning secure coding patterns | **Skills** | Includes examples and detailed guidance |
@@ -47,11 +47,11 @@
 - **Automatic context activation** based on request content
 - **Interactive workflows** where Claude decides what knowledge to apply
 - **Progressive disclosure** (load descriptions first, content on-match)
-- **Token efficiency** (~50 tokens until activated, then load full content)
+- **Token efficiency** (small discovery cost, larger on activation)
 - **Zero cognitive load** (no need to remember which skill to call)
 
 ### Agents are Better For:
-- **Explicit parallel execution** (multiple agents simultaneously via Task tool)
+- **Explicit parallel execution** (multiple sub-agents via Agent SDK)
 - **Programmatic invocation** (CI/CD, pre-commit hooks, automated pipelines)
 - **Background execution** with monitoring and output retrieval
 - **Deterministic workflows** (user controls exactly which agents run)
@@ -114,23 +114,23 @@ description: Authentication security expertise covering login mechanisms,
 
 ```
 Session Start (All Skills)
-├─ authentication-security: 50 tokens (name + description)
-├─ session-management-security: 50 tokens
-├─ secrets-management: 50 tokens
-├─ [... 12 more skills]: ~600 tokens
-└─ Total Discovery Cost: ~750 tokens
+├─ authentication-security: small cost (name + description)
+├─ session-management-security: small cost
+├─ secrets-management: small cost
+├─ [... 12 more skills]: minimal per-skill cost
+└─ Total Discovery Cost: modest upfront investment
 
 User Request: "Review authentication code"
 ├─ Semantic Match: authentication-security skill
-├─ Load Full Skill: authentication-security/SKILL.md (~3-5k tokens)
-├─ On-Demand: Load rules.json if needed (~12k tokens)
-└─ Total Cost: 750 + 5k + (optional 12k) = ~6k-18k tokens
+├─ Load Full Skill: authentication-security/SKILL.md (moderate cost)
+├─ On-Demand: Load rules.json if needed (larger cost)
+└─ Total Cost: discovery + skill content + (optional rules)
 
 Compare to Agents (Manual Invocation)
 ├─ No discovery phase (user must know agent exists)
-├─ Load Full Agent: authentication-specialist.md (~2k tokens)
-├─ Load Rules: json/authentication-specialist.json (~12k tokens)
-└─ Total Cost: ~14k tokens (all upfront, no progressive loading)
+├─ Load Full Agent: authentication-specialist.md (moderate cost)
+├─ Load Rules: json/authentication-specialist.json (large cost)
+└─ Total Cost: all context loaded upfront, no progressive loading
 ```
 
 **Skills advantage:** Only load full content when semantically matched to request.
@@ -148,8 +148,8 @@ Compare to Agents (Manual Invocation)
 3. secrets-management skill → "secrets" match
 
 // Result: 3 skills loaded, all relevant knowledge applied
-// Cost: 750 (discovery) + ~15k (3 skills × 5k each)
-// Compare to: Manually calling 3 agents or calling an agent to call sub-agents
+// Cost: discovery overhead + content for each activated skill
+// Compare to: Manually invoking multiple agents via Agent SDK
 ```
 
 **Key Takeaway:** Skills automatically solve the context management problem through semantic matching and progressive disclosure. No additional infrastructure needed.
@@ -179,8 +179,8 @@ use the authentication-specialist agent to analyze src/auth/login.py
 ```
 
 **Characteristics:**
-- ✅ **Parallel Execution**: Multiple agents run simultaneously
-- ✅ **Programmatic**: Task tool with `subagent_type` parameter
+- ✅ **Parallel Execution**: Multiple sub-agents run simultaneously
+- ✅ **Programmatic**: Explicit invocation via Agent SDK
 - ✅ **Fast**: Optimized for automated execution
 - ✅ **Validated**: Existing workflow, proven in production
 - ✅ **On-Demand Loading**: References JSON rule files, loads when needed
@@ -189,9 +189,9 @@ use the authentication-specialist agent to analyze src/auth/login.py
 
 **Token Usage:**
 ```
-Initial load: ~2k tokens (agent instructions + frontmatter)
-On-demand: Load JSON rule file when needed (~10-15k tokens)
-Total: 2k-17k tokens depending on whether rules are loaded
+Initial load: moderate (agent instructions + frontmatter)
+On-demand: Load JSON rule file when needed (larger cost)
+Total: varies depending on whether rules are loaded
 ```
 
 **Best For:**
@@ -245,14 +245,14 @@ Activate authentication-security skill and analyze src/auth/login.py
 - ✅ **Rich Examples**: Concrete code snippets included
 - ✅ **Human-Readable**: Designed for understanding
 - ✅ **Automatic Activation**: Semantic matching on description
-- ✅ **Token Efficient**: ~50 tokens until activated
+- ✅ **Token Efficient**: Small cost until activated
 
 **Token Usage:**
 ```
-Initial load: ~50 tokens (name + description during discovery)
-On-activation: ~3-5k tokens (full SKILL.md content)
-On-demand: +10k tokens (full rules via JSON symlink if needed)
-Total if all loaded: ~13-15k tokens
+Initial load: small (name + description during discovery)
+On-activation: moderate (full SKILL.md content)
+On-demand: larger (full rules via JSON symlink if needed)
+Total if all loaded: varies based on what's needed
 Advantage: Can provide guidance without loading full rule set
 ```
 
@@ -380,7 +380,7 @@ Claude: [Automatically activates multiple skills]
 ## Key Insights
 
 1. **Skills solve automatic context management** - Semantic matching and progressive disclosure built-in
-2. **Agents solve explicit parallel execution** - Task tool enables deterministic workflows
+2. **Agents solve explicit parallel execution** - Agent SDK enables deterministic workflows
 3. **Both share rule knowledge** - Symlinks ensure single source of truth
 4. **Complementary, not competing** - Use the right tool for each scenario
 5. **No additional infrastructure needed** - Skills already provide intelligent context injection
@@ -405,7 +405,7 @@ From the official documentation:
 **Example risk:**
 ```javascript
 User: "Fix this authentication bug"
-→ MIGHT activate authentication-security skill (~80-90% chance)
+→ MIGHT activate authentication-security skill (probabilistic)
 → MIGHT NOT activate if semantic matching fails
 → Security guidance may be missed
 ```
@@ -419,7 +419,7 @@ User: "Fix this authentication bug"
 │ Layer 1: Skills (Proactive Guidance - Best Effort)     │
 │ - Auto-activate based on semantic matching              │
 │ - Guide Claude toward secure implementations            │
-│ - Reliability: ~80-90% (probabilistic)                  │
+│ - Reliability: Probabilistic (not guaranteed)           │
 │ - Purpose: Reduce violations before they happen         │
 └─────────────────────────────────────────────────────────┘
                           ↓
@@ -454,17 +454,17 @@ User: "Add JWT authentication to the API"
 // STEP 2: Skills Activate (Proactive - Probabilistic)
 // ============================================================
 Claude scans skill descriptions:
-→ authentication-security skill activates (~90% chance)
+→ authentication-security skill may activate
   ├─ Matches: "authentication" in request
   ├─ Loads: Password hashing, MFA, credential guidelines
   └─ Suggests: bcrypt, secure session handling
 
-→ session-management-security skill activates (~85% chance)
+→ session-management-security skill may activate
   ├─ Matches: "JWT" in request
   ├─ Loads: Token validation, expiration, storage
   └─ Suggests: Strong algorithms, proper validation
 
-→ secrets-management skill activates (~80% chance)
+→ secrets-management skill may activate
   ├─ Matches: "authentication" implies secrets
   ├─ Loads: Environment variables, key storage
   └─ Suggests: Load JWT secret from env, not hardcode
@@ -527,7 +527,7 @@ Hook allows commit:
 - **Benefit:** Reduces violations at code creation time
 - **Limitation:** Not guaranteed to activate
 - **Value:** When they work, violations never happen
-- **Coverage:** ~80-90% with well-written descriptions
+- **Coverage:** Probabilistic with well-written descriptions
 
 **Layer 2: Hooks (Enforcement)**
 - **Benefit:** Catches EVERYTHING skills miss
@@ -543,29 +543,32 @@ Hook allows commit:
 
 ### Hook Implementation Example
 
-```yaml
-# .claude/hooks.yml
-hooks:
-  # Security validation before file writes
-  - event: PreToolUse
-    tool: Write
-    command: |
-      python3 .claude/hooks/security_validator.py \
-        --tool Write \
-        --input "$CLAUDE_TOOL_INPUT" \
-        --mode pre-write
-
-  # Security validation before git commits
-  - event: PreToolUse
-    tool: Bash
-    command: |
-      # Detect git commit commands
-      if echo "$CLAUDE_TOOL_INPUT" | grep -q "git commit"; then
-        python3 .claude/hooks/security_validator.py \
-          --tool Bash \
-          --input "$CLAUDE_TOOL_INPUT" \
-          --mode pre-commit
-      fi
+```json
+// .claude/settings.json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/security_validator.py --tool Write"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/security_validator.py --tool Bash"
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
 ```python
@@ -602,22 +605,33 @@ def validate_security(tool, input_data, mode):
     if violations:
         # BLOCK operation and return violations to Claude
         print(json.dumps({
-            "blocked": True,
-            "violations": violations,
-            "message": f"SECURITY VIOLATIONS DETECTED - {len(violations)} issues found"
+            "hookSpecificOutput": {
+                "hookEventName": "PreToolUse",
+                "permissionDecision": "deny",
+                "permissionDecisionReason": f"SECURITY VIOLATIONS DETECTED - {len(violations)} issues found",
+                "updatedInput": None
+            },
+            "violations": violations
         }))
-        sys.exit(1)  # Non-zero exit blocks the tool use
+        sys.exit(1)
 
     # Allow operation
+    print(json.dumps({
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "allow",
+            "permissionDecisionReason": "No security violations detected",
+            "updatedInput": None
+        }
+    }))
     sys.exit(0)
 
 if __name__ == "__main__":
     # Hook receives environment variables from Claude Code
     tool = sys.argv[1].replace("--tool", "").strip()
     input_data = os.getenv("CLAUDE_TOOL_INPUT")
-    mode = sys.argv[3].replace("--mode", "").strip()
 
-    validate_security(tool, input_data, mode)
+    validate_security(tool, input_data, None)
 ```
 
 ### Key Decision: When to Use Each Layer
@@ -683,16 +697,16 @@ if __name__ == "__main__":
 - ⬜ [... remaining 10 domains]
 
 **Phase 2: Implement Security Hooks (1 week) - Layer 2**
-- Create `.claude/hooks.yml` configuration
-- Implement `security_validator.py` hook script
+- Create `.claude/settings.json` hook configuration
+- Implement `.claude/hooks/security_validator.py` validation script
 - Add PreToolUse hooks for Write and Bash tools
 - Validate against all 191 security rules from JSON files
-- Test blocking behavior and feedback mechanism
+- Test blocking behavior and `permissionDecision` feedback
 - **Goal:** 100% guaranteed security enforcement before commits
 
 **Hook deliverables:**
-- `.claude/hooks.yml` - Hook configuration
-- `.claude/hooks/security_validator.py` - Validation script
+- `.claude/settings.json` - Hook configuration with PreToolUse matchers
+- `.claude/hooks/security_validator.py` - Validation script using permissionDecision
 - `.claude/hooks/utils/` - Rule loading and pattern matching
 - Documentation on hook behavior and debugging
 
@@ -739,7 +753,7 @@ if __name__ == "__main__":
 
 **Implementation:**
 1. **Skills** in `.claude/skills/` - Auto-discovery and proactive guidance
-2. **Hooks** in `.claude/hooks.yml` - Mandatory security validation
+2. **Hooks** in `.claude/settings.json` - Mandatory security validation
 3. **Agents** in `.claude/agents/` - Explicit parallel execution and deep analysis
 4. **Shared rules** via symlinks - Single source of truth (no duplication)
 
@@ -751,7 +765,7 @@ if __name__ == "__main__":
 │   ├── session-management-security/
 │   └── [... 15 security domains]
 │
-├── hooks.yml                        # Layer 2: Guaranteed Enforcement
+├── settings.json                    # Layer 2: Hook Configuration
 ├── hooks/
 │   ├── security_validator.py       # Validates all commits/writes
 │   └── utils/                       # Rule loading & pattern matching
@@ -798,14 +812,14 @@ CI/CD Pipeline:
 **Agent (Reference-Based):**
 ```
 ┌──────────────────────────────────────┐
-│ Step 1: Load Agent Instructions     │ ~2k tokens
+│ Step 1: Load Agent Instructions     │ moderate cost
 │ - Agent frontmatter                  │
 │ - Analysis approach                  │
 │ - Tool descriptions                  │
 └──────────────────────────────────────┘
          ↓ (when analysis needed)
 ┌──────────────────────────────────────┐
-│ Step 2: Load JSON Rule File         │ ~10-15k tokens
+│ Step 2: Load JSON Rule File         │ larger cost
 │ - Read json/{agent-name}.json        │
 │ - All rules, detection patterns      │
 │ - References (ASVS, CWE, OWASP)      │
@@ -815,19 +829,19 @@ CI/CD Pipeline:
 **Skill (Progressive):**
 ```
 ┌─────────────────────┐
-│ Step 1: Overview    │ ~50 tokens (discovery)
+│ Step 1: Overview    │ small cost (discovery)
 │ - Name + description│
 └─────────────────────┘
          ↓ (semantic match)
 ┌─────────────────────┐
-│ Step 2: Load SKILL  │ ~3-5k tokens
+│ Step 2: Load SKILL  │ moderate cost
 │ - Full instructions │
 │ - Capabilities      │
 │ - Usage patterns    │
 └─────────────────────┘
          ↓ (if needed)
 ┌─────────────────────┐
-│ Step 3: Full Rules  │ +10k tokens
+│ Step 3: Full Rules  │ larger cost
 │ - Load rules.json   │
 │ - All detection     │
 └─────────────────────┘
