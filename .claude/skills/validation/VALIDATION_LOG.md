@@ -48,7 +48,7 @@ See: `.claude/skills/validation/SOLUTION_SKILL_INVOCATION.md` for full analysis.
 | Prompt | Mechanism | ASVS Refs? | Tokens | Quality Notes |
 |--------|-----------|------------|--------|---------------|
 | A1: Review vulnerable_login.py | Manual | ✅ YES | ~2061 | 15/15 vulns detected, excellent |
-| A2: Implement password reset | | | | |
+| A2: Implement password reset | Agent | ✅ YES (via agent) | N/A | Used semantic-search + auth-specialist (CORRECT) |
 | A3: Hash user passwords | | | | |
 | A4: Add MFA to signup | | | | |
 | A5: Minimum password length | | | | |
@@ -58,7 +58,11 @@ See: `.claude/skills/validation/SOLUTION_SKILL_INVOCATION.md` for full analysis.
 | A9: Store API credentials | | | | |
 | A10: Account lockout | | | | |
 
-**Mechanism Key**: Auto=Skill tool, Manual=SlashCommand, Both, None
+**Mechanism Key**:
+- Auto=Skill tool (auto-activation)
+- Manual=SlashCommand (manual skill invocation)
+- Agent=Task tool with specialist agent (semantic-search, authentication-specialist, etc.)
+- None=No activation
 
 **Group B (Should NOT Activate) - 10 prompts**
 

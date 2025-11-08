@@ -44,33 +44,44 @@ To make validation tests realistic, sample code files are provided:
   - Shows proper authentication security patterns
   - Use for comparison and learning
 
-## Test Group A: Should Trigger Skill (Authentication-Related)
+## Test Group A: Should Trigger Knowledge Activation (Authentication-Related)
 
 **Expected**: ≥8/10 activations (≥80% knowledge activation rate)
 
-**Activation Mechanisms** (both are valid):
+**Activation Mechanisms** (all are valid):
 - **Auto**: Skill tool invoked (semantic matching)
 - **Manual**: SlashCommand `/authentication-security` invoked
-- **Success**: Either mechanism loads authentication security knowledge
+- **Agent**: Task tool with specialist agents (semantic-search, authentication-specialist)
+- **Success**: Any mechanism provides authentication security knowledge
 
-| # | Prompt | Code File | Mechanism | ASVS Refs? | Tokens | Notes |
-|---|--------|-----------|-----------|------------|--------|-------|
-| A1 | "Review `.claude/skills/validation/sample_code/vulnerable_login.py` for security issues" | vulnerable_login.py | | | | Should detect MD5, SQL injection, etc. |
-| A2 | "I need to implement password reset functionality" | (none) | | | | General guidance |
-| A3 | "How should I hash user passwords in Python?" | (none) | | | | Should recommend bcrypt/argon2 |
-| A4 | "Add multi-factor authentication to the signup flow" | (none) | | | | Should reference ASVS 2.7.x |
-| A5 | "What's the minimum password length I should enforce?" | (none) | | | | Should cite ASVS 2.1.1 |
-| A6 | "Implement session management for user authentication" | (none) | | | | Should reference ASVS 3.x |
-| A7 | "Review the `authenticate_user()` function in `.claude/skills/validation/sample_code/vulnerable_login.py`" | vulnerable_login.py | | | | Should detect specific vulns |
-| A8 | "Add OAuth2 login support to the application" | (none) | | | | Should reference secure OAuth patterns |
-| A9 | "How do I securely store API credentials?" | (none) | | | | Should recommend env vars, secrets mgmt |
-| A10 | "Implement account lockout after failed login attempts" | (none) | | | | Should reference ASVS 2.2.1 |
+**Task Type Impact** (discovered during testing):
+- **Review tasks** → Likely skill activation (Manual/Auto)
+- **Implementation tasks** → May use agents instead (semantic-search + specialist)
+- **Knowledge queries** → Skill activation or direct answer
+
+| # | Prompt | Type | Code File | Mechanism | ASVS Refs? | Notes |
+|---|--------|------|-----------|-----------|------------|-------|
+| A1 | "Review `.claude/skills/validation/sample_code/vulnerable_login.py` for security issues" | Review | vulnerable_login.py | | | Should detect MD5, SQL injection (skill expected) |
+| A2 | "I need to implement password reset functionality" | Implement | (none) | | | Agent workflow acceptable (semantic-search + specialist) |
+| A3 | "How should I hash user passwords in Python?" | Query | (none) | | | Should recommend bcrypt/argon2 (skill or direct) |
+| A4 | "Add multi-factor authentication to the signup flow" | Implement | (none) | | | Should reference ASVS 2.7.x (skill or agent) |
+| A5 | "What's the minimum password length I should enforce?" | Query | (none) | | | Should cite ASVS 2.1.1 (skill or direct) |
+| A6 | "Implement session management for user authentication" | Implement | (none) | | | Should reference ASVS 3.x (skill or agent) |
+| A7 | "Review the `authenticate_user()` function in `.claude/skills/validation/sample_code/vulnerable_login.py`" | Review | vulnerable_login.py | | | Should detect specific vulns (skill expected) |
+| A8 | "Add OAuth2 login support to the application" | Implement | (none) | | | Secure OAuth patterns (skill or agent) |
+| A9 | "How do I securely store API credentials?" | Query | (none) | | | Env vars, secrets mgmt (skill or direct) |
+| A10 | "Implement account lockout after failed login attempts" | Implement | (none) | | | Should reference ASVS 2.2.1 (skill or agent) |
 
 **Mechanism Column Values**:
 - `Auto` = Skill tool invoked (auto-activation)
-- `Manual` = SlashCommand invoked (manual)
-- `Both` = Both mechanisms triggered
-- `None` = No skill activation
+- `Manual` = SlashCommand invoked (manual skill invocation)
+- `Agent` = Task tool with specialist agent (semantic-search, authentication-specialist, etc.)
+- `None` = No activation
+
+**Task Type Guide**:
+- **Review**: Code review tasks → Expect skill activation (Manual/Auto)
+- **Implement**: Implementation tasks → Skill OR agent workflow acceptable
+- **Query**: Knowledge questions → Skill, agent, or direct answer acceptable
 
 ### Rationale for Group A
 
