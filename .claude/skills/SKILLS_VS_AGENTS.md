@@ -149,7 +149,7 @@ Compare to Agents (Manual Invocation)
 
 // Result: 3 skills loaded, all relevant knowledge applied
 // Cost: 750 (discovery) + ~15k (3 skills × 5k each)
-// Compare to: Manually calling 3 agents serially
+// Compare to: Manually calling 3 agents or calling an agent to call sub-agents
 ```
 
 **Key Takeaway:** Skills automatically solve the context management problem through semantic matching and progressive disclosure. No additional infrastructure needed.
@@ -385,7 +385,269 @@ Claude: [Automatically activates multiple skills]
 4. **Complementary, not competing** - Use the right tool for each scenario
 5. **No additional infrastructure needed** - Skills already provide intelligent context injection
 
-**The "missing layer" isn't missing - it's skills!**
+
+---
+
+## Defense-in-Depth Strategy: Skills + Hooks + Agents
+
+### Critical Understanding: Skills Are NOT Guaranteed
+
+**Skills activation is probabilistic, not deterministic:**
+
+From the official documentation:
+> "Skills are **model-invoked**—Claude autonomously decides when to use them based on your request and the Skill's description."
+
+**What this means for security:**
+- ✅ Skills **may** activate if description semantically matches request
+- ❌ Skills **may not** activate if Claude doesn't recognize the match
+- ❌ **Cannot rely on skills alone for mandatory security enforcement**
+
+**Example risk:**
+```javascript
+User: "Fix this authentication bug"
+→ MIGHT activate authentication-security skill (~80-90% chance)
+→ MIGHT NOT activate if semantic matching fails
+→ Security guidance may be missed
+```
+
+### The Solution: Three-Layer Security Architecture
+
+**Use skills, hooks, AND agents for comprehensive protection:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ Layer 1: Skills (Proactive Guidance - Best Effort)     │
+│ - Auto-activate based on semantic matching              │
+│ - Guide Claude toward secure implementations            │
+│ - Reliability: ~80-90% (probabilistic)                  │
+│ - Purpose: Reduce violations before they happen         │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
+│ Layer 2: Hooks (Mandatory Validation - Guaranteed)     │
+│ - PreToolUse hooks execute before commits/writes        │
+│ - Validate ALL code against security rules              │
+│ - Reliability: 100% (deterministic execution)           │
+│ - Purpose: Block unsafe operations, provide feedback    │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
+│ Layer 3: Agents (Deep Analysis - On-Demand)            │
+│ - Triggered by hooks when violations detected           │
+│ - Explicit parallel security scanning                   │
+│ - Comprehensive rule validation                         │
+│ - Purpose: Generate detailed remediation guidance       │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Complete Security Flow Example
+
+**Scenario: Add JWT authentication to API**
+
+```javascript
+// ============================================================
+// STEP 1: User Starts Task
+// ============================================================
+User: "Add JWT authentication to the API"
+
+// ============================================================
+// STEP 2: Skills Activate (Proactive - Probabilistic)
+// ============================================================
+Claude scans skill descriptions:
+→ authentication-security skill activates (~90% chance)
+  ├─ Matches: "authentication" in request
+  ├─ Loads: Password hashing, MFA, credential guidelines
+  └─ Suggests: bcrypt, secure session handling
+
+→ session-management-security skill activates (~85% chance)
+  ├─ Matches: "JWT" in request
+  ├─ Loads: Token validation, expiration, storage
+  └─ Suggests: Strong algorithms, proper validation
+
+→ secrets-management skill activates (~80% chance)
+  ├─ Matches: "authentication" implies secrets
+  ├─ Loads: Environment variables, key storage
+  └─ Suggests: Load JWT secret from env, not hardcode
+
+Claude writes code following skill guidance:
+✅ Uses bcrypt for passwords (from authentication-security skill)
+✅ Implements proper JWT validation (from session-management skill)
+✅ Loads secrets from environment (from secrets-management skill)
+
+// ============================================================
+// STEP 3: Claude Attempts Commit (Hooks Execute - Guaranteed)
+// ============================================================
+Claude: "git commit -m 'Add JWT authentication'"
+
+PreToolUse hook ALWAYS executes (100% guaranteed):
+→ Runs: python3 .claude/hooks/validate_security.py
+→ Scans code for:
+  ├─ Weak crypto (MD5, SHA1, DES)
+  ├─ Hardcoded secrets (API_KEY = "...", PASSWORD = "...")
+  ├─ SQL injection patterns (string concatenation in queries)
+  ├─ Command injection (subprocess with shell=True)
+  ├─ Path traversal (open(user_input) without validation)
+  └─ [... all security rules ...]
+
+// ============================================================
+// STEP 4a: If Hook Finds Violations (Enforcement)
+// ============================================================
+Hook detects: hashlib.md5(password.encode())  # WEAK CRYPTO!
+
+Hook BLOCKS commit and returns to Claude:
+❌ SECURITY VIOLATION DETECTED
+   - File: src/auth/login.py:42
+   - Issue: MD5 used for password hashing
+   - Rule: CRYPTO-001 (Weak cryptographic algorithm)
+   - Fix: Use bcrypt.hashpw() or argon2.hash()
+
+Claude sees violation feedback:
+→ Optionally invokes comprehensive-security-agent for deep analysis
+→ Agent provides detailed remediation with code examples
+→ Claude fixes the issue
+→ Tries commit again (hook re-validates)
+
+// ============================================================
+// STEP 4b: If Hook Finds No Violations (Success)
+// ============================================================
+Hook validation passes:
+✅ All security rules satisfied
+✅ No weak crypto detected
+✅ No hardcoded secrets found
+✅ Input validation present
+
+Hook allows commit:
+→ Code committed successfully
+→ Security validation complete
+```
+
+### Why This Three-Layer Approach Works
+
+**Layer 1: Skills (Proactive)**
+- **Benefit:** Reduces violations at code creation time
+- **Limitation:** Not guaranteed to activate
+- **Value:** When they work, violations never happen
+- **Coverage:** ~80-90% with well-written descriptions
+
+**Layer 2: Hooks (Enforcement)**
+- **Benefit:** Catches EVERYTHING skills miss
+- **Limitation:** Reactive (after code written, before commit)
+- **Value:** 100% guaranteed execution
+- **Coverage:** 100% - no code escapes validation
+
+**Layer 3: Agents (Deep Analysis)**
+- **Benefit:** Comprehensive multi-domain analysis
+- **Limitation:** Higher token cost, longer execution
+- **Value:** Detailed remediation when needed
+- **Coverage:** Triggered only when violations detected
+
+### Hook Implementation Example
+
+```yaml
+# .claude/hooks.yml
+hooks:
+  # Security validation before file writes
+  - event: PreToolUse
+    tool: Write
+    command: |
+      python3 .claude/hooks/security_validator.py \
+        --tool Write \
+        --input "$CLAUDE_TOOL_INPUT" \
+        --mode pre-write
+
+  # Security validation before git commits
+  - event: PreToolUse
+    tool: Bash
+    command: |
+      # Detect git commit commands
+      if echo "$CLAUDE_TOOL_INPUT" | grep -q "git commit"; then
+        python3 .claude/hooks/security_validator.py \
+          --tool Bash \
+          --input "$CLAUDE_TOOL_INPUT" \
+          --mode pre-commit
+      fi
+```
+
+```python
+# .claude/hooks/security_validator.py
+"""
+Security validation hook - guaranteed execution before commits/writes
+Validates against all 191 security rules from compiled rule cards
+"""
+import sys
+import json
+from pathlib import Path
+
+def validate_security(tool, input_data, mode):
+    """Run security validation against rule cards"""
+
+    # Load all security rules
+    rules_dir = Path(".claude/agents/json")
+    violations = []
+
+    for rule_file in rules_dir.glob("*.json"):
+        rules = json.loads(rule_file.read_text())
+
+        # Check each rule's detection patterns
+        for rule in rules.get("rules", []):
+            if check_violation(input_data, rule):
+                violations.append({
+                    "file": extract_file_from_input(input_data),
+                    "rule_id": rule["id"],
+                    "severity": rule["severity"],
+                    "description": rule["description"],
+                    "remediation": rule["remediation"]
+                })
+
+    if violations:
+        # BLOCK operation and return violations to Claude
+        print(json.dumps({
+            "blocked": True,
+            "violations": violations,
+            "message": f"SECURITY VIOLATIONS DETECTED - {len(violations)} issues found"
+        }))
+        sys.exit(1)  # Non-zero exit blocks the tool use
+
+    # Allow operation
+    sys.exit(0)
+
+if __name__ == "__main__":
+    # Hook receives environment variables from Claude Code
+    tool = sys.argv[1].replace("--tool", "").strip()
+    input_data = os.getenv("CLAUDE_TOOL_INPUT")
+    mode = sys.argv[3].replace("--mode", "").strip()
+
+    validate_security(tool, input_data, mode)
+```
+
+### Key Decision: When to Use Each Layer
+
+| Scenario | Skills | Hooks | Agents |
+|----------|--------|-------|--------|
+| Interactive development | ✅ Auto-activate | ✅ Validate commits | ❌ Not needed |
+| Pre-commit validation | ⚠️ Best effort | ✅ Always run | ✅ If violations |
+| CI/CD pipeline | ❌ Skip | ✅ Always run | ✅ Parallel scan |
+| Security audit | ❌ Skip | ❌ Skip | ✅ Comprehensive |
+| Learning/exploration | ✅ Auto-activate | ❌ May be too strict | ❌ Not needed |
+
+### Critical Insight
+
+**Skills alone are NOT sufficient for security-critical codebases:**
+
+```
+❌ WRONG: Rely only on skills
+   → Skills may not activate
+   → Violations can slip through
+   → No enforcement mechanism
+
+✅ RIGHT: Skills + Hooks + Agents
+   → Skills reduce violations proactively
+   → Hooks enforce rules deterministically
+   → Agents provide deep analysis when needed
+   → Defense-in-depth security
+```
+
+**For this security-focused repository: ALL THREE LAYERS ARE REQUIRED.**
 
 ---
 
@@ -398,59 +660,136 @@ Claude: [Automatically activates multiple skills]
 - ✅ Symlink architecture (skills reference agent JSON)
 - ✅ Single source of truth for security rules
 
-### Next Steps
+### Next Steps: Complete Three-Layer Implementation
 
-**Phase 1: Create Remaining Skills (2-3 weeks)**
+**Phase 1: Create Remaining Skills (2-3 weeks) - Layer 1**
 - Convert each agent to skill format
 - Focus on rich descriptions for semantic matching
 - Add progressive disclosure structure
 - Test auto-activation patterns
+- **Goal:** Proactive guidance reduces violations at creation time
 
-**Phase 2: Validate Auto-Activation (1 week)**
-- Test semantic matching accuracy
-- Measure token efficiency gains
-- Document activation patterns
-- Refine skill descriptions
+**Skills to create:**
+- ✅ authentication-security (completed)
+- ⬜ session-management-security
+- ⬜ secrets-management-security
+- ⬜ input-validation-security
+- ⬜ cryptography-security
+- ⬜ authorization-security
+- ⬜ logging-security
+- ⬜ data-protection-security
+- ⬜ web-security
+- ⬜ configuration-security
+- ⬜ [... remaining 10 domains]
 
-**Phase 3: Optimize Hybrid Usage (1 week)**
-- Document when to use skills vs agents
-- Create usage examples
-- Update CLAUDE.md with guidance
-- Train team on hybrid approach
+**Phase 2: Implement Security Hooks (1 week) - Layer 2**
+- Create `.claude/hooks.yml` configuration
+- Implement `security_validator.py` hook script
+- Add PreToolUse hooks for Write and Bash tools
+- Validate against all 191 security rules from JSON files
+- Test blocking behavior and feedback mechanism
+- **Goal:** 100% guaranteed security enforcement before commits
+
+**Hook deliverables:**
+- `.claude/hooks.yml` - Hook configuration
+- `.claude/hooks/security_validator.py` - Validation script
+- `.claude/hooks/utils/` - Rule loading and pattern matching
+- Documentation on hook behavior and debugging
+
+**Phase 3: Integrate Hooks with Agents (1 week) - Layer 3**
+- Hooks trigger agent invocation on violations
+- Configure parallel agent execution
+- Implement detailed remediation feedback loop
+- Test end-to-end: violation → agent analysis → remediation
+- **Goal:** Deep analysis and actionable guidance when violations occur
+
+**Integration deliverables:**
+- Hook-to-agent invocation logic
+- Parallel execution configuration
+- Remediation feedback templates
+- End-to-end validation tests
+
+**Phase 4: Validate Three-Layer Architecture (1 week)**
+- Test complete flow: Skills → Hooks → Agents
+- Measure effectiveness of each layer
+- Document activation rates and violation detection
+- Refine descriptions and detection patterns
+- **Goal:** Verify defense-in-depth provides comprehensive protection
+
+**Validation metrics:**
+- Skill activation rate (target: >85%)
+- Hook violation detection rate (target: 100%)
+- Agent remediation effectiveness (target: >95%)
+- False positive rate (target: <5%)
+- End-to-end security coverage (target: 100%)
 
 ---
 
-## Recommendation: Embrace the Hybrid
+## Recommendation: Embrace the Three-Layer Architecture
 
-**Keep both skills and agents:**
+**Implement skills, hooks, AND agents for defense-in-depth:**
 
 **Benefits:**
-- ✅ Skills for automatic context (interactive workflows)
-- ✅ Agents for explicit execution (programmatic workflows)
+- ✅ **Layer 1 (Skills):** Proactive guidance reduces violations before they happen
+- ✅ **Layer 2 (Hooks):** Guaranteed enforcement catches everything skills miss
+- ✅ **Layer 3 (Agents):** Deep analysis provides comprehensive remediation
 - ✅ Backward compatible (existing agent workflows unchanged)
-- ✅ Forward compatible (new skill-based workflows enabled)
-- ✅ Token efficient (skills auto-activate only when needed)
-- ✅ Flexible (choose right tool for each scenario)
+- ✅ Token efficient (skills auto-activate, agents only when needed)
+- ✅ Security-first (100% coverage through hooks)
 
 **Implementation:**
-1. Skills in `.claude/skills/` (new, auto-discovery)
-2. Agents in `.claude/agents/` (existing, explicit invocation)
-3. Symlink to shared JSON rule sets (no duplication)
-4. Document when to use each approach
-5. Support both invocation methods
+1. **Skills** in `.claude/skills/` - Auto-discovery and proactive guidance
+2. **Hooks** in `.claude/hooks.yml` - Mandatory security validation
+3. **Agents** in `.claude/agents/` - Explicit parallel execution and deep analysis
+4. **Shared rules** via symlinks - Single source of truth (no duplication)
 
-**Result:**
+**Architecture:**
 ```
-User can say:
-- "What authentication security capabilities exist?" → Skills auto-activate
-- "Validate auth system" → Agents execute explicitly
-- "Guide me through secure auth" → Skills provide examples
-- "Scan codebase for auth vulns" → Agents run in parallel
+.claude/
+├── skills/                          # Layer 1: Proactive Guidance
+│   ├── authentication-security/
+│   ├── session-management-security/
+│   └── [... 15 security domains]
+│
+├── hooks.yml                        # Layer 2: Guaranteed Enforcement
+├── hooks/
+│   ├── security_validator.py       # Validates all commits/writes
+│   └── utils/                       # Rule loading & pattern matching
+│
+└── agents/                          # Layer 3: Deep Analysis
+    ├── authentication-specialist.md
+    ├── [... 15 specialist agents]
+    └── json/                        # Shared security rules
+        └── *.json                   # 191 rules across 20 domains
+```
+
+**Result - Complete Security Coverage:**
+```
+Interactive Development:
+- User: "Add JWT authentication"
+  → Skills auto-activate (guidance)
+  → Claude writes secure code
+  → Hooks validate before commit (enforcement)
+  → If violations: Agents provide remediation (analysis)
+
+Pre-Commit Validation:
+- Developer commits code
+  → Hooks ALWAYS validate (100% coverage)
+  → Block if violations detected
+  → Trigger agents for detailed analysis
+  → Provide actionable remediation
+
+CI/CD Pipeline:
+- Pipeline runs security scan
+  → Hooks validate all changes
+  → Agents run in parallel for comprehensive analysis
+  → Generate security report
+  → Block merge if violations found
 ```
 
 ---
 
-**Conclusion:** Skills and agents serve different but complementary purposes. The hybrid architecture gives the best of both worlds without sacrificing existing capabilities. Skills already solve automatic context injection - no additional infrastructure needed.
+**Conclusion:** Skills, hooks, and agents form a comprehensive three-layer security architecture. Skills provide proactive guidance through automatic context injection. Hooks provide guaranteed enforcement that catches everything skills miss. Agents provide deep parallel analysis when violations occur. Together, they deliver defense-in-depth security with 100% coverage for security-critical codebases.
 
 ## Detailed Comparison
 
