@@ -1568,3 +1568,12 @@ For organizations operating beyond these parameters, the migration paths above p
 This project is licensed under the **Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0)**.
 
 See [LICENSE.md](LICENSE.md) for the full license text.
+
+
+## References
+1. https://www.reddit.com/r/ClaudeAI/comments/1oivjvm/claude_code_is_a_beast_tips_from_6_months_of/
+2. https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/
+3. https://github.com/obra/superpowers/blob/main/skills/test-driven-development/SKILL.md including hooks https://github.com/obra/superpowers/blob/main/hooks/session-start.sh
+4. https://github.com/diet103/claude-code-infrastructure-showcase/blob/main/.claude/commands/dev-docs-update.md
+5. https://github.com/yusufkaraaslan/Skill_Seekers Automatically convert documentation websites, GitHub repositories, and PDFs into Claude AI skills in minutes.
+6. https://medium.com/data-science-collective/claude-skills-a-technical-deep-dive-into-context-injection-architecture-ee6bf30cf514
