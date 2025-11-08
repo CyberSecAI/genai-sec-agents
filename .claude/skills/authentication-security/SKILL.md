@@ -7,10 +7,7 @@ domains:
   - multi-factor-authentication
   - password-security
   - credential-management
-tools:
-  - Read
-  - Grep
-  - Bash
+allowed-tools: Read, Grep, Bash
 ---
 
 # Authentication Security Skill
