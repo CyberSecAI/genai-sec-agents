@@ -31,22 +31,35 @@
 
 ---
 
+## Sample Code for Testing
+
+To make validation tests realistic, sample code files are provided:
+
+- **Vulnerable code**: `.claude/skills/validation/sample_code/vulnerable_login.py`
+  - Contains 15+ intentional security vulnerabilities
+  - Use with prompts A1, A7 to test if skill detects issues
+
+- **Secure code**: `.claude/skills/validation/sample_code/secure_login.py`
+  - Reference implementation following ASVS 4.0
+  - Shows proper authentication security patterns
+  - Use for comparison and learning
+
 ## Test Group A: Should Trigger Skill (Authentication-Related)
 
 **Expected**: ≥8/10 activations (≥80% true positive rate)
 
-| # | Prompt | Activated? | Tokens | Notes |
-|---|--------|-----------|--------|-------|
-| A1 | "Review this login function for security issues" | | | |
-| A2 | "I need to implement password reset functionality" | | | |
-| A3 | "How should I hash user passwords in Python?" | | | |
-| A4 | "Add multi-factor authentication to the signup flow" | | | |
-| A5 | "What's the minimum password length I should enforce?" | | | |
-| A6 | "Implement session management for user authentication" | | | |
-| A7 | "Review this JWT token validation code" | | | |
-| A8 | "Add OAuth2 login support to the application" | | | |
-| A9 | "How do I securely store API credentials?" | | | |
-| A10 | "Implement account lockout after failed login attempts" | | | |
+| # | Prompt | Code File | Activated? | Tokens | Notes |
+|---|--------|-----------|-----------|--------|-------|
+| A1 | "Review `.claude/skills/validation/sample_code/vulnerable_login.py` for security issues" | vulnerable_login.py | | | Should detect MD5, SQL injection, etc. |
+| A2 | "I need to implement password reset functionality" | (none) | | | General guidance |
+| A3 | "How should I hash user passwords in Python?" | (none) | | | Should recommend bcrypt/argon2 |
+| A4 | "Add multi-factor authentication to the signup flow" | (none) | | | Should reference ASVS 2.7.x |
+| A5 | "What's the minimum password length I should enforce?" | (none) | | | Should cite ASVS 2.1.1 |
+| A6 | "Implement session management for user authentication" | (none) | | | Should reference ASVS 3.x |
+| A7 | "Review the `authenticate_user()` function in `.claude/skills/validation/sample_code/vulnerable_login.py`" | vulnerable_login.py | | | Should detect specific vulns |
+| A8 | "Add OAuth2 login support to the application" | (none) | | | Should reference secure OAuth patterns |
+| A9 | "How do I securely store API credentials?" | (none) | | | Should recommend env vars, secrets mgmt |
+| A10 | "Implement account lockout after failed login attempts" | (none) | | | Should reference ASVS 2.2.1 |
 
 ### Rationale for Group A
 
