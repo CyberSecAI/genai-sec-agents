@@ -32,6 +32,418 @@
 
 ---
 
+## The Missing Layer: Automatic Context Management
+
+### The Core Problem
+
+**Current State (Manual):**
+```javascript
+// User: "Fix authentication vulnerability"
+// Developer must remember to:
+use authentication-specialist agent to review auth code
+```
+
+**Problems:**
+- ❌ Requires developer to know which agent to call
+- ❌ No automatic detection of security domains
+- ❌ All-or-nothing: either load full agent or nothing
+- ❌ Easy to miss relevant security domains
+- ❌ Manual invocation adds cognitive load
+
+**Desired State (Automatic):**
+```javascript
+// User: "Fix authentication vulnerability"
+// System automatically:
+1. Detects "authentication" domain from user story/code
+2. Loads ONLY authentication security knowledge
+3. Applies it during code creation/editing/review
+4. No manual agent invocation needed
+```
+
+### Required Capabilities
+
+**Intelligent context injection needs:**
+- 🎯 **Domain detection** - What security domains are relevant?
+- 🎯 **Context scoping** - Load only what's needed
+- 🎯 **Automatic activation** - No manual agent calls
+- 🎯 **Progressive loading** - Start small, expand if needed
+
+### Three-Layer Context Loading Architecture
+
+```
+Layer 1: Detection (Always Active, ~0 tokens)
+├─ Analyze user story/file/commit
+├─ Extract security domains from keywords/imports/patterns
+└─ Determine minimal context needed
+
+Layer 2: Targeted Loading (On-Demand, 2-6k tokens)
+├─ Load ONLY relevant domain overviews
+├─ Apply domain-specific rules to code
+└─ Escalate to full rules if violations found
+
+Layer 3: Deep Analysis (If Needed, 15-20k tokens)
+├─ Load full rule sets for detected violations
+├─ Invoke parallel specialist agents
+└─ Generate comprehensive remediation
+```
+
+### Context Activation Triggers
+
+**Trigger 1: User Story Analysis**
+```yaml
+# Story: "Implement JWT authentication for API"
+Auto-detect domains:
+- authentication (JWT mention)
+- session-management (token handling)
+- secrets-management (signing keys)
+
+Auto-load relevant context:
+- authentication-security/overview.md (2k tokens)
+- session-management-security/jwt.md (1k tokens)
+- secrets-management/key-storage.md (1k tokens)
+Total: 4k tokens (vs 57k for all agents)
+```
+
+**Trigger 2: Code File Analysis**
+```python
+# File: src/auth/login.py
+# Auto-detect from imports/code:
+import jwt          → session-management domain
+import bcrypt       → authentication domain
+import os.getenv    → secrets-management domain
+
+# Auto-load ONLY relevant rules:
+- Password hashing rules (authentication)
+- JWT validation rules (session-management)
+- Secret handling rules (secrets-management)
+```
+
+**Trigger 3: Git Diff Analysis**
+```diff
+# Pre-commit hook sees:
++ def authenticate(username, password):
++     hash = hashlib.md5(password.encode())  # WEAK CRYPTO
+
+# Auto-trigger:
+- Load crypto rules (comprehensive-security-agent/crypto)
+- Flag MD5 usage immediately
+- Suggest SHA-256 with reasoning
+```
+
+### Token Efficiency: Progressive Loading
+
+**Current Approach (Manual, All-or-Nothing):**
+```
+Developer calls: "use authentication-specialist agent"
+Load: authentication-specialist.md (2k)
+Load: json/authentication-specialist.json (12k)
+Load: session-management-specialist.md (2k)
+Load: json/session-management-specialist.json (10k)
+Load: secrets-specialist.md (2k)
+Load: json/secrets-specialist.json (8k)
+─────────────────────────────────────────────
+Total: 36k tokens (loaded upfront, used or not)
+```
+
+**Progressive Approach (Automatic, Targeted):**
+```
+Auto-detect domains from story/code (0k tokens)
+Load: 3 domain overviews (6k tokens)
+Apply: During code creation (real-time)
+Escalate: Only if violations detected
+  → Load specific rules (15k tokens)
+  → Invoke agents (parallel)
+─────────────────────────────────────────────
+Best case: 6k tokens (no violations)
+Worst case: 21k tokens (violations + agents)
+Average: ~13k tokens (40% token savings)
+```
+
+### Implementation Options
+
+#### Option A: Enhanced Skills (Progressive Context)
+
+Add auto-activation metadata to skills frontmatter:
+
+```markdown
+# .claude/skills/authentication-security/SKILL.md
+---
+name: authentication-security
+auto_activate_on:
+  keywords: [login, password, authenticate, jwt, token, mfa, 2fa]
+  imports: [bcrypt, argon2, passlib, jwt, oauthlib]
+  file_patterns: [**/auth/**, **/login.py, **/authentication/**]
+  functions: [authenticate(), login(), verify_password()]
+---
+
+## Context Levels (Progressive Loading)
+
+### Level 1: Overview (2k tokens) - Always load when triggered
+- Core security principles
+- Common vulnerabilities
+- Quick validation checklist
+
+### Level 2: Specific Rules (5k tokens) - Load when code detected
+- Password hashing requirements
+- MFA implementation patterns
+- Session token handling
+
+### Level 3: Full Analysis (15k tokens) - Load when violations found
+- All 45 authentication rules
+- Detection patterns
+- Remediation examples with code
+```
+
+**How it works:**
+1. User opens `src/auth/login.py` → Auto-detects "authentication" domain
+2. Loads Level 1 overview (2k tokens) → Applies quick validation
+3. User writes password hashing code → Loads Level 2 rules (5k tokens)
+4. User uses MD5 → Detects violation → Loads Level 3 + invokes agent (15k tokens)
+
+#### Option B: CLAUDE.md Domain Triggers (Immediate)
+
+Enhance CLAUDE.md with domain detection rules:
+
+```markdown
+# CLAUDE.md - Automatic Security Context Loading
+
+BEFORE any security-related work, Claude Code should:
+
+1. **Analyze work context:**
+   - Read user story/task description
+   - Scan files being modified
+   - Review git diff if available
+
+2. **Detect security domains:**
+   - Extract keywords (authentication, crypto, input, etc.)
+   - Analyze imports and code patterns
+   - Match against domain triggers
+
+3. **Load targeted context:**
+   - Start with domain overviews (2-3k tokens)
+   - Load specific rules when code detected (5k tokens)
+   - Invoke specialist agents only when violations found
+
+4. **Apply during work:**
+   - Code creation: Apply rules proactively
+   - Code editing: Validate changes against loaded context
+   - Code review: Flag violations with loaded knowledge
+
+## Domain Trigger Definitions
+
+### Authentication Domain
+**Auto-activate when:**
+- Keywords: login, password, authenticate, credentials, mfa, 2fa
+- Imports: bcrypt, argon2, passlib, jwt, oauthlib
+- Files: **/auth/**, **/login.py, **/authentication/**
+- Functions: authenticate(), login(), verify_password()
+
+**Load progression:**
+1. Overview: Password security principles (2k)
+2. Rules: Hashing requirements, MFA patterns (5k)
+3. Full: All 45 authentication rules + agent (15k)
+
+### Cryptography Domain
+**Auto-activate when:**
+- Keywords: encrypt, decrypt, hash, cipher, crypto, key
+- Imports: hashlib, cryptography, pycryptodome, Crypto
+- Code patterns: hashlib.md5, hashlib.sha1, DES, 3DES
+- Functions: encrypt(), hash(), generate_key()
+
+**Load progression:**
+1. Overview: Crypto best practices (2k)
+2. Rules: Algorithm requirements, key management (5k)
+3. Full: All crypto rules + agent (12k)
+
+[... similar for all 15+ security domains ...]
+```
+
+#### Option C: Smart Context Manager (Future)
+
+Build automated context orchestration:
+
+```python
+# .claude/context-manager.py
+class SecurityContextManager:
+    """Intelligent security context loading based on work analysis"""
+
+    def analyze_work_context(self, user_story=None, files=None, diff=None):
+        """Detect which security domains are relevant"""
+        domains = set()
+
+        # Story analysis
+        if user_story:
+            domains.update(self._extract_domains_from_story(user_story))
+
+        # Code analysis
+        if files:
+            for file_path in files:
+                domains.update(self._extract_domains_from_code(file_path))
+
+        # Diff analysis
+        if diff:
+            domains.update(self._extract_domains_from_diff(diff))
+
+        return self._load_targeted_context(domains)
+
+    def _extract_domains_from_code(self, file_path):
+        """Extract security domains from code imports/patterns"""
+        domains = set()
+        code = read_file(file_path)
+
+        # Import analysis
+        if 'import jwt' in code or 'import bcrypt' in code:
+            domains.add('authentication')
+        if 'import hashlib' in code or 'import cryptography' in code:
+            domains.add('cryptography')
+        if 'request.form' in code or 'request.args' in code:
+            domains.add('input-validation')
+
+        # Pattern analysis
+        if 'os.getenv' in code or 'API_KEY' in code:
+            domains.add('secrets-management')
+        if 'session[' in code or 'jwt.encode' in code:
+            domains.add('session-management')
+
+        return domains
+
+    def _load_targeted_context(self, domains):
+        """Load only relevant security knowledge progressively"""
+        context = {}
+        for domain in domains:
+            context[domain] = {
+                'overview': self._load_overview(domain),      # 2k tokens
+                'rules': None,                                 # Load on-demand
+                'agent': self._get_agent_for_domain(domain)   # Reference only
+            }
+        return context
+```
+
+### Real-World Workflow Example
+
+**User story:** "Implement user login with JWT authentication"
+
+```javascript
+// === STEP 1: Automatic Detection ===
+Claude analyzes story keywords: "login", "JWT", "authentication"
+
+Domains detected:
+- authentication (login mention)
+- session-management (JWT mention)
+- secrets-management (JWT signing keys implied)
+
+// === STEP 2: Targeted Context Loading ===
+Auto-load Level 1 overviews:
+- authentication-security/overview.md (2k tokens)
+- session-management-security/overview.md (2k tokens)
+- secrets-management/overview.md (2k tokens)
+Total: 6k tokens
+
+Claude now has context for:
+- Password hashing best practices
+- JWT validation requirements
+- Secret key storage patterns
+
+// === STEP 3: Code Creation with Loaded Context ===
+def login(username, password):
+    user = get_user(username)
+    # Claude suggests with loaded authentication context:
+    # ✅ Use bcrypt/argon2 for hashing
+    if bcrypt.verify(password, user.password_hash):
+        # Claude suggests with loaded session context:
+        # ✅ Use strong JWT signing algorithm
+        token = jwt.encode(
+            {'user_id': user.id},
+            # Claude suggests with loaded secrets context:
+            # ✅ Load key from environment variables
+            os.getenv('JWT_SECRET_KEY'),
+            algorithm='HS256'
+        )
+        return token
+
+// === STEP 4: Progressive Escalation on Violations ===
+# Developer accidentally writes:
+hash = hashlib.md5(password.encode())  # VIOLATION!
+
+Claude detects violation:
+→ Escalates to Level 2: Load crypto rules (5k tokens)
+→ Identifies: MD5 prohibited for passwords
+→ Escalates to Level 3: Load full crypto rules + invoke agent (15k tokens)
+→ Generates: Detailed fix with bcrypt example and reasoning
+
+// === STEP 5: Final Validation ===
+Before commit:
+→ Run targeted validation (only loaded domains)
+→ authentication-specialist validates password handling
+→ session-management-specialist validates JWT implementation
+→ secrets-specialist validates key management
+
+If all pass: commit
+If failures: load full context + generate remediation
+```
+
+**Token usage in this workflow:**
+- Initial detection: 0 tokens
+- Level 1 loading: 6k tokens
+- Code creation guidance: 2k tokens
+- Violation detection + Level 3: 15k tokens (only if MD5 used)
+- **Total: 8k tokens (no violations) or 23k tokens (with violations)**
+- **Compare to: 36k tokens (manual full agent loading)**
+
+### Implementation Recommendation
+
+**Phased approach:**
+
+**Phase 1: CLAUDE.md Enhancement (Start Here - Low Effort)**
+- Add domain trigger definitions to CLAUDE.md
+- Document progressive loading rules
+- Claude follows guidance automatically
+- **Effort:** 2-3 hours
+- **Benefit:** Immediate 40% token reduction
+
+**Phase 2: Skill Auto-Activation (Medium Effort)**
+- Add `auto_activate_on` frontmatter to skills
+- Implement trigger matching logic
+- Build progressive disclosure in skills
+- **Effort:** 1-2 days per skill (15 skills = 2-3 weeks)
+- **Benefit:** True automatic activation
+
+**Phase 3: Smart Context Manager (Future - High Effort)**
+- Build standalone context orchestration system
+- Automated domain detection from code/diffs
+- Integration with CI/CD pipelines
+- **Effort:** 2-3 weeks
+- **Benefit:** Fully automated, zero manual intervention
+
+### Key Insight: Context Management is Neither Skills Nor Agents
+
+This is a **third architectural layer** that orchestrates skills/agents:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ Context Management Layer (NEW)                          │
+│ - Detects security domains from work context            │
+│ - Loads targeted knowledge progressively                │
+│ - Activates agents when violations found                │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+        ┌─────────────────┴─────────────────┐
+        ↓                                   ↓
+┌───────────────────┐            ┌──────────────────────┐
+│ Skills Layer      │            │ Agents Layer         │
+│ - Discovery       │            │ - Execution          │
+│ - Learning        │            │ - Validation         │
+│ - Composition     │            │ - Parallel analysis  │
+└───────────────────┘            └──────────────────────┘
+```
+
+**This answers your core question:**
+> "How do we ensure that the right knowledge is loaded so that code created/edited/reviewed has the right knowledge applied?"
+
+**Answer:** Build an automatic context management layer that detects domains and progressively loads targeted knowledge based on actual work being done.
+
+---
+
 ## Architecture Comparison
 
 ### Agents (Current, `.claude/agents/*.md`)
