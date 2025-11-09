@@ -27,11 +27,14 @@
 | 4 | Query | | | | | | Not tested yet |
 | 5 | File-specific | | | | | | Not tested yet |
 
-**Current Activation Rate**: 0/2 = 0% ❌
-**False Positives**: 0/2 = 0%
+**Current Activation Rate**: 0/4 = 0% ❌
+**Tests**: Original 2 + Retest 2 after pattern fix
+**False Positives**: 0/4 = 0%
 **Critical Failures**: 0 (no implementations tested yet)
 
-**Preliminary Gate Decision**: ❌ **FAILING** - 0% activation
+**Preliminary Gate Decision**: ❌ **FAILING** - 0% activation even after pattern fix
+
+**Critical Discovery**: Patterns don't auto-enforce. CLAUDE.md is guidance, not automation. Even with Pattern 5 & 6 added, activation remains probabilistic.
 
 ---
 
