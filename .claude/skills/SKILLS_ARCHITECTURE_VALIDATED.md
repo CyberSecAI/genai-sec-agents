@@ -38,46 +38,9 @@
 
 ---
 
-## The Three-Component Architecture
-
-```
-┌──────────────────────────────────────────────────────────┐
-│ CLAUDE.md (Active Workflow Engine)                      │
-│ Lines 201-359: SECURITY-FIRST DEVELOPMENT WORKFLOW      │
-│                                                          │
-│ ✅ Pattern triggers (lines 232-245)                     │
-│ ✅ Workflow steps (STEP 1-4, lines 321-339)             │
-│ ✅ Multi-agent orchestration (lines 350-358)            │
-│ ✅ Security-first framing                               │
-│ ✅ Intent disambiguation                                │
-└──────────────────────────────────────────────────────────┘
-                        ↓ orchestrates
-┌──────────────────────────────────────────────────────────┐
-│ Agents (Delivery Mechanism)                             │
-│                                                          │
-│ ✅ semantic-search → Corpus research (OWASP, ASVS)      │
-│ ✅ authentication-specialist → Auth security rules      │
-│ ✅ session-management-specialist → Session rules        │
-│ ✅ secrets-specialist → Credential security             │
-│ ✅ Parallel execution for performance                   │
-└──────────────────────────────────────────────────────────┘
-                        ↓ loads
-┌──────────────────────────────────────────────────────────┐
-│ Skills (Passive Knowledge Repository)                   │
-│                                                          │
-│ ✅ ASVS rules (rules.json)                              │
-│ ✅ Security patterns (SKILL.md)                         │
-│ ✅ Domain expertise                                     │
-│ ✅ Slash commands (/authentication-security)            │
-│ ✅ Progressive disclosure                               │
-└──────────────────────────────────────────────────────────┘
-```
-
-**All three are ESSENTIAL. Remove any → system breaks.**
-
----
-
 ## CLAUDE.md Contribution by Task Type
+
+**Why this matters**: Understanding CLAUDE.md's contribution by task type explains WHY the three-component architecture is essential.
 
 ### Implementation Tasks (A8, A2, A4): ~100%
 
@@ -126,7 +89,49 @@
 
 **Contribution**: **0%** (fixable pattern gap)
 
-**Fix**: Update CLAUDE.md patterns to match review tasks
+**Fix**: Update CLAUDE.md patterns to match review tasks (✅ DONE in CLAUDE.md lines 279-302)
+
+---
+
+## The Three-Component Architecture
+
+**Now that we understand WHY each component is needed, here's HOW they work together**:
+
+```
+┌──────────────────────────────────────────────────────────┐
+│ CLAUDE.md (Active Workflow Engine)                      │
+│ Lines 248-302: SECURITY-FIRST DEVELOPMENT WORKFLOW      │
+│                                                          │
+│ ✅ Pre-implementation guard (lines 248-276)             │
+│ ✅ Pattern triggers (lines 279-302)                     │
+│ ✅ Workflow steps (STEP 1-4)                            │
+│ ✅ Multi-agent orchestration                            │
+│ ✅ Security-first framing                               │
+│ ✅ Intent disambiguation                                │
+└──────────────────────────────────────────────────────────┘
+                        ↓ orchestrates
+┌──────────────────────────────────────────────────────────┐
+│ Agents (Delivery Mechanism)                             │
+│                                                          │
+│ ✅ semantic-search → Corpus research (OWASP, ASVS)      │
+│ ✅ authentication-specialist → Auth security rules      │
+│ ✅ session-management-specialist → Session rules        │
+│ ✅ secrets-specialist → Credential security             │
+│ ✅ Parallel execution for performance                   │
+└──────────────────────────────────────────────────────────┘
+                        ↓ loads
+┌──────────────────────────────────────────────────────────┐
+│ Skills (Passive Knowledge Repository)                   │
+│                                                          │
+│ ✅ ASVS rules (rules.json) - 195 rules across 20 domains│
+│ ✅ Security patterns (SKILL.md)                         │
+│ ✅ Domain expertise                                     │
+│ ✅ Slash commands (/authentication-security)            │
+│ ✅ Progressive disclosure                               │
+└──────────────────────────────────────────────────────────┘
+```
+
+**All three are ESSENTIAL. Remove any → system breaks.**
 
 ---
 
