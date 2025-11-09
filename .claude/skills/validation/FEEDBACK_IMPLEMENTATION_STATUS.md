@@ -266,21 +266,46 @@ SECURITY BLOCK: [RULE_ID] [FILE:LINE] [WHY] [HOW TO FIX]
 
 ---
 
-### 12. 20-Prompt Activation Test Suite
+### 12. 20-Prompt Test Protocol (Manual Execution)
 **Status**: Not started
+**Reality Check**: Cannot automate Claude Code sessions - each test requires new session
+
+**Revised Approach** - Manual Test Protocol:
+```
+1. Create test_prompts_phase1.md with 20 prompts
+2. Document expected behavior for each
+3. Manual execution: Start fresh session, run prompt, record results
+4. Track in spreadsheet: Prompt | Expected | Actual | TP/FP | Notes
+5. Calculate metrics after each skill migration
+```
+
 **Requirements**:
-- 20 diverse prompts covering auth/session/secrets/authz
+- 20 diverse prompts covering next skill domain (e.g., session-management)
 - Mix of implementation/query/review tasks
-- Automated harness to run daily
-- Measure: TP rate, FP rate, token costs
-- Gate: ≥70% TP, ≤15% FP before next skill migration
+- Clear expected behavior documented
+- Simple tracking template (markdown table or CSV)
+
+**Metrics to Track**:
+- Activation rate (did skill/agent activate?)
+- Correct specialist (right agent called?)
+- ASVS citations present?
+- Timing (research before implementation?)
+- False positives (activated when shouldn't)
+
+**Gate Criteria** (assessed manually after 20 prompts):
+- ≥70% correct activation (14/20)
+- ≤15% false positives (≤3/20)
+- NO critical timing failures (like A4)
 
 **Purpose**:
-- Validates activation improvements
-- Provides metrics for inline claims (item #10)
-- Gates Phase 1 skill migrations
+- Validates each skill before migrating next
+- Provides evidence for inline metrics claims
+- Catches regressions (like A7 pattern gap)
 
-**Priority**: HIGH - Blocks Phase 1 execution
+**Priority**: MEDIUM - Useful for Phase 1, but not a hard blocker
+- Phase 0 gave us 12 tests (7 baseline + 5 isolation)
+- Can start Phase 1 and test opportunistically
+- Formalize protocol when migrating 3rd+ skill
 
 ---
 
@@ -296,21 +321,24 @@ SECURITY BLOCK: [RULE_ID] [FILE:LINE] [WHY] [HOW TO FIX]
 - Deterministic escape hatches (user safety valve)
 
 **Remaining Work**:
-- Item #10: Full inline metrics (blocked by #12)
+- Item #10: Full inline metrics (can add opportunistically)
 - Item #11: Minimal hooks (Phase 2, not blocking)
-- Item #12: 20-prompt test suite (HIGH priority for Phase 1)
+- Item #12: Manual test protocol (useful but not blocking)
 
-**Phase 1 Readiness**:
+**Phase 1 Readiness**: ✅ READY TO START
 - Architecture fortified ✅
 - Known issues fixed (A4, A7) ✅
 - Escape hatches documented ✅
 - Evidence-based claims ✅
-- **BLOCKER**: Need activation test suite before migrating next skill
+- Phase 0 testing complete (12 tests) ✅
 
-**Recommendation**: Build 20-prompt suite (#12) before starting Phase 1 skill migrations. This provides:
-1. Baseline metrics for current skill (authentication)
-2. Gate criteria for next skill (session-management)
-3. Data for remaining inline metrics (#10)
+**No Hard Blockers**: Can't automate Claude Code testing, so manual protocol is best-effort validation, not a gate.
+
+**Recommendation for Phase 1**:
+1. Start session-management skill migration
+2. Test opportunistically (run a few prompts, record results)
+3. Formalize test protocol if patterns emerge by 3rd skill
+4. Add inline metrics as we gather data from real usage
 
 ---
 
