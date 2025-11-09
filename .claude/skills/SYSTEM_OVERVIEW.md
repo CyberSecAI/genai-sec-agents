@@ -241,11 +241,32 @@ User decides whether to implement
 
 **Both Share**: Same compiled rules.json (single source of truth)
 
+#### Reliability Ladder (Activation Guarantees)
+
+```
+HIGHEST RELIABILITY
+↑  Agents via CLAUDE.md orchestration
+│  → Deterministic activation (explicit Task tool calls)
+│  → Guaranteed execution when triggered
+│  → Proven 100% activation in tests (A1-A8 WITH CLAUDE.md)
+│
+│  Manual skill/agent invocation
+│  → Deterministic (user explicitly requests)
+│  → Examples: /authentication-security, "use authentication-specialist"
+│  → Guaranteed load when syntax correct
+│
+↓  Skill auto-activation
+   → Probabilistic (best-effort semantic matching)
+   → Observed 0% activation in isolation tests (A8/A2/A4 WITHOUT CLAUDE.md)
+   → May interpret as commands vs context
+LOWEST RELIABILITY
+```
+
 **Critical Difference**:
-- **Agents**: Deterministic - when called via Task tool, they WILL execute
-- **Skills**: Probabilistic - may or may not load based on semantic matching
-- **Skills**: Claude may interpret as commands OR context (non-deterministic)
-- **CLAUDE.md**: Provides deterministic orchestration over probabilistic skills
+- **Agents via CLAUDE.md**: Deterministic - pattern triggers → guaranteed agent calls
+- **Skills auto-activation**: Probabilistic - may or may not load, unreliable for security-critical work
+- **Manual invocation**: Deterministic escape hatch for both agents and skills
+- **CLAUDE.md**: Converts probabilistic skills into deterministic workflow
 
 **Agent Example** (authentication-specialist.md):
 ```markdown
@@ -285,6 +306,18 @@ Covers login, passwords, MFA, credentials
 - Claude may interpret skills as commands vs context
 - No deterministic control over WHEN knowledge applies
 - Implementation tasks bypass research without explicit orchestration
+
+#### Probabilistic Failure Modes (Isolation Test Evidence)
+
+| Scenario | Expected Behavior | Observed WITHOUT CLAUDE.md | Risk Level | Test |
+|----------|------------------|----------------------------|------------|------|
+| "Add OAuth2 login" | Research → Implement | Direct implementation, NO standards | **HIGH** | A8-NO-CLAUDE |
+| "Review authenticate_user()" (no "security") | Auth skill loads | General review, NO ASVS refs | **MEDIUM** | A7-NO-CLAUDE |
+| "Add MFA to secure_login.py" | Research first | Edits file immediately | **HIGH** | A4-NO-CLAUDE |
+| "I need to implement password reset" | Research security | Direct coding, NO rules | **HIGH** | A2-NO-CLAUDE |
+| "What's minimum password length?" | Agent-quality research | Bash tools (lower quality) | **LOW** | A5-NO-CLAUDE |
+
+**Pattern**: Implementation tasks (80% of tests) show HIGH risk without CLAUDE.md orchestration. Query tasks degrade but maintain research intent.
 
 **Without CLAUDE.md** (proven by isolation testing):
 - Implementation tasks: Direct coding, NO security research ❌

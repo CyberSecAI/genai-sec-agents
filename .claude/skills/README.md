@@ -10,6 +10,33 @@ This directory contains Claude Skills for specialized security analysis. Skills 
 
 ⚠️ **IMPORTANT**: Skills + CLAUDE.md + Agents is a **THREE-COMPONENT ARCHITECTURE**. All three are essential (proven via isolation testing). Skills alone don't work for implementation tasks.
 
+## Quick Start: Deterministic Activation (Bypass Probabilistic Matching)
+
+**Don't rely on auto-activation!** Skills use semantic matching which is probabilistic. For security-critical work, use these **guaranteed activation methods**:
+
+### Method 1: Slash Commands (Highest Reliability)
+```
+/authentication-security - Load authentication skill
+/session-management - Load session security skill (when available)
+/secrets-management - Load secrets handling skill (when available)
+```
+
+### Method 2: Explicit Skill Requests
+```
+"use authentication-security skill to review this login flow"
+"load the authentication-security skill"
+```
+
+### Method 3: Direct Agent Calls (Via CLAUDE.md Orchestration)
+```
+"use authentication-specialist agent to analyze src/auth/"
+CLAUDE.md pattern triggers automatically call agents for security tasks
+```
+
+**Reliability Guarantee**: Slash commands and explicit requests = 100% activation. Auto-activation via semantic matching = 0% in isolation tests without CLAUDE.md.
+
+---
+
 **The Big Picture**: We transform security standards (OWASP, ASVS) into actionable guidance through:
 1. Source documents (research/) → Semantic search & grep
 2. Refactored atomic rules (app/rule_cards/) → Testable, composable

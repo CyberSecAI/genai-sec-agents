@@ -245,6 +245,63 @@ connect|socket|server|client → configuration-specialist
 logger|log.|print(|sys.stdout → logging-specialist (if may log secrets)
 ```
 
+### CRITICAL: Pre-Implementation Security Guard
+
+**BEFORE implementing security code in a specific file, you MUST:**
+
+**Detection Pattern**:
+```
+IF user prompt contains:
+  - File path with extension: \.(py|js|ts|java|go|rb|php|cs)\b
+  AND
+  - Security keyword: (auth|login|password|session|token|oauth|mfa|jwt|crypto|hash|secret|api_key|credential)
+```
+
+**Then MANDATORY workflow**:
+```
+1. STOP → Do NOT write/modify files yet
+2. RESEARCH → Run STEP 1 (semantic-search agent)
+3. ANALYZE → Run STEP 2 (specialist agents in parallel)
+4. GUIDE → Provide security requirements with ASVS citations
+5. CONFIRM → Ask user: "Ready to implement with these security requirements?"
+6. IMPLEMENT → STEP 3 (only after user confirmation)
+```
+
+**Examples that trigger guard**:
+- "Add MFA to src/auth/login.py" → STOP → Research → Guide → Confirm
+- "Implement OAuth2 in app.js" → STOP → Research → Guide → Confirm
+- "Fix password hashing in user_model.rb" → STOP → Research → Guide → Confirm
+
+**Rationale**: Isolation tests (A4, A8) proved file-specific prompts bypass research phase. This guard enforces security-first workflow for ALL file-specific security implementations.
+
+---
+
+### Expanded Review Intent Patterns
+
+**Review tasks now auto-activate security specialists**:
+
+```
+Pattern 1: Explicit security review
+  (?i)\breview\b.*\b(security|vulnerabilit|exploit|attack)\b
+  → comprehensive-security-agent
+
+Pattern 2: Auth/session review (no "security" keyword needed)
+  (?i)\breview\b.*\b(authenticate|login|password|session|token|oauth|jwt)\b
+  → authentication-specialist + session-management-specialist
+
+Pattern 3: Audit/pentest intent
+  (?i)\b(audit|pen.*test|security.*scan|threat.*model)\b
+  → comprehensive-security-agent
+
+Pattern 4: Authorization review
+  (?i)\breview\b.*\b(authorize|permission|access.*control|role)\b
+  → authorization-specialist
+```
+
+**Fix for A7 false negative**: "Review authenticate_user()" now triggers authentication-specialist (no "security" keyword required).
+
+---
+
 ### Security Implementation Patterns (Always Use)
 
 ```python

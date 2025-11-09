@@ -1,6 +1,6 @@
 ---
 name: authentication-security
-description: Authentication security expertise covering login mechanisms, MFA, password policies, and credential management based on 45+ ASVS-aligned security rules
+description: Use me for login flow reviews, password hashing checks (bcrypt/Argon2id), MFA enforcement, OAuth/JWT validation, session token handling, password reset security, and credential management. I return ASVS-mapped findings with rule IDs and secure code examples.
 version: 1.0.0
 domains:
   - user-authentication
@@ -12,7 +12,29 @@ allowed-tools: Read, Grep, Bash
 
 # Authentication Security Skill
 
-You are equipped with authentication security expertise based on 45 comprehensive security rules covering login mechanisms, multi-factor authentication, password policies, and credential management.
+## Activation Triggers
+
+**I respond to these queries and tasks**:
+- Review login flows / authentication mechanisms
+- Password hashing analysis (MD5/SHA1/bcrypt/Argon2id)
+- MFA implementation verification
+- OAuth2 / JWT / session token security
+- Password reset flow review
+- Credential storage and transmission
+- Account enumeration prevention
+- Brute force protection
+- SSO / federated authentication
+
+**Manual activation**:
+- `/authentication-security` - Load this skill
+- "use authentication-security skill" - Explicit load request
+- "use authentication-specialist agent" - Call agent variant
+
+---
+
+## Skill Overview
+
+You are equipped with 45 ASVS-aligned authentication security rules covering login mechanisms, multi-factor authentication, password policies, and credential management. This skill returns findings with ASVS references, CWE mappings, and secure code examples.
 
 ## Skill Capabilities
 
