@@ -2,11 +2,20 @@
 
 **Status**: ✅ Phase 0 VALIDATED (2025-11-09) | **Decision**: GO to Phase 1
 
-📖 **START HERE**: [SKILLS_ARCHITECTURE_VALIDATED.md](SKILLS_ARCHITECTURE_VALIDATED.md) - Complete Phase 0 validation findings
+📖 **START HERE**:
+- **[SYSTEM_OVERVIEW.md](SYSTEM_OVERVIEW.md)** - Complete architecture with diagrams (what/why/how)
+- **[SKILLS_ARCHITECTURE_VALIDATED.md](SKILLS_ARCHITECTURE_VALIDATED.md)** - Phase 0 validation findings
 
 This directory contains Claude Skills for specialized security analysis. Skills provide progressive context loading and composability while working alongside **CLAUDE.md and the agent system**.
 
 ⚠️ **IMPORTANT**: Skills + CLAUDE.md + Agents is a **THREE-COMPONENT ARCHITECTURE**. All three are essential (proven via isolation testing). Skills alone don't work for implementation tasks.
+
+**The Big Picture**: We transform security standards (OWASP, ASVS) into actionable guidance through:
+1. Source documents (research/) → Semantic search & grep
+2. Refactored atomic rules (app/rule_cards/) → Testable, composable
+3. Compiled JSON (.claude/agents/json/) → Fast loading
+4. Dual access (agents + skills) → Explicit & implicit invocation
+5. CLAUDE.md orchestration → Security-first workflow automation
 
 ## What are Skills?
 

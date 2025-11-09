@@ -1573,7 +1573,11 @@ See [LICENSE.md](LICENSE.md) for the full license text.
 ## References
 1. https://www.reddit.com/r/ClaudeAI/comments/1oivjvm/claude_code_is_a_beast_tips_from_6_months_of/
 2. https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/
-3. https://github.com/obra/superpowers/blob/main/skills/test-driven-development/SKILL.md including hooks https://github.com/obra/superpowers/blob/main/hooks/session-start.sh
-4. https://github.com/diet103/claude-code-infrastructure-showcase/blob/main/.claude/commands/dev-docs-update.md
-5. https://github.com/yusufkaraaslan/Skill_Seekers Automatically convert documentation websites, GitHub repositories, and PDFs into Claude AI skills in minutes.
-6. https://medium.com/data-science-collective/claude-skills-a-technical-deep-dive-into-context-injection-architecture-ee6bf30cf514
+3. https://agiflow.io/blog/claude-code-internals-reverse-engineering-prompt-augmentation/ and https://github.com/AgiFlow/claude-code-prompt-analysis Analysis of Claude Code's five prompt augmentation mechanisms through network traffic instrumentation.
+4. https://github.com/obra/superpowers/blob/main/skills/ test-driven-development/SKILL.md including hooks https://github.com/obra/superpowers/blob/main/hooks/session-start.sh
+5. https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
+6. https://github.com/diet103/claude-code-infrastructure-showcase/blob/main/.claude/commands/dev-docs-update.md
+7. https://github.com/yusufkaraaslan/Skill_Seekers Automatically convert documentation websites, GitHub repositories, and PDFs into Claude AI skills in minutes.
+8. https://medium.com/data-science-collective/claude-skills-a-technical-deep-dive-into-context-injection-architecture-ee6bf30cf514
+9. https://github.com/Toowiredd/claude-skills-automation
+10. https://github.com/obra/superpowers/blob/main/skills/testing-skills-with-subagents/examples/CLAUDE_MD_TESTING.md 
