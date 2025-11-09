@@ -5,6 +5,12 @@
 **Phase**: Phase 1 - First skill migration
 **Goal**: Validate activation, ASVS references, timing
 
+**Status**: 🔄 RETEST NEEDED - CLAUDE.md patterns updated (Pattern 5 & 6 added)
+
+**Previous Results**: 0/2 activation (0%)
+**Pattern Fix**: Added missing review patterns (lines 300-306)
+**Expected After Fix**: Tests 1-2 should now activate secrets-specialist
+
 ---
 
 ## Test Instructions
@@ -19,7 +25,9 @@
 
 ## Test Prompts (5 total)
 
-### Test 1: Hardcoded API Key Detection (Implementation)
+### Test 1: Hardcoded API Key Detection (Review)
+**Pattern Match**: Should trigger Pattern 5 (`api.*key` in review context)
+
 ```
 Review this Python code for security issues:
 
@@ -46,6 +54,8 @@ def fetch_data():
 
 
 ### Test 2: Database Credential Security (Review)
+**Pattern Match**: Should trigger Pattern 6 (`connection.*secur` in review context)
+
 ```
 Review the database connection security in this code:
 
