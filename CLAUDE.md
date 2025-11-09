@@ -296,9 +296,20 @@ Pattern 3: Audit/pentest intent
 Pattern 4: Authorization review
   (?i)\breview\b.*\b(authorize|permission|access.*control|role)\b
   → authorization-specialist
+
+Pattern 5: Secrets/credentials review
+  (?i)\breview\b.*\b(secret|credential|api.*key|hardcoded|password.*stor|connection.*string)\b
+  → secrets-specialist
+
+Pattern 6: Database security review
+  (?i)\breview\b.*\b(database.*secur|db.*password|connection.*secur|credential.*stor)\b
+  → secrets-specialist + configuration-specialist
 ```
 
-**Fix for A7 false negative**: "Review authenticate_user()" now triggers authentication-specialist (no "security" keyword required).
+**Fixes**:
+- **A7 false negative**: "Review authenticate_user()" now triggers authentication-specialist (no "security" keyword required)
+- **Secrets review gap**: "Review API key security" now triggers secrets-specialist (Pattern 5)
+- **Database review gap**: "Review database connection security" now triggers secrets-specialist (Pattern 6)
 
 ---
 
