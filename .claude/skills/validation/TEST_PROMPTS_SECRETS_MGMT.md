@@ -35,7 +35,7 @@ def fetch_data():
     )
     return response.json()
 ```
-```
+
 
 **Expected**:
 - ✅ secrets-management or secrets-specialist activation
@@ -43,7 +43,7 @@ def fetch_data():
 - ✅ CWE-798 citation
 - ✅ Secure code example (environment variables)
 
----
+
 
 ### Test 2: Database Credential Security (Review)
 ```
@@ -56,7 +56,7 @@ conn = psycopg2.connect(
     "postgresql://admin:password123@localhost:5432/mydb"
 )
 ```
-```
+
 
 **Expected**:
 - ✅ secrets-management or secrets-specialist activation
@@ -64,7 +64,7 @@ conn = psycopg2.connect(
 - ✅ Identifies hardcoded password in connection string
 - ✅ Suggests environment variables or secret vault
 
----
+
 
 ### Test 3: JWT Secret Validation (Implementation)
 ```
