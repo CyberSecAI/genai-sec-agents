@@ -28,14 +28,16 @@
 │ LAYER 2: ATOMIC DOMAIN KNOWLEDGE (app/rule_cards/)                      │
 │                                                                         │
 │  app/rule_cards/                                                        │
-│  ├── authentication/     45 rules (AUTH-*)                              │
+│  ├── authentication/     49 rules (AUTH-*)                              │
 │  │   ├── AUTH-PASSWORD-HASH-001.yml                                     │
 │  │   ├── AUTH-LOGIN-MECHANISM-001.yml                                   │
-│  │   └── ... (43 more)                                                  │
-│  ├── session_management/ 22 rules (SESSION-*)                           │
-│  ├── secrets/            8 rules (SECRET-*)                             │
-│  ├── authorization/      13 rules (AUTHZ-*)                             │
-│  └── ... (16 more domains, 197 rules total)                             │
+│  │   └── ... (47 more)                                                  │
+│  ├── session-management/ 22 rules (SESSION-*)                           │
+│  ├── logging/            18 rules (LOG-*)                               │
+│  ├── configuration/      16 rules (CONFIG-*)                            │
+│  └── ... (16 more domains, 195 rules total)                             │
+│                                                                          │
+│  See: .claude/skills/validation/STATUS.md for canonical rule counts     │
 │                                                                         │
 │  Purpose: Atomic, testable security rules extracted from standards      │
 │  Format: YAML with rule_id, description, severity, cwe, asvs refs       │
@@ -46,10 +48,10 @@
 │ LAYER 3: COMPILED RULE SETS (.claude/agents/json/)                      │
 │                                                                         │
 │  .claude/agents/json/                                                   │
-│  ├── authentication_rules.json  (45 rules compiled)                     │
+│  ├── authentication_rules.json  (49 rules compiled)                     │
 │  ├── session_rules.json         (22 rules compiled)                     │
-│  ├── secrets_rules.json         (8 rules compiled)                      │
-│  └── ... (197 rules total across 20 domains)                            │
+│  ├── logging_rules.json         (18 rules compiled)                     │
+│  └── ... (195 rules total across 20 domains)                            │
 │                                                                         │
 │  Purpose: Optimized JSON for fast loading by agents/skills              │
 │  Shared by: Both agents (.claude/agents/) and skills (.claude/skills/)  │
@@ -162,13 +164,13 @@ User: "What's the minimum password length?"
 
 **Where**: `app/rule_cards/{domain}/{RULE-ID}.yml`
 
-**Domains** (20 total):
-- `authentication/` - 45 rules
+**Domains** (20 total - see STATUS.md for canonical counts):
+- `authentication/` - 49 rules
 - `session_management/` - 22 rules
-- `secrets/` - 8 rules
-- `authorization/` - 13 rules
-- `input_validation/` - 6 rules
-- ... (15 more, 197 total rules)
+- `logging/` - 18 rules
+- `configuration/` - 16 rules
+- `data_protection/` - 14 rules
+- ... (15 more, **195 total rules**)
 
 **Rule Structure** (YAML):
 ```yaml

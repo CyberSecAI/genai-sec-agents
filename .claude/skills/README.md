@@ -74,7 +74,7 @@ CLAUDE.md pattern triggers automatically call agents for security tasks
    - Multi-factor authentication (MFA)
    - Password security and hashing
    - Credential management
-   - **45 security rules** | ASVS, OWASP, CWE aligned
+   - **49 security rules** | ASVS, OWASP, CWE aligned
 
 2. **authorization-security** ⏳
    - Role-based access control (RBAC)

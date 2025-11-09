@@ -34,7 +34,7 @@ allowed-tools: Read, Grep, Bash
 
 ## Skill Overview
 
-You are equipped with 45 ASVS-aligned authentication security rules covering login mechanisms, multi-factor authentication, password policies, and credential management. This skill returns findings with ASVS references, CWE mappings, and secure code examples.
+You are equipped with 49 ASVS-aligned authentication security rules covering login mechanisms, multi-factor authentication, password policies, and credential management. This skill returns findings with ASVS references, CWE mappings, and secure code examples.
 
 ## Skill Capabilities
 
