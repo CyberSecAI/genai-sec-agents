@@ -134,8 +134,11 @@
 
 **Isolation tests (A8, A2, A4) WITHOUT CLAUDE.md proved**:
 
-1. **Skills don't auto-activate** based on task type
-   - OAuth2 prompt didn't trigger authentication-security skill
+1. **Skills have probabilistic loading**
+   - Semantic matching determines if skill context loads
+   - NOT deterministic - may or may not activate
+   - Claude may interpret skill names as commands rather than context
+   - OAuth2 prompt didn't reliably trigger authentication-security skill
    - Password reset didn't trigger any security research
    - MFA didn't load ASVS rules
 
@@ -143,13 +146,15 @@
    - No concept of "research BEFORE implementation"
    - No enforcement of pre-implementation timing
    - No multi-agent orchestration
+   - Even when loaded, don't control WHEN to apply knowledge
 
 3. **Skills are passive knowledge**
-   - Wait to be activated (by CLAUDE.md or manual invocation)
+   - Wait to be activated (by CLAUDE.md, manual invocation, or probabilistic matching)
    - Contain rules but don't prescribe when to use them
    - Generate slash commands but don't trigger automatically
+   - May load as context OR be interpreted as executable commands
 
-**Conclusion**: Skills require CLAUDE.md to be effective for implementation tasks.
+**Conclusion**: Skills' probabilistic nature + passive design means CLAUDE.md is essential to provide deterministic control and active workflow enforcement for implementation tasks.
 
 ---
 

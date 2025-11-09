@@ -232,11 +232,18 @@ User decides whether to implement
 |--------|-------------------------|-------------------------|
 | **Access** | Programmatic (Task tool) | Interactive (natural language) |
 | **Loading** | All-at-once (fast) | Progressive (token-efficient) |
+| **Activation** | Deterministic (explicit call) | Probabilistic (semantic matching) |
 | **Best For** | Execution, automation | Learning, exploration |
 | **Examples** | Minimal | Rich code samples |
 | **Parallel** | Native (multiple agents) | Via agent delegation |
 
 **Both Share**: Same compiled rules.json (single source of truth)
+
+**Critical Difference**:
+- **Agents**: Deterministic - when called via Task tool, they WILL execute
+- **Skills**: Probabilistic - may or may not load based on semantic matching
+- **Skills**: Claude may interpret as commands OR context (non-deterministic)
+- **CLAUDE.md**: Provides deterministic orchestration over probabilistic skills
 
 **Agent Example** (authentication-specialist.md):
 ```markdown
@@ -271,17 +278,24 @@ Covers login, passwords, MFA, credentials
 
 ### 5. ✅ CLAUDE.md for Implicit Invocation
 
+**The Probabilistic Problem**:
+- Skills have semantic matching → may or may not load
+- Claude may interpret skills as commands vs context
+- No deterministic control over WHEN knowledge applies
+- Implementation tasks bypass research without explicit orchestration
+
 **Without CLAUDE.md** (proven by isolation testing):
 - Implementation tasks: Direct coding, NO security research ❌
 - Query tasks: Bash tools research (lower quality) ⚠️
-- Skills dormant (not auto-activated) ❌
+- Skills dormant or randomly activated (probabilistic) ❌
 
 **With CLAUDE.md** (validated):
 - Implementation tasks: Research FIRST, security-first workflow ✅
 - Query tasks: Agent orchestration (higher quality) ✅
-- Skills activated implicitly (pattern triggers) ✅
+- Skills activated deterministically via agent calls ✅
+- Probabilistic activation replaced with explicit orchestration
 
-**How CLAUDE.md Enables Implicit Invocation**:
+**How CLAUDE.md Enables Deterministic Invocation**:
 
 ```markdown
 Lines 232-245: Pattern Triggers
@@ -350,7 +364,20 @@ Quality: Unknown (no standards consulted)
 Workflow: Implementation ONLY (no research)
 ```
 
-**CLAUDE.md is essential for implicit invocation.** Without it, skills remain dormant.
+**Key Insight: CLAUDE.md Converts Probabilistic to Deterministic**
+
+Skills alone:
+- May or may not load (semantic matching)
+- May be interpreted as commands vs context
+- No control over timing or workflow
+
+CLAUDE.md + Agents:
+- Deterministic activation (explicit agent calls)
+- Controlled timing (research BEFORE implementation)
+- Structured workflow (STEP 1-4)
+- Skills loaded via agents (reliable delivery)
+
+**Result**: CLAUDE.md provides the deterministic orchestration layer that makes probabilistic skills reliable for security-critical work.
 
 ---
 
