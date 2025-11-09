@@ -82,12 +82,15 @@ CLAUDE.md pattern triggers automatically call agents for security tasks
    - Privilege management
    - **13 security rules**
 
-3. **secrets-management** ⏳
-   - API key security
-   - Credential protection
-   - Hardcoded secret detection
-   - Secret rotation
-   - **8 security rules**
+3. **[secrets-management](./secrets-management/SKILL.md)** ✅
+   - API key security and storage
+   - Hardcoded secret detection (passwords/tokens in code)
+   - Database credential protection
+   - JWT signing secret validation
+   - Cloud credential management (AWS/Azure/GCP)
+   - Environment variable security
+   - Secret rotation policies
+   - **4 security rules** | ASVS, OWASP, CWE aligned
 
 4. **session-security** ⏳
    - Session lifecycle management
