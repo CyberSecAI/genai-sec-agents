@@ -76,11 +76,13 @@ CLAUDE.md pattern triggers automatically call agents for security tasks
    - Credential management
    - **49 security rules** | ASVS, OWASP, CWE aligned
 
-2. **authorization-security** ⏳
+2. **[authorization-security](./authorization-security/SKILL.md)** ✅
    - Role-based access control (RBAC)
-   - Permission models
-   - Privilege management
-   - **13 security rules**
+   - Permission model design and validation
+   - Privilege escalation prevention
+   - Access control enforcement
+   - Insecure Direct Object References (IDOR) prevention
+   - **13 security rules** | ASVS, OWASP, CWE aligned
 
 3. **[secrets-management](./secrets-management/SKILL.md)** ✅
    - API key security and storage
@@ -92,17 +94,22 @@ CLAUDE.md pattern triggers automatically call agents for security tasks
    - Secret rotation policies
    - **4 security rules** | ASVS, OWASP, CWE aligned
 
-4. **session-security** ⏳
-   - Session lifecycle management
-   - Token security
-   - Session fixation prevention
-   - **22 security rules**
+4. **[session-management](./session-management/SKILL.md)** ✅
+   - Session lifecycle management (create, validate, destroy)
+   - Session token security and validation
+   - Session fixation/hijacking prevention
+   - Cookie security (HttpOnly/Secure/SameSite)
+   - Session timeout and expiration
+   - **22 security rules** | ASVS, OWASP, CWE aligned
 
-5. **input-validation** ⏳
-   - Injection prevention (SQL, XSS, Command)
-   - Data sanitization
-   - Schema validation
-   - **6 security rules**
+5. **[input-validation](./input-validation/SKILL.md)** ✅
+   - SQL injection prevention and detection
+   - NoSQL injection prevention
+   - Command injection prevention
+   - Cross-Site Scripting (XSS) prevention
+   - Input sanitization and validation
+   - Output encoding (HTML/JavaScript/URL)
+   - **6 security rules** | ASVS, OWASP, CWE aligned
 
 6. **jwt-security** ⏳
    - JWT token validation
@@ -326,10 +333,10 @@ Total: 2k - 12k tokens (only what's needed)
 | Agent | Skill | Status | Priority |
 |-------|-------|--------|----------|
 | `authentication-specialist` | `authentication-security` | ✅ Complete | High |
-| `secrets-specialist` | `secrets-management` | ⏳ Pending | High |
-| `session-management-specialist` | `session-security` | ⏳ Pending | High |
-| `input-validation-specialist` | `input-validation` | ⏳ Pending | Medium |
-| `authorization-specialist` | `authorization-security` | ⏳ Pending | Medium |
+| `secrets-specialist` | `secrets-management` | ✅ Complete | High |
+| `session-management-specialist` | `session-management` | ✅ Complete | High |
+| `input-validation-specialist` | `input-validation` | ✅ Complete | Medium |
+| `authorization-specialist` | `authorization-security` | ✅ Complete | Medium |
 | `jwt-specialist` | `jwt-security` | ⏳ Pending | Medium |
 | `logging-specialist` | `logging-security` | ⏳ Pending | Low |
 | `configuration-specialist` | `secure-configuration` | ⏳ Pending | Low |
@@ -398,7 +405,7 @@ When creating new skills:
 
 ---
 
-**Skills Status:** 1/12 complete (authentication-security ✅)
+**Skills Status:** 5/12 complete (authentication, secrets, session, input-validation, authorization ✅)
 **Architecture:** Hybrid (skills + agents) recommended
 **Token Efficiency:** 20-87% savings with progressive disclosure
 **Backward Compatible:** Yes, agents unchanged

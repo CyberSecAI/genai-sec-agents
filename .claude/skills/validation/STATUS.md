@@ -16,8 +16,9 @@
 
 | Domain | Rules | Status |
 |--------|-------|--------|
-| authentication | 49 | ✅ Skill complete |
-| session-management | 22 | ⏳ Pending |
+| authentication | 49 | ✅ Skill complete (Phase 0) |
+| secrets | 4 | ✅ Skill complete (Phase 1 - Slash: 100%) |
+| session-management | 22 | 🔄 In Progress (Phase 1) |
 | logging | 18 | ⏳ Pending |
 | configuration | 16 | ⏳ Pending |
 | data-protection | 14 | ⏳ Pending |
