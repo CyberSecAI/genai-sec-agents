@@ -12,6 +12,8 @@ allowed-tools: Read, Grep, Bash
 
 # Secrets Management Security Skill
 
+**Complete Security Rules**: [rules.json](./rules.json) | 4 ASVS-aligned secrets management rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

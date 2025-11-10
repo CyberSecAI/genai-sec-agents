@@ -7,6 +7,8 @@ description: Use me for JWT token validation, signature verification, algorithm 
 
 **I provide JWT (JSON Web Token) security guidance following ASVS, OWASP, and CWE standards.**
 
+**Complete Security Rules**: [rules.json](./rules.json) | 4 ASVS-aligned JWT security rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

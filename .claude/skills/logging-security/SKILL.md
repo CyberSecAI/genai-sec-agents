@@ -7,6 +7,8 @@ description: Use me for security logging and monitoring reviews, audit trail imp
 
 **I provide security logging and monitoring guidance following ASVS, OWASP, and CWE standards.**
 
+**Complete Security Rules**: [rules.json](./rules.json) | 18 ASVS-aligned logging security rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

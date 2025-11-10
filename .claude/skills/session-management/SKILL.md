@@ -12,6 +12,8 @@ allowed-tools: Read, Grep, Bash
 
 # Session Management Security Skill
 
+**Complete Security Rules**: [rules.json](./rules.json) | 22 ASVS-aligned session management rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

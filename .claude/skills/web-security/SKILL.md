@@ -7,6 +7,8 @@ description: Use me for web application security reviews covering XSS prevention
 
 **I provide web application security guidance following ASVS, OWASP Top 10, and CWE standards.**
 
+**Complete Security Rules**: [rules.json](./rules.json) | 9 ASVS-aligned web security rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

@@ -12,6 +12,8 @@ allowed-tools: Read, Grep, Bash
 
 # Input Validation Security Skill
 
+**Complete Security Rules**: [rules.json](./rules.json) | 6 ASVS-aligned input validation rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

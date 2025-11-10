@@ -7,6 +7,8 @@ description: Use me for cryptographic security reviews covering weak algorithms 
 
 **I provide cryptographic security guidance following ASVS, OWASP, NIST, and CWE standards.**
 
+**Complete Security Rules**: [rules.json](./rules.json) | 8 ASVS-aligned cryptography rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

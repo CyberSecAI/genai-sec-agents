@@ -12,6 +12,8 @@ allowed-tools: Read, Grep, Bash
 
 # Authorization Security Skill
 
+**Complete Security Rules**: [rules.json](./rules.json) | 13 ASVS-aligned authorization rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

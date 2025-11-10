@@ -7,6 +7,8 @@ description: Use me for data privacy and protection reviews, GDPR/CCPA complianc
 
 **I provide data privacy and protection guidance following ASVS, GDPR, CCPA, and CWE standards.**
 
+**Complete Security Rules**: [rules.json](./rules.json) | 14 ASVS-aligned data protection rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:

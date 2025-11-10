@@ -7,6 +7,8 @@ description: Use me for secure defaults, security hardening, configuration secur
 
 **I provide security configuration and hardening guidance following ASVS, OWASP, and CWE standards.**
 
+**Complete Security Rules**: [rules.json](./rules.json) | 16 ASVS-aligned configuration security rules with detection patterns
+
 ## Activation Triggers
 
 **I respond to these queries and tasks**:
