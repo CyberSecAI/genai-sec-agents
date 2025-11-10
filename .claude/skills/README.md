@@ -111,45 +111,66 @@ CLAUDE.md pattern triggers automatically call agents for security tasks
    - Output encoding (HTML/JavaScript/URL)
    - **6 security rules** | ASVS, OWASP, CWE aligned
 
-6. **jwt-security** ⏳
-   - JWT token validation
-   - Algorithm security
-   - Key management
-   - **4 security rules**
+6. **[jwt-security](./jwt-security/SKILL.md)** ✅
+   - JWT signature verification and validation
+   - JWT algorithm security (preventing 'none' algorithm attacks)
+   - JWT key management and rotation
+   - JWT expiration and claims validation
+   - **4 security rules** | ASVS, OWASP, CWE aligned
 
 ### Specialized Skills
 
-7. **logging-security** ⏳
-   - Security event logging
-   - Audit trail requirements
-   - Sensitive data in logs
-   - **18 security rules**
+7. **[logging-security](./logging-security/SKILL.md)** ✅
+   - Security event logging and audit trails
+   - Sensitive data exposure in logs (passwords, tokens, PII)
+   - Log injection prevention (CRLF injection, log forging)
+   - Log tampering and integrity protection
+   - Security monitoring and alerting
+   - **18 security rules** | ASVS, OWASP, CWE aligned
 
-8. **secure-configuration** ⏳
-   - Secure defaults
-   - Hardening guidelines
-   - Configuration validation
-   - **16 security rules**
+8. **[secure-configuration](./secure-configuration/SKILL.md)** ✅
+   - Secure default configuration review
+   - Security hardening and configuration management
+   - TLS/SSL configuration and cipher suites
+   - Database security configuration
+   - Production security settings review
+   - Security headers configuration
+   - **16 security rules** | ASVS, OWASP, CWE aligned
 
-9. **data-protection** ⏳
-   - GDPR compliance
-   - Encryption at rest
-   - Data handling
-   - **14 security rules**
+9. **[data-protection](./data-protection/SKILL.md)** ✅
+   - Data privacy and protection reviews
+   - GDPR and CCPA compliance validation
+   - Encryption at rest and in transit
+   - PII (Personally Identifiable Information) handling
+   - Sensitive data classification and tagging
+   - Data minimization and retention policies
+   - **14 security rules** | ASVS, GDPR, CCPA aligned
 
-10. **web-security** ⏳
-    - XSS prevention
-    - CSRF protection
-    - Clickjacking defense
+10. **[web-security](./web-security/SKILL.md)** ✅
+    - Cross-Site Scripting (XSS) prevention and detection
+    - Cross-Site Request Forgery (CSRF) protection
+    - Clickjacking prevention (X-Frame-Options, CSP)
+    - Content Security Policy (CSP) implementation
+    - Security headers configuration
+    - Cookie security (HttpOnly, Secure, SameSite)
+    - **9 security rules** | ASVS, OWASP, CWE aligned
+
+11. **[cryptography](./cryptography/SKILL.md)** ✅
+    - Weak cryptographic algorithm detection (MD5, SHA1, DES)
+    - Strong cryptography recommendations (AES-256, RSA-2048+)
+    - Cryptographically secure random number generation
+    - Password hashing best practices (bcrypt, Argon2)
+    - Encryption key management and rotation
+    - **8 security rules** | ASVS, NIST, OWASP aligned
 
 ### Meta Skills
 
-11. **security-research** ⏳
+12. **security-research** ⏳
     - Semantic search over OWASP/ASVS
     - Standards lookup
     - Best practice guidance
 
-12. **comprehensive-security** ⏳
+13. **comprehensive-security** ⏳
     - Multi-domain analysis
     - Cross-cutting concerns
     - **191 total rules**
@@ -337,10 +358,12 @@ Total: 2k - 12k tokens (only what's needed)
 | `session-management-specialist` | `session-management` | ✅ Complete | High |
 | `input-validation-specialist` | `input-validation` | ✅ Complete | Medium |
 | `authorization-specialist` | `authorization-security` | ✅ Complete | Medium |
-| `jwt-specialist` | `jwt-security` | ⏳ Pending | Medium |
-| `logging-specialist` | `logging-security` | ⏳ Pending | Low |
-| `configuration-specialist` | `secure-configuration` | ⏳ Pending | Low |
-| `data-protection-specialist` | `data-protection` | ⏳ Pending | Low |
+| `jwt-specialist` | `jwt-security` | ✅ Complete | Medium |
+| `logging-specialist` | `logging-security` | ✅ Complete | Low |
+| `configuration-specialist` | `secure-configuration` | ✅ Complete | Low |
+| `data-protection-specialist` | `data-protection` | ✅ Complete | Low |
+| `web-security-specialist` | `web-security` | ✅ Complete | Medium |
+| `cryptography-specialist` | `cryptography` | ✅ Complete | High |
 | `semantic-search` | `security-research` | ⏳ Pending | Low |
 
 ## Getting Started
@@ -405,7 +428,7 @@ When creating new skills:
 
 ---
 
-**Skills Status:** 5/12 complete (authentication, secrets, session, input-validation, authorization ✅)
+**Skills Status:** 11/13 complete (Phase 1 migration 85% complete ✅)
 **Architecture:** Hybrid (skills + agents) recommended
 **Token Efficiency:** 20-87% savings with progressive disclosure
 **Backward Compatible:** Yes, agents unchanged
