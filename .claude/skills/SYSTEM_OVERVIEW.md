@@ -48,7 +48,7 @@
 │ LAYER 3: COMPILED RULE SETS (.claude/agents/json/)                      │
 │                                                                         │
 │  .claude/agents/json/                                                   │
-│  ├── authentication_rules.json  (49 rules compiled)                     │
+│  ├── authentication-specialist.json  (49 rules compiled)                     │
 │  ├── session_rules.json         (22 rules compiled)                     │
 │  ├── logging_rules.json         (18 rules compiled)                     │
 │  └── ... (195 rules total across 20 domains)                            │
@@ -66,9 +66,9 @@
 │ │   specialist.md            │ │   ├── SKILL.md (progressive)           │
 │ │   (loads auth rules.json)  │ │   ├── rules.json → symlink             │
 │ │                            │ │   └── examples/                        │
-│ ├── session-management-      │ ├── session-security/                    │
+│ ├── session-management-      │ ├── session-management/                  │
 │ │   specialist.md            │ │   └── ... (same structure)             │
-│ │   (loads session rules)    │ └── ... (12 skills total)                │
+│ │   (loads session rules)    │ └── ... (11 skills total)                │
 │ └── semantic-search.md       │                                          │
 │     (searches research/)     │ Purpose: Interactive learning,           │
 │                              │ progressive disclosure, composition      │
@@ -274,7 +274,7 @@ LOWEST RELIABILITY
 ```markdown
 You are an authentication security specialist.
 
-Load: .claude/agents/json/authentication_rules.json (45 rules)
+Load: .claude/agents/json/authentication-specialist.json (45 rules)
 
 Execute: Fast security analysis with full context
 ```
@@ -290,7 +290,7 @@ Covers login, passwords, MFA, credentials
 [Concrete code examples]
 
 ## Full Rules (loads if needed - 5k tokens)
-→ Symlinks to authentication_rules.json
+→ Symlinks to authentication-specialist.json
 ```
 
 **Semantic Search & Grep Support**:
@@ -448,7 +448,7 @@ CLAUDE.md + Agents:
 │ STEP 2: Get implementation guidance (lines 326-327, parallel)    │
 │                                                                  │
 │ authentication-specialist agent:                                 │
-│ → Loads: .claude/agents/json/authentication_rules.json           │
+│ → Loads: .claude/agents/json/authentication-specialist.json           │
 │ → Applies: 45 authentication rules                               │
 │ → Finds: AUTH-LOGIN-MECHANISM-*, AUTH-OAUTH-*                    │
 │                                                                  │
@@ -526,7 +526,7 @@ CLAUDE.md + Agents:
 │ → Extracts: NIST SP800-63B recommendations                       │
 │                                                                  │
 │ authentication-specialist agent:                                 │
-│ → Loads: authentication_rules.json                               │
+│ → Loads: authentication-specialist.json                               │
 │ → Finds: AUTH-PASSWORD-POLICY-001 (min length 8)                 │
 │         AUTH-PASSWORD-STRENGTH-001 (complexity)                  │
 │ → References: ASVS 6.2.1, 6.2.9, CWE-521                         │
@@ -581,7 +581,7 @@ Same query WITHOUT CLAUDE.md:
 │                                                                  │
 │ User's IDE: /authentication-security                             │
 │ → Loads: authentication-security/SKILL.md                        │
-│ → Loads: authentication_rules.json (45 rules)                    │
+│ → Loads: authentication-specialist.json (45 rules)                    │
 │ → Reads: vulnerable_login.py                                     │
 │ → Applies: All 45 authentication rules                           │
 └──────────────────────────────────────────────────────────────────┘
@@ -699,16 +699,16 @@ Same query WITHOUT CLAUDE.md:
 - Task-type dependency understood
 - Known issues identified and fixable
 
-**Phase 1**: 🚀 READY TO BEGIN
-- Migrate 9 remaining agents to skills
-- Fix A7 pattern gap (review tasks)
-- Fix A4 timing issue (file-specific)
-- Maintain hybrid architecture
+**Phase 1**: ✅ COMPLETE (2025-11-10)
+- 11/11 security domain skills created
+- Skills pattern validated with slash activation
+- Progressive disclosure (2k-12k tokens vs 15k+ agents)
+- Hybrid architecture operational
 
 **Current Capabilities**:
-- ✅ 1/12 skills complete (authentication-security)
-- ✅ 20/20 agent domains operational
-- ✅ 197 security rules compiled
+- ✅ 11/11 skills complete (see [validation/STATUS.md](validation/STATUS.md) for details)
+- ✅ 20+ agent domains operational
+- ✅ 195 security rules compiled across 20 domains
 - ✅ 119 documents in search corpus
 - ✅ CLAUDE.md orchestration validated
 
@@ -725,7 +725,7 @@ semsearch.sh "password hashing"
 grep -r "bcrypt" research/
 
 # Load compiled rules
-cat .claude/agents/json/authentication_rules.json
+cat .claude/agents/json/authentication-specialist.json
 
 # Interactive skill
 /authentication-security
