@@ -1,6 +1,13 @@
 ---
 name: jwt-security
 description: Use me for JWT token validation, signature verification, algorithm security (preventing 'none' algorithm attacks), key management, expiration handling, and JWT best practices. I return ASVS-mapped findings with rule IDs and secure code examples.
+version: 1.0.0
+domains:
+  - jwt-tokens
+  - signature-verification
+  - algorithm-security
+  - token-validation
+allowed-tools: Read, Grep, Bash
 ---
 
 # JWT Security Skill

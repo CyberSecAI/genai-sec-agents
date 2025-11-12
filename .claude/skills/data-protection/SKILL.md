@@ -1,6 +1,13 @@
 ---
 name: data-protection
 description: Use me for data privacy and protection reviews, GDPR/CCPA compliance, encryption at rest and in transit, PII handling, data minimization, data retention policies, and sensitive data classification. I return ASVS-mapped findings with rule IDs and secure code examples.
+version: 1.0.0
+domains:
+  - data-privacy
+  - gdpr-ccpa
+  - encryption
+  - pii-handling
+allowed-tools: Read, Grep, Bash
 ---
 
 # Data Protection Skill

@@ -1,6 +1,13 @@
 ---
 name: cryptography
 description: Use me for cryptographic security reviews covering weak algorithms (MD5, SHA1), strong cryptography (AES-256, RSA-2048+), random number generation, key management, password hashing (bcrypt, Argon2), and cryptographic best practices. I return ASVS-mapped findings with rule IDs and secure code examples.
+version: 1.0.0
+domains:
+  - cryptographic-algorithms
+  - key-management
+  - password-hashing
+  - random-generation
+allowed-tools: Read, Grep, Bash
 ---
 
 # Cryptography Skill

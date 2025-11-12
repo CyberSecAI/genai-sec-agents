@@ -1,6 +1,13 @@
 ---
 name: web-security
 description: Use me for web application security reviews covering XSS prevention, CSRF protection, clickjacking prevention, content security policy (CSP), security headers, cookie security, and OWASP Top 10 web vulnerabilities. I return ASVS-mapped findings with rule IDs and secure code examples.
+version: 1.0.0
+domains:
+  - xss-prevention
+  - csrf-protection
+  - clickjacking
+  - content-security-policy
+allowed-tools: Read, Grep, Bash
 ---
 
 # Web Security Skill

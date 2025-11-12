@@ -1,6 +1,13 @@
 ---
 name: logging-security
 description: Use me for security logging and monitoring reviews, audit trail implementation, sensitive data exposure in logs, log injection prevention, log tampering protection, and security event monitoring. I return ASVS-mapped findings with rule IDs and secure code examples.
+version: 1.0.0
+domains:
+  - security-logging
+  - audit-trails
+  - log-injection
+  - log-integrity
+allowed-tools: Read, Grep, Bash
 ---
 
 # Logging Security Skill

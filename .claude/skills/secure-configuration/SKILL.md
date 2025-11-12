@@ -1,6 +1,13 @@
 ---
 name: secure-configuration
 description: Use me for secure defaults, security hardening, configuration security reviews, environment variable management, TLS/SSL configuration, database security settings, and production security configuration. I return ASVS-mapped findings with rule IDs and secure code examples.
+version: 1.0.0
+domains:
+  - secure-defaults
+  - security-hardening
+  - tls-ssl-configuration
+  - environment-security
+allowed-tools: Read, Grep, Bash
 ---
 
 # Secure Configuration Skill
