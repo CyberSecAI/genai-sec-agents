@@ -4,6 +4,65 @@
 
 A comprehensive Policy-as-Code system that **creates** security knowledge from standards and **delivers** it through Claude Code CLI integration for **pre-code guidance** or **post-code checking**.
 
+---
+
+## 📋 **Executive Summary**
+
+**Purpose**: Turn *any* complex documentation (internal standards, regulator rules, framework docs) into something engineers can actually use in design, coding, and review. OWASP Cheat Sheets and ASVS are our first examples, but the pattern works for any source.
+
+### Core Idea
+
+- Take large, hard-to-apply documents (e.g., OWASP Cheat Sheets, ASVS, internal security baselines)
+- Break them into small, testable **"rule cards"**
+- Compile those rules into reusable **knowledge packs**
+- Expose them via **agents** and **interactive skills**, orchestrated by a central workflow (**CLAUDE.md**)
+- **Result**: The system "remembers the standards" so humans don't have to
+
+### Layered Architecture
+
+1. **Source Documents** (`research/`)
+   - Any official or internal documentation: security standards, policies, platform guides, patterns
+   - Kept in normalized, searchable format for research and traceability
+   - OWASP Cheat Sheets and ASVS chapters are current seed examples
+
+2. **Atomic Rule Cards** (`app/rule_cards/`)
+   - Each rule = one precise, testable requirement derived from the sources
+   - Includes: priority, references (e.g., ASVS, CWE, policy IDs), implementation/validation notes
+   - Domain-agnostic: can model auth, privacy, crypto, API standards, internal patterns, etc.
+
+3. **Compiled Rule Sets** (`.claude/agents/json/`)
+   - Machine-friendly bundles of related rules per domain or topic
+   - Single source of truth shared by all agents and skills
+   - Easy to extend when new docs or policies are added
+
+4. **Agents & Skills**
+   - **Agents** (`.claude/agents/`): "Deep specialists" for automation (CI/CD checks, bulk reviews, pre-commit hooks)
+     - Load full rule sets for exhaustive analysis
+   - **Skills** (`.claude/skills/`): "Interactive helpers" for humans (focused, progressive guidance while designing or coding)
+     - Load only what's needed, on demand
+   - Both read the same rule sets → consistent decisions across tools and teams
+
+### Orchestration & Access Patterns
+
+1. **CLAUDE.md Workflow** (Orchestration Layer)
+   - Pattern rules detect when a task touches a governed area (e.g., "build login", "store card data", "add audit log")
+   - Orchestrates standard flow: Identify docs → Load agents/skills → Assist implementation → Validate changes
+
+2. **How People & Systems Use It**
+   - **Implicit**: Auto-trigger agents when prompts or code changes match known risk areas
+   - **Explicit**: Named skills (`/authentication-security`, `/payment-data`) for predictable, repeatable guidance
+   - **Search**: Semantic search over original documentation; direct queries over rules for precise checks
+
+### Business Outcomes
+
+- **Reusable Knowledge from Any Source**: One system to operationalize external standards (OWASP, ASVS) and internal policies
+- **Lower Risk, Higher Consistency**: Decisions grounded in documented rules, not ad-hoc LLM answers
+- **Developer Velocity with Guardrails**: Engineers get contextual, actionable direction instead of long PDFs
+- **Compliance & Auditability**: Every recommendation traceable back to specific documents and clauses
+- **Scales with New Requirements**: Adding new standards/policies is ingestion + refactoring, not rebuilding
+
+---
+
 ## 🔑 **How LLMs Access Security Knowledge**
 
 **Given a body of security knowledge (OWASP, ASVS, CWE), how do LLMs access it?**
