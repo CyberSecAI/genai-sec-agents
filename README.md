@@ -14,6 +14,54 @@ Transform security standards (OWASP, ASVS) into intelligent, real-time developme
 - **⚡ Real-Time Analysis**: Provide immediate security guidance during coding
 - **🛡️ Standards Compliance**: Automatic CWE/OWASP/ASVS reference validation
 
+## 🔑 **How LLMs Access Security Knowledge**
+
+**Given a body of security knowledge (OWASP, ASVS, CWE), how do LLMs access it?**
+
+This repository implements **four complementary access patterns**, each optimized for different use cases:
+
+### Access Patterns
+
+| Pattern | Activation | Token Cost | Use Case | Context |
+|---------|-----------|------------|----------|---------|
+| **Skills** | Deterministic (slash) or probabilistic | 2k-12k | User-facing guidance, progressive disclosure | Injected into session |
+| **Agents** | Explicit (Task tool) | 15k+ | Parallel analysis, deep validation | Separate execution |
+| **Semantic Search** | Explicit (tool) | Variable | Standards research, best practices lookup | Returns excerpts |
+| **CLAUDE.md** | Automatic (patterns) | 0 | Workflow orchestration, security enforcement | Triggers others |
+
+### Key Validation Findings
+
+**What we learned from Phase 0 validation testing**:
+
+1. **Skills are Probabilistic** ⚠️
+   - Auto-activation via semantic matching: **0-85% success rate** (varies by domain)
+   - Even the model itself uses slash commands (`/authentication-security`) for reliability
+   - **CLAUDE.md patterns make a big difference** - skills rarely load without orchestration patterns
+   - **Recommendation**: Use deterministic slash commands for critical security work
+
+2. **Resilience Through Redundancy** ✅
+   - Multiple access patterns provide **automatic fallback mechanisms**
+   - If skills fail to load → Claude autonomously invokes semantic search or agents
+   - If one pattern is unavailable → Alternative patterns compensate
+   - This redundancy ensures security knowledge is always accessible
+
+3. **Three-Component Architecture** 🏗️
+   - Skills + CLAUDE.md + Agents work together (proven via isolation testing)
+   - No single component works optimally alone
+   - CLAUDE.md orchestration patterns significantly improve skill activation rates
+   - Hybrid model provides both performance and resilience
+
+### When to Use Each Pattern
+
+- **Skills**: User-facing guidance, iterative queries, progressive disclosure for token savings
+- **Agents**: Deep validation, parallel analysis, autonomous research, comprehensive reports
+- **Semantic Search**: Research unfamiliar topics, standards lookup, best practices discovery
+- **CLAUDE.md**: Pre-implementation guards, review workflows, automatic security enforcement
+
+📖 **For detailed guidance**: See [.claude/skills/SKILLS_VS_AGENTS.md](.claude/skills/SKILLS_VS_AGENTS.md) and [.claude/skills/README.md](.claude/skills/README.md)
+
+---
+
 ## 👥 **Who This Is For**
 
 This system addresses real security challenges for development teams. See our [User Personas & Scenarios](docs/BMadSecurityAgent_Personas_Scenarios.md) to understand how different roles benefit:
