@@ -4,16 +4,6 @@
 
 A comprehensive Policy-as-Code system that **creates** security knowledge from standards and **delivers** it through Claude Code CLI integration for **pre-code guidance** or **post-code checking**.
 
-## 🎯 **What This System Does**
-
-Transform security standards (OWASP, ASVS) into intelligent, real-time development assistance:
-
-- **📝 Rule Card Creation**: Convert security standards into structured YAML rule cards
-- **🤖 Agent Compilation**: Generate specialized JSON security agents for Claude Code
-- **🔍 Semantic Search**: Query 119+ security documents (OWASP CheatSheets + ASVS standards) 
-- **⚡ Real-Time Analysis**: Provide immediate security guidance during coding
-- **🛡️ Standards Compliance**: Automatic CWE/OWASP/ASVS reference validation
-
 ## 🔑 **How LLMs Access Security Knowledge**
 
 **Given a body of security knowledge (OWASP, ASVS, CWE), how do LLMs access it?**
@@ -59,6 +49,19 @@ This repository implements **four complementary access patterns**, each optimize
 - **CLAUDE.md**: Pre-implementation guards, review workflows, automatic security enforcement
 
 📖 **For detailed guidance**: See [.claude/skills/SKILLS_VS_AGENTS.md](.claude/skills/SKILLS_VS_AGENTS.md) and [.claude/skills/README.md](.claude/skills/README.md)
+
+---
+
+## 🎯 **What This System Does**
+
+Transform security standards (OWASP, ASVS) into intelligent, real-time development assistance:
+
+- **📝 Rule Card Creation**: Convert security standards into structured YAML rule cards
+- **🤖 Agent Compilation**: Generate specialized JSON security agents for Claude Code
+- **🎓 Skills Development**: Create 11 security domain skills with progressive disclosure (2k-12k tokens)
+- **🔍 Semantic Search**: Query 119+ security documents (OWASP CheatSheets + ASVS standards)
+- **⚡ Real-Time Analysis**: Provide immediate security guidance during coding
+- **🛡️ Standards Compliance**: Automatic CWE/OWASP/ASVS reference validation
 
 ---
 
