@@ -64,6 +64,12 @@ This repository implements **four complementary access patterns**, each optimize
 3. **Skills** provide user-facing guidance → progressive disclosure saves tokens
 4. **Agents** perform deep analysis → parallel validation, autonomous tasks
 
+**Resilience Through Redundancy**: Multiple access patterns provide **automatic fallback mechanisms** (validated in Phase 0 testing):
+- If skills fail to load → Claude Code autonomously invokes semantic search or agents
+- If one pattern is unavailable → Alternative patterns compensate
+- Probabilistic activation → Deterministic slash commands as backup
+- This redundancy ensures security knowledge is always accessible
+
 **Example Flow**:
 ```
 User: "Review authenticate_user() for security issues"
