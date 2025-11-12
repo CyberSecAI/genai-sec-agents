@@ -81,6 +81,14 @@ Result: ASVS-aligned findings with secure code examples
 
 ⚠️ **IMPORTANT**: Skills + CLAUDE.md + Agents is a **THREE-COMPONENT ARCHITECTURE**. All three are essential (proven via isolation testing). No single component works optimally alone.
 
+📖 **For detailed decision guidance**: See [SKILLS_VS_AGENTS.md](./SKILLS_VS_AGENTS.md) for:
+- When to use skills vs agents vs semantic search
+- Decision trees and selection criteria
+- Performance characteristics and trade-offs
+- Concrete examples and anti-patterns
+
+---
+
 ## Quick Start: Deterministic Activation (Bypass Probabilistic Matching)
 
 **Don't rely on auto-activation!** Skills use semantic matching which is probabilistic. For security-critical work, use these **guaranteed activation methods**:
