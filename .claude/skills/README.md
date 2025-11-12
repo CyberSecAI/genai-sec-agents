@@ -1,14 +1,85 @@
 # Claude Skills for Security Analysis
 
-**Status**: ✅ Phase 0 VALIDATED (2025-11-09) | **Decision**: GO to Phase 1
+**Status**: ✅ Phase 1 COMPLETE (2025-11-10) | 11/11 security domain skills operational
 
 📖 **START HERE**:
 - **[SYSTEM_OVERVIEW.md](SYSTEM_OVERVIEW.md)** - Complete architecture with diagrams (what/why/how)
 - **[SKILLS_ARCHITECTURE_VALIDATED.md](SKILLS_ARCHITECTURE_VALIDATED.md)** - Phase 0 validation findings
 
-This directory contains Claude Skills for specialized security analysis. Skills provide progressive context loading and composability while working alongside **CLAUDE.md and the agent system**.
+---
 
-⚠️ **IMPORTANT**: Skills + CLAUDE.md + Agents is a **THREE-COMPONENT ARCHITECTURE**. All three are essential (proven via isolation testing). Skills alone don't work for implementation tasks.
+## The Knowledge Access Architecture
+
+**Given a body of security knowledge (OWASP, ASVS, CWE), how do LLMs access it?**
+
+This repository implements **four complementary access patterns**, each optimized for different use cases:
+
+### 1. **Skills** (Progressive Context Injection)
+- **What**: Modular resources loaded into Claude Code sessions on-demand
+- **How**: Slash commands (`/authentication-security`) or explicit requests
+- **When**: User-facing security guidance, progressive disclosure for token efficiency
+- **Tokens**: 2k-12k (staged loading, 20-87% savings vs agents)
+- **Activation**: Deterministic (slash) or probabilistic (semantic matching)
+- **Context**: Injected into current conversation, stays loaded
+
+### 2. **Agents** (Task Delegation)
+- **What**: Specialized sub-agents with full rule sets loaded upfront
+- **How**: Task tool calls via CLAUDE.md orchestration patterns
+- **When**: Parallel analysis, deep validation, autonomous research
+- **Tokens**: 15k+ (full rule set loaded immediately)
+- **Activation**: Explicit Task tool calls, CLAUDE.md pattern triggers
+- **Context**: Separate execution context, returns results
+
+### 3. **Semantic Search** (Corpus Research)
+- **What**: Vector search over 119 OWASP/ASVS documents
+- **How**: `semantic-search` agent or `semsearch.sh` tool
+- **When**: Finding best practices, researching unfamiliar topics, standards lookup
+- **Tokens**: Variable (depends on query/results)
+- **Activation**: Explicit tool invocation
+- **Context**: Returns relevant document excerpts
+
+### 4. **CLAUDE.md Orchestration** (Workflow Automation)
+- **What**: Rules and patterns that trigger security workflows automatically
+- **How**: Pattern matching on code changes, security keywords, file paths
+- **When**: Pre-implementation guards, review patterns, security enforcement
+- **Tokens**: 0 (patterns only, triggers other mechanisms)
+- **Activation**: Automatic based on user actions
+- **Context**: Orchestrates skills/agents/search
+
+### Access Pattern Comparison
+
+| Pattern | Activation | Token Cost | Use Case | Context |
+|---------|-----------|------------|----------|---------|
+| **Skills** | Deterministic (slash) or probabilistic | 2k-12k | User-facing guidance, progressive disclosure | Injected into session |
+| **Agents** | Explicit (Task tool) | 15k+ | Parallel analysis, deep validation | Separate execution |
+| **Semantic Search** | Explicit (tool) | Variable | Standards research, best practices lookup | Returns excerpts |
+| **CLAUDE.md** | Automatic (patterns) | 0 | Workflow orchestration, security enforcement | Triggers others |
+
+### The Hybrid Model (Recommended)
+
+**Use all four together** for maximum effectiveness:
+
+1. **CLAUDE.md** detects security-relevant changes → triggers workflows
+2. **Semantic Search** researches OWASP/ASVS best practices → finds guidance
+3. **Skills** provide user-facing guidance → progressive disclosure saves tokens
+4. **Agents** perform deep analysis → parallel validation, autonomous tasks
+
+**Example Flow**:
+```
+User: "Review authenticate_user() for security issues"
+↓
+CLAUDE.md pattern: "review.*authenticate" → triggers authentication workflow
+↓
+Semantic Search: Find OWASP authentication best practices
+↓
+Skill: Load authentication-security (2k tokens, overview)
+↓
+Agent: authentication-specialist for deep validation (15k tokens, full rules)
+↓
+Result: ASVS-aligned findings with secure code examples
+```
+
+⚠️ **IMPORTANT**: Skills + CLAUDE.md + Agents is a **THREE-COMPONENT ARCHITECTURE**. All three are essential (proven via isolation testing). No single component works optimally alone.
 
 ## Quick Start: Deterministic Activation (Bypass Probabilistic Matching)
 
@@ -36,13 +107,6 @@ CLAUDE.md pattern triggers automatically call agents for security tasks
 **Reliability Guarantee**: Slash commands and explicit requests = 100% activation. Auto-activation via semantic matching = 0% in isolation tests without CLAUDE.md.
 
 ---
-
-**The Big Picture**: We transform security standards (OWASP, ASVS) into actionable guidance through:
-1. Source documents (research/) → Semantic search & grep
-2. Refactored atomic rules (app/rule_cards/) → Testable, composable
-3. Compiled JSON (.claude/agents/json/) → Fast loading
-4. Dual access (agents + skills) → Explicit & implicit invocation
-5. CLAUDE.md orchestration → Security-first workflow automation
 
 ## What are Skills?
 
