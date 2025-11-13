@@ -3,7 +3,11 @@
 A comprehensive Policy-as-Code system that **creates** knowledge packs from standards and **delivers** it through Claude Code CLI integration for **pre-code guidance** or **post-code checking**.
 
 > **🎯 TL;DR**: Just copy the `.claude/` folder to your project. The agents and skills are **ready to use** - no installation required!
-> **🛠️ Installation** is only needed if you want to **build** new agents/skills from your own documentation.
+> 
+> **🛠️ Installation** is only needed if 
+> 
+> 1. you want to add **support semantic search** of the documentation
+> 2. you want to **build** new agents/skills from your own documentation.
 
 ---
 
@@ -40,13 +44,9 @@ A comprehensive Policy-as-Code system that **creates** knowledge packs from stan
 
 ### How People & Systems Use It
 
-- **Skills (Interactive)**: Load skills via slash commands (`/authentication-security`) for progressive guidance
-- **Agents (Automatic)**: CLAUDE.md auto-triggers specialist agents when detecting security tasks
-  - Single agent: `authentication-specialist` for login code review
-  - Multi-agent: `semantic-search` + `authentication-specialist` + `session-specialist` + `secrets-specialist` for OAuth2 implementation
-- **Agents (Explicit)**: Direct agent calls for deep analysis across multiple files or complex security reviews
-- **Search**: Semantic search over 119 OWASP/ASVS documents via `/semsearch` command
-- **Grep**: Direct pattern search for exact matches in rules and corpus
+- **Implicit**: Auto-trigger agents when prompts match known risk areas
+- **Explicit**: Named skills (`/authentication-security`) for predictable guidance
+- **Search**: Semantic search over 119 OWASP/ASVS documents
 
 ### Business Outcomes
 
@@ -65,15 +65,13 @@ This repository implements **five complementary access patterns**:
 |---------|-----------|------------|----------|
 | **Skills** | Deterministic (slash) or probabilistic | 2k-12k | User-facing guidance, progressive disclosure |
 | **Agents** | Explicit (Task tool) | 15k+ | Parallel analysis, deep validation |
-| **Semantic Search** | Explicit (tool) | Variable | Standards research, best practices lookup |
+| **Semantic Search** | Explicit (tool) | Variable | Standards research, best practices lookup. No vector or RAG DB needed. |
 | **Grep** | Explicit (tool) | Minimal | Direct pattern search in rules/corpus |
 | **CLAUDE.md** | Automatic (patterns) | <1K | Workflow orchestration, security enforcement |
 
 **Agent Invocation Strategy**: Claude can invoke `comprehensive-security-agent` (loads all 195 rules across 20 domains) for broad cross-domain analysis, or invoke specific specialist agents (e.g., `authentication-specialist`, `secrets-specialist`) for focused domain expertise.
 
-📖 **Learn more**:
-- [ARCHITECTURE.md](.claude/skills/ARCHITECTURE.md) - Complete system architecture
-- [SKILLS_VS_AGENTS.md](.claude/skills/SKILLS_VS_AGENTS.md) - When to use skills vs agents
+📖 **For detailed architecture**: See [.claude/skills/ARCHITECTURE.md](.claude/skills/ARCHITECTURE.md)
 
 ---
 
@@ -92,7 +90,7 @@ cp -r .claude/ /path/to/your/project/.claude/
 ```
 
 **That's it!** Claude Code will automatically:
-- Load skills via `/authentication-security` slash commands
+- Load skills
 - Route security tasks to specialist agents
 - Apply 195 security rules from OWASP/ASVS standards
 
@@ -101,29 +99,6 @@ cp -r .claude/ /path/to/your/project/.claude/
 - ✅ **21 Security Agents**: Deep specialists for automated analysis
 - ✅ **195 Security Rules**: ASVS/OWASP/CWE-aligned requirements
 - ✅ **119 Documents**: Searchable OWASP CheatSheets + ASVS standards (via `research/`)
-
-**Optional: Enable Semantic Search**
-
-To use the `/semsearch` command for searching security standards:
-
-```bash
-# Install Rust and semtools (one-time setup)
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source ~/.cargo/env
-cargo install semtools
-
-# Verify installation
-search --version
-```
-
-Then use semantic search:
-```bash
-/semsearch "JWT token validation"
-/semsearch "SQL injection prevention"
-/semsearch "session timeout controls" --corpus research/search_corpus/asvs
-```
-
-**Note**: Semantic search is optional. Skills and agents work without it.
 
 ### Option 2: Build Your Own Knowledge Packs
 
@@ -158,16 +133,26 @@ poetry install
 #### 3. Compile Security Agents
 
 ```bash
-# Transform your YAML rule cards → JSON specialist agents
+# Transform 195 YAML rule cards → 21 JSON specialist agents
 poetry run python app/tools/compile_agents.py --verbose
 
 # Or use makefile
 make compile
 ```
 
-**Output:** Updated `.claude/` folder with your custom agents and skills!
+#### 4. Build Semantic Search Corpus (Optional)
 
-**Note**: For semantic search installation, see "Optional: Enable Semantic Search" in Option 1 above.
+```bash
+# Install Rust and semtools
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+cargo install semtools
+
+# Build OWASP & ASVS search corpus
+make semsearch-build
+```
+
+**Output:** Updated `.claude/` folder with your custom agents and skills!
 
 </details>
 
@@ -187,27 +172,27 @@ make compile
 ### Search Security Knowledge
 
 ```bash
-# Via slash command (requires semtools - see "Optional: Enable Semantic Search" above)
-/semsearch "JWT token validation"
-
-# Via makefile (requires semtools)
+# Search OWASP CheatSheets
 make semsearch q="JWT token validation best practices"
+
+# Search ASVS standards
 make semsearch-asvs q="password complexity requirements"
 
-# Direct grep for exact matches (no installation required)
+# Direct grep for exact matches
 grep -r "bcrypt" app/rule_cards/
-grep -r "AUTH-PASSWORD" .claude/agents/json/
 ```
 
-### Agents Work Automatically
+### Run Security Analysis
 
-**No manual invocation needed** - Claude Code automatically routes security tasks to agents:
+```bash
+# Analyze single file
+poetry run python app/claude_code/manual_commands.py file --path app.py
 
-```
-User: "Review this login function for security issues"
-→ Claude routes to authentication-specialist agent
-→ Agent applies 49 authentication rules
-→ Returns findings with ASVS/CWE citations
+# Analyze entire workspace
+poetry run python app/claude_code/manual_commands.py workspace
+
+# JSON output for CI/CD
+poetry run python app/claude_code/manual_commands.py file --path app.py --format json
 ```
 
 ---
@@ -299,6 +284,7 @@ genai-sec-agents/
 ### Semantic Search
 - **Fast**: Sub-second search via Rust-based semtools
 - **Local-Only**: No external API calls, complete offline capability
+- **No Vector Database**: Theres no vector database, embeddings are never saved to disk. On every search call its generating embeddings on the fly using word2vec.
 - **Comprehensive**: Search across OWASP CheatSheets and ASVS standards
 - **Secure**: Input validation, audit logging, resource limits
 
@@ -359,6 +345,8 @@ See [LICENSE.md](LICENSE.md) for full details.
 6. [Skills Automation Framework](https://github.com/Toowiredd/claude-skills-automation)
 7. [Technical Deep Dive](https://medium.com/data-science-collective/claude-skills-a-technical-deep-dive-into-context-injection-architecture-ee6bf30cf514)
 8. [Skills Testing with Subagents](https://github.com/obra/superpowers/blob/main/skills/testing-skills-with-subagents/examples/CLAUDE_MD_TESTING.md)
+9. https://github.com/run-llama/semtools a vectorless, reasoning-based RAG used in this solution
+10. https://github.com/VectifyAI/PageIndex a vectorless, reasoning-based RAG
 
 ---
 
