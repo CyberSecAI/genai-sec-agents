@@ -40,9 +40,13 @@ A comprehensive Policy-as-Code system that **creates** knowledge packs from stan
 
 ### How People & Systems Use It
 
-- **Implicit**: Auto-trigger agents when prompts match known risk areas
-- **Explicit**: Named skills (`/authentication-security`) for predictable guidance
-- **Search**: Semantic search over 119 OWASP/ASVS documents
+- **Skills (Interactive)**: Load skills via slash commands (`/authentication-security`) for progressive guidance
+- **Agents (Automatic)**: CLAUDE.md auto-triggers specialist agents when detecting security tasks
+  - Single agent: `authentication-specialist` for login code review
+  - Multi-agent: `semantic-search` + `authentication-specialist` + `session-specialist` + `secrets-specialist` for OAuth2 implementation
+- **Agents (Explicit)**: Direct agent calls for deep analysis across multiple files or complex security reviews
+- **Search**: Semantic search over 119 OWASP/ASVS documents via `/semsearch` command
+- **Grep**: Direct pattern search for exact matches in rules and corpus
 
 ### Business Outcomes
 
