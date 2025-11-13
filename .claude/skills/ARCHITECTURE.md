@@ -302,6 +302,8 @@ User: "Implement password reset in auth.py"
 
 **Phase 0 isolation testing proved that Skills + CLAUDE.md + Agents is a THREE-COMPONENT SYSTEM where removing any component dramatically degrades effectiveness.**
 
+📖 **Architecture Decision**: See [ADR_NO_HOOKS_FOR_SKILL_LOADING.md](../../ADR/ADR_NO_HOOKS_FOR_SKILL_LOADING.md) for detailed analysis of why CLAUDE.md orchestration is essential and why alternative approaches (hooks, passive context injection) were rejected.
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │ CLAUDE.md (Active Workflow Engine)                      │
@@ -769,5 +771,22 @@ Security knowledge becomes accessible exactly when and how it's needed, through 
 
 ---
 
-**Last Updated**: 2025-11-12
+## References
+
+### Architecture Decision Records (ADRs)
+- **[ADR_NO_HOOKS_FOR_SKILL_LOADING.md](../../ADR/ADR_NO_HOOKS_FOR_SKILL_LOADING.md)** - Why CLAUDE.md orchestration is essential (vs hooks/passive injection)
+
+### Validation Documentation
+- **[VALIDATION_SUMMARY.md](validation/VALIDATION_SUMMARY.md)** - Organized validation status and artifacts
+- **[ISOLATION_EXPERIMENT_COMPLETE_ANALYSIS.md](validation/archive/ISOLATION_EXPERIMENT_COMPLETE_ANALYSIS.md)** - Complete Phase 0 analysis ⭐⭐⭐
+- **[STATUS.md](validation/STATUS.md)** - Detailed domain status and rule counts
+
+### Other Key Documents
+- **[SYSTEM_OVERVIEW.md](SYSTEM_OVERVIEW.md)** - Technical details with diagrams
+- **[SKILLS_VS_AGENTS.md](SKILLS_VS_AGENTS.md)** - When to use skills vs agents
+- **[SKILLS_ARCHITECTURE_VALIDATED.md](SKILLS_ARCHITECTURE_VALIDATED.md)** - Phase 0 validation summary
+
+---
+
+**Last Updated**: 2025-11-13
 **Version**: 1.0
