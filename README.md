@@ -67,7 +67,9 @@ This repository implements **five complementary access patterns**:
 
 **Agent Invocation Strategy**: Claude can invoke `comprehensive-security-agent` (loads all 195 rules across 20 domains) for broad cross-domain analysis, or invoke specific specialist agents (e.g., `authentication-specialist`, `secrets-specialist`) for focused domain expertise.
 
-📖 **For detailed architecture**: See [.claude/skills/ARCHITECTURE.md](.claude/skills/ARCHITECTURE.md)
+📖 **Learn more**:
+- [ARCHITECTURE.md](.claude/skills/ARCHITECTURE.md) - Complete system architecture
+- [SKILLS_VS_AGENTS.md](.claude/skills/SKILLS_VS_AGENTS.md) - When to use skills vs agents
 
 ---
 
