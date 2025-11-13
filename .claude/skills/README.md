@@ -12,7 +12,7 @@
 
 **Given a body of security knowledge (OWASP, ASVS, CWE), how do LLMs access it?**
 
-This repository implements **four complementary access patterns**, each optimized for different use cases:
+This repository implements **five complementary access patterns**, each optimized for different use cases:
 
 ### 1. **Skills** (Progressive Context Injection)
 - **What**: Modular resources loaded into Claude Code sessions on-demand
@@ -30,6 +30,8 @@ This repository implements **four complementary access patterns**, each optimize
 - **Activation**: Explicit Task tool calls, CLAUDE.md pattern triggers
 - **Context**: Separate execution context, returns results
 
+**Agent Invocation Strategy**: Claude can invoke `comprehensive-security-agent` (loads all 195 rules across 20 domains) for broad cross-domain analysis, or invoke specific specialist agents (e.g., `authentication-specialist`, `secrets-specialist`) for focused domain expertise. CLAUDE.md orchestration patterns determine the optimal approach based on task context.
+
 ### 3. **Semantic Search** (Corpus Research)
 - **What**: Vector search over 119 OWASP/ASVS documents
 - **How**: `semantic-search` agent or `semsearch.sh` tool
@@ -38,7 +40,15 @@ This repository implements **four complementary access patterns**, each optimize
 - **Activation**: Explicit tool invocation
 - **Context**: Returns relevant document excerpts
 
-### 4. **CLAUDE.md Orchestration** (Workflow Automation)
+### 4. **Grep** (Direct Pattern Search)
+- **What**: Direct text pattern search in rules and corpus documents
+- **How**: `Grep` tool with regex patterns
+- **When**: Finding specific keywords, rule IDs, code patterns, exact matches
+- **Tokens**: Minimal (returns only matching lines)
+- **Activation**: Explicit tool invocation
+- **Context**: Returns matching lines with file paths
+
+### 5. **CLAUDE.md Orchestration** (Workflow Automation)
 - **What**: Rules and patterns that trigger security workflows automatically
 - **How**: Pattern matching on code changes, security keywords, file paths
 - **When**: Pre-implementation guards, review patterns, security enforcement
@@ -53,16 +63,18 @@ This repository implements **four complementary access patterns**, each optimize
 | **Skills** | Deterministic (slash) or probabilistic | 2k-12k | User-facing guidance, progressive disclosure | Injected into session |
 | **Agents** | Explicit (Task tool) | 15k+ | Parallel analysis, deep validation | Separate execution |
 | **Semantic Search** | Explicit (tool) | Variable | Standards research, best practices lookup | Returns excerpts |
+| **Grep** | Explicit (tool) | Minimal | Direct pattern search, rule IDs, exact matches | Returns matching lines |
 | **CLAUDE.md** | Automatic (patterns) | 0 | Workflow orchestration, security enforcement | Triggers others |
 
 ### The Hybrid Model (Recommended)
 
-**Use all four together** for maximum effectiveness:
+**Use all five together** for maximum effectiveness:
 
 1. **CLAUDE.md** detects security-relevant changes → triggers workflows
 2. **Semantic Search** researches OWASP/ASVS best practices → finds guidance
-3. **Skills** provide user-facing guidance → progressive disclosure saves tokens
-4. **Agents** perform deep analysis → parallel validation, autonomous tasks
+3. **Grep** finds specific patterns and rule IDs → fast, precise lookups
+4. **Skills** provide user-facing guidance → progressive disclosure saves tokens
+5. **Agents** perform deep analysis → parallel validation, autonomous tasks
 
 **Resilience Through Redundancy**: Multiple access patterns provide **automatic fallback mechanisms** (validated in Phase 0 testing):
 - If skills fail to load → Claude Code autonomously invokes semantic search or agents
